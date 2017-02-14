@@ -4,7 +4,8 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent }  from './app.component';
-import { WelcomeComponent } from './home/welcome.component';
+
+import { EntryPointComponent } from './entryPoint.component'
 
 /* Feature Modules */
 
@@ -13,14 +14,14 @@ import { WelcomeComponent } from './home/welcome.component';
     BrowserModule,
     HttpModule,
     RouterModule.forRoot([
-      { path: 'welcome', component: WelcomeComponent },
+      { path: 'welcome', component: EntryPointComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ])
   ],
   declarations: [
     AppComponent,
-    WelcomeComponent
+    EntryPointComponent
   ],
   bootstrap: [ AppComponent ]
 })

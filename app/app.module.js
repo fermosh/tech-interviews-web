@@ -10,7 +10,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var router_1 = require("@angular/router");
 var app_component_1 = require("./app.component");
-var welcome_component_1 = require("./home/welcome.component");
+var entryPoint_component_1 = require("./entryPoint.component");
 /* Feature Modules */
 var AppModule = (function () {
     function AppModule() {
@@ -23,14 +23,14 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
             router_1.RouterModule.forRoot([
-                { path: 'welcome', component: welcome_component_1.WelcomeComponent },
+                { path: 'welcome', component: entryPoint_component_1.EntryPointComponent },
                 { path: '', redirectTo: 'welcome', pathMatch: 'full' },
                 { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
             ])
         ],
         declarations: [
             app_component_1.AppComponent,
-            welcome_component_1.WelcomeComponent
+            entryPoint_component_1.EntryPointComponent
         ],
         bootstrap: [app_component_1.AppComponent]
     })
