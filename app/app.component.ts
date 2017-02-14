@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
                                 <span class="logo">
                                     <img src="node_modules/uui-framework/images/ic_logo_UUi.svg" alt="" />
                                 </span>
-                                <span class="title">Unified UI</span>
+                                <span class="title">Technical Interview Helper</span>
                             </a>
                         </div>
                     </div>
@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
                         <span class="logo">
                             <img src="node_modules/uui-framework/images/ic_logo_UUi.svg" alt="" />
                         </span>
-                        Unified UI
+                        Technical Interview Helper
                     </a>
                     <ul class='nav navbar-nav'>
                         <li><a [routerLink]="['/welcome']">Home</a></li>

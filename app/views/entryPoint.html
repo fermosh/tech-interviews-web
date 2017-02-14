@@ -21,10 +21,19 @@
         color: white !important;
         text-transform: uppercase;
     }
+    .container{
+        width: 100%;
+        margin: 20px auto;
+    }
+    .right-Button
+    {
+        float: right;
+    }
+    
 </style>
 
 <div class="panel">
-    <h1 class="dark-gray plus-margin-horizontal plus-margin-vertical">Technical Interview Helper</h1>
+    <h3 class="dark-gray plus-margin-horizontal plus-margin-vertical">Please, select the candidate's profile:</h3>
     <select name="competency" class="selectpicker uui-form-element plus-margin-horizontal" title="Competency">
         <option *ngFor="let competencyOption of competencyOptions">{{competencyOption}}</option>
     </select>
@@ -216,4 +225,8 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="container">
+        <a href="" class="uui-button lime-green right-icon right-Button">Next<i class="fa fa-long-arrow-right"></i></a>
+    </div>
 </div>
