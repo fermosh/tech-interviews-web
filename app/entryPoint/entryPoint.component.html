@@ -1,15 +1,16 @@
 <div class="panel">
     <h3 class="dark-gray plus-margin-horizontal plus-margin-vertical">Please, select the candidate's profile:</h3>
-    <select name="competency" class="selectpicker uui-form-element plus-margin-horizontal" title="Competency">
-        <option *ngFor="let competencyOption of competencyOptions">{{competencyOption}}</option>
+
+    <select [(ngModel)]="competency" (change)="onCompetencyChange($event.target.value)" name="competency" class="selectpicker uui-form-element plus-margin-horizontal" title="Competency">
+        <option *ngFor="let competencyOption of competencyOptions" [attr.value]="competencyOption">{{competencyOption}}</option>
     </select>
 
-    <select name="level" class="uui-form-element plus-margin-horizontal" title="Level">
-        <option *ngFor="let levelOption of levelOptions">{{levelOption}}</option>
+    <select [(ngModel)]="level" (change)="onLevelChange($event.target.value)" name="level" class="uui-form-element plus-margin-horizontal" title="Level">
+        <option *ngFor="let levelOption of levelOptions" [attr.value]="levelOption">{{levelOption}}</option>
     </select>
 
-    <select name="domain" class="uui-form-element plus-margin-horizontal" title="Domain">
-        <option *ngFor="let domainOption of domainOptions">{{domainOption}}</option>
+    <select [(ngModel)]="domain" name="domain" class="uui-form-element plus-margin-horizontal" title="Domain">
+        <option *ngFor="let domainOption of domainOptions" [attr.value]="domainOption">{{domainOption}}</option>
     </select>
 
     <button class="uui-button lime-green minus-margin-top" (click)="show()" ><i class="fa fa-search"></i> Search</button>
