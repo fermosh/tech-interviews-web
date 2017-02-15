@@ -4,10 +4,10 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent }  from './app.component';
-
 import { EntryPointComponent } from './entryPoint/entryPoint.component'
 
 /* Feature Modules */
+import { ScriptViewerModule } from './script-viewer/script-viewer.module';
 
 @NgModule({
   imports: [
@@ -17,7 +17,8 @@ import { EntryPointComponent } from './entryPoint/entryPoint.component'
       { path: 'welcome', component: EntryPointComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
-    ])
+    ]),
+    ScriptViewerModule
   ],
   declarations: [
     AppComponent,

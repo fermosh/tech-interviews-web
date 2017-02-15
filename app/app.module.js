@@ -12,6 +12,7 @@ var router_1 = require("@angular/router");
 var app_component_1 = require("./app.component");
 var entryPoint_component_1 = require("./entryPoint/entryPoint.component");
 /* Feature Modules */
+var script_viewer_module_1 = require("./script-viewer/script-viewer.module");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,7 +27,8 @@ AppModule = __decorate([
                 { path: 'welcome', component: entryPoint_component_1.EntryPointComponent },
                 { path: '', redirectTo: 'welcome', pathMatch: 'full' },
                 { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
-            ])
+            ]),
+            script_viewer_module_1.ScriptViewerModule
         ],
         declarations: [
             app_component_1.AppComponent,

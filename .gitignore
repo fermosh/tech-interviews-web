@@ -303,3 +303,6 @@ $RECYCLE.BIN/
 *.lnk
 
 */scriptViewer/*.js*
+*/shared/*.js*
+*/script-viewer/*.js*
+*/script-viewer/BO/*.js*

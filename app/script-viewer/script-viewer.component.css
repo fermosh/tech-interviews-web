@@ -1,0 +1,161 @@
+/* SCRIPT VIEWER HEADER */
+
+.script-viewer-header {
+    background-color: #1A9CB0;
+    color: #FFFFFF;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.script-viewer-title-box {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0;
+}
+
+.script-viewer-title-box h2 {
+    text-transform: none;
+    margin-bottom: 2px;
+}
+
+.competency-level-label-value {
+    font-family: 'Oswald Light';
+    text-transform: uppercase;
+}
+
+.final-score-box {
+    float: right;
+}
+
+.final-score-label-text {
+    font-family: 'Oswald Light';
+    text-transform: uppercase;
+}
+
+.final-score-label-value {
+    float: right;
+}
+
+
+
+.skill-label-value {
+    font-family: 'Oswald Regular';
+    color: #1A9CB0;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.topic-label-value {
+    font-family: 'Oswald Light';
+    color: #999999;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.starting-label-value {
+    font-family: 'Oswald Regular';
+    color: #666666;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+/* SKILL SETTING */
+
+.score-label-value {
+    float: right;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    padding-top: 6px;
+}
+
+.score-label-value-0 {
+    border: 1px #CCCCCC solid;
+    background-color: #FFFFFF;
+    color: #CCCCCC;
+}
+
+.score-label-value-1 {
+    background-color: #B22746;
+    color: #FFFFFF;
+}
+
+.score-label-value-2 {
+    background-color: #FFDC19;
+    color: #FFFFFF;
+}
+
+.score-label-value-3 {
+    background-color: #FF9B19;
+    color: #FFFFFF;
+}
+
+.score-label-value-4 {
+    background-color: #A3C644;
+    color: #FFFFFF;
+}
+
+.score-label-value-5 {
+    background-color: #7F993A;
+    color: #FFFFFF;
+}
+
+.priority-very-low-label-value {
+    background-color: #DDDDDD;
+    color: #FFF !important;
+    border: 1px solid #DDDDDD;
+}
+
+.priority-low-label-value {
+    background-color: #AAAAAA;
+    color: #FFF !important;
+    border: 1px solid #AAAAAA;
+}
+
+.priority-medium-label-value {
+    background-color: #777777;
+    color: #FFF !important;
+    border: 1px solid #777777;
+}
+
+.priority-high-label-value {
+    background-color:  #444444;
+    color: #FFF !important;
+    border: 1px solid #444444;
+}
+
+.priority-very-high-label-value {
+    background-color:  #111111;
+    color: #FFF !important;
+    border: 1px solid #111111;
+}
+
+.icon-button {
+    cursor: pointer;
+    color: #8B5A9F;
+}
+
+/* QUESTION SETTING */
+
+.rating-cell {
+    text-align: right;
+    width: 100px;
+    color: #1A9CB0;
+}
+
+.uui-rating .star {
+    font-size: 12px;
+}
+
+.comments-cell {
+    text-align: right;
+    width: 25px;
+}
+
+.comments-input {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
