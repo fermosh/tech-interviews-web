@@ -2,7 +2,8 @@ import { AfterContentInit, Component, ElementRef } from '@angular/core';
 import 'node_modules/uui-framework/js/uui-tree-grid.min.js';
 @Component({
     selector: 'ip-entryPoint',
-    templateUrl: 'app/views/entryPoint.html'
+    templateUrl: 'app/entryPoint/entryPoint.component.html',
+    styleUrls:['app/entryPoint/entryPoint.component.css']
     }
 )
 export class EntryPointComponent {

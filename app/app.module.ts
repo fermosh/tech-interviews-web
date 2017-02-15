@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent }  from './app.component';
 
-import { EntryPointComponent } from './entryPoint.component'
+import { EntryPointComponent } from './entryPoint/entryPoint.component'
 
 /* Feature Modules */
 

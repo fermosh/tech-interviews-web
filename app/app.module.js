@@ -10,7 +10,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var router_1 = require("@angular/router");
 var app_component_1 = require("./app.component");
-var entryPoint_component_1 = require("./entryPoint.component");
+var entryPoint_component_1 = require("./entryPoint/entryPoint.component");
 /* Feature Modules */
 var AppModule = (function () {
     function AppModule() {

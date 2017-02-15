@@ -38,7 +38,8 @@ var EntryPointComponent = (function () {
 EntryPointComponent = __decorate([
     core_1.Component({
         selector: 'ip-entryPoint',
-        templateUrl: 'app/views/entryPoint.html'
+        templateUrl: 'app/entryPoint/entryPoint.component.html',
+        styleUrls: ['app/entryPoint/entryPoint.component.css']
     }),
     __metadata("design:paramtypes", [core_1.ElementRef])
 ], EntryPointComponent);

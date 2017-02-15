@@ -1,0 +1,30 @@
+.minus-margin-top
+    {
+        margin-top: -3px;
+        margin-left: 5px;
+    }
+    .plus-margin-horizontal
+    {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .plus-margin-vertical
+    {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .uui-table thead tr {
+        background-color:rgba(102,102,102,0.95);
+    }
+    .uui-table thead tr th{
+        color: white !important;
+        text-transform: uppercase;
+    }
+    .container{
+        width: 100%;
+        margin: 20px auto;
+    }
+    .right-Button
+    {
+        float: right;
+    }
