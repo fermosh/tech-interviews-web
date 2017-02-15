@@ -306,4 +306,8 @@ $RECYCLE.BIN/
 */shared/*.js*
 */script-viewer/*.js*
 */script-viewer/BO/*.js*
+<<<<<<< HEAD
 *.vscode/settings.json*
+=======
+*/entryPoint/*.js*
+>>>>>>> a38437f6f5b6e51fd369e60a92defcc76f18432b
