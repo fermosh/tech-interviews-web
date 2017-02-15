@@ -306,3 +306,4 @@ $RECYCLE.BIN/
 */shared/*.js*
 */script-viewer/*.js*
 */script-viewer/BO/*.js*
+*.vscode/settings.json*

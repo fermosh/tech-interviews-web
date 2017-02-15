@@ -159,3 +159,24 @@
     margin-top: 10px;
     margin-bottom: 15px;
 }
+
+/* EXERCISE SETTING */
+
+.ex-tab-pane {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.ex-subtitle-label {
+    font-family: 'Oswald Regular';
+    color: #666666;
+    text-transform: none;
+    font-size: 16px;
+}
+
+.ex-rating-cell {
+    width: 90px;
+    color: #1A9CB0;
+    border-right: 1px #CCC solid;
+    height: 55px;
+}

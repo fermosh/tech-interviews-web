@@ -62,7 +62,7 @@
         <br>
         <br>
 
-        <h3>Exercises</h3>
+        <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
         <section class="uui-tabs" *ngIf="scriptViewer.exercises && scriptViewer.exercises.length">
             <div class="tabs-heading">
                 <ul class="nav nav-tabs">
@@ -73,8 +73,21 @@
             </div>
             <div class="tabs-body">
                 <div class="tab-content">
-                    <div *ngFor="let exercise of scriptViewer.exercises; let index = index" [id]="'tab_ex_' + exercise.id" [ngClass]="{ 'tab-pane': true, 'active': index == 0 }">
-                        {{ exercise.description }}
+                    <div *ngFor="let exercise of scriptViewer.exercises; let index = index" [id]="'tab_ex_' + exercise.id" [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index == 0 }">
+                        <h3><span class="ex-subtitle-label">Description</span></h3>
+                        <p class="gray">{{ exercise.description }}</p><br>
+                        <h3><span class="ex-subtitle-label">Score</span></h3>
+                        <table>
+                            <tr>
+                                <td class="ex-rating-cell">
+                                    <ai-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></ai-star>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <input type="text" class="uui-form-element" style="width: 100%;" [(ngModel)]="exercise.comments" placeholder="Additional Comments" />
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

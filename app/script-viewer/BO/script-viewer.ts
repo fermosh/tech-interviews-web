@@ -23,11 +23,20 @@ export class ScriptViewer {
 
     get rating(): number {
         let sum: number = 0;
+
         if (this.skills && this.skills.length > 0) {
-            for (let skills of this.skills) {
-                sum += skills.rating; 
+            for (let skill of this.skills) {
+                sum += skill.rating; 
             }
-            return sum / this.skills.length;
+        }
+        if (this.exercises && this.exercises.length > 0) {
+            for (let exercise of this.exercises) {
+                sum += exercise.rating; 
+            }
+        }
+        
+        if (sum > 0) {
+            return sum / (this.skills.length + this.exercises.length);
         } else {
             return 0;
         }
