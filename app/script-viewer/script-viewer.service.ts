@@ -7,7 +7,7 @@ import { ScriptViewer } from './BO/script-viewer'
 @Injectable()
 
 export class ScriptViewerService {
-    private _scriptVieweUrl = 'api/script-viewer/technical-interview.json';
+    private _scriptVieweUrl = 'app/script-viewer/technical-interview.json';
 
     constructor(private _http: Http) { }
 
