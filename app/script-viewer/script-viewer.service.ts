@@ -22,8 +22,7 @@ export class ScriptViewerService {
                                                 ,jsonObject.domain
                                                 ,jsonObject.levelName
                                                 ,jsonObject.levelDescription
-                                                ,jsonObject.skills
-                                                ,jsonObject.exercises);
+                                                ,jsonObject.skills);
             //console.log(scriptViewer);
             return scriptViewer;
         })

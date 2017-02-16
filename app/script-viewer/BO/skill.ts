@@ -1,21 +1,25 @@
-import { Question } from '../BO/question'
+import { Topic } from '../BO/Topic';
+import { Question } from '../BO/question';
+import { Exercise } from '../BO/exercise';
 
 export class Skill {
     // API Properties
-    skillId: number;
-    skillName: string;
-    topic: string;
+    id: number;
+    name: string;
     startingFrom: string;
     priority: string;
+    topics: Topic[];
     questions: Question[];
+    exercises: Exercise[];
 
-    constructor(_skillId: number, _skillName: string, _topic: string, _startingFrom: string, _priority: string, _questions: Question[]) {
-        this.skillId = _skillId;
-        this.skillName = _skillName;
-        this.topic = _topic;
+    constructor(_id: number, _name: string, _startingFrom: string, _priority: string, _topics: Topic[], _questions: Question[], _exercises: Exercise[]) {
+        this.id = _id;
+        this.name = _name;
         this.startingFrom = _startingFrom;
         this.priority = _priority;
-        this.questions = _questions.map(item => new Question(item.questionId, item.question));
+        this.topics = _topics.map(item => new Topic(item.id, item.name));
+        this.questions = _questions.map(item => new Question(item.id, item.question, item.answer));
+        this.exercises = _exercises.map(item => new Exercise(item.id, item.title, item.description, item.solution));
     }
 
     get priorityStyle(): string {

@@ -9,26 +9,30 @@
                 <h2>{{ scriptViewer.competencyName }} {{ scriptViewer.domain }}</h2>
                 <span class="competency-level-label-value">{{ scriptViewer.levelName }} - {{ scriptViewer.levelDescription }}</span>
             </div>
-            
+
         </div>
     </div>
     <br>
     <br>
     <div class="container">
+        <!-- SKILLS SET -->
         <section class="uui-accordion cards-accordion" id="accordion-skills" *ngIf="scriptViewer.skills && scriptViewer.skills.length">
             <div class="panel accordion-item" *ngFor='let skill of scriptViewer.skills'>
                 <div class="accordion-heading">
                     <p class="accordion-title">
-                        <a data-toggle="collapse" class="accordion-toggle" [href]="'#skill_' + skill.skillId">
-                            <div [class]="'score-label-value ' + skill.ratingStyle"><h3>{{ skill.rating | number:'1.0-1' }}</h3></div><span class="skill-label-value">{{ skill.skillName }}</span><br>
+                        <a data-toggle="collapse" class="accordion-toggle" [href]="'#skill_' + skill.id">
+                            <div [class]="'score-label-value ' + skill.ratingStyle">
+                                <h3>{{ skill.rating | number:'1.0-1' }}</h3>
+                            </div><span class="skill-label-value">{{ skill.name }}</span><br>
                             <span [class]="'uui-label ' + skill.priorityStyle">{{ skill.priority }}</span>&nbsp;&nbsp;
                             <span class="starting-label-value">{{ skill.startingFrom }}</span>&nbsp;&nbsp;
-                            <span class="topic-label-value">{{ skill.topic }}</span>
+                            <span class="topic-label-value">Topics</span>
                         </a>
                     </p>
                 </div>
-                <div class="accordion-collapse collapse in" [id]="'skill_' + skill.skillId">
+                <div class="accordion-collapse collapse in" [id]="'skill_' + skill.id">
                     <div class="accordion-body">
+                        <!-- QUESTIONS SET -->
                         <table class="table" *ngIf='skill.questions && skill.questions.length'>
                             <tbody>
                                 <tr *ngFor='let question of skill.questions'>
@@ -38,18 +42,17 @@
                                                 <td>{{ question.question }}</td>
                                                 <td class="rating-cell">
                                                     <ai-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></ai-star>
-                                                </td>                                            
+                                                </td>
                                                 <td class="comments-cell">
-                                                    <i [ngClass]="{ 'fa': true, 'fa-comment': question.comments, 'fa-comment-o': !question.comments, 'icon-button': true }"
-                                                    data-toggle="collapse"
-                                                    [attr.data-target]="'#skill_' + skill.skillId + '_question_' + question.questionId"
-                                                    aria-expanded="false"
-                                                    [attr.aria-controls]="'skill_' + skill.skillId + '_question_' + question.questionId"></i>
+                                                    <i [ngClass]="{ 'fa': true, 'fa-comment': question.comments, 'fa-comment-o': !question.comments, 'icon-button': true }" data-toggle="collapse"
+                                                        [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
+                                                        aria-expanded="false" [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
                                                 </td>
                                             </tr>
                                         </table>
-                                        <div class="collapse" [id]="'skill_' + skill.skillId + '_question_' + question.questionId">
-                                            <input type="text" class="uui-form-element comments-input" [(ngModel)]="question.comments" placeholder="Additional Comments" />
+                                        <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
+                                            <input type="text" class="uui-form-element comments-input" [(ngModel)]="question.comments" placeholder="Additional Comments"
+                                            />
                                         </div>
                                     </td>
                                 </tr>
@@ -61,7 +64,7 @@
         </section>
         <br>
         <br>
-
+        <!-- EXERCISES SET -->
         <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
         <section class="uui-tabs" *ngIf="scriptViewer.exercises && scriptViewer.exercises.length">
             <div class="tabs-heading">
