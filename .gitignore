@@ -302,9 +302,19 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-*/scriptViewer/*.js*
-*/shared/*.js*
-*/script-viewer/*.js*
-*/script-viewer/BO/*.js*
+*/scriptViewer/*.js
+*/scriptViewer/*.js.map
+
+*/shared/*.js
+*/shared/*.js.map
+
+*/script-viewer/*.js
+*/script-viewer/*.js.map
+
+*/script-viewer/BO/*.js
+*/script-viewer/BO/*.js.map
+
 *.vscode/settings.json*
-*/entryPoint/*.js*
+
+*/entryPoint/*.js
+*/entryPoint/*.js.map
