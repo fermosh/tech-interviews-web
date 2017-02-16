@@ -14,6 +14,7 @@ var app_component_1 = require("./app.component");
 var entryPoint_component_1 = require("./entryPoint/entryPoint.component");
 /* Feature Modules */
 var script_viewer_module_1 = require("./script-viewer/script-viewer.module");
+var entryPoint_service_1 = require("./entryPoint/entryPoint.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -36,6 +37,7 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             entryPoint_component_1.EntryPointComponent
         ],
+        providers: [entryPoint_service_1.EntryPointService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

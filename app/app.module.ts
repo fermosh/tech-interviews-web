@@ -8,6 +8,7 @@ import { EntryPointComponent } from './entryPoint/entryPoint.component'
 
 /* Feature Modules */
 import { ScriptViewerModule } from './script-viewer/script-viewer.module';
+import { EntryPointService } from './entryPoint/entryPoint.service';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { ScriptViewerModule } from './script-viewer/script-viewer.module';
     AppComponent,
     EntryPointComponent
   ],
+  providers:[EntryPointService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
