@@ -2,10 +2,10 @@
     [title]="rating"
     (click)='onClick()'>
     <div style="width: 86px">
-        <span (click)='onStarClick(1)' [ngClass]="{ 'fa': true, 'fa-star-o': rating < 1, 'fa-star': rating > 0 }"></span>
-        <span (click)='onStarClick(2)' [ngClass]="{ 'fa': true, 'fa-star-o': rating < 2, 'fa-star': rating > 1 }"></span>
-        <span (click)='onStarClick(3)' [ngClass]="{ 'fa': true, 'fa-star-o': rating < 3, 'fa-star': rating > 2 }"></span>
-        <span (click)='onStarClick(4)' [ngClass]="{ 'fa': true, 'fa-star-o': rating < 4, 'fa-star': rating > 3 }"></span>
-        <span (click)='onStarClick(5)' [ngClass]="{ 'fa': true, 'fa-star-o': rating < 5, 'fa-star': rating > 4 }"></span>
+        <span *ngFor="let item of startCollection; let index = index"
+            (click)='onStarClick(item)'
+            (mouseover)='onStarMouseOver(item)'
+            (mouseleave)='onStarMouseLeave()'
+            [ngClass]="{ 'fa': true, 'fa-star-o': rating < item, 'fa-star': rating > index }"></span>
     </div>
 </div>
