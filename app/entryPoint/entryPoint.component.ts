@@ -14,23 +14,23 @@ import { EntryPointService } from './entryPoint.service';
     }
 )
 export class EntryPointComponent {
-    competencyId: number = 0;
-    levelId: number = 0;
-    domainId: number = 0;
+    competencyId: number;
+    levelId: number;
+    domainId: number;
 
     competencyOptions: ICompetency[];
     levelOptions: ILevel[];
     domainOptions: IDomain[];
 
-    isSkillGridVisible: boolean = false;
-    isTreeCreated:boolean= false;
+    isSkillGridVisible: boolean;
+    isTreeCreated: boolean;
 
-    constructor(private elementRef:ElementRef, private service: EntryPointService) {};
+    constructor(private elementRef: ElementRef, private service: EntryPointService) {};
 
-    show():void {
+    show(): void {
         this.isSkillGridVisible = !this.isSkillGridVisible;
 
-        if(!this.isTreeCreated){
+        if (!this.isTreeCreated){
             this.createTree();
             this.isTreeCreated = true;
         }
@@ -44,14 +44,13 @@ export class EntryPointComponent {
     }
 
     createTree(): void {
-        var s = document.createElement("script");
-        s.type = "text/javascript";
-        s.innerHTML = "$('.uui-table.treegrid').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });";
+        let s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
         this.elementRef.nativeElement.appendChild(s);
     }
 
-    onCompetencyChange(competencyId:number):void
-    {
+    onCompetencyChange(competencyId: number): void {
         // clear the level Selection and the level Options Array
         this.levelId = 0;
         this.levelOptions = [];
@@ -61,22 +60,21 @@ export class EntryPointComponent {
         this.domainOptions = [];
 
         this.service.getLevels().subscribe(
-            levels => this.levelOptions = levels.filter(x=> x.competencyId == competencyId),
+            levels => this.levelOptions = levels.filter(x => x.competencyId === competencyId),
             error => alert(<any>error));
     }
 
-    onLevelChange(levelId:number):void
-    {
+    onLevelChange(levelId: number): void {
         // clear the domain Selection
         this.domainId = 0;
-        
+
         this.service.getDomains().subscribe(
-            domains => this.domainOptions = domains.filter(x=> x.competencyId == this.competencyId && x.levelId == levelId),
+            domains => this.domainOptions = domains.filter(x => x.competencyId === this.competencyId && x.levelId === levelId),
             error => alert(<any>error));
     }
 
-    onNext():void
+    onNext(): void
     {
-        alert("CompetencyId:" + this.competencyId + ", LevelId:" + this.levelId + ", DomainId:" + this.domainId);
+        alert('CompetencyId:' + this.competencyId + ', LevelId:' + this.levelId + ', DomainId:' + this.domainId);
     }
 }
