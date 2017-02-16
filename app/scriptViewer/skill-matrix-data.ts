@@ -8,6 +8,13 @@ export class SkillMatrixData implements InMemoryDbService {
         {
             hasContent: true,
             competencyId: 13,
+            competencyName: '.Net',
+            level: {
+                id: 3,
+                name: 'L3',
+                description: 'Senior Software Engineer',
+                competencyId: 1
+            },
             skills: [
             {
                 rootId: 7,

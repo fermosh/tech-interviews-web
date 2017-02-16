@@ -12,7 +12,7 @@ import { ISkillMatrix } from './skill-matrix';
 
 @Injectable()
 export class SkillService {
-    private baseUrl = 'api/skills';
+    private baseUrl = 'api/skill-matrix-data';
 
     constructor(private http: Http) { }
 

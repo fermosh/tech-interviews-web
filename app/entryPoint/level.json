@@ -1,0 +1,10 @@
+[
+    {"id":1,"name":"L1","competencyId":1},
+    {"id":2,"name":"L2","competencyId":1},
+    {"id":3,"name":"L3","competencyId":1},
+    {"id":4,"name":"L4","competencyId":1},
+    {"id":5,"name":"L5","competencyId" : 1},
+    {"id":6,"name":"L1 j","competencyId":2},
+    {"id":7,"name": "L2 j","competencyId":2},
+    {"id":8,"name":"L3 j","competencyId":2}
+]

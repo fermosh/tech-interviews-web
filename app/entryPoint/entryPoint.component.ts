@@ -1,6 +1,12 @@
 import { Component, ElementRef } from '@angular/core';
-
 import 'node_modules/uui-framework/js/uui-tree-grid.min.js';
+
+import { ICompetency } from './competency';
+import { IDomain } from './domain';
+import { ILevel } from './level';
+
+import { EntryPointService } from './entryPoint.service';
+
 @Component({
     selector: 'ip-entryPoint',
     templateUrl: 'app/entryPoint/entryPoint.component.html',
@@ -8,86 +14,67 @@ import 'node_modules/uui-framework/js/uui-tree-grid.min.js';
     }
 )
 export class EntryPointComponent {
-    competency: string;
-    level: string;
-    domain: string;
+    competencyId: number;
+    levelId: number;
+    domainId: number;
 
-    competencyOptions: string[]=['FrontEnd','.Net'];
-    levelOptions: string[];//=['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'];
-    domainOptions: string[]; //= ['FrontEnd web development', 'Backend development', 'Azure development'];
+    competencyOptions: ICompetency[];
+    levelOptions: ILevel[];
+    domainOptions: IDomain[];
 
-    isSkillGridVisible: boolean = false;
-    isTreeCreated:boolean= false;
+    isSkillGridVisible: boolean;
+    isTreeCreated: boolean;
 
-    constructor(private elementRef:ElementRef) {};
+    constructor(private elementRef: ElementRef, private service: EntryPointService) {};
 
-    show():void {
+    show(): void {
         this.isSkillGridVisible = !this.isSkillGridVisible;
 
-        if(!this.isTreeCreated){
+        if (!this.isTreeCreated){
             this.createTree();
             this.isTreeCreated = true;
         }
     }
 
+    ngOnInit(): void {
+        this.competencyId = 0;
+        this.service.getCompetencies().subscribe(
+            competencies => this.competencyOptions = competencies,
+            error => alert(<any>error));
+    }
+
     createTree(): void {
-        var s = document.createElement("script");
-        s.type = "text/javascript";
-        s.innerHTML = "$('.uui-table.treegrid').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });";
+        let s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
         this.elementRef.nativeElement.appendChild(s);
     }
 
-    onCompetencyChange(competency:string):void
-    {
-        // reset the level selected
-        this.level = '';
+    onCompetencyChange(competencyId: number): void {
+        // clear the level Selection and the level Options Array
+        this.levelId = 0;
+        this.levelOptions = [];
 
-        switch (competency) {
-            case 'FrontEnd':
-                this.levelOptions = ['Level 2','Level 3', 'Level 4'];
-                break;
-            case '.Net':
-                this.levelOptions = ['Level 3', 'Level 4', 'Level 5'];
-                break;
-            default:
-                this.levelOptions = [];
-                break;
-        }
-
-        this.domain = '';
+        // clear the domain Selection and the competency Options Array
+        this.domainId = 0;
         this.domainOptions = [];
+
+        this.service.getLevels().subscribe(
+            levels => this.levelOptions = levels.filter(x => x.competencyId === competencyId),
+            error => alert(<any>error));
     }
 
-    onLevelChange(level:string):void
-    {
-        this.domain = '';
-        this.domainOptions = [];
+    onLevelChange(levelId: number): void {
+        // clear the domain Selection
+        this.domainId = 0;
 
-        if(this.competency === '.Net'){
-            switch (level) {
-                case 'Level 3':
-                    this.domainOptions = ['FrontEnd web development'];
-                    break;
-                case 'Level 4':
-                    this.domainOptions = ['FrontEnd web development', 'Backend development'];
-                    break;
-                default:
-                    this.domainOptions = ['FrontEnd web development', 'Backend development', 'Azure development']
-                    break;
-            }
-        }
-        else{
-            switch (level) {
-                case 'Level 2':
-                    this.domainOptions = ['Html5'];
-                    break;
-                case 'Level 3':
-                    this.domainOptions = ['Html5', 'CSS3'];
-                    break;
-                default:
-                    this.domainOptions = ['Html5', 'CSS3', 'Javascript'];
-                    break;
-            }
-        }
+        this.service.getDomains().subscribe(
+            domains => this.domainOptions = domains.filter(x => x.competencyId === this.competencyId && x.levelId === levelId),
+            error => alert(<any>error));
+    }
+
+    onNext(): void
+    {
+        alert('CompetencyId:' + this.competencyId + ', LevelId:' + this.levelId + ', DomainId:' + this.domainId);
     }
 }
