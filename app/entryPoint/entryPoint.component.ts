@@ -6,7 +6,6 @@ import { IDomain } from './domain';
 import { ILevel } from './level';
 
 import { EntryPointService } from './entryPoint.service';
-import { CompetencyService } from './competency-service';
 
 @Component({
     selector: 'ip-entryPoint',
@@ -25,7 +24,7 @@ export class EntryPointComponent {
     isSkillGridVisible: boolean;
     isTreeCreated: boolean;
 
-    constructor(private elementRef: ElementRef, private cService: CompetencyService, private service: EntryPointService) { };
+    constructor(private elementRef: ElementRef, private service: EntryPointService) { };
 
     show(): void {
         this.isSkillGridVisible = !this.isSkillGridVisible;
@@ -38,7 +37,7 @@ export class EntryPointComponent {
 
     ngOnInit(): void {
         this.competencyId = 0;
-        this.cService.getCompetencies().subscribe(
+        this.service.getCompetencies().subscribe(
             competencies => {
                 this.competencyOptions = competencies;
 
@@ -48,12 +47,10 @@ export class EntryPointComponent {
                 }
             },
             error => console.log(<any>error));
-
-
     }
 
     onCompetencyChange(competencyId: number): void {
-        
+
         // clear the domain Selection and the competency Options Array
         this.domainId = 0;
         this.domainOptions = [];
@@ -66,14 +63,12 @@ export class EntryPointComponent {
                     this.levelId = this.levelOptions[0].id;
                     this.onLevelChange(this.levelId);
                 }
-                else{
+                else {
                     // clear the level Selection and the level Options Array
                     this.levelId = 0;
                 }
             },
             error => console.log(<any>error));
-
-
     }
 
     onLevelChange(levelId: number): void {
