@@ -80,7 +80,6 @@ export class EntryPointComponent {
                 this.domainOptions = domains.filter(x => x.competencyId == this.competencyId && x.levelId == levelId);
 
                 if (this.domainOptions.length > 0) {
-                    console.log(this.domainOptions);
                     this.domainId = this.domainOptions[0].id;
                 }
             },
