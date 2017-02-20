@@ -1,5 +1,5 @@
-import { Skill } from '../BO/skill'
-import { Exercise } from '../BO/exercise';
+import { Skill } from '../classes/skill'
+import { Exercise } from '../classes/exercise';
 
 export class ScriptViewer {
     // API Properties
@@ -29,6 +29,7 @@ export class ScriptViewer {
         }
         return 0;
     }
+
     get exercises(): Exercise[] {
         let exercises: Exercise[] = [];
         for (let skill of this.skills) {
