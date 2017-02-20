@@ -5,7 +5,7 @@ import { ICompetency } from './competency';
 import { IDomain } from './domain';
 import { ILevel } from './level';
 
-import { CompetencyService } from './competency-service';
+import { CompetencyService } from './competency.service';
 
 @Component({
     selector: 'ip-entryPoint',
