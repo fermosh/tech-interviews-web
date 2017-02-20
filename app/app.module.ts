@@ -7,7 +7,7 @@ import { AppComponent }  from './app.component';
 
 /* Feature Modules */
 import { ScriptViewerModule } from './script-viewer/script-viewer.module';
-import { EntryPointModule } from './entryPoint/entryPoint-module';
+import { EntryPointModule } from './entryPoint/entryPoint.module';
 
 @NgModule({
   imports: [

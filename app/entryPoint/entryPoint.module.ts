@@ -5,12 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 
-import { CompetencyService } from './competency-service';
-import { LevelService } from './level-service';
-import { DomainService } from './domain-service';
+import { CompetencyService } from './competency.service';
+import { LevelService } from './level.service';
+import { DomainService } from './domain.service';
 import { EntryPointComponent } from './entryPoint.component';
 
-import { SkillMatrixData } from './skill-matrix-data';
+import { FilterCriteriaData } from './filter-criteria-data';
 
 
 import { SharedModule } from '../shared/shared.module';
@@ -19,7 +19,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     SharedModule,
     ReactiveFormsModule,
-    InMemoryWebApiModule.forRoot(SkillMatrixData),
+    InMemoryWebApiModule.forRoot(FilterCriteriaData),
     RouterModule.forChild([
       { path: 'welcome', component: EntryPointComponent },
     ])

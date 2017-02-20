@@ -4,7 +4,7 @@ import { ICompetency } from './competency';
 import { IDomain } from './domain';
 import { ILevel } from './level';
 
-export class SkillMatrixData implements InMemoryDbService {
+export class FilterCriteriaData implements InMemoryDbService {
 
     createDb() {
         let competencies: ICompetency[] = [
