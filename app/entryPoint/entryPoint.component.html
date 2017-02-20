@@ -10,7 +10,7 @@
     </select>
 
     <select [(ngModel)]="domainId" name="domain" class="uui-form-element plus-margin-horizontal" title="Domain">
-        <option *ngFor="let domainOption of domainOptions" [attr.value]="domainOption.Id">{{domainOption.name}}</option>
+        <option *ngFor="let domainOption of domainOptions" [attr.value]="domainOption.id">{{domainOption.name}}</option>
     </select>
 
     <button class="uui-button lime-green minus-margin-top" (click)="show()" ><i class="fa fa-search"></i> Search</button>
