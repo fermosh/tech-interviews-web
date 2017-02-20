@@ -39,6 +39,14 @@
 
 /* SKILL SETTING */
 
+.skill-accordion-toggle-title {
+    padding-bottom: 5px !important;
+}
+
+.skill-accordion-subtitle {
+    padding: 0 15px 9px 15px;
+}
+
 .skill-label-value {
     font-family: 'Oswald Regular';
     color: #1A9CB0;
@@ -67,6 +75,7 @@
     height: 35px;
     text-align: center;
     padding-top: 6px;
+    margin-top: -22px
 }
 
 .score-label-value-0 {
@@ -167,7 +176,6 @@
     margin-bottom: 10px;
     text-transform: uppercase;
 }
-
 
 /* EXERCISE SETTING */
 

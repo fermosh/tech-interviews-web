@@ -17,13 +17,13 @@ export class Skill {
         this.name = _name;
         this.startingFrom = _startingFrom;
         this.priority = _priority;
-        this.topics = _topics.map(item => new Topic(item.id, item.name));
+        this.topics = _topics.map(item => new Topic(item.id, item.name, item.isRequired));
         this.questions = _questions.map(item => new Question(item.id, item.question, item.selected, item.answer));
         this.exercises = _exercises.map(item => new Exercise(item.id, item.title, item.description, item.selected, item.solution));
     }
 
     get priorityStyle(): string {
-        let priorityStyle: string = this.priority.toLowerCase().trim().replace(" ","-");
+        let priorityStyle: string = this.priority.toLowerCase().trim().replace(" ", "-");
         return "priority-" + priorityStyle + "-label-value";
     }
 
@@ -33,7 +33,7 @@ export class Skill {
 
         if (this.questions && this.questions.length > 0) {
             for (let question of this.questions.filter(q => q.selected)) {
-                sum += question.rating; 
+                sum += question.rating;
                 numberOfItems++;
             }
         }
@@ -56,21 +56,35 @@ export class Skill {
 
         switch (true) {
             case (this.rating == 0): ratingStyle += "0";
-                        break;
+                break;
             case (this.rating < 2): ratingStyle += "1";
-                        break;
+                break;
             case (this.rating < 3): ratingStyle += "2";
-                        break;
+                break;
             case (this.rating < 4): ratingStyle += "3";
-                        break;
+                break;
             case (this.rating < 5): ratingStyle += "4";
-                        break;
+                break;
             case (this.rating == 5): ratingStyle += "5";
-                        break;
+                break;
             default:
                 ratingStyle += "0";
         }
 
         return ratingStyle;
+    }
+
+    get topicList(): string {
+        let topicList: string = "";
+
+        if (this.topics && this.topics.length > 0) {
+            for (let topic of this.topics) {
+                topicList += "- " + topic.name + "<br>";
+            }
+        } else {
+            topicList = "No topics related";
+        }
+
+        return topicList;
     }
 }

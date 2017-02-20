@@ -13,7 +13,18 @@
                         "topics": [
                             {
                                 "id": 1,
-                                "name": "Code Conventions"
+                                "name": "Code Conventions Required 1",
+                                "isRequired": true
+                            },
+                            {
+                                "id": 2,
+                                "name": "Code Conventions Required 2",
+                                "isRequired": true
+                            },
+                            {
+                                "id": 3,
+                                "name": "Code Conventions Required 3",
+                                "isRequired": true
                             }
                         ],
                         "questions": [
@@ -46,7 +57,8 @@
                         "topics": [
                             {
                                 "id": 1,
-                                "name": "OOP Fundamentals"
+                                "name": "OOP Fundamentals",
+                                "isRequired": true
                             }
                         ],
                         "questions": [
@@ -94,7 +106,8 @@
                         "topics": [
                             {
                                 "id": 1,
-                                "name": "Scrum / Agile - Base"
+                                "name": "Scrum / Agile - Base",
+                                "isRequired": true
                             }
                         ],
                         "questions": [

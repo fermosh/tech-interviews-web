@@ -20,16 +20,23 @@
             <div class="panel accordion-item" *ngFor='let skill of scriptViewer.skills'>
                 <div class="accordion-heading">
                     <p class="accordion-title">
-                        <a data-toggle="collapse" class="accordion-toggle" [href]="'#skill_' + skill.id">
-                            <div [class]="'score-label-value ' + skill.ratingStyle">
-                                <h3>{{ skill.rating | number:'1.0-1' }}</h3>
-                            </div>
-                            <span class="skill-label-value">{{ skill.name }}</span><br>
-                            <span [class]="'uui-label ' + skill.priorityStyle">{{ skill.priority }}</span>&nbsp;&nbsp;
-                            <span class="starting-label-value">{{ skill.startingFrom }}</span>&nbsp;&nbsp;
-                            <span class="topic-label-value">Topics</span>&nbsp;&nbsp;
+                        <a data-toggle="collapse" class="accordion-toggle skill-accordion-toggle-title" [href]="'#skill_' + skill.id">
+                            <span class="skill-label-value">{{ skill.name }}</span>
                         </a>
                     </p>
+                    <div class="skill-accordion-subtitle">
+                        <div [class]="'score-label-value ' + skill.ratingStyle">
+                            <h3>{{ skill.rating | number:'1.0-1' }}</h3>
+                        </div>
+                        <span [class]="'uui-label ' + skill.priorityStyle">{{ skill.priority }}</span>&nbsp;&nbsp;
+                        <span class="starting-label-value">{{ skill.startingFrom }}</span>&nbsp;&nbsp;
+                        <span class="topic-label-value"
+                              data-toggle="tooltip"
+                              data-container="body"
+                              data-html="true"
+                              data-placement="right"
+                              [attr.data-original-title]="skill.topicList">Topics</span>
+                    </div>
                 </div>
                 <div class="accordion-collapse collapse in" [id]="'skill_' + skill.id">
                     <div class="accordion-body">
@@ -64,7 +71,8 @@
                             </tbody>
                         </table>
                         <!-- QUESTION & EXERCISES PICKER -->
-                        <div class="modal uui-modal fade blue" [id]="'modalQuestion_Skill_' + skill.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal uui-modal fade blue" [id]="'modalQuestion_Skill_' + skill.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -93,7 +101,8 @@
                                                                 <tr *ngFor="let question of skill.questions">
                                                                     <td>
                                                                         <p class="uui-checkbox square-skin large">
-                                                                            <input type="checkbox" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + skill.id + '_Question_' + question.id" />
+                                                                            <input type="checkbox" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + skill.id + '_Question_' + question.id"
+                                                                            />
                                                                             <label [for]="'cbxQuestion_Skill' + skill.id + '_Question_' + question.id">{{ question.question }}</label>
                                                                         </p>
                                                                     </td>
@@ -110,7 +119,8 @@
                                                                 <tr *ngFor="let exercise of skill.exercises">
                                                                     <td>
                                                                         <p class="uui-checkbox square-skin large">
-                                                                            <input type="checkbox" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Skill' + skill.id + '_Exercise_' + exercise.id" />
+                                                                            <input type="checkbox" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Skill' + skill.id + '_Exercise_' + exercise.id"
+                                                                            />
                                                                             <label [for]="'cbxExercise_Skill' + skill.id + '_Exercise_' + exercise.id">{{ exercise.title }}</label>
                                                                         </p>
                                                                     </td>
@@ -128,45 +138,47 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <br>
-        <br>
-        <!-- EXERCISES SET -->
-        <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
-        <section class="uui-tabs" *ngIf="scriptViewer.exercises && scriptViewer.exercises.length">
-            <div class="tabs-heading">
-                <ul class="nav nav-tabs">
-                    <li *ngFor="let exercise of scriptViewer.exercises | exerciseFilter : 'selected' : 'true'; let index = index" [class.active]="index == 0">
-                        <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="tabs-body">
-                <div class="tab-content">
-                    <div *ngFor="let exercise of scriptViewer.exercises | exerciseFilter : 'selected' : 'true'; let index = index" [id]="'tab_ex_' + exercise.id" [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index == 0 }">
-                        <h3><span class="ex-subtitle-label">Description</span></h3>
-                        <p class="gray">{{ exercise.description }}</p><br>
-                        <h3><span class="ex-subtitle-label">Score</span></h3>
-                        <table>
-                            <tr>
-                                <td class="ex-rating-cell">
-                                    <ai-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></ai-star>
-                                </td>
-                                <td>&nbsp;</td>
-                                <td>
-                                    <input type="text" class="uui-form-element" style="width: 100%;" [(ngModel)]="exercise.comments" placeholder="Additional Comments" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
+    </section>
+    <br>
+    <br>
+    <!-- EXERCISES SET -->
+    <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
+    <section class="uui-tabs" *ngIf="scriptViewer.exercises && scriptViewer.exercises.length">
+        <div class="tabs-heading">
+            <ul class="nav nav-tabs">
+                <li *ngFor="let exercise of scriptViewer.exercises | exerciseFilter : 'selected' : 'true'; let index = index" [class.active]="index == 0">
+                    <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tabs-body">
+            <div class="tab-content">
+                <div *ngFor="let exercise of scriptViewer.exercises | exerciseFilter : 'selected' : 'true'; let index = index" [id]="'tab_ex_' + exercise.id"
+                    [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index == 0 }">
+                    <h3><span class="ex-subtitle-label">Description</span></h3>
+                    <p class="gray">{{ exercise.description }}</p><br>
+                    <h3><span class="ex-subtitle-label">Score</span></h3>
+                    <table>
+                        <tr>
+                            <td class="ex-rating-cell">
+                                <ai-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></ai-star>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                <input type="text" class="uui-form-element" style="width: 100%;" [(ngModel)]="exercise.comments" placeholder="Additional Comments"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+</div>
+</section>
+</div>
 </div>
 <br>
 <br>
