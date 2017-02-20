@@ -308,9 +308,6 @@ $RECYCLE.BIN/
 */shared/*.js
 */shared/*.js.map
 
-*/script-viewer/*.js
-*/script-viewer/*.js.map
-
 */scriptViewer/classes/*.js
 */scriptViewer/classes/*.js.map
 
