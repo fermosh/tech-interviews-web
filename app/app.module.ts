@@ -15,7 +15,6 @@ import { EntryPointModule } from './entryPoint/entryPoint-module';
     BrowserModule,
     HttpModule,
     RouterModule.forRoot([
-      //{ path: 'welcome', component: EntryPointComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ]),
@@ -27,4 +26,5 @@ import { EntryPointModule } from './entryPoint/entryPoint-module';
   ],
   bootstrap: [ AppComponent ]
 })
+
 export class AppModule { }

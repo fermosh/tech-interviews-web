@@ -1,10 +1,27 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
+import { ICompetency } from './competency';
 import { IDomain } from './domain';
+import { ILevel } from './level';
 
-export class DomainData implements InMemoryDbService {
+export class SkillMatrixData implements InMemoryDbService {
 
     createDb() {
+        let competencies: ICompetency[] = [
+            {
+                id: 1,
+                name: '.Net'
+            },
+            {
+                id: 2,
+                name: 'Javascript'
+            },
+            {
+                id: 3,
+                name: 'DevOps'
+            }
+        ];
+
         let domains: IDomain[] = [
             {
                 id: 1,
@@ -127,6 +144,57 @@ export class DomainData implements InMemoryDbService {
                 levelId: 1
             }
         ];
-        return { domains };
+        let levels: ILevel[] = [
+            {
+                id: 1,
+                name: 'L1',
+                description: 'Junior Software Engineer',
+                competencyId: 13
+            },
+            {
+                id: 2,
+                name: 'L2',
+                description: 'Software Engineer',
+                competencyId: 13
+            },
+            {
+                id: 3,
+                name: 'L3',
+                description: 'Senior Software Engineer',
+                competencyId: 13
+            },
+            {
+                id: 4,
+                name: 'L4',
+                description: 'Lead Software Engineer',
+                competencyId: 1
+            },
+            {
+                id: 5,
+                name: 'L5',
+                description: 'Chief Software Engineer',
+                competencyId: 1
+            },
+            {
+                id: 6,
+                name: 'L1',
+                description: '',
+                competencyId: 2
+            },
+            {
+                id: 7,
+                name: 'L2',
+                description: '',
+                competencyId: 2
+            },
+            {
+                id: 8,
+                name: 'L3',
+                description: '',
+                competencyId: 1
+            }
+        ];
+
+        return { competencies, domains, levels };
     }
 }

@@ -26,7 +26,6 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
             router_1.RouterModule.forRoot([
-                //{ path: 'welcome', component: EntryPointComponent },
                 { path: '', redirectTo: 'welcome', pathMatch: 'full' },
                 { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
             ]),
