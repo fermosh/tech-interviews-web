@@ -7,12 +7,12 @@ import { ScriptViewer } from './BO/script-viewer'
 @Injectable()
 
 export class ScriptViewerService {
-    private _scriptVieweUrl = 'app/script-viewer/technical-interview.json';
+    private _scriptViewerUrl = 'app/script-viewer/technical-interview.json';
 
     constructor(private _http: Http) { }
 
     getScriptViewer(): Observable<ScriptViewer> {
-        return this._http.get(this._scriptVieweUrl)
+        return this._http.get(this._scriptViewerUrl)
         //.map((response: Response) => <ScriptViewer> response.json())
         //.do(data => console.log('All: ' + JSON.stringify(data)))
         .map((response: Response) => {

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { ScriptViewerComponent } from './script-viewer.component';
+import { QuestionFilterPipe } from './question-filter.pipe';
+import { ExerciseFilterPipe } from './exercise-filter.pipe';
 import { ScriptViewerService } from './script-viewer.service';
 import { SharedModule } from '../shared/shared.module';
 
@@ -13,7 +15,9 @@ import { SharedModule } from '../shared/shared.module';
         ])
     ],
     declarations: [
-        ScriptViewerComponent
+        ScriptViewerComponent,
+        QuestionFilterPipe,
+        ExerciseFilterPipe
     ],
     providers: [
         ScriptViewerService

@@ -17,18 +17,18 @@ export class StarComponent {
     }
 
     private onStarClick(selectedRating: number): void {
-        this.temporalRating = selectedRating;
+        //this.temporalRating = selectedRating;
         this.rating = selectedRating;
     }
 
     private onStarMouseOver(selectedRating: number): void {
-        if (selectedRating > this.rating) {
+        /*if (selectedRating > this.rating) {
             this.temporalRating = this.rating;
             this.rating = selectedRating;
-        }
+        }*/
     }
 
     private onStarMouseLeave(): void {
-        this.rating = this.temporalRating;
+        //this.rating = this.temporalRating;
     }
 }

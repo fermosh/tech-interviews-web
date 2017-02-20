@@ -18,8 +18,8 @@ export class Skill {
         this.startingFrom = _startingFrom;
         this.priority = _priority;
         this.topics = _topics.map(item => new Topic(item.id, item.name));
-        this.questions = _questions.map(item => new Question(item.id, item.question, item.answer));
-        this.exercises = _exercises.map(item => new Exercise(item.id, item.title, item.description, item.solution));
+        this.questions = _questions.map(item => new Question(item.id, item.question, item.selected, item.answer));
+        this.exercises = _exercises.map(item => new Exercise(item.id, item.title, item.description, item.selected, item.solution));
     }
 
     get priorityStyle(): string {
@@ -29,11 +29,23 @@ export class Skill {
 
     get rating(): number {
         let sum: number = 0;
+        let numberOfItems: number = 0;
+
         if (this.questions && this.questions.length > 0) {
-            for (let question of this.questions) {
+            for (let question of this.questions.filter(q => q.selected)) {
                 sum += question.rating; 
+                numberOfItems++;
             }
-            return sum / this.questions.length;
+        }
+        if (this.exercises && this.exercises.length > 0) {
+            for (let exercise of this.exercises.filter(e => e.selected)) {
+                sum += exercise.rating;
+                numberOfItems++;
+            }
+        }
+
+        if (sum > 0) {
+            return sum / numberOfItems;
         } else {
             return 0;
         }

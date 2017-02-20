@@ -158,6 +158,17 @@
     margin-bottom: 15px;
 }
 
+.question-picker-button {
+    cursor: pointer;
+    color: #8B5A9F;
+    font-family: 'Oswald Regular';
+    font-size: 11px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+
 /* EXERCISE SETTING */
 
 .ex-tab-pane {

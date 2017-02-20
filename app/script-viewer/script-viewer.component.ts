@@ -28,8 +28,4 @@ export class ScriptViewerComponent implements OnInit {
     ngOnDestroy() {
         this.sub.unsubscribe();
     }
-
-    onRatingClicked(rating: number): void {
-        console.log(rating);
-    }
 }
