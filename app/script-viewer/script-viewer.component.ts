@@ -5,7 +5,7 @@ import { ScriptViewer } from './BO/script-viewer'
 import { ScriptViewerService } from './script-viewer.service';
 import { SkillService } from '../scriptViewer/skill-service';
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 @Component({
     templateUrl: 'app/script-viewer/script-viewer.component.html',
@@ -16,7 +16,7 @@ export class ScriptViewerComponent implements OnInit {
     scriptViewer: ScriptViewer;
     errorMessage: string;
     private sub: Subscription;
-    private isDomRendered: boolean = false;
+    private isScriptViewerRendered: boolean = false;
 
     constructor(private _scriptViewerService: ScriptViewerService, private _skillService: SkillService) {}
 
@@ -34,7 +34,10 @@ export class ScriptViewerComponent implements OnInit {
         this.sub.unsubscribe();
     }
 
-    onRatingClicked(rating: number): void {
-        console.log(rating);
+    ngAfterViewChecked(): void {
+        if (this.scriptViewer && this.scriptViewer.skills && !this.isScriptViewerRendered) {
+            jQuery('.topic-label-value').uui_tooltip();
+            this.isScriptViewerRendered = true;
+        }
     }
 }
