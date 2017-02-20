@@ -1,20 +1,20 @@
-import { Topic } from '../BO/topic'
-import { Question } from '../BO/question'
-import { Exercise } from '../BO/exercise'
+import { Topic } from '../BO/Topic';
+import { Question } from '../BO/question';
+import { Exercise } from '../BO/exercise';
 
 export class Skill {
     // API Properties
-    skillId: number;
-    skillName: string;
+    id: number;
+    name: string;
     startingFrom: string;
     priority: string;
     topics: Topic[];
     questions: Question[];
     exercises: Exercise[];
 
-    constructor(_skillId: number, _skillName: string, _startingFrom: string, _priority: string, _topics:  Topic[], _questions: Question[], _exercises: Exercise[]) {
-        this.skillId = _skillId;
-        this.skillName = _skillName;
+    constructor(_id: number, _name: string, _startingFrom: string, _priority: string, _topics: Topic[], _questions: Question[], _exercises: Exercise[]) {
+        this.id = _id;
+        this.name = _name;
         this.startingFrom = _startingFrom;
         this.priority = _priority;
         this.topics = _topics.map(item => new Topic(item.id, item.name, item.isRequired));
@@ -30,6 +30,7 @@ export class Skill {
     get rating(): number {
         let sum: number = 0;
         let numberOfItems: number = 0;
+
         if (this.questions && this.questions.length > 0) {
             for (let question of this.questions.filter(q => q.selected)) {
                 sum += question.rating;
@@ -41,7 +42,10 @@ export class Skill {
                 sum += exercise.rating;
                 numberOfItems++;
             }
-            return sum / this.questions.length;
+        }
+
+        if (sum > 0) {
+            return sum / numberOfItems;
         } else {
             return 0;
         }

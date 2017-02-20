@@ -9,12 +9,13 @@
                 <h2>{{ scriptViewer.competencyName }} {{ scriptViewer.domain }}</h2>
                 <span class="competency-level-label-value">{{ scriptViewer.levelName }} - {{ scriptViewer.levelDescription }}</span>
             </div>
-            
+
         </div>
     </div>
     <br>
     <br>
     <div class="container">
+        <!-- SKILLS SET -->
         <section class="uui-accordion cards-accordion" id="accordion-skills" *ngIf="scriptViewer.skills && scriptViewer.skills.length">
             <div class="panel accordion-item" *ngFor='let skill of scriptViewer.skills'>
                 <div class="accordion-heading">
@@ -37,68 +38,38 @@
                               [attr.data-original-title]="skill.topicList">Topics</span>
                     </div>
                 </div>
-                <div class="accordion-collapse collapse in" [id]="'skill_' + skill.skillId">
+                <div class="accordion-collapse collapse in" [id]="'skill_' + skill.id">
                     <div class="accordion-body">
+                        <div class="question-picker-button" data-toggle="modal" [attr.data-target]="'#modalQuestion_Skill_' + skill.id">
+                            <i class="fa fa-pencil"></i>
+                            <span>Questions & Exercises</span>
+                        </div>
+                        <!-- QUESTIONS SET -->
                         <table class="table" *ngIf='skill.questions && skill.questions.length'>
                             <tbody>
-                                <tr *ngFor='let question of skill.questions'>
+                                <tr *ngFor="let question of skill.questions | questionFilter : 'selected' : 'true'">
                                     <td>
                                         <table>
                                             <tr>
                                                 <td>{{ question.question }}</td>
                                                 <td class="rating-cell">
                                                     <ai-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></ai-star>
-                                                </td>                                            
+                                                </td>
                                                 <td class="comments-cell">
-                                                    <i [ngClass]="{ 'fa': true, 'fa-comment': question.comments, 'fa-comment-o': !question.comments, 'icon-button': true }"
-                                                    data-toggle="collapse"
-                                                    [attr.data-target]="'#skill_' + skill.skillId + '_question_' + question.questionId"
-                                                    aria-expanded="false"
-                                                    [attr.aria-controls]="'skill_' + skill.skillId + '_question_' + question.questionId"></i>
+                                                    <i [ngClass]="{ 'fa': true, 'fa-comment': question.comments, 'fa-comment-o': !question.comments, 'icon-button': true }" data-toggle="collapse"
+                                                        [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
+                                                        aria-expanded="false" [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
                                                 </td>
                                             </tr>
                                         </table>
-                                        <div class="collapse" [id]="'skill_' + skill.skillId + '_question_' + question.questionId">
-                                            <input type="text" class="uui-form-element comments-input" [(ngModel)]="question.comments" placeholder="Additional Comments" />
+                                        <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
+                                            <input type="text" class="uui-form-element comments-input" [(ngModel)]="question.comments" placeholder="Additional Comments"
+                                            />
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <br>
-        <br>
-
-        <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
-        <section class="uui-tabs" *ngIf="scriptViewer.exercises && scriptViewer.exercises.length">
-            <div class="tabs-heading">
-                <ul class="nav nav-tabs">
-                    <li *ngFor="let exercise of scriptViewer.exercises; let index = index" [class.active]="index == 0">
-                        <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="tabs-body">
-                <div class="tab-content">
-                    <div *ngFor="let exercise of scriptViewer.exercises; let index = index" [id]="'tab_ex_' + exercise.id" [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index == 0 }">
-                        <h3><span class="ex-subtitle-label">Description</span></h3>
-                        <p class="gray">{{ exercise.description }}</p><br>
-                        <h3><span class="ex-subtitle-label">Score</span></h3>
-                        <table>
-                            <tr>
-                                <td class="ex-rating-cell">
-                                    <ai-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></ai-star>
-                                </td>
-                                <td>&nbsp;</td>
-                                <td>
-                                    <input type="text" class="uui-form-element" style="width: 100%;" [(ngModel)]="exercise.comments" placeholder="Additional Comments" />
-                                </td>
-                            </tr>
-                        </table>
-=======
                         <!-- QUESTION & EXERCISES PICKER -->
                         <div class="modal uui-modal fade blue" [id]="'modalQuestion_Skill_' + skill.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                             aria-hidden="true">
@@ -167,7 +138,6 @@
                                     </div>
                                 </div>
                             </div>
->>>>>>> master
                     </div>
                 </div>
             </div>

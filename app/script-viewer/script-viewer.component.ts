@@ -18,16 +18,15 @@ export class ScriptViewerComponent implements OnInit {
     private sub: Subscription;
     private isScriptViewerRendered: boolean = false;
 
-    constructor(private _scriptViewerService: ScriptViewerService, private _skillService: SkillService) {}
+    constructor(private _scriptViewerService: ScriptViewerService, private _skillService: SkillService) { }
 
     ngOnInit(): void {
         /*this.sub = this._scriptViewerService.getScriptViewer()
             .subscribe(scriptViewer => this.scriptViewer = scriptViewer,
-                       error => this.errorMessage = <any>error);*/
-
+            error => this.errorMessage = <any>error);*/
         this._skillService.getSkillMatrix()
             .subscribe(scriptViewer => console.log(scriptViewer),
-                       error => this.errorMessage = <any>error);
+            error => this.errorMessage = <any>error);
     }
 
     ngOnDestroy() {
@@ -36,7 +35,9 @@ export class ScriptViewerComponent implements OnInit {
 
     ngAfterViewChecked(): void {
         if (this.scriptViewer && this.scriptViewer.skills && !this.isScriptViewerRendered) {
-            jQuery('.topic-label-value').uui_tooltip();
+            jQuery('.topic-label-value').uui_tooltip(/*{
+                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner tooltip-skill-topics"></div></div>'
+            }*/);
             this.isScriptViewerRendered = true;
         }
     }

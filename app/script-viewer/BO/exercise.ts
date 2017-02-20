@@ -3,8 +3,8 @@ export class Exercise {
     id: number;
     title: string;
     description: string;
-    solution?: string;
     selected: boolean;
+    solution?: string;
 
     // Persistance Properties
     comments: string;
@@ -14,8 +14,8 @@ export class Exercise {
         this.id = _id;
         this.title = _title;
         this.description = _description;
-        this.solution = _solution;
         this.selected = _selected;
+        this.solution = _solution;
         this.comments = "";
         this.rating = 0;
     }
