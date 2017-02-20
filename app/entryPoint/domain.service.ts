@@ -12,7 +12,7 @@ import { IDomain } from './Domain';
 
 @Injectable()
 export class DomainService {
-    private baseUrl = 'api/Domain';
+    private baseUrl = 'api/domains';
 
     constructor(private http: Http) { }
 
