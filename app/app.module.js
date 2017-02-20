@@ -13,7 +13,7 @@ var forms_1 = require("@angular/forms");
 var app_component_1 = require("./app.component");
 /* Feature Modules */
 var script_viewer_module_1 = require("./script-viewer/script-viewer.module");
-var entryPoint_module_1 = require("./entryPoint/entryPoint-module");
+var entryPoint_module_1 = require("./entryPoint/entryPoint.module");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,7 +26,6 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
             router_1.RouterModule.forRoot([
-                //{ path: 'welcome', component: EntryPointComponent },
                 { path: '', redirectTo: 'welcome', pathMatch: 'full' },
                 { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
             ]),
