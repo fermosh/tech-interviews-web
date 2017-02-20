@@ -3,7 +3,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 export class InterviewScriptData implements InMemoryDbService {
 
     createDb() {
-        let interviewScriptData: any =
+        let interviewScriptData: any = [
             {
                 hasContent: true,
                 competencyId: 13,
@@ -4094,9 +4094,9 @@ export class InterviewScriptData implements InMemoryDbService {
                         isSelectable: true
                     }
                 ]
-            };
+            }];
 
-        let interviewScriptDataTemp: any = {
+        let interviewScriptDataTemp: any = [{
             competencyId: 13,
             competencyName: '.Net',
             domain: 'Front-End Web Developemnt',
@@ -4230,7 +4230,7 @@ export class InterviewScriptData implements InMemoryDbService {
                     exercises: []
                 }
             ]
-        }
+        }];
 
         return { interviewScriptData, interviewScriptDataTemp };
     }

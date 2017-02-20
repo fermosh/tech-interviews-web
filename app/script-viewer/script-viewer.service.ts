@@ -20,7 +20,7 @@ export class ScriptViewerService {
     }
 
     private extractData(response: Response) {
-        let jsonObject = response.json().data;
+        let jsonObject = response.json().data[0];
 
         let scriptViewer = new ScriptViewer(jsonObject.competencyId
             , jsonObject.competencyName
