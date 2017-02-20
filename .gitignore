@@ -311,13 +311,13 @@ $RECYCLE.BIN/
 */script-viewer/*.js
 */script-viewer/*.js.map
 
-*/script-viewer/classes/*.js
-*/script-viewer/classes/*.js.map
+*/scriptViewer/classes/*.js
+*/scriptViewer/classes/*.js.map
 
 *.vscode/settings.json*
 
 */entryPoint/*.js
 */entryPoint/*.js.map
 
-*/script-viewer/pipes/*.js
-*/script-viewer/pipes/*.js.map
+*/scriptViewer/pipes/*.js
+*/scriptViewer/pipes/*.js.map
