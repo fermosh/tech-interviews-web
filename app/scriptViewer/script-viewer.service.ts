@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { ScriptViewer } from './classes/script-viewer';
+import { ISkillMatrix } from './interfaces/skill-matrix'
 
 @Injectable()
 
@@ -11,7 +11,7 @@ export class ScriptViewerService {
 
     constructor(private _http: Http) { }
 
-    getScriptViewer(): Observable<ScriptViewer> {
+    getScriptViewer(): Observable<ISkillMatrix> {
         return this._http.get(this._scriptViewerUrl)
             //.map((response: Response) => <ScriptViewer> response.json())
             //.do(data => console.log('All: ' + JSON.stringify(data)))
@@ -21,17 +21,7 @@ export class ScriptViewerService {
 
     private extractData(response: Response) {
         let jsonObject = response.json().data[0];
-
-        let scriptViewer = new ScriptViewer(jsonObject.competencyId
-            , jsonObject.competencyName
-            , jsonObject.domain
-            , jsonObject.level.name
-            , jsonObject.level.description
-            , jsonObject.skills);
-
-        //console.log(jsonObject);
-        //console.log(scriptViewer);
-        return scriptViewer || {};
+        return jsonObject || {};
     }
 
     private handleError(error: Response) {

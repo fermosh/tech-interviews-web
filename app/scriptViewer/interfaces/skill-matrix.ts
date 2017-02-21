@@ -6,6 +6,7 @@ export interface ISkillMatrix {
     hasContent: boolean;
     competencyId: number;
     competencyName: string;
+    domain: string;
     level: ILevel;
     skills?: ISkill[];
 }
