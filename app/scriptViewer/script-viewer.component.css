@@ -39,6 +39,14 @@
 
 /* SKILL SETTING */
 
+.skill-accordion-toggle-title {
+    padding-bottom: 5px !important;
+}
+
+.skill-accordion-subtitle {
+    padding: 0 15px 9px 15px;
+}
+
 .skill-label-value {
     font-family: 'Oswald Regular';
     color: #1A9CB0;
@@ -51,6 +59,7 @@
     color: #999999;
     text-transform: uppercase;
     font-size: 11px;
+    cursor: pointer;
 }
 
 .starting-label-value {
@@ -67,6 +76,7 @@
     height: 35px;
     text-align: center;
     padding-top: 6px;
+    margin-top: -22px
 }
 
 .score-label-value-0 {
@@ -156,6 +166,17 @@
     width: 100%;
     margin-top: 10px;
     margin-bottom: 15px;
+}
+
+.question-picker-button {
+    cursor: pointer;
+    color: #8B5A9F;
+    font-family: 'Oswald Regular';
+    font-size: 11px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    width: 115px;
 }
 
 /* EXERCISE SETTING */

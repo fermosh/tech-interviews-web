@@ -18,4 +18,6 @@ export interface ISkill {
     parentId: number;
     name: string;
     isSelectable: boolean;
+    skillLevel?: number;
+    hasChilds?: boolean;
 }
