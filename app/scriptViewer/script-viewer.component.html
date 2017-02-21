@@ -30,7 +30,7 @@
                         </div>
                         <span [class]="'uui-label ' + skill.priorityStyle">{{ skill.priority }}</span>&nbsp;&nbsp;
                         <span class="starting-label-value">{{ skill.startingFrom }}</span>&nbsp;&nbsp;
-                        <span class="topic-label-value"
+                        <span class="topic-label-value "
                               data-toggle="tooltip"
                               data-container="body"
                               data-html="true"
@@ -63,8 +63,7 @@
                                             </tr>
                                         </table>
                                         <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
-                                            <input type="text" class="uui-form-element comments-input" [(ngModel)]="question.comments" placeholder="Additional Comments"
-                                            />
+                                            <input type="text" class="uui-form-element comments-input" [(ngModel)]="question.comments" placeholder="Additional Comments" />
                                         </div>
                                     </td>
                                 </tr>

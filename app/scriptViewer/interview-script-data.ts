@@ -4114,15 +4114,15 @@ export class InterviewScriptData implements InMemoryDbService {
                     priority: "Low",
                     topics: [
                         {
-                            name: "Code Conventions 1",
+                            name: 'Code Conventions',
                             isRequired: true
                         },
                         {
-                            name: "Code Conventions 2",
-                            isRequired: false
+                            name: 'Code Standards usage',
+                            isRequired: true
                         },
                         {
-                            name: "Code Conventions 3",
+                            name: 'Code Standards Implementation',
                             isRequired: false
                         }
                     ],
@@ -4155,7 +4155,71 @@ export class InterviewScriptData implements InMemoryDbService {
                     priority: "High",
                     topics: [
                         {
-                            name: "OOP Fundamentals",
+                            name: '.NET Framework',
+                            isRequired: true
+                        },
+                        {
+                            name: '.NET Framework fundamentals',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Advanced .NET',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Advanced debugging',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Analyze and fix performance bottlenecks',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Application architecture concepts',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Application configuration principles',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Debugging fundamentals',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Exception Handling',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Inversion of control principles, base libraries',
+                            isRequired: true
+                        },
+                        {
+                            name: 'LINQ',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Multi-threading and async app',
+                            isRequired: true
+                        },
+                        {
+                            name: 'OOP fundamentals',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Reflection',
+                            isRequired: true
+                        },
+                        {
+                            name: 'TDD, Unit tests, BDD',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Unit-testing fundamentals',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Windows security',
                             isRequired: true
                         }
                     ],
@@ -4203,7 +4267,11 @@ export class InterviewScriptData implements InMemoryDbService {
                     priority: "Medium",
                     topics: [
                         {
-                            name: "Scrum / Agile - Base",
+                            name: 'Scrum/Agile - Base',
+                            isRequired: true
+                        },
+                        {
+                            name: 'Scrum/Agile - Master',
                             isRequired: true
                         }
                     ],

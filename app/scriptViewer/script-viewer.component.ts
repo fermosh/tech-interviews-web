@@ -32,7 +32,8 @@ export class ScriptViewerComponent implements OnInit {
     ngAfterViewChecked(): void {
         if (this.scriptViewer && this.scriptViewer.skills && !this.isScriptViewerRendered) {
             jQuery('.topic-label-value').uui_tooltip({
-                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner" style="font-size:12px; text-align:left;"></div></div>'
+                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner" style="text-align:left; padding:15px; line-height:15px; max-width:500px;"></div></div>',
+                color: 'black'
             });
             this.isScriptViewerRendered = true;
         }

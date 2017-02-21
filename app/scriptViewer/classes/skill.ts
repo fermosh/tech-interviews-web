@@ -80,9 +80,9 @@ export class Skill {
         if (this.topics && this.topics.length > 0) {
             for (let topic of this.topics) {
                 if (topic.isRequired) {
-                    topicList += "- <b>" + topic.name + "</b>";
+                    topicList += "- " + topic.name + "";
                 } else {
-                    topicList += "- " + topic.name;
+                    topicList += "<span style='color:#888;'>- " + topic.name + "</span>";
                 }
                 topicList += "<br>";
             }
