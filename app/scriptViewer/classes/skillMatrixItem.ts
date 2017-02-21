@@ -1,7 +1,7 @@
 /* Defines the skill entity */
-import { ITopic } from './topic';
-import { IQuestion } from './question';
-import { IExercise } from './exercise';
+import { ITopic } from '../interfaces/topic';
+import { IQuestion } from '../interfaces/question';
+import { IExercise } from '../interfaces/exercise';
 
 export class SkillMatrixItem {
     id: number;

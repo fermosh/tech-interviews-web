@@ -9,8 +9,8 @@ import { CompetencyService } from './competency.service';
 import { LevelService } from './level.service';
 import { DomainService } from './domain.service';
 
-import { ISkill } from '../scriptViewer/skill';
-import { SkillMatrixItem } from '../scriptViewer/skillMatrixItem';
+import { ISkill } from '../scriptViewer/interfaces/skill';
+import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
 
 @Component({
     selector: 'ip-entryPoint',

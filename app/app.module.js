@@ -12,7 +12,7 @@ var router_1 = require("@angular/router");
 var forms_1 = require("@angular/forms");
 var app_component_1 = require("./app.component");
 /* Feature Modules */
-var script_viewer_module_1 = require("./script-viewer/script-viewer.module");
+var script_viewer_module_1 = require("./scriptViewer/script-viewer.module");
 var entryPoint_module_1 = require("./entryPoint/entryPoint.module");
 var AppModule = (function () {
     function AppModule() {
