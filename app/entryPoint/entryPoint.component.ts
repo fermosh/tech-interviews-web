@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import 'node_modules/uui-framework/uui/js/uui-tree-grid.min.js';
 
 import { ICompetency } from './competency';
@@ -29,14 +30,17 @@ export class EntryPointComponent {
     isSkillGridVisible: boolean;
     isTreeCreated: boolean;
 
-    constructor(private elementRef: ElementRef, 
+    constructor(private router: Router, private elementRef: ElementRef,
         private competencyService: CompetencyService,
         private levelService: LevelService,
-        private domainService: DomainService){
+        private domainService: DomainService) {
     };
 
     show(): void {
-        this.isSkillGridVisible = !this.isSkillGridVisible;
+
+        if (!this.isSkillGridVisible) {
+            this.isSkillGridVisible = true;
+        }
 
         if (!this.isTreeCreated) {
             this.createTree();
@@ -57,7 +61,7 @@ export class EntryPointComponent {
             },
             error => console.log(<any>error));
 
-        this.skillMatrixItems = this.skillMatrix.map(x => new SkillMatrixItem(x.id, x.name, x.skillLevel, x.hasChilds));
+        this.skillMatrixItems = this.skillMatrix.map(x => new SkillMatrixItem(x.id, x.parentId, x.name, x.skillLevel, x.hasChilds));
     }
 
     onCompetencyChange(competencyId: number): void {
@@ -98,7 +102,8 @@ export class EntryPointComponent {
     }
 
     onNext(): void {
-        alert('CompetencyId:' + this.competencyId + ', LevelId:' + this.levelId + ', DomainId:' + this.domainId);
+
+        this.router.navigate(['./script-viewer/13',]);
     }
 
     createTree(): void {
@@ -106,6 +111,39 @@ export class EntryPointComponent {
         s.type = 'text/javascript';
         s.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
         this.elementRef.nativeElement.appendChild(s);
+    }
+
+    onSkillSelected(skill: SkillMatrixItem): void {
+        this.cascadeChilds(skill);
+        this.cascadeParent(skill);
+    }
+
+    cascadeChilds(skill: SkillMatrixItem): void {
+        if (!skill.hasChilds) {
+            return;
+        }
+
+        this.skillMatrixItems.filter(x => x.parentId == skill.id).forEach(x => {
+            x.isSelected = skill.isSelected;
+            this.cascadeChilds(x);
+        });
+    }
+
+    cascadeParent(skill: SkillMatrixItem): void {
+        if (skill.parentId == null) {
+            return;
+        }
+
+        let parent = this.skillMatrixItems.find(x => x.id == skill.parentId);
+        if (parent == null || parent.isSelected == skill.isSelected) {
+            return;
+        }
+
+        let anyFalse = this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
+
+        parent.isSelected = !anyFalse;
+
+        this.cascadeParent(parent);
     }
 
     skillMatrixItems: SkillMatrixItem[];
@@ -197,8 +235,8 @@ export class EntryPointComponent {
         competencyId: 13,
         jobFunctionLevel: 3,
         topics: [],
-        id: 573,
-        parentId: 479,
+        id: 8080,
+        parentId: 573,
         name: 'Leadership 1',
         isSelectable: true,
         skillLevel: 5,

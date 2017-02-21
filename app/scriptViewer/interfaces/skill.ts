@@ -20,4 +20,5 @@ export interface ISkill {
     isSelectable: boolean;
     skillLevel?: number;
     hasChilds?: boolean;
+    priority?: string;
 }

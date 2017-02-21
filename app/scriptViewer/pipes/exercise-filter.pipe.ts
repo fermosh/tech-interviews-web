@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { Exercise } from '../classes/exercise';
+import { IExercise } from '../interfaces/exercise';
 
 @Pipe({
     name: 'exerciseFilter',
@@ -7,10 +7,11 @@ import { Exercise } from '../classes/exercise';
 })
 
 export class ExerciseFilterPipe implements PipeTransform {
-    
-    transform(items: Exercise[], field: string, value: string): Exercise[] {
-        if (!items) return [];
-        return items.filter(i => String(i[field]) == value);
-    }
 
+    transform(items: IExercise[], field: string, value: string): IExercise[] {
+        if (!items) {
+            return [];
+        }
+        return items.filter(i => String(i[field]) === value);
+    }
 }

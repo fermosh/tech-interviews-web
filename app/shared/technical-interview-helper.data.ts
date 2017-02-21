@@ -1,8 +1,201 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-export class InterviewScriptData implements InMemoryDbService {
+import { ICompetency } from '../entryPoint/competency';
+import { IDomain } from '../entryPoint/domain';
+import { ILevel } from '../entryPoint/level';
+
+export class TechnicalInterviewData implements InMemoryDbService {
 
     createDb() {
+        let competencies: ICompetency[] = [
+            {
+                id: 1,
+                name: '.Net'
+            },
+            {
+                id: 2,
+                name: 'Javascript'
+            },
+            {
+                id: 3,
+                name: 'DevOps'
+            }
+        ];
+
+        let domains: IDomain[] = [
+            {
+                id: 1,
+                name: 'FrontEnd web development',
+                competencyId: 1,
+                levelId: 1
+            },
+            {
+                id: 2,
+                name: 'Backend development',
+                competencyId: 1,
+                levelId: 1
+            },
+            {
+                id: 3,
+                name: 'FrontEnd desktop development',
+                competencyId: 1,
+                levelId: 1
+            },
+            {
+                id: 4,
+                name: 'Azure development',
+                competencyId: 1,
+                levelId: 1
+            },
+            {
+                id: 5,
+                name: 'FrontEnd web development',
+                competencyId: 1,
+                levelId: 2
+            },
+            {
+                id: 6,
+                name: 'Backend development',
+                competencyId: 1,
+                levelId: 2
+            },
+            {
+                id: 7,
+                name: 'FrontEnd desktop development',
+                competencyId: 1,
+                levelId: 2
+            },
+            {
+                id: 8,
+                name: 'Azure development',
+                competencyId: 1,
+                levelId: 2
+            },
+            {
+                id: 9,
+                name: 'FrontEnd web development',
+                competencyId: 1,
+                levelId: 3
+            },
+            {
+                id: 10,
+                name: 'Backend development',
+                competencyId: 1,
+                levelId: 3
+            },
+            {
+                id: 11,
+                name: 'FrontEnd desktop development',
+                competencyId: 1,
+                levelId: 3
+            },
+            {
+                id: 12,
+                name: 'Azure development',
+                competencyId: 1,
+                levelId: 4
+            },
+            {
+                id: 13,
+                name: 'FrontEnd web development',
+                competencyId: 1,
+                levelId: 4
+            },
+            {
+                id: 14,
+                name: 'Backend development',
+                competencyId: 1,
+                levelId: 4
+            },
+            {
+                id: 15,
+                name: 'FrontEnd desktop development',
+                competencyId: 1,
+                levelId: 4
+            },
+            {
+                id: 16,
+                name: 'Azure development',
+                competencyId: 1,
+                levelId: 5
+            },
+            {
+                id: 17,
+                name: 'FrontEnd web development',
+                competencyId: 1,
+                levelId: 5
+            },
+            {
+                id: 18,
+                name: 'Backend development',
+                competencyId: 1,
+                levelId: 5
+            },
+            {
+                id: 19,
+                name: 'FrontEnd desktop development',
+                competencyId: 1,
+                levelId: 5
+            },
+            {
+                id: 20,
+                name: 'Azure development',
+                competencyId: 1,
+                levelId: 1
+            }
+        ];
+
+        let levels: ILevel[] = [
+            {
+                id: 1,
+                name: 'L1',
+                description: 'Junior Software Engineer',
+                competencyId: 13
+            },
+            {
+                id: 2,
+                name: 'L2',
+                description: 'Software Engineer',
+                competencyId: 13
+            },
+            {
+                id: 3,
+                name: 'L3',
+                description: 'Senior Software Engineer',
+                competencyId: 13
+            },
+            {
+                id: 4,
+                name: 'L4',
+                description: 'Lead Software Engineer',
+                competencyId: 1
+            },
+            {
+                id: 5,
+                name: 'L5',
+                description: 'Chief Software Engineer',
+                competencyId: 1
+            },
+            {
+                id: 6,
+                name: 'L1',
+                description: '',
+                competencyId: 2
+            },
+            {
+                id: 7,
+                name: 'L2',
+                description: '',
+                competencyId: 2
+            },
+            {
+                id: 8,
+                name: 'L3',
+                description: '',
+                competencyId: 1
+            }
+        ];
+
         let interviewScriptData: any = [
             {
                 hasContent: true,
@@ -4109,9 +4302,9 @@ export class InterviewScriptData implements InMemoryDbService {
             skills: [
                 {
                     id: 1,
-                    name: "Code Standards",
-                    startingFrom: "Novice",
-                    priority: "Low",
+                    name: 'Code Standards',
+                    startingFrom: 'Novice',
+                    priority: 'Low',
                     topics: [
                         {
                             name: 'Code Conventions',
@@ -4129,30 +4322,33 @@ export class InterviewScriptData implements InMemoryDbService {
                     questions: [
                         {
                             id: 1,
-                            question: "What's the purpose of standards/conventions in .NET C#?",
-                            answer: "",
-                            selected: true
+                            question: 'Whats the purpose of standards/conventions in .NET C#?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 2,
-                            question: "When to use string and when StringBuilder?",
-                            answer: "",
-                            selected: true
+                            question: 'When to use string and when StringBuilder?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 3,
-                            question: "When to use var and when the exact data type?",
-                            answer: "",
-                            selected: true
+                            question: 'When to use var and when the exact data type?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         }
                     ],
                     exercises: []
                 },
                 {
                     id: 2,
-                    name: ".NET Development",
-                    startingFrom: "Novice",
-                    priority: "High",
+                    name: '.NET Development',
+                    startingFrom: 'Novice',
+                    priority: 'High',
                     topics: [
                         {
                             name: '.NET Framework',
@@ -4226,45 +4422,55 @@ export class InterviewScriptData implements InMemoryDbService {
                     questions: [
                         {
                             id: 1,
-                            question: "What is SOLID? Explain the principles and provide examples",
-                            answer: "",
-                            selected: true
+                            question: 'What is SOLID? Explain the principles and provide examples',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 2,
-                            question: "What is Value Type and Reference Type?",
-                            answer: "",
-                            selected: true
+                            question: 'What is Value Type and Reference Type?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 3,
-                            question: "What is Boxing and Un-Boxing?",
-                            answer: "",
-                            selected: true
+                            question: 'What is Boxing and Un-Boxing?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         }
                     ],
                     exercises: [
                         {
                             id: 1,
-                            title: "Palindrome",
-                            description: "A palindrome is a word, phrase, number, or other sequence of characters which reads the same backward or forward, such as madam or kayak. Write an function that receives an string parameters and return true if it is a palindrome.",
-                            solution: "",
-                            selected: true
+                            title: 'Palindrome',
+                            description: `A palindrome is a word, phrase, number, or other
+                                sequence of characters which reads the same backward or forward,
+                                such as madam or kayak. Write an function that receives an string
+                                parameters and return true if it is a palindrome.`,
+                            solution: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 2,
-                            title: "Balanced Brakets",
-                            description: "Type of Brackets: () Round brackets or parentheses, {} Curly brackets or braces, [] Square brackets. Implement an algorithm to resolve the balanced brackets problems, ie. \"{([])}\" is balanced.",
-                            solution: "",
-                            selected: true
+                            title: 'Balanced Brakets',
+                            description: `Type of Brackets: () Round brackets or parentheses, {}
+                                Curly brackets or braces, [] Square brackets. Implement an algorithm
+                                to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
+                            solution: '',
+                            selected: true,
+                            rating: 0
                         }
                     ]
                 },
                 {
                     id: 3,
-                    name: "Scrum / Agile",
-                    startingFrom: "Novice",
-                    priority: "Medium",
+                    name: 'Scrum / Agile',
+                    startingFrom: 'Novice',
+                    priority: 'Medium',
                     topics: [
                         {
                             name: 'Scrum/Agile - Base',
@@ -4278,21 +4484,24 @@ export class InterviewScriptData implements InMemoryDbService {
                     questions: [
                         {
                             id: 1,
-                            question: "Explain SCRUM",
-                            answer: "",
-                            selected: true
+                            question: 'Explain SCRUM',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 2,
-                            question: "How do you face or deal with problems in an Agile project?",
-                            answer: "",
-                            selected: true
+                            question: 'How do you face or deal with problems in an Agile project?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 3,
-                            question: "When you need to solve something you don't know, how do you deal with it?",
-                            answer: "",
-                            selected: true
+                            answer: '',
+                            question: `When you need to solve something you don't know, how do you deal with it?`,
+                            selected: true,
+                            rating: 0
                         }
                     ],
                     exercises: []
@@ -4300,6 +4509,6 @@ export class InterviewScriptData implements InMemoryDbService {
             ]
         }];
 
-        return { interviewScriptData, interviewScriptDataTemp };
+        return { interviewScriptData, interviewScriptDataTemp, competencies, levels, domains };
     }
 }
