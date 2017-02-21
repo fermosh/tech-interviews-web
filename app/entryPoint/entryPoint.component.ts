@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import 'node_modules/uui-framework/uui/js/uui-tree-grid.min.js';
 
 import { ICompetency } from './competency';
@@ -29,14 +30,17 @@ export class EntryPointComponent {
     isSkillGridVisible: boolean;
     isTreeCreated: boolean;
 
-    constructor(private elementRef: ElementRef,
+    constructor(private router: Router, private elementRef: ElementRef,
         private competencyService: CompetencyService,
         private levelService: LevelService,
         private domainService: DomainService) {
     };
 
     show(): void {
-        this.isSkillGridVisible = !this.isSkillGridVisible;
+
+        if (!this.isSkillGridVisible) {
+            this.isSkillGridVisible = true;
+        }
 
         if (!this.isTreeCreated) {
             this.createTree();
@@ -98,7 +102,8 @@ export class EntryPointComponent {
     }
 
     onNext(): void {
-        alert('CompetencyId:' + this.competencyId + ', LevelId:' + this.levelId + ', DomainId:' + this.domainId);
+
+        this.router.navigate(['./script-viewer/13',]);
     }
 
     createTree(): void {

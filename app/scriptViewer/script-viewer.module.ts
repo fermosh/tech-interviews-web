@@ -11,7 +11,7 @@ import { SharedModule } from '../shared/shared.module';
     imports: [
         SharedModule,
         RouterModule.forChild([
-            { path: 'script-viewer', component: ScriptViewerComponent }
+            { path: 'script-viewer/:templateId', component: ScriptViewerComponent }
         ])
     ],
     declarations: [
