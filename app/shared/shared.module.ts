@@ -4,8 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { StarComponent } from './star.component';
 
+// Imports for loading & configuring the in-memory web api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+
+
+import { TechnicalInterviewData } from './technical-interview-helper.data';
+
 @NgModule({
-  imports: [ CommonModule],
+  imports: [ CommonModule,
+  InMemoryWebApiModule.forRoot(TechnicalInterviewData)],
   exports : [
     CommonModule,
     FormsModule,
