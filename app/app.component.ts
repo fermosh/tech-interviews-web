@@ -24,8 +24,10 @@ import { Component } from '@angular/core';
                         Technical Interview Helper
                     </a>
                     <ul class='nav navbar-nav'>
+                        <!--
                         <li><a [routerLink]="['/welcome']">Home</a></li>
                         <li><a [routerLink]="['/skillMatrix']">Skill Matrix</a></li>
+                        -->
                     </ul>                    
                 </nav>
             </div>

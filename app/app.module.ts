@@ -15,8 +15,8 @@ import { EntryPointModule } from './entryPoint/entryPoint.module';
     BrowserModule,
     HttpModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-      { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
+      { path: '', redirectTo: '', pathMatch: 'full' },
+      { path: '**', redirectTo: '', pathMatch: 'full' }
     ]),
     EntryPointModule,
     ScriptViewerModule
