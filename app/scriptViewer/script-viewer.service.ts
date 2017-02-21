@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core'
-import { Http, Response } from '@angular/http'
-import { Observable } from 'rxjs/Rx'
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 
-import { ScriptViewer } from './classes/script-viewer'
+import { ScriptViewer } from './classes/script-viewer';
 
 @Injectable()
 

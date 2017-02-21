@@ -1,5 +1,5 @@
-import { Skill } from '../classes/skill'
-import { Exercise } from '../classes/exercise';
+import { Skill } from '../classes/skill';
+import { IExercise } from '../interfaces/exercise';
 
 export class ScriptViewer {
     // API Properties
@@ -9,7 +9,7 @@ export class ScriptViewer {
     levelName: string;
     levelDescription: string;
     skills: Skill[];
-    
+
     constructor(_competencyId: number, _competencyName: string, _domain: string, _levelName: string, _levelDescription: string, _skills: Skill[]) {
         this.competencyId= _competencyId;
         this.competencyName = _competencyName;
@@ -23,15 +23,15 @@ export class ScriptViewer {
         let sum: number = 0;
         if (this.skills && this.skills.length > 0) {
             for (let skill of this.skills) {
-                sum += skill.rating; 
+                sum += skill.rating;
             }
             return sum / this.skills.length;
         }
         return 0;
     }
 
-    get exercises(): Exercise[] {
-        let exercises: Exercise[] = [];
+    get exercises(): IExercise[] {
+        let exercises: IExercise[] = [];
         for (let skill of this.skills) {
             for (let exercise of skill.exercises) {
                 exercises.push(exercise);

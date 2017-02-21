@@ -4302,9 +4302,9 @@ export class TechnicalInterviewData implements InMemoryDbService {
             skills: [
                 {
                     id: 1,
-                    name: "Code Standards",
-                    startingFrom: "Novice",
-                    priority: "Low",
+                    name: 'Code Standards',
+                    startingFrom: 'Novice',
+                    priority: 'Low',
                     topics: [
                         {
                             name: 'Code Conventions',
@@ -4322,30 +4322,33 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     questions: [
                         {
                             id: 1,
-                            question: "What's the purpose of standards/conventions in .NET C#?",
-                            answer: "",
-                            selected: true
+                            question: 'Whats the purpose of standards/conventions in .NET C#?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 2,
-                            question: "When to use string and when StringBuilder?",
-                            answer: "",
-                            selected: true
+                            question: 'When to use string and when StringBuilder?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 3,
-                            question: "When to use var and when the exact data type?",
-                            answer: "",
-                            selected: true
+                            question: 'When to use var and when the exact data type?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         }
                     ],
                     exercises: []
                 },
                 {
                     id: 2,
-                    name: ".NET Development",
-                    startingFrom: "Novice",
-                    priority: "High",
+                    name: '.NET Development',
+                    startingFrom: 'Novice',
+                    priority: 'High',
                     topics: [
                         {
                             name: '.NET Framework',
@@ -4419,45 +4422,55 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     questions: [
                         {
                             id: 1,
-                            question: "What is SOLID? Explain the principles and provide examples",
-                            answer: "",
-                            selected: true
+                            question: 'What is SOLID? Explain the principles and provide examples',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 2,
-                            question: "What is Value Type and Reference Type?",
-                            answer: "",
-                            selected: true
+                            question: 'What is Value Type and Reference Type?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 3,
-                            question: "What is Boxing and Un-Boxing?",
-                            answer: "",
-                            selected: true
+                            question: 'What is Boxing and Un-Boxing?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         }
                     ],
                     exercises: [
                         {
                             id: 1,
-                            title: "Palindrome",
-                            description: "A palindrome is a word, phrase, number, or other sequence of characters which reads the same backward or forward, such as madam or kayak. Write an function that receives an string parameters and return true if it is a palindrome.",
-                            solution: "",
-                            selected: true
+                            title: 'Palindrome',
+                            description: `A palindrome is a word, phrase, number, or other
+                                sequence of characters which reads the same backward or forward,
+                                such as madam or kayak. Write an function that receives an string
+                                parameters and return true if it is a palindrome.`,
+                            solution: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 2,
-                            title: "Balanced Brakets",
-                            description: "Type of Brackets: () Round brackets or parentheses, {} Curly brackets or braces, [] Square brackets. Implement an algorithm to resolve the balanced brackets problems, ie. \"{([])}\" is balanced.",
-                            solution: "",
-                            selected: true
+                            title: 'Balanced Brakets',
+                            description: `Type of Brackets: () Round brackets or parentheses, {}
+                                Curly brackets or braces, [] Square brackets. Implement an algorithm
+                                to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
+                            solution: '',
+                            selected: true,
+                            rating: 0
                         }
                     ]
                 },
                 {
                     id: 3,
-                    name: "Scrum / Agile",
-                    startingFrom: "Novice",
-                    priority: "Medium",
+                    name: 'Scrum / Agile',
+                    startingFrom: 'Novice',
+                    priority: 'Medium',
                     topics: [
                         {
                             name: 'Scrum/Agile - Base',
@@ -4471,21 +4484,24 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     questions: [
                         {
                             id: 1,
-                            question: "Explain SCRUM",
-                            answer: "",
-                            selected: true
+                            question: 'Explain SCRUM',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 2,
-                            question: "How do you face or deal with problems in an Agile project?",
-                            answer: "",
-                            selected: true
+                            question: 'How do you face or deal with problems in an Agile project?',
+                            answer: '',
+                            selected: true,
+                            rating: 0
                         },
                         {
                             id: 3,
-                            question: "When you need to solve something you don't know, how do you deal with it?",
-                            answer: "",
-                            selected: true
+                            answer: '',
+                            question: `When you need to solve something you don't know, how do you deal with it?`,
+                            selected: true,
+                            rating: 0
                         }
                     ],
                     exercises: []

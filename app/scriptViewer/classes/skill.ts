@@ -1,6 +1,6 @@
-import { Topic } from '../classes/Topic';
-import { Question } from '../classes/question';
-import { Exercise } from '../classes/exercise';
+import { ITopic } from '../interfaces/topic';
+import { IQuestion } from '../interfaces/question';
+import { IExercise } from '../interfaces/exercise';
 
 export class Skill {
     // API Properties
@@ -8,23 +8,23 @@ export class Skill {
     name: string;
     startingFrom: string;
     priority: string;
-    topics: Topic[];
-    questions: Question[];
-    exercises: Exercise[];
+    topics: ITopic[];
+    questions: IQuestion[];
+    exercises: IExercise[];
 
-    constructor(_id: number, _name: string, _startingFrom: string, _priority: string, _topics: Topic[], _questions: Question[], _exercises: Exercise[]) {
+    constructor(_id: number, _name: string, _startingFrom: string, _priority: string, _topics: ITopic[], _questions: IQuestion[], _exercises: IExercise[]) {
         this.id = _id;
         this.name = _name;
         this.startingFrom = _startingFrom ? _startingFrom : 'Intermediate';
         this.priority = _priority ? _priority : 'medium';
-        this.topics = _topics.map(item => new Topic(item.name, item.isRequired));
-        this.questions = _questions ? _questions.map(item => new Question(item.id, item.question, item.selected, item.answer)) : [];
-        this.exercises = _exercises ? _exercises.map(item => new Exercise(item.id, item.title, item.description, item.selected, item.solution)) : [];
+        this.topics = _topics;
+        this.questions = _questions;
+        this.exercises = _exercises;
     }
 
     get priorityStyle(): string {
-        let priorityStyle: string = this.priority.toLowerCase().trim().replace(" ", "-");
-        return "priority-" + priorityStyle + "-label-value";
+        let priorityStyle: string = this.priority.toLowerCase().trim().replace(' ', '-');
+        return 'priority-' + priorityStyle + '-label-value';
     }
 
     get rating(): number {
@@ -52,42 +52,42 @@ export class Skill {
     }
 
     get ratingStyle(): string {
-        let ratingStyle: string = "score-label-value-";
+        let ratingStyle: string = 'score-label-value-';
 
         switch (true) {
-            case (this.rating == 0): ratingStyle += "0";
+            case (this.rating === 0): ratingStyle += '0';
                 break;
-            case (this.rating < 2): ratingStyle += "1";
+            case (this.rating < 2): ratingStyle += '1';
                 break;
-            case (this.rating < 3): ratingStyle += "2";
+            case (this.rating < 3): ratingStyle += '2';
                 break;
-            case (this.rating < 4): ratingStyle += "3";
+            case (this.rating < 4): ratingStyle += '3';
                 break;
-            case (this.rating < 5): ratingStyle += "4";
+            case (this.rating < 5): ratingStyle += '4';
                 break;
-            case (this.rating == 5): ratingStyle += "5";
+            case (this.rating === 5): ratingStyle += '5';
                 break;
             default:
-                ratingStyle += "0";
+                ratingStyle += '0';
         }
 
         return ratingStyle;
     }
 
     get topicList(): string {
-        let topicList: string = "";
+        let topicList: string = '';
 
         if (this.topics && this.topics.length > 0) {
             for (let topic of this.topics) {
                 if (topic.isRequired) {
-                    topicList += "- " + topic.name + "";
+                    topicList += '- ' + topic.name + '';
                 } else {
-                    topicList += "<span style='color:#888;'>- " + topic.name + "</span>";
+                    topicList += "<span style='color:#888;'>- " + topic.name + '</span>';
                 }
-                topicList += "<br>";
+                topicList += '<br>';
             }
         } else {
-            topicList = "No topics related";
+            topicList = 'No topics related';
         }
 
         return topicList;
