@@ -79,7 +79,12 @@ export class Skill {
 
         if (this.topics && this.topics.length > 0) {
             for (let topic of this.topics) {
-                topicList += "- " + topic.name + "<br>";
+                if (topic.isRequired) {
+                    topicList += "- <b>" + topic.name + "</b>";
+                } else {
+                    topicList += "- " + topic.name;
+                }
+                topicList += "<br>";
             }
         } else {
             topicList = "No topics related";

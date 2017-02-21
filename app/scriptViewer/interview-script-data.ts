@@ -4114,16 +4114,16 @@ export class InterviewScriptData implements InMemoryDbService {
                     priority: "Low",
                     topics: [
                         {
-                            name: "Code Conventions Required 1",
+                            name: "Code Conventions 1",
                             isRequired: true
                         },
                         {
-                            name: "Code Conventions Required 2",
-                            isRequired: true
+                            name: "Code Conventions 2",
+                            isRequired: false
                         },
                         {
-                            name: "Code Conventions Required 3",
-                            isRequired: true
+                            name: "Code Conventions 3",
+                            isRequired: false
                         }
                     ],
                     questions: [
