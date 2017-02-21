@@ -6,13 +6,15 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 import 'rxjs/add/observable/of';
 
 import { ILevel } from './level';
 
 @Injectable()
 export class LevelService {
-    private baseUrl = 'api/level';
+    private baseUrl = 'api/levels';
 
     constructor(private http: Http) { }
 
@@ -22,7 +24,15 @@ export class LevelService {
             .do(data => console.log('getLevels: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
-
+    /*
+    getLevels(competencyId: number): Observable<ILevel[]> {
+        return this.http.get(this.baseUrl)
+            .map(this.extractData)
+            .filter(x => x.competencyId === competencyId)
+            .do(data => console.log('getLevels: ' + JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+    */
     getLevel(id: number): Observable<ILevel> {
         if (id === 0) {
         return Observable.of(this.initializeProduct());
