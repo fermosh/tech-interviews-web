@@ -41,7 +41,8 @@ export class ScriptViewerComponent implements OnInit {
             this.isScriptViewerRendered = true;
         }
     }
-
+    
+    // ----------------------------------------------------------------------------------
     /* SCRIPT VIEWER EVENTS */
 
     getFinalScore(): number {
@@ -65,6 +66,7 @@ export class ScriptViewerComponent implements OnInit {
         return exercises;
     }
 
+    // ----------------------------------------------------------------------------------
     /* SKILL EVENTS */
 
     getRatingBySkill(skill: ISkill): number {
