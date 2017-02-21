@@ -5,14 +5,16 @@ import { IExercise } from '../interfaces/exercise';
 
 export class SkillMatrixItem {
     id: number;
+    parentId: number;
     name: string;
     isSelected: boolean;
     className: string;
     skillLevel: number;
     hasChilds: boolean;
 
-    constructor(id: number, name: string, skillLevel: number, hasChilds: boolean) {
+    constructor(id: number, parentId: number, name: string, skillLevel: number, hasChilds: boolean) {
         this.id = id;
+        this.parentId = parentId;
         this.name = name;
         this.skillLevel = skillLevel;
         this.hasChilds = hasChilds;
@@ -20,17 +22,14 @@ export class SkillMatrixItem {
         this.className = this.getClassName();
     }
 
-    getClassName(): string
-    {
-        if(this.skillLevel == 1)
-        {
+    getClassName(): string {
+        if (this.skillLevel == 1) {
             return "treegrid-parent";
         }
-        if(this.hasChilds)
-        {
+        if (this.hasChilds) {
             return "treegrid-parent treegrid-child";
         }
-        else{
+        else {
             return "treegrid-child";
         }
     }
