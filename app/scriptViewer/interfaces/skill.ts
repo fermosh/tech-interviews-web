@@ -11,7 +11,7 @@ export interface ISkill {
     levelSet: number;
     competencyId: number;
     jobFunctionLevel: number;
-    topics: ITopic[];
+    topics?: ITopic[];
     questions?: IQuestion[];
     exercises?: IExercise[];
     id: number;

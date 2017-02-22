@@ -6,6 +6,6 @@ export interface IQuestion {
     question: string;
     selected: boolean;
     answer?: string;
-    comments: IComment[];
+    comments?: IComment[];
     rating: number;
 }

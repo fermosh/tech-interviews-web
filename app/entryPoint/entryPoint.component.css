@@ -20,10 +20,6 @@
     color: white !important;
     text-transform: uppercase;
 }
-.container{
-    width: 100%;
-    margin: 20px auto;
-}
 .right-Button
 {
     float: right;
@@ -31,4 +27,8 @@
 
 tr[class="treegrid-child"] td div p.uui-checkbox{
     margin-left: 20px;
+}
+
+.panel{
+    border: none !important;
 }

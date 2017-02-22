@@ -14,7 +14,7 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      { path: 'welcome', component: EntryPointComponent }
+      { path: '', component: EntryPointComponent }
     ])
   ],
   declarations: [EntryPointComponent],

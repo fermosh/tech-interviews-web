@@ -1,6 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 import { ICompetency } from '../entryPoint/competency';
+import { ISkillMatrix } from '../scriptViewer/interfaces/skill-matrix';
 import { IDomain } from '../entryPoint/domain';
 import { ILevel } from '../entryPoint/level';
 
@@ -26,61 +27,61 @@ export class TechnicalInterviewData implements InMemoryDbService {
             {
                 id: 1,
                 name: 'FrontEnd web development',
-                competencyId: 1,
+                competencyId: 13,
                 levelId: 1
             },
             {
                 id: 2,
                 name: 'Backend development',
-                competencyId: 1,
+                competencyId: 13,
                 levelId: 1
             },
             {
                 id: 3,
                 name: 'FrontEnd desktop development',
-                competencyId: 1,
+                competencyId: 13,
                 levelId: 1
             },
             {
                 id: 4,
                 name: 'Azure development',
-                competencyId: 1,
+                competencyId: 13,
                 levelId: 1
             },
             {
                 id: 5,
                 name: 'FrontEnd web development',
-                competencyId: 1,
+                competencyId: 13,
                 levelId: 2
             },
             {
                 id: 6,
                 name: 'Backend development',
-                competencyId: 1,
+                competencyId: 14,
                 levelId: 2
             },
             {
                 id: 7,
                 name: 'FrontEnd desktop development',
-                competencyId: 1,
+                competencyId: 14,
                 levelId: 2
             },
             {
                 id: 8,
                 name: 'Azure development',
-                competencyId: 1,
+                competencyId: 14,
                 levelId: 2
             },
             {
                 id: 9,
                 name: 'FrontEnd web development',
-                competencyId: 1,
+                competencyId: 14,
                 levelId: 3
             },
             {
                 id: 10,
                 name: 'Backend development',
-                competencyId: 1,
+                competencyId: 14,
                 levelId: 3
             },
             {
@@ -195,6 +196,396 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 competencyId: 1
             }
         ];
+
+        let skillMatrix: ISkillMatrix[] = [
+            {
+                id: 13,
+                hasContent: true,
+                competencyName: '.Net',
+                domain: 'FrontEnd web development',
+                level:
+                {
+                    id: 3,
+                    name: 'L3',
+                    description: 'Senior Software Engineer',
+                    competencyId: 13
+                },
+                skills: [
+                    {
+                        rootId: 7,
+                        displayOrder: -100500,
+                        requiredSkillLevel: 0,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [],
+                        id: 7,
+                        parentId: null,
+                        name: 'Hard skills',
+                        isSelectable: true,
+                        skillLevel: 1,
+                        hasChilds: true
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 95,
+                        requiredSkillLevel: 0,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [],
+                        id: 973,
+                        parentId: 7,
+                        name: 'Management',
+                        isSelectable: true,
+                        skillLevel: 2,
+                        hasChilds: true
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 96,
+                        requiredSkillLevel: 0,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [],
+                        id: 479,
+                        parentId: 973,
+                        name: 'General Management',
+                        isSelectable: true,
+                        skillLevel: 3,
+                        hasChilds: true
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 97,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [
+                            {
+                                name: 'Leadership - Novice',
+                                isRequired: true
+                            },
+                            {
+                                name: 'Leadership - Advanced',
+                                isRequired: false
+                            },
+                            {
+                                name: 'Leadership - Intermediate',
+                                isRequired: false
+                            }
+                        ],
+                        id: 573,
+                        parentId: 479,
+                        name: 'Leadership',
+                        isSelectable: true,
+                        skillLevel: 4,
+                        hasChilds: true
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 97,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [],
+                        id: 8080,
+                        parentId: 573,
+                        name: 'Leadership 1',
+                        isSelectable: true,
+                        skillLevel: 5,
+                        hasChilds: false
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 99,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [
+                            {
+                                name: 'Planning and Organizing - Novice',
+                                isRequired: true
+                            },
+                            {
+                                name: 'Planning and Organizing - Advanced',
+                                isRequired: false
+                            },
+                            {
+                                name: 'Planning and Organizing - Intermediate',
+                                isRequired: false
+                            }
+                        ],
+                        id: 569,
+                        parentId: 479,
+                        name: 'Planning and Organizing',
+                        isSelectable: true,
+                        skillLevel: 4,
+                        hasChilds: false
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 100,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [
+                            {
+                                name: 'Delegation - Novice',
+                                isRequired: true
+                            },
+                            {
+                                name: 'Delegation - Advanced',
+                                isRequired: false
+                            },
+                            {
+                                name: 'Delegation - Intermediate',
+                                isRequired: false
+                            }
+                        ],
+                        id: 570,
+                        parentId: 479,
+                        name: 'Delegation',
+                        isSelectable: true,
+                        skillLevel: 4,
+                        hasChilds: false
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 101,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [
+                            {
+                                name: 'Control - Novice',
+                                isRequired: true
+                            },
+                            {
+                                name: 'Control - Advanced',
+                                isRequired: false
+                            },
+                            {
+                                name: 'Control - Intermediate',
+                                isRequired: false
+                            }
+                        ],
+                        id: 571,
+                        parentId: 479,
+                        name: 'Control',
+                        isSelectable: true,
+                        skillLevel: 4,
+                        hasChilds: false
+                    }]
+            },
+            {
+                id: 14,
+                hasContent: true,
+                competencyName: '.Net',
+                domain: 'Azure development',
+                level:
+                    {
+                        id: 4,
+                        name: 'L4',
+                        description: 'Lead Software Engineer',
+                        competencyId: 1
+                    },
+                skills: [
+                    {
+                        rootId: 7,
+                        displayOrder: -100500,
+                        requiredSkillLevel: 0,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [],
+                        id: 7,
+                        parentId: null,
+                        name: 'Hard skills',
+                        isSelectable: true,
+                        skillLevel: 1,
+                        hasChilds: true
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 95,
+                        requiredSkillLevel: 0,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [],
+                        id: 973,
+                        parentId: 7,
+                        name: 'Management',
+                        isSelectable: true,
+                        skillLevel: 2,
+                        hasChilds: true
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 96,
+                        requiredSkillLevel: 0,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [],
+                        id: 479,
+                        parentId: 973,
+                        name: 'General Management',
+                        isSelectable: true,
+                        skillLevel: 3,
+                        hasChilds: true
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 97,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [
+                            {
+                                name: 'Leadership - Novice',
+                                isRequired: true
+                            },
+                            {
+                                name: 'Leadership - Advanced',
+                                isRequired: false
+                            },
+                            {
+                                name: 'Leadership - Intermediate',
+                                isRequired: false
+                            }
+                        ],
+                        id: 573,
+                        parentId: 479,
+                        name: 'Leadership',
+                        isSelectable: true,
+                        skillLevel: 4,
+                        hasChilds: true
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 97,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [],
+                        id: 8080,
+                        parentId: 573,
+                        name: 'Leadership 1',
+                        isSelectable: true,
+                        skillLevel: 5,
+                        hasChilds: false
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 99,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [
+                            {
+                                name: 'Planning and Organizing - Novice',
+                                isRequired: true
+                            },
+                            {
+                                name: 'Planning and Organizing - Advanced',
+                                isRequired: false
+                            },
+                            {
+                                name: 'Planning and Organizing - Intermediate',
+                                isRequired: false
+                            }
+                        ],
+                        id: 569,
+                        parentId: 479,
+                        name: 'Planning and Organizing',
+                        isSelectable: true,
+                        skillLevel: 4,
+                        hasChilds: false
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 100,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [
+                            {
+                                name: 'Delegation - Novice',
+                                isRequired: true
+                            },
+                            {
+                                name: 'Delegation - Advanced',
+                                isRequired: false
+                            },
+                            {
+                                name: 'Delegation - Intermediate',
+                                isRequired: false
+                            }
+                        ],
+                        id: 570,
+                        parentId: 479,
+                        name: 'Delegation',
+                        isSelectable: true,
+                        skillLevel: 4,
+                        hasChilds: false
+                    },
+                    {
+                        rootId: 7,
+                        displayOrder: 101,
+                        requiredSkillLevel: 10,
+                        userSkillLevel: 0,
+                        levelSet: 0,
+                        competencyId: 13,
+                        jobFunctionLevel: 3,
+                        topics: [
+                            {
+                                name: 'Control - Novice',
+                                isRequired: true
+                            },
+                            {
+                                name: 'Control - Advanced',
+                                isRequired: false
+                            },
+                            {
+                                name: 'Control - Intermediate',
+                                isRequired: false
+                            }
+                        ],
+                        id: 571,
+                        parentId: 479,
+                        name: 'Control',
+                        isSelectable: true,
+                        skillLevel: 4,
+                        hasChilds: false
+                    }]
+            }];
 
         let interviewScriptData: any = [
             {
@@ -4289,6 +4680,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 ]
             }];
 
+        
         let interviewScriptDataTemp: any = [{
             competencyId: 13,
             competencyName: '.Net',
@@ -4520,6 +4912,6 @@ export class TechnicalInterviewData implements InMemoryDbService {
             ]
         }];
 
-        return { interviewScriptData, interviewScriptDataTemp, competencies, levels, domains };
+        return { interviewScriptData, interviewScriptDataTemp, competencies, levels, domains, skillMatrix };
     }
 }
