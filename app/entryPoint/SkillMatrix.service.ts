@@ -12,14 +12,14 @@ import { ISkillMatrix } from '../scriptViewer/interfaces/skill-matrix';
 
 @Injectable()
 export class SkillMatrixService {
-    private baseUrl = 'api/competencies';
+    private baseUrl = 'api/skillMatrix';
 
     constructor(private http: Http) { }
 
-    getSkillMatrix(id: number): Observable<ISkillMatrix[]> {
-        return this.http.get(this.baseUrl)
+    getSkillMatrix(id: number): Observable<ISkillMatrix> {
+        const url = `${this.baseUrl}/${id}`;
+        return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getSkillMatrix: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 

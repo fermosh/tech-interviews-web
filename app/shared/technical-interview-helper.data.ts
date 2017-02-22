@@ -27,122 +27,135 @@ export class TechnicalInterviewData implements InMemoryDbService {
             {
                 id: 1,
                 name: 'FrontEnd web development',
-                competencyId: 13,
-                levelId: 1
+                competencyId: 1,
+                levelId: 1,
+				skillMatrixId: 13
             },
             {
                 id: 2,
                 name: 'Backend development',
-                competencyId: 13,
-                levelId: 1
+                competencyId: 1,
+                levelId: 1,
+				skillMatrixId: 14
             },
             {
                 id: 3,
                 name: 'FrontEnd desktop development',
-                competencyId: 13,
-                levelId: 1
+                competencyId: 1,
+                levelId: 1,
+				skillMatrixId: 13
             },
             {
                 id: 4,
                 name: 'Azure development',
-                competencyId: 13,
-                levelId: 1
+                competencyId: 1,
+                levelId: 1,
+				skillMatrixId: 14
             },
             {
                 id: 5,
                 name: 'FrontEnd web development',
-                competencyId: 13,
-                levelId: 2
+                competencyId: 1,
+                levelId: 2,
+				skillMatrixId: 13
             },
             {
                 id: 6,
                 name: 'Backend development',
-                competencyId: 14,
-                levelId: 2
+                competencyId: 1,
+                levelId: 2,
+				skillMatrixId: 14
             },
             {
                 id: 7,
                 name: 'FrontEnd desktop development',
-                competencyId: 14,
-                levelId: 2
+                competencyId: 1,
+                levelId: 2,
+				skillMatrixId: 13
             },
             {
                 id: 8,
                 name: 'Azure development',
-                competencyId: 14,
-                levelId: 2
+                competencyId: 1,
+                levelId: 2,
+				skillMatrixId: 14
             },
             {
                 id: 9,
                 name: 'FrontEnd web development',
-                competencyId: 14,
-                levelId: 3
+                competencyId: 1,
+                levelId: 3,
+				skillMatrixId: 13
             },
             {
                 id: 10,
                 name: 'Backend development',
-                competencyId: 14,
-                levelId: 3
+                competencyId: 1,
+                levelId: 3,
+				skillMatrixId: 14
             },
             {
                 id: 11,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
-                levelId: 3
+                levelId: 3,
+				skillMatrixId: 13
             },
             {
                 id: 12,
                 name: 'Azure development',
                 competencyId: 1,
-                levelId: 4
+                levelId: 4,
+				skillMatrixId: 14
             },
             {
                 id: 13,
                 name: 'FrontEnd web development',
                 competencyId: 1,
-                levelId: 4
+                levelId: 4,
+				skillMatrixId: 13
             },
             {
                 id: 14,
                 name: 'Backend development',
                 competencyId: 1,
-                levelId: 4
+                levelId: 4,
+				skillMatrixId: 14
             },
             {
                 id: 15,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
-                levelId: 4
+                levelId: 4,
+				skillMatrixId: 13
             },
             {
                 id: 16,
                 name: 'Azure development',
                 competencyId: 1,
-                levelId: 5
+                levelId: 5,
+				skillMatrixId: 14
             },
             {
                 id: 17,
                 name: 'FrontEnd web development',
                 competencyId: 1,
-                levelId: 5
+                levelId: 5,
+				skillMatrixId: 13
             },
             {
                 id: 18,
                 name: 'Backend development',
                 competencyId: 1,
-                levelId: 5
+                levelId: 5,
+				skillMatrixId: 14
             },
             {
                 id: 19,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
-                levelId: 5
-            },
-            {
-                id: 20,
-                name: 'Azure development',
-                competencyId: 1,
-                levelId: 1
+                levelId: 5,
+				skillMatrixId: 13
             }
         ];
 
@@ -151,19 +164,19 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 id: 1,
                 name: 'L1',
                 description: 'Junior Software Engineer',
-                competencyId: 13
+                competencyId: 1
             },
             {
                 id: 2,
                 name: 'L2',
                 description: 'Software Engineer',
-                competencyId: 13
+                competencyId: 1
             },
             {
                 id: 3,
                 name: 'L3',
                 description: 'Senior Software Engineer',
-                competencyId: 13
+                competencyId: 1
             },
             {
                 id: 4,
@@ -193,7 +206,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 id: 8,
                 name: 'L3',
                 description: '',
-                competencyId: 1
+                competencyId: 2
             }
         ];
 
@@ -432,7 +445,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         topics: [],
                         id: 973,
                         parentId: 7,
-                        name: 'Management',
+                        name: 'Development',
                         isSelectable: true,
                         skillLevel: 2,
                         hasChilds: true
@@ -448,7 +461,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         topics: [],
                         id: 479,
                         parentId: 973,
-                        name: 'General Management',
+                        name: '.Net Development',
                         isSelectable: true,
                         skillLevel: 3,
                         hasChilds: true
@@ -477,7 +490,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         ],
                         id: 573,
                         parentId: 479,
-                        name: 'Leadership',
+                        name: '.Net Web development',
                         isSelectable: true,
                         skillLevel: 4,
                         hasChilds: true
@@ -493,7 +506,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         topics: [],
                         id: 8080,
                         parentId: 573,
-                        name: 'Leadership 1',
+                        name: 'Asp.Net MVC',
                         isSelectable: true,
                         skillLevel: 5,
                         hasChilds: false
@@ -522,7 +535,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         ],
                         id: 569,
                         parentId: 479,
-                        name: 'Planning and Organizing',
+                        name: '.Net WPF Development',
                         isSelectable: true,
                         skillLevel: 4,
                         hasChilds: false
@@ -551,7 +564,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         ],
                         id: 570,
                         parentId: 479,
-                        name: 'Delegation',
+                        name: '.Net Winforms development',
                         isSelectable: true,
                         skillLevel: 4,
                         hasChilds: false
@@ -580,7 +593,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         ],
                         id: 571,
                         parentId: 479,
-                        name: 'Control',
+                        name: '.Net Backen Development',
                         isSelectable: true,
                         skillLevel: 4,
                         hasChilds: false
