@@ -21,4 +21,5 @@ export interface ISkill {
     skillLevel?: number;
     hasChilds?: boolean;
     priority?: string;
+    startingFrom?: string;
 }

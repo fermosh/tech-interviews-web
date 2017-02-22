@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ISkillMatrix } from './interfaces/skill-matrix'
@@ -15,18 +16,21 @@ declare var jQuery: any;
     styleUrls: ['app/scriptViewer/script-viewer.component.css']
 })
 
-export class ScriptViewerComponent implements OnInit {
+export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: ISkillMatrix;
     errorMessage: string;
     private sub: Subscription;
     private isScriptViewerRendered: boolean = false;
 
-    constructor(private _scriptViewerService: ScriptViewerService) { }
+    constructor(private _route: ActivatedRoute,
+                private _scriptViewerService: ScriptViewerService) { }
 
     ngOnInit(): void {
-        this.sub = this._scriptViewerService.getScriptViewer()
-            .subscribe(scriptViewer => this.scriptViewer = scriptViewer,
-            error => this.errorMessage = <any>error);
+        this.sub = this._route.params.subscribe(
+            params => {
+                let id = +params['templateId'];
+                this.getInterviewScript(id);
+        });
     }
 
     ngOnDestroy() {
@@ -43,6 +47,12 @@ export class ScriptViewerComponent implements OnInit {
         }
     }
     
+    getInterviewScript(id: number) {
+        this._scriptViewerService.getScriptViewer(id)
+            .subscribe(scriptViewer => this.scriptViewer = scriptViewer,
+                       error => this.errorMessage = <any>error);
+    }
+
     // ----------------------------------------------------------------------------------
     /* SCRIPT VIEWER EVENTS */
 
