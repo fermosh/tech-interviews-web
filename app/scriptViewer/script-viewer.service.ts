@@ -12,7 +12,8 @@ export class ScriptViewerService {
     constructor(private http: Http) { }
 
     getScriptViewer(id: number): Observable<ISkillMatrix> {
-        return this.http.get(this.baseUrl)
+        const url = `${this.baseUrl}/${id}`;
+        return this.http.get(url)
             .map(this.extractData)
             .do(data => console.log('getScriptViewer(' + id + '): ' + JSON.stringify(data)))
             .catch(this.handleError);
