@@ -20,9 +20,9 @@ import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
     styleUrls: ['app/entryPoint/entryPoint.component.css']
 })
 export class EntryPointComponent {
-    competencyId: number;
-    levelId: number;
-    domainId: number;
+    competencyId: number = 0;
+    levelId: number = 0;
+    domainId: number = 0;
 
     competencyOptions: ICompetency[];
     levelOptions: ILevel[];
@@ -51,7 +51,7 @@ export class EntryPointComponent {
         this.competencyService.getCompetencies().subscribe(
             competencies => {
                 // fill the available competencies with the ones from the datasource
-                this.competencyOptions = competencies;
+                this.competencyOptions = competencies.sort((c1, c2) => this.competencyComparer(c1, c2));
 
                 if (this.competencyOptions.length > 0) {
                     this.competencyId = this.competencyOptions[0].id;
@@ -67,7 +67,7 @@ export class EntryPointComponent {
         this.levelService.getLevels().subscribe(
             levels => {
                 // fill the available levels
-                this.levelOptions = levels;
+                this.levelOptions = levels.sort((l1, l2) => this.levelComparer(l1, l2));
 
                 // possible levels
                 let possibleLevels = this.levelOptions.filter(x => x.competencyId == this.competencyId);
@@ -85,7 +85,7 @@ export class EntryPointComponent {
         this.domainService.getDomains().subscribe(
             domains => {
                 // fill the available domains
-                this.domainOptions = domains;
+                this.domainOptions = domains.sort((d1, d2) => this.domainComparer(d1, d2));
 
                 // possible levels
                 let possibleDomains = this.domainOptions.filter(x => x.levelId == this.levelId);
@@ -188,6 +188,42 @@ export class EntryPointComponent {
 
     checkSearchButtonStatus(): void {
         this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0 || this.domainId == 0);
+    }
+
+    competencyComparer(first: ICompetency, second: ICompetency): number {
+        if (first.name > second.name) {
+            return 1;
+        }
+
+        if (first.name < second.name) {
+            return -1;
+        }
+
+        return 0;
+    }
+
+    levelComparer(first: ILevel, second: ILevel): number {
+        if (first.name > second.name) {
+            return 1;
+        }
+
+        if (first.name < second.name) {
+            return -1;
+        }
+
+        return 0;
+    }
+
+    domainComparer(first: IDomain, second: IDomain): number {
+        if (first.name > second.name) {
+            return 1;
+        }
+
+        if (first.name < second.name) {
+            return -1;
+        }
+
+        return 0;
     }
     /*End helper functions */
 }
