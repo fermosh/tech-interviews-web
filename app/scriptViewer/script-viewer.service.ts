@@ -15,7 +15,7 @@ export class ScriptViewerService {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getScriptViewer(' + id + '): ' + JSON.stringify(data)))
+            //.do(data => console.log('getScriptViewer(' + id + '): ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
