@@ -19,7 +19,6 @@ export class CompetencyService {
     getCompetencies(): Observable<ICompetency[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
-            .do(data => console.log('getCompetencies: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 

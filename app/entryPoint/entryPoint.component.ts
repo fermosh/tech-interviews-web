@@ -9,6 +9,7 @@ import { ILevel } from './level';
 import { CompetencyService } from './competency.service';
 import { LevelService } from './level.service';
 import { DomainService } from './domain.service';
+import { SkillMatrixService } from './SkillMatrix.service';
 
 import { ISkill } from '../scriptViewer/interfaces/skill';
 import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
@@ -27,95 +28,126 @@ export class EntryPointComponent {
     levelOptions: ILevel[];
     domainOptions: IDomain[];
 
+    skillMatrixItems: SkillMatrixItem[];
+
     isSkillGridVisible: boolean;
     isTreeCreated: boolean;
+    isSearchDisabled: boolean;
 
     constructor(private router: Router, private elementRef: ElementRef,
         private competencyService: CompetencyService,
         private levelService: LevelService,
-        private domainService: DomainService) {
+        private domainService: DomainService,
+        private skillMatrixService: SkillMatrixService) {
     };
 
-    show(): void {
-
-        if (!this.isSkillGridVisible) {
-            this.isSkillGridVisible = true;
-        }
-
-        if (!this.isTreeCreated) {
-            this.createTree();
-            this.isTreeCreated = true;
-        }
+    /* Start Initilizers */
+    ngOnInit(): void {
+        this.initializeCompetencyData();
     }
 
-    ngOnInit(): void {
-        this.competencyId = 0;
+    initializeCompetencyData(): void {
+        // load competency dropdown
         this.competencyService.getCompetencies().subscribe(
             competencies => {
+                // fill the available competencies with the ones from the datasource
                 this.competencyOptions = competencies;
 
                 if (this.competencyOptions.length > 0) {
                     this.competencyId = this.competencyOptions[0].id;
-                    this.onCompetencyChange(this.competencyId);
+                }
+
+                this.initializeLevelData();
+            },
+            error => console.log(<any>error));
+    }
+
+    initializeLevelData(): void {
+        // load level dropdown
+        this.levelService.getLevels().subscribe(
+            levels => {
+                // fill the available levels
+                this.levelOptions = levels;
+
+                // possible levels
+                let possibleLevels = this.levelOptions.filter(x => x.competencyId == this.competencyId);
+                if (possibleLevels.length > 0) {
+                    this.levelId = possibleLevels[0].id;
+                }
+
+                this.initializeDomainData();
+            },
+            error => console.log(<any>error));
+    }
+
+    initializeDomainData(): void {
+        // load domain dropdown
+        this.domainService.getDomains().subscribe(
+            domains => {
+                // fill the available domains
+                this.domainOptions = domains;
+
+                // possible levels
+                let possibleDomains = this.domainOptions.filter(x => x.levelId == this.levelId);
+                if (possibleDomains.length > 0) {
+                    this.domainId = possibleDomains[0].id;
+                }
+
+                this.checkSearchButtonStatus();
+            },
+            error => console.log(<any>error));
+    }
+    /* End Initilizers */
+
+    /*Start event functions*/
+    onSearch(): void {
+
+        this.isSkillGridVisible = false;
+        this.skillMatrixService.getSkillMatrix(13).subscribe(
+            skillMatrix => {
+                this.skillMatrixItems = skillMatrix.skills.map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChilds));
+                this.isSkillGridVisible = true;
+
+                if (!this.isTreeCreated) {
+                    this.createTree();
                 }
             },
             error => console.log(<any>error));
-
-        this.skillMatrixItems = this.skillMatrix.map(x => new SkillMatrixItem(x.id, x.parentId, x.name, x.skillLevel, x.hasChilds));
     }
 
     onCompetencyChange(competencyId: number): void {
-
-        // clear the domain Selection and the competency Options Array
+        this.levelId = 0;
         this.domainId = 0;
-        this.domainOptions = [];
-
-        this.levelService.getLevels().subscribe(
-            levels => {
-                this.levelOptions = levels.filter(x => x.competencyId == competencyId);
-
-                if (this.levelOptions.length > 0) {
-                    this.levelId = this.levelOptions[0].id;
-                    this.onLevelChange(this.levelId);
-                }
-                else {
-                    // clear the level Selection and the level Options Array
-                    this.levelId = 0;
-                }
-            },
-            error => console.log(<any>error));
+        this.checkSearchButtonStatus();
     }
 
     onLevelChange(levelId: number): void {
-        // clear the domain Selection
         this.domainId = 0;
+        this.checkSearchButtonStatus();
+    }
 
-        this.domainService.getDomains().subscribe(
-            domains => {
-                this.domainOptions = domains.filter(x => x.competencyId == this.competencyId && x.levelId == levelId);
-
-                if (this.domainOptions.length > 0) {
-                    this.domainId = this.domainOptions[0].id;
-                }
-            },
-            error => console.log(<any>error));
+    onDomainChange(domainId: number): void {
+        this.checkSearchButtonStatus();
     }
 
     onNext(): void {
-
         this.router.navigate(['./script-viewer/13',]);
-    }
-
-    createTree(): void {
-        let s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
-        this.elementRef.nativeElement.appendChild(s);
     }
 
     onSkillSelected(skill: SkillMatrixItem): void {
         this.cascadeChilds(skill);
         this.cascadeParent(skill);
+    }
+    /*End event functions*/
+
+    /*Start helper functions */
+    createTree(): void {
+        let s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
+        this.elementRef.nativeElement.appendChild(s);
+
+        this.isTreeCreated = true;
     }
 
     cascadeChilds(skill: SkillMatrixItem): void {
@@ -146,188 +178,16 @@ export class EntryPointComponent {
         this.cascadeParent(parent);
     }
 
-    skillMatrixItems: SkillMatrixItem[];
+    getClassName(skill: SkillMatrixItem): string {
+        if (skill.skillLevel === 1) {
+            return 'treegrid-parent';
+        }
 
-    skillMatrix: ISkill[] = [{
-        rootId: 7,
-        displayOrder: -100500,
-        requiredSkillLevel: 0,
-        userSkillLevel: 0,
-        levelSet: 0,
-        competencyId: 13,
-        jobFunctionLevel: 3,
-        topics: [],
-        id: 7,
-        parentId: null,
-        name: 'Hard skills',
-        isSelectable: true,
-        skillLevel: 1,
-        hasChilds: true
-    },
-    {
-        rootId: 7,
-        displayOrder: 95,
-        requiredSkillLevel: 0,
-        userSkillLevel: 0,
-        levelSet: 0,
-        competencyId: 13,
-        jobFunctionLevel: 3,
-        topics: [],
-        id: 973,
-        parentId: 7,
-        name: 'Management',
-        isSelectable: true,
-        skillLevel: 2,
-        hasChilds: true
-    },
-    {
-        rootId: 7,
-        displayOrder: 96,
-        requiredSkillLevel: 0,
-        userSkillLevel: 0,
-        levelSet: 0,
-        competencyId: 13,
-        jobFunctionLevel: 3,
-        topics: [],
-        id: 479,
-        parentId: 973,
-        name: 'General Management',
-        isSelectable: true,
-        skillLevel: 3,
-        hasChilds: true
-    },
-    {
-        rootId: 7,
-        displayOrder: 97,
-        requiredSkillLevel: 10,
-        userSkillLevel: 0,
-        levelSet: 0,
-        competencyId: 13,
-        jobFunctionLevel: 3,
-        topics: [
-            {
-                name: 'Leadership - Novice',
-                isRequired: true
-            },
-            {
-                name: 'Leadership - Advanced',
-                isRequired: false
-            },
-            {
-                name: 'Leadership - Intermediate',
-                isRequired: false
-            }
-        ],
-        id: 573,
-        parentId: 479,
-        name: 'Leadership',
-        isSelectable: true,
-        skillLevel: 4,
-        hasChilds: true
-    },
+        return skill.hasChilds ? 'treegrid-parent treegrid-child' : 'treegrid-child';
+    }
 
-    {
-        rootId: 7,
-        displayOrder: 97,
-        requiredSkillLevel: 10,
-        userSkillLevel: 0,
-        levelSet: 0,
-        competencyId: 13,
-        jobFunctionLevel: 3,
-        topics: [],
-        id: 8080,
-        parentId: 573,
-        name: 'Leadership 1',
-        isSelectable: true,
-        skillLevel: 5,
-        hasChilds: false
-    },
-
-    {
-        rootId: 7,
-        displayOrder: 99,
-        requiredSkillLevel: 10,
-        userSkillLevel: 0,
-        levelSet: 0,
-        competencyId: 13,
-        jobFunctionLevel: 3,
-        topics: [
-            {
-                name: 'Planning and Organizing - Novice',
-                isRequired: true
-            },
-            {
-                name: 'Planning and Organizing - Advanced',
-                isRequired: false
-            },
-            {
-                name: 'Planning and Organizing - Intermediate',
-                isRequired: false
-            }
-        ],
-        id: 569,
-        parentId: 479,
-        name: 'Planning and Organizing',
-        isSelectable: true,
-        skillLevel: 4,
-        hasChilds: false
-    },
-    {
-        rootId: 7,
-        displayOrder: 100,
-        requiredSkillLevel: 10,
-        userSkillLevel: 0,
-        levelSet: 0,
-        competencyId: 13,
-        jobFunctionLevel: 3,
-        topics: [
-            {
-                name: 'Delegation - Novice',
-                isRequired: true
-            },
-            {
-                name: 'Delegation - Advanced',
-                isRequired: false
-            },
-            {
-                name: 'Delegation - Intermediate',
-                isRequired: false
-            }
-        ],
-        id: 570,
-        parentId: 479,
-        name: 'Delegation',
-        isSelectable: true,
-        skillLevel: 4,
-        hasChilds: false
-    },
-    {
-        rootId: 7,
-        displayOrder: 101,
-        requiredSkillLevel: 10,
-        userSkillLevel: 0,
-        levelSet: 0,
-        competencyId: 13,
-        jobFunctionLevel: 3,
-        topics: [
-            {
-                name: 'Control - Novice',
-                isRequired: true
-            },
-            {
-                name: 'Control - Advanced',
-                isRequired: false
-            },
-            {
-                name: 'Control - Intermediate',
-                isRequired: false
-            }
-        ],
-        id: 571,
-        parentId: 479,
-        name: 'Control',
-        isSelectable: true,
-        skillLevel: 4,
-        hasChilds: false
-    }];
+    checkSearchButtonStatus(): void {
+        this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0 || this.domainId == 0);
+    }
+    /*End helper functions */
 }

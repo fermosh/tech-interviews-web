@@ -21,18 +21,9 @@ export class LevelService {
     getLevels(): Observable<ILevel[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
-            .do(data => console.log('getLevels: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
-    /*
-    getLevels(competencyId: number): Observable<ILevel[]> {
-        return this.http.get(this.baseUrl)
-            .map(this.extractData)
-            .filter(x => x.competencyId === competencyId)
-            .do(data => console.log('getLevels: ' + JSON.stringify(data)))
-            .catch(this.handleError);
-    }
-    */
+    
     getLevel(id: number): Observable<ILevel> {
         if (id === 0) {
         return Observable.of(this.initializeProduct());
