@@ -1,3 +1,4 @@
+/* Defines question entity */
 import { IComment } from './comment';
 
 export interface IQuestion {

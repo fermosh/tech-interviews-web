@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ISkillMatrix } from './interfaces/skill-matrix'
 import { ISkill } from './interfaces/skill';
 import { IExercise } from './interfaces/exercise';
+import { IComment } from './interfaces/comment';
 
 import { ScriptViewerService } from './script-viewer.service';
 
@@ -115,5 +116,23 @@ export class ScriptViewerComponent implements OnInit {
     getSkillPriorityStyle(skill: ISkill): string {
         let priorityStyle: string = skill.priority.toLowerCase().trim().replace(' ', '-');
         return 'priority-' + priorityStyle + '-label-value';
+    }
+
+    // ----------------------------------------------------------------------------------
+    /* QUESTION EVENTS */
+    
+    addCommentToQuestion(skillId: number, questionId: number, event: any): void {
+        let comment: IComment = { text: event.target.value, user: "Hugo Dominguez", date: new Date() };
+        this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === questionId)[0].comments.push(comment);
+        event.target.value = null;
+    }
+
+    deleteCommentFromQuestion(skillId: number, questionId: number, comment: IComment): void {
+        let index: number = this.scriptViewer.skills
+                                .filter(s => s.id === skillId)[0].questions
+                                .filter(q => q.id === questionId)[0].comments
+                                .indexOf(comment);
+        
+        this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === questionId)[0].comments.splice(index, 1);        
     }
 }

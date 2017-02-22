@@ -7,24 +7,26 @@ import { ISkillMatrix } from './interfaces/skill-matrix'
 @Injectable()
 
 export class ScriptViewerService {
-    private _scriptViewerUrl = 'api/interviewScriptDataTemp';
+    private baseUrl = 'api/interviewScriptData';
 
-    constructor(private _http: Http) { }
+    constructor(private http: Http) { }
 
-    getScriptViewer(): Observable<ISkillMatrix> {
-        return this._http.get(this._scriptViewerUrl)
-            //.map((response: Response) => <ScriptViewer> response.json())
-            //.do(data => console.log('All: ' + JSON.stringify(data)))
+    getScriptViewer(id: number): Observable<ISkillMatrix> {
+        const url = `${this.baseUrl}/${id}`;
+        return this.http.get(url)
             .map(this.extractData)
+            .do(data => console.log('getScriptViewer(' + id + '): ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
     private extractData(response: Response) {
-        let jsonObject = response.json().data[0];
-        return jsonObject || {};
+        let body = response.json();
+        return body.data || {};
     }
 
-    private handleError(error: Response) {
+    private handleError(error: Response): Observable<any> {
+        // in a real world app, we may send the server to some remote logging infrastructure
+        // instead of just logging it to the console
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }

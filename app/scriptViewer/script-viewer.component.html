@@ -28,12 +28,7 @@
                         <tih-score [score]='getRatingBySkill(skill)' class="score-label-value"></tih-score>
                         <span [class]="'uui-label ' + getSkillPriorityStyle(skill)">{{ skill.priority }}</span>&nbsp;&nbsp;
                         <span class="starting-label-value">{{ skill.startingFrom }}</span>&nbsp;&nbsp;
-                        <span class="topic-label-value "
-                              data-toggle="tooltip"
-                              data-container="body"
-                              data-html="true"
-                              data-placement="right"
-                              [attr.data-original-title]="getTopicsBySkill(skill)">Topics</span>
+                        <span class="topic-label-value " data-toggle="tooltip" data-container="body" data-html="true" data-placement="right" [attr.data-original-title]="getTopicsBySkill(skill)">Topics</span>
                     </div>
                 </div>
                 <div class="accordion-collapse collapse in" [id]="'skill_' + skill.id">
@@ -54,14 +49,16 @@
                                                     <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                 </td>
                                                 <td class="comments-cell">
-                                                    <i [ngClass]="{ 'fa': true, 'fa-comment': question.comments, 'fa-comment-o': !question.comments, 'icon-button': true }" data-toggle="collapse"
-                                                        [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
-                                                        aria-expanded="false" [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
+                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }"
+                                                        data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
+                                                        [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
                                                 </td>
                                             </tr>
                                         </table>
                                         <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
-                                            <input type="text" class="uui-form-element comments-input" [(ngModel)]="question.comments" placeholder="Additional Comments" />
+                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteCommentFromQuestion(skill.id, question.id, $event)"></tih-history-comment>
+                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addCommentToQuestion(skill.id, question.id, $event)"
+                                            />
                                         </div>
                                     </td>
                                 </tr>
@@ -73,7 +70,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Question Picker</h4>
+                                        <h4 class="modal-title">Questions and Exercises Picker</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span></span><span></span></button>
                                     </div>
                                     <div class="modal-body">
@@ -110,7 +107,7 @@
                                                     </div>
                                                     <div [id]="'tabExercisesPicker_Skill_' + skill.id" class="tab-pane">
                                                         <br><br>
-                                                        <span *ngIf='skill.exercises && skill.exercises.length == 0'>No exercises available for <b>{{ skill.name }}</b>.</span>
+                                                        <span *ngIf='skill.exercises && skill.exercises.length == 0'>No exercises found for <b>{{ skill.name }}</b>.</span>
                                                         <table *ngIf='skill.exercises && skill.exercises.length'>
                                                             <tbody>
                                                                 <tr *ngFor="let exercise of skill.exercises">
@@ -135,47 +132,47 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
+                            </div>
                     </div>
                 </div>
+        </section>
+        <br>
+        <br>
+        <!-- EXERCISES SET -->
+        <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
+        <section class="uui-tabs" *ngIf="getAllSelectedExercises() && getAllSelectedExercises().length">
+            <div class="tabs-heading">
+                <ul class="nav nav-tabs">
+                    <li *ngFor="let exercise of getAllSelectedExercises() | exerciseFilter : 'selected' : 'true'; let index = index" [class.active]="index == 0">
+                        <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
+                    </li>
+                </ul>
             </div>
+            <div class="tabs-body">
+                <div class="tab-content">
+                    <div *ngFor="let exercise of getAllSelectedExercises() | exerciseFilter : 'selected' : 'true'; let index = index" [id]="'tab_ex_' + exercise.id"
+                        [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index == 0 }">
+                        <h3><span class="ex-subtitle-label">Description</span></h3>
+                        <p class="gray">{{ exercise.description }}</p><br>
+                        <h3><span class="ex-subtitle-label">Score</span></h3>
+                        <table>
+                            <tr>
+                                <td class="ex-rating-cell">
+                                    <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <input type="text" class="uui-form-element" style="width: 100%;" [(ngModel)]="exercise.comments" placeholder="Additional Comments"
+                                    />
+                                </td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+            </div>
+        </section>
     </div>
-    </section>
-    <br>
-    <br>
-    <!-- EXERCISES SET -->
-    <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
-    <section class="uui-tabs" *ngIf="getAllSelectedExercises() && getAllSelectedExercises().length">
-        <div class="tabs-heading">
-            <ul class="nav nav-tabs">
-                <li *ngFor="let exercise of getAllSelectedExercises() | exerciseFilter : 'selected' : 'true'; let index = index" [class.active]="index == 0">
-                    <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="tabs-body">
-            <div class="tab-content">
-                <div *ngFor="let exercise of getAllSelectedExercises() | exerciseFilter : 'selected' : 'true'; let index = index" [id]="'tab_ex_' + exercise.id"
-                    [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index == 0 }">
-                    <h3><span class="ex-subtitle-label">Description</span></h3>
-                    <p class="gray">{{ exercise.description }}</p><br>
-                    <h3><span class="ex-subtitle-label">Score</span></h3>
-                    <table>
-                        <tr>
-                            <td class="ex-rating-cell">
-                                <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
-                            </td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <input type="text" class="uui-form-element" style="width: 100%;" [(ngModel)]="exercise.comments" placeholder="Additional Comments"
-                                />
-                            </td>
-                        </tr>
-                    </table>
-            </div>
-        </div>
-</div>
-</section>
-</div>
 </div>
 <br>
 <br>

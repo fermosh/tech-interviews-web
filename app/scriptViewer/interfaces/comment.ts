@@ -1,6 +1,6 @@
-/* Defines comment entity */
+/* Defines the comment entity */
 export interface IComment {
     text: string;
     user: string;
-    date: string;
+    date: Date;
 }
