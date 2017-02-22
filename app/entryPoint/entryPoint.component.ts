@@ -44,6 +44,7 @@ export class EntryPointComponent {
     /* Start Initilizers */
     ngOnInit(): void {
         this.initializeCompetencyData();
+        this.createTree();
     }
 
     initializeCompetencyData(): void {
@@ -103,14 +104,14 @@ export class EntryPointComponent {
     onSearch(): void {
 
         this.isSkillGridVisible = false;
-        this.skillMatrixService.getSkillMatrix(13).subscribe(
+        
+        // get the skillMatrixId from the selected domain
+        let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
+
+        this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
             skillMatrix => {
                 this.skillMatrixItems = skillMatrix.skills.map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChilds));
                 this.isSkillGridVisible = true;
-
-                if (!this.isTreeCreated) {
-                    this.createTree();
-                }
             },
             error => console.log(<any>error));
     }
@@ -131,7 +132,12 @@ export class EntryPointComponent {
     }
 
     onNext(): void {
-        this.router.navigate(['./script-viewer/13',]);
+
+        // todo: here we will call to an api method to persist the list of selected skill ids
+        //let selectedSkills = this.skillMatrixItems.filter(x=> x.isSelected).map(x=> x.id);
+
+        let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
+        this.router.navigate(['./script-viewer/' + skillMatrixId,]);
     }
 
     onSkillSelected(skill: SkillMatrixItem): void {
@@ -142,7 +148,17 @@ export class EntryPointComponent {
 
     /*Start helper functions */
     createTree(): void {
+        let scriptName = 'treegridScript';
+
+        if(this.isTreeCreated)
+        {
+            // remove script from dom
+            let treegridScript = document.getElementById(scriptName);
+            treegridScript.parentElement.removeChild(treegridScript);
+        }
+
         let s = document.createElement('script');
+        s.id =  scriptName;
         s.type = 'text/javascript';
         s.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
         this.elementRef.nativeElement.appendChild(s);

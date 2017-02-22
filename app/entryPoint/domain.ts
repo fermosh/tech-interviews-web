@@ -3,4 +3,5 @@ export interface IDomain {
     name: string;
     competencyId: number;
     levelId: number;
+	skillMatrixId: number;
 }
