@@ -4325,21 +4325,24 @@ export class TechnicalInterviewData implements InMemoryDbService {
                             question: 'Whats the purpose of standards/conventions in .NET C#?',
                             answer: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         },
                         {
                             id: 2,
                             question: 'When to use string and when StringBuilder?',
                             answer: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         },
                         {
                             id: 3,
                             question: 'When to use var and when the exact data type?',
                             answer: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         }
                     ],
                     exercises: []
@@ -4425,21 +4428,24 @@ export class TechnicalInterviewData implements InMemoryDbService {
                             question: 'What is SOLID? Explain the principles and provide examples',
                             answer: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         },
                         {
                             id: 2,
                             question: 'What is Value Type and Reference Type?',
                             answer: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         },
                         {
                             id: 3,
                             question: 'What is Boxing and Un-Boxing?',
                             answer: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         }
                     ],
                     exercises: [
@@ -4452,7 +4458,8 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 parameters and return true if it is a palindrome.`,
                             solution: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         },
                         {
                             id: 2,
@@ -4462,7 +4469,8 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
                             solution: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         }
                     ]
                 },
@@ -4487,21 +4495,24 @@ export class TechnicalInterviewData implements InMemoryDbService {
                             question: 'Explain SCRUM',
                             answer: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         },
                         {
                             id: 2,
                             question: 'How do you face or deal with problems in an Agile project?',
                             answer: '',
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         },
                         {
                             id: 3,
                             answer: '',
                             question: `When you need to solve something you don't know, how do you deal with it?`,
                             selected: true,
-                            rating: 0
+                            rating: 0,
+                            comments: []
                         }
                     ],
                     exercises: []
