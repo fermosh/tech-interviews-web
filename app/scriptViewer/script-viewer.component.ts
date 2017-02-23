@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ISkillMatrix } from './interfaces/skill-matrix';
 import { ISkill } from './interfaces/skill';
+import { IExercise } from './interfaces/exercise';
 import { IComment } from './interfaces/comment';
 
 import { ScriptViewerService } from './script-viewer.service';
@@ -19,7 +20,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: ISkillMatrix;
     errorMessage: string;
     private sub: Subscription;
-    private isScriptViewerRendered: boolean;
+    private isScriptViewerRendered: boolean = false;
 
     constructor(private _route: ActivatedRoute,
         private _scriptViewerService: ScriptViewerService) { }
@@ -39,9 +40,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     ngAfterViewChecked(): void {
         if (this.scriptViewer && this.scriptViewer.skills && !this.isScriptViewerRendered) {
             jQuery('.topic-label-value').uui_tooltip({
-                template: `<div class="tooltip" role="tooltip"><div class="tooltip-arrow">
-                    </div><div class="tooltip-inner" style="text-align:left; padding:15px;
-                    line-height:15px; max-width:none; background-color:rgba(0,0,0,0.7);"></div></div>`,
+                template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner" style="text-align:left; padding:15px; line-height:15px; max-width:none; background-color:rgba(0,0,0,0.7);"></div></div>',
                 color: 'black'
             });
             this.isScriptViewerRendered = true;
@@ -58,7 +57,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     /* SCRIPT VIEWER EVENTS */
 
     getFinalScore(): number {
-        let sum: number;
+        let sum: number = 0;
         if (this.scriptViewer.skills && this.scriptViewer.skills.length > 0) {
             for (let skill of this.scriptViewer.skills) {
                 sum += this.getRatingBySkill(skill);
@@ -69,7 +68,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     }
 
     getIndexFirstTab(): number {
-        let skillIndex: number;
+        let skillIndex: number = 0;
         for (let skill of this.scriptViewer.skills) {
             for (let exercise of skill.exercises) {
                 return skillIndex;
@@ -83,8 +82,8 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     /* SKILL EVENTS */
 
     getRatingBySkill(skill: ISkill): number {
-        let sum: number;
-        let numberOfItems: number;
+        let sum: number = 0;
+        let numberOfItems: number = 0;
 
         if (skill.questions && skill.questions.length > 0) {
             for (let question of skill.questions.filter(q => q.selected)) {
@@ -107,14 +106,14 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     }
 
     getTopicsBySkill(skill: ISkill): string {
-        let topicList: string;
+        let topicList: string = '';
 
         if (skill.topics && skill.topics.length > 0) {
             for (let topic of skill.topics) {
                 if (topic.isRequired) {
                     topicList += '- ' + topic.name + '';
                 } else {
-                    topicList += `<span style='color:#888;'>- ` + topic.name + '</span>';
+                    topicList += "<span style='color:#888;'>- " + topic.name + '</span>';
                 }
                 topicList += '<br>';
             }
@@ -134,7 +133,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     /* QUESTION AND EXERCISE EVENTS */
 
     addComment(type: string, skillId: number, typeId: number, event: any): void {
-        let comment: IComment = { text: event.target.value, user: 'Logged User Name', date: new Date() };
+        let comment: IComment = { text: event.target.value, user: "Logged User Name", date: new Date() };
         switch (type) {
             case 'question':
                 this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === typeId)[0].comments.push(comment);
@@ -151,16 +150,12 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
 
         switch (type) {
             case 'question':
-                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions
-                    .filter(q => q.id === typeId)[0].comments.indexOf(comment);
-                this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions
-                    .filter(q => q.id === typeId)[0].comments.splice(index, 1);
+                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === typeId)[0].comments.indexOf(comment);
+                this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === typeId)[0].comments.splice(index, 1);
                 break;
             case 'exercise':
-                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].exercises
-                    .filter(e => e.id === typeId)[0].comments.indexOf(comment);
-                this.scriptViewer.skills.filter(s => s.id === skillId)[0].exercises
-                    .filter(e => e.id === typeId)[0].comments.splice(index, 1);
+                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].exercises.filter(e => e.id === typeId)[0].comments.indexOf(comment);
+                this.scriptViewer.skills.filter(s => s.id === skillId)[0].exercises.filter(e => e.id === typeId)[0].comments.splice(index, 1);
                 break;
         }
     }

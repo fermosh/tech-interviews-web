@@ -11,6 +11,7 @@ import { LevelService } from './level.service';
 import { DomainService } from './domain.service';
 import { SkillMatrixService } from './SkillMatrix.service';
 
+import { ISkill } from '../scriptViewer/interfaces/skill';
 import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
 
 @Component({
@@ -20,9 +21,9 @@ import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
 })
 export class EntryPointComponent {
     /* Initilize the filters identifiers */
-    competencyId: number;
-    levelId: number;
-    domainId: number;
+    competencyId: number = 0;
+    levelId: number = 0;
+    domainId: number = 0;
 
     /* Declare options to store the filter data */
     competencyOptions: ICompetency[];
@@ -59,7 +60,7 @@ export class EntryPointComponent {
                 if (this.competencyOptions.length > 0) {
                     this.competencyId = this.competencyOptions[0].id;
                 }
-
+                
                 // call the level initialization
                 this.initializeLevelData();
             },
@@ -74,7 +75,7 @@ export class EntryPointComponent {
                 this.levelOptions = levels.sort((l1, l2) => this.levelComparer(l1, l2));
 
                 // possible levels
-                let possibleLevels = this.levelOptions.filter(x => x.competencyId === this.competencyId);
+                let possibleLevels = this.levelOptions.filter(x => x.competencyId == this.competencyId);
 
                 // if there is more than one level use the first one
                 if (possibleLevels.length > 0) {
@@ -95,7 +96,7 @@ export class EntryPointComponent {
                 this.domainOptions = domains.sort((d1, d2) => this.domainComparer(d1, d2));
 
                 // possible levels
-                let possibleDomains = this.domainOptions.filter(x => x.levelId === this.levelId);
+                let possibleDomains = this.domainOptions.filter(x => x.levelId == this.levelId);
 
                 // if there is more than one domain use the first one
                 if (possibleDomains.length > 0) {
@@ -113,21 +114,20 @@ export class EntryPointComponent {
     onSearch(): void {
 
         this.isSkillGridVisible = false;
-
+        
         // get the skillMatrixId from the selected domain
-        let skillMatrixId = this.domainOptions.find(x => x.id === this.domainId).skillMatrixId;
+        let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
 
         // call the service to get the skill matrix data
         this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
             skillMatrix => {
 
                 // fill the skill picker source
-                this.skillMatrixItems = skillMatrix.skills.map(skill =>
-                    new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChilds));
+                this.skillMatrixItems = skillMatrix.skills.map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChilds));
                 this.isSkillGridVisible = true;
 
                 // initialize treegrid script
-                setTimeout(() => { this.createTree(); }, 0);
+                setTimeout(() => {this.createTree();}, 0);
             },
             error => console.log(<any>error));
     }
@@ -155,9 +155,12 @@ export class EntryPointComponent {
     }
 
     onNext(): void {
+
         // todo: here we will call to an api method to persist the list of selected skill ids
-        let skillMatrixId = this.domainOptions.find(x => x.id === this.domainId).skillMatrixId;
-        this.router.navigate(['./script-viewer/' + skillMatrixId]);
+        //let selectedSkills = this.skillMatrixItems.filter(x=> x.isSelected).map(x=> x.id);
+
+        let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
+        this.router.navigate(['./script-viewer/' + skillMatrixId,]);
     }
 
     onSkillSelected(skill: SkillMatrixItem): void {
@@ -173,7 +176,8 @@ export class EntryPointComponent {
         let scriptId = 'treegridScript';
 
         // if the script is already added to the view lets remove it
-        if (this.isTreeCreated) {
+        if(this.isTreeCreated)
+        {
             // remove script from dom
             this.elementRef.nativeElement.removeChild(document.getElementById(scriptId));
         }
@@ -196,7 +200,7 @@ export class EntryPointComponent {
             return;
         }
 
-        this.skillMatrixItems.filter(x => x.parentId === skill.id).forEach(x => {
+        this.skillMatrixItems.filter(x => x.parentId == skill.id).forEach(x => {
             x.isSelected = skill.isSelected;
             this.cascadeChilds(x);
         });
@@ -207,12 +211,12 @@ export class EntryPointComponent {
             return;
         }
 
-        let parent = this.skillMatrixItems.find(x => x.id === skill.parentId);
-        if (parent == null || parent.isSelected === skill.isSelected) {
+        let parent = this.skillMatrixItems.find(x => x.id == skill.parentId);
+        if (parent == null || parent.isSelected == skill.isSelected) {
             return;
         }
 
-        let anyFalse = this.skillMatrixItems.filter(x => x.parentId === parent.id).some(x => !x.isSelected);
+        let anyFalse = this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
 
         parent.isSelected = !anyFalse;
 
@@ -228,7 +232,7 @@ export class EntryPointComponent {
     }
 
     checkSearchButtonStatus(): void {
-        this.isSearchDisabled = (this.competencyId === 0 || this.levelId === 0 || this.domainId === 0);
+        this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0 || this.domainId == 0);
     }
 
     competencyComparer(first: ICompetency, second: ICompetency): number {
