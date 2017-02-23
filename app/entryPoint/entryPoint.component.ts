@@ -20,20 +20,23 @@ import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
     styleUrls: ['app/entryPoint/entryPoint.component.css']
 })
 export class EntryPointComponent {
+    /* Initilize the filters identifiers */
     competencyId: number = 0;
     levelId: number = 0;
     domainId: number = 0;
 
+    /* Declare options to store the filter data */
     competencyOptions: ICompetency[];
     levelOptions: ILevel[];
     domainOptions: IDomain[];
-
     skillMatrixItems: SkillMatrixItem[];
 
+    /* Auxiliar flags */
     isSkillGridVisible: boolean;
     isTreeCreated: boolean;
     isSearchDisabled: boolean;
 
+    /* Constructor to inject the diferent services */
     constructor(private router: Router, private elementRef: ElementRef,
         private competencyService: CompetencyService,
         private levelService: LevelService,
@@ -44,7 +47,6 @@ export class EntryPointComponent {
     /* Start Initilizers */
     ngOnInit(): void {
         this.initializeCompetencyData();
-        this.createTree();
     }
 
     initializeCompetencyData(): void {
@@ -54,10 +56,12 @@ export class EntryPointComponent {
                 // fill the available competencies with the ones from the datasource
                 this.competencyOptions = competencies.sort((c1, c2) => this.competencyComparer(c1, c2));
 
+                // if there is more than one competency use the first one
                 if (this.competencyOptions.length > 0) {
                     this.competencyId = this.competencyOptions[0].id;
                 }
-
+                
+                // call the level initialization
                 this.initializeLevelData();
             },
             error => console.log(<any>error));
@@ -72,10 +76,13 @@ export class EntryPointComponent {
 
                 // possible levels
                 let possibleLevels = this.levelOptions.filter(x => x.competencyId == this.competencyId);
+
+                // if there is more than one level use the first one
                 if (possibleLevels.length > 0) {
                     this.levelId = possibleLevels[0].id;
                 }
 
+                // call the domain initialization
                 this.initializeDomainData();
             },
             error => console.log(<any>error));
@@ -90,10 +97,13 @@ export class EntryPointComponent {
 
                 // possible levels
                 let possibleDomains = this.domainOptions.filter(x => x.levelId == this.levelId);
+
+                // if there is more than one domain use the first one
                 if (possibleDomains.length > 0) {
                     this.domainId = possibleDomains[0].id;
                 }
 
+                // verify the search status
                 this.checkSearchButtonStatus();
             },
             error => console.log(<any>error));
@@ -108,26 +118,39 @@ export class EntryPointComponent {
         // get the skillMatrixId from the selected domain
         let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
 
+        // call the service to get the skill matrix data
         this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
             skillMatrix => {
+
+                // fill the skill picker source
                 this.skillMatrixItems = skillMatrix.skills.map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChilds));
                 this.isSkillGridVisible = true;
+
+                // initialize treegrid script
+                setTimeout(() => {this.createTree();}, 0);
             },
             error => console.log(<any>error));
     }
 
     onCompetencyChange(competencyId: number): void {
+        // reset level and domain selections
         this.levelId = 0;
         this.domainId = 0;
+
+        // verify the search status
         this.checkSearchButtonStatus();
     }
 
     onLevelChange(levelId: number): void {
+        // reset domain selections
         this.domainId = 0;
+
+        // verify the search status
         this.checkSearchButtonStatus();
     }
 
     onDomainChange(domainId: number): void {
+        // verify the search status
         this.checkSearchButtonStatus();
     }
 
@@ -148,21 +171,27 @@ export class EntryPointComponent {
 
     /*Start helper functions */
     createTree(): void {
-        let scriptName = 'treegridScript';
 
+        // the id we use to add or remove the script
+        let scriptId = 'treegridScript';
+
+        // if the script is already added to the view lets remove it
         if(this.isTreeCreated)
         {
             // remove script from dom
-            let treegridScript = document.getElementById(scriptName);
-            treegridScript.parentElement.removeChild(treegridScript);
+            this.elementRef.nativeElement.removeChild(document.getElementById(scriptId));
         }
 
-        let s = document.createElement('script');
-        s.id =  scriptName;
-        s.type = 'text/javascript';
-        s.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
-        this.elementRef.nativeElement.appendChild(s);
+        // prepare the script element
+        let script = document.createElement('script');
+        script.id =  scriptId;
+        script.type = 'text/javascript';
+        script.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
 
+        // attach script element to the dom
+        this.elementRef.nativeElement.appendChild(script);
+
+        // set the flag to true
         this.isTreeCreated = true;
     }
 
