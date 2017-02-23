@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ISkillMatrix } from './interfaces/skill-matrix'
+import { ISkillMatrix } from './interfaces/skill-matrix';
 import { ISkill } from './interfaces/skill';
 import { IComment } from './interfaces/comment';
 
