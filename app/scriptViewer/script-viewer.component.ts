@@ -132,7 +132,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     /* QUESTION EVENTS */
     
     addCommentToQuestion(skillId: number, questionId: number, event: any): void {
-        let comment: IComment = { text: event.target.value, user: "Hugo Dominguez", date: new Date() };
+        let comment: IComment = { text: event.target.value, user: "Logged User Name", date: new Date() };
         this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === questionId)[0].comments.push(comment);
         event.target.value = null;
     }
