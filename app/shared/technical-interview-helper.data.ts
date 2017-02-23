@@ -29,14 +29,14 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 name: 'FrontEnd web development',
                 competencyId: 1,
                 levelId: 1,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 2,
                 name: 'Backend development',
                 competencyId: 1,
                 levelId: 1,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 3,
@@ -113,49 +113,49 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 name: 'FrontEnd web development',
                 competencyId: 1,
                 levelId: 4,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 14,
                 name: 'Backend development',
                 competencyId: 1,
                 levelId: 4,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 15,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
                 levelId: 4,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 16,
                 name: 'Azure development',
                 competencyId: 1,
                 levelId: 5,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 17,
                 name: 'FrontEnd web development',
                 competencyId: 1,
                 levelId: 5,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 18,
                 name: 'Backend development',
                 competencyId: 1,
                 levelId: 5,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 19,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
                 levelId: 5,
-				skillMatrixId: 13
+                skillMatrixId: 13
             }
         ];
 
@@ -909,10 +909,10 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         questions: [
                             {
                                 id: 1,
-                                question: 'Whats the purpose of standards/conventions in .NET C#?',
+                                question: `What's the purpose of standards/conventions in .NET C#?`,
                                 answer: '',
                                 selected: true,
-                                rating: 0,
+                                rating: 4.1,
                                 comments: []
                             },
                             {
@@ -920,7 +920,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 question: 'When to use string and when StringBuilder?',
                                 answer: '',
                                 selected: true,
-                                rating: 0,
+                                rating: 3,
                                 comments: []
                             },
                             {
@@ -928,7 +928,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 question: 'When to use var and when the exact data type?',
                                 answer: '',
                                 selected: true,
-                                rating: 0,
+                                rating: 4,
                                 comments: []
                             }
                         ],
@@ -1026,23 +1026,33 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 question: 'What is SOLID? Explain the principles and provide examples',
                                 answer: '',
                                 selected: true,
-                                rating: 0,
-                                comments: []
+                                rating: 3,
+                                comments: [{
+                                    text: `He did had an overall idea of the 5 principles but he was not able 
+                                        to explain nor them properly`,
+                                    user: `Victor Parra`,
+                                    date: new Date(`Feb 22, 2017, 4:54:35 PM`)
+                                }]
                             },
                             {
                                 id: 2,
                                 question: 'What is Value Type and Reference Type?',
                                 answer: '',
                                 selected: true,
-                                rating: 0,
-                                comments: []
+                                rating: 4,
+                                comments: [{
+                                    text: `He did explained on detail memory allocation process and 
+                                        how the runtime mamange primitives and objects...`,
+                                    user: `Victor Parra`,
+                                    date: new Date(`Feb 22, 2017, 4:35:12 PM`)
+                                }]
                             },
                             {
                                 id: 3,
                                 question: 'What is Boxing and Un-Boxing?',
                                 answer: '',
                                 selected: true,
-                                rating: 0,
+                                rating: 4,
                                 comments: []
                             }
                         ],
@@ -1056,8 +1066,13 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                     parameters and return true if it is a palindrome.`,
                                 solution: '',
                                 selected: true,
-                                rating: 0,
-                                comments: []
+                                rating: 4,
+                                comments: [{
+                                    text: `Followed Microsoft's coding standards, applied SOLID principles, 
+                                        and good clean overall coding`,
+                                    user: `Victor Parra`,
+                                    date: new Date(`Feb 23, 2017, 12:26:55 PM`)
+                                }]
                             },
                             {
                                 id: 2,
@@ -1067,8 +1082,13 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                     to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
                                 solution: '',
                                 selected: true,
-                                rating: 0,
-                                comments: []
+                                rating: 5,
+                                comments: [{
+                                    text: `Outstanding implementation using only two lines of code`,
+                                    user: `Victor Parra`,
+                                    date: new Date(`Feb 23, 2017, 11:58:04 PM`)
+                                }]
+
                             }
                         ]
                     },
@@ -1104,24 +1124,39 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 question: 'Explain SCRUM',
                                 answer: '',
                                 selected: true,
-                                rating: 0,
-                                comments: []
+                                rating: 3,
+                                comments: [{
+                                    text: `Was able to identify roles such Scrum Master, Product Owner, etc. but he's not
+                                        familiar with ceremonies and what is performed in those other than scrum`,
+                                    user: `Victor Parra`,
+                                    date: new Date(`Feb 23, 2017, 12:33:15 PM`)
+                                }]
                             },
                             {
                                 id: 2,
                                 question: 'How do you face or deal with problems in an Agile project?',
                                 answer: '',
                                 selected: true,
-                                rating: 0,
-                                comments: []
+                                rating: 3,
+                                comments: [{
+                                    text: `When I asked him about a real prolem such includind a user story
+                                        to the sprint whitout capatity abailable he answer that you cannot do that.`,
+                                    user: `Victor Parra`,
+                                    date: new Date(`Feb 23, 2017, 12:36:02 PM`)
+                                }]
                             },
                             {
                                 id: 3,
                                 answer: '',
                                 question: `When you need to solve something you don't know, how do you deal with it?`,
                                 selected: true,
-                                rating: 0,
-                                comments: []
+                                rating: 4,
+                                comments: [{
+                                    text: `It looks like he is self driven and able to learn things on his own, good
+                                        analytic and troubleshooting habilities`,
+                                    user: `Victor Parra`,
+                                    date: new Date(`Feb 23, 2017, 12:40:33 PM`)
+                                }]
                             }
                         ],
                         exercises: []
