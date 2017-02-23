@@ -7,7 +7,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class StarComponent {
     private startCollection: number[] = [1, 2, 3, 4, 5];
-    private temporalRating: number;
     @Input() rating: number;
     @Output() ratingClicked: EventEmitter<number> =
         new EventEmitter<number>();
@@ -17,18 +16,6 @@ export class StarComponent {
     }
 
     private onStarClick(selectedRating: number): void {
-        this.temporalRating = selectedRating;
         this.rating = selectedRating;
-    }
-
-    private onStarMouseOver(selectedRating: number): void {
-        /*if (selectedRating > this.rating) {
-            this.temporalRating = this.rating;
-            this.rating = selectedRating;
-        }*/
-    }
-
-    private onStarMouseLeave(): void {
-        /*this.rating = this.temporalRating;*/
     }
 }
