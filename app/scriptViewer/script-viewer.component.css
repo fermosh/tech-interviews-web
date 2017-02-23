@@ -162,4 +162,11 @@
     color: #1A9CB0;
     border-right: 1px #CCC solid;
     height: 55px;
+    vertical-align: top;
+    padding-top: 7px;
+}
+
+.ex-comment-cell {
+    padding-left: 10px;
+    vertical-align: top;
 }

@@ -56,8 +56,8 @@
                                             </tr>
                                         </table>
                                         <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
-                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteCommentFromQuestion(skill.id, question.id, $event)"></tih-history-comment>
-                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addCommentToQuestion(skill.id, question.id, $event)"
+                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.id, $event)"></tih-history-comment>
+                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)"
                                             />
                                         </div>
                                     </td>
@@ -65,7 +65,8 @@
                             </tbody>
                         </table>
                         <!-- QUESTION & EXERCISES PICKER -->
-                        <div class="modal uui-modal fade blue" [id]="'modalQuestion_Skill_' + skill.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal uui-modal fade blue" [id]="'modalQuestion_Skill_' + skill.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -131,27 +132,30 @@
                                     </div>
                                 </div>
                             </div>
-                            </div>
-                            </div>
                     </div>
                 </div>
-        </section>
-        <br>
-        <br>
-        <!-- EXERCISES SET -->
-        <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
-        <section class="uui-tabs" *ngIf="getAllSelectedExercises() && getAllSelectedExercises().length">
-            <div class="tabs-heading">
-                <ul class="nav nav-tabs">
-                    <li *ngFor="let exercise of getAllSelectedExercises() | exerciseFilter : 'selected' : 'true'; let index = index" [class.active]="index == 0">
+            </div>
+    </div>
+    </section>
+    <br>
+    <br>
+    <!-- EXERCISES SET -->
+    <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
+    <section class="uui-tabs" *ngIf="getIndexFirstTab() >= 0">
+        <div class="tabs-heading">
+            <ul class="nav nav-tabs">
+                <template ngFor let-skill [ngForOf]="scriptViewer.skills" let-indexSkill="index">
+                    <li *ngFor="let exercise of skill.exercises | exerciseFilter : 'selected' : 'true'; let exIndex = index" [class.active]="indexSkill == getIndexFirstTab() && exIndex == 0">
                         <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
                     </li>
-                </ul>
-            </div>
-            <div class="tabs-body">
-                <div class="tab-content">
-                    <div *ngFor="let exercise of getAllSelectedExercises() | exerciseFilter : 'selected' : 'true'; let index = index" [id]="'tab_ex_' + exercise.id"
-                        [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index == 0 }">
+                </template>
+            </ul>
+        </div>
+        <div class="tabs-body">
+            <div class="tab-content">
+                <template ngFor let-skill [ngForOf]="scriptViewer.skills" let-indexSkill="index">
+                    <div *ngFor="let exercise of skill.exercises | exerciseFilter : 'selected' : 'true'; let exIndex = index" [id]="'tab_ex_' + exercise.id"
+                        [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': (indexSkill == getIndexFirstTab() && exIndex == 0) }">
                         <h3><span class="ex-subtitle-label">Description</span></h3>
                         <p class="gray">{{ exercise.description }}</p><br>
                         <h3><span class="ex-subtitle-label">Score</span></h3>
@@ -161,17 +165,19 @@
                                     <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
                                 </td>
                                 <td>&nbsp;</td>
-                                <td>
-                                    <input type="text" class="uui-form-element" style="width: 100%;" [(ngModel)]="exercise.comments" placeholder="Additional Comments"
+                                <td class="ex-comment-cell">
+                                    <tih-history-comment [comments]="exercise.comments" (deleteCommentClicked)="deleteComment('exercise', skill.id, exercise.id, $event)"></tih-history-comment>
+                                    <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', skill.id, exercise.id, $event)"
                                     />
                                 </td>
                             </tr>
                         </table>
-                </div>
+                    </div>
+                </template>
             </div>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 </div>
 <br>
 <br>
