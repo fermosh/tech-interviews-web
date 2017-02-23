@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'tih-score',
@@ -10,7 +10,7 @@ export class ScoreComponent {
     @Input() score: number;
 
     get scoreStyleClass(): string {
-        let scoreStyle: string = 'score-value-';
+        let scoreStyle: 'score-value-';
 
         switch (true) {
             case (this.score === 0): scoreStyle += '0';

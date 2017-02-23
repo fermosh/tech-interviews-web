@@ -51,5 +51,5 @@ import { Component } from '@angular/core';
      `
 })
 export class AppComponent {
-    pageTitle: string = 'Technical Interview Helper';
+    pageTitle: 'Technical Interview Helper';
 }
