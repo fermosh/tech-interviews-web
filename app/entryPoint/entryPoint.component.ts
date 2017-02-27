@@ -13,6 +13,8 @@ import { SkillMatrixService } from './SkillMatrix.service';
 
 import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
 
+declare var jQuery: any;
+
 @Component({
     selector: 'ip-entryPoint',
     templateUrl: 'app/entryPoint/entryPoint.component.html',
@@ -20,9 +22,9 @@ import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
 })
 export class EntryPointComponent {
     /* Initilize the filters identifiers */
-    competencyId: number = 0;
-    levelId: number = 0;
-    domainId: number = 0;
+    competencyId = 0;
+    levelId = 0;
+    domainId = 0;
 
     /* Declare options to store the filter data */
     competencyOptions: ICompetency[];
@@ -131,7 +133,7 @@ export class EntryPointComponent {
                 this.isSkillGridVisible = true;
 
                 // initialize treegrid script
-                setTimeout(() => {this.createTree();}, 0);
+                setTimeout(() => {this.createTree(); }, 0);
             },
             error => console.log(<any>error));
     }
@@ -163,7 +165,7 @@ export class EntryPointComponent {
         // todo: here we will call to an api method to persist the list of selected skill ids
         // let selectedSkills = this.skillMatrixItems.filter(x=> x.isSelected).map(x=> x.id);
 
-        let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
+        let skillMatrixId = this.domainOptions.find(x => x.id == this.domainId).skillMatrixId;
         this.router.navigate(['./script-viewer/' + skillMatrixId,]);
     }
 
@@ -175,27 +177,8 @@ export class EntryPointComponent {
 
     /*Start helper functions */
     createTree(): void {
-
-        // the id we use to add or remove the script
-        let scriptId = 'treegridScript';
-
-        // if the script is already added to the view lets remove it
-        if (this.isTreeCreated){
-            // remove script from dom
-            this.elementRef.nativeElement.removeChild(document.getElementById(scriptId));
-        }
-
-        // prepare the script element
-        let script = document.createElement('script');
-        script.id =  scriptId;
-        script.type = 'text/javascript';
-        script.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
-
-        // attach script element to the dom
-        this.elementRef.nativeElement.appendChild(script);
-
-        // set the flag to true
-        this.isTreeCreated = true;
+        // calls this jQuery function to initialize the uui Tree Grid
+        jQuery('.uui-table.treegrid').uui_tree_grid({ collapsed: false, padding_automation: false, padding: 10 });
     }
 
     cascadeChilds(skill: SkillMatrixItem): void {
