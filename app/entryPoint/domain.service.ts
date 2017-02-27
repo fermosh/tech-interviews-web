@@ -19,7 +19,6 @@ export class DomainService {
     getDomains(): Observable<IDomain[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
-            .do(data => console.log('getDomains: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -34,7 +33,6 @@ export class DomainService {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getDomain: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -92,7 +90,8 @@ export class DomainService {
             id: 0,
             name: null,
             competencyId: 0,
-            levelId: 0
+            levelId: 0,
+            skillMatrixId: 0
         };
     }
 }

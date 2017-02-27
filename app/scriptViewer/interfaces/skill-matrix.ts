@@ -3,9 +3,11 @@ import { ISkill } from './skill';
 import { ILevel } from '../../entryPoint/level';
 
 export interface ISkillMatrix {
-    hasContent: boolean;
-    competencyId: number;
+    id: number;
+    hasContent?: boolean;
+    competencyId?: number;
     competencyName: string;
+    domain: string;
     level: ILevel;
     skills?: ISkill[];
 }

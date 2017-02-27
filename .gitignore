@@ -304,5 +304,5 @@ $RECYCLE.BIN/
 
 *.vscode/settings.json*
 
-**/app/**/*.map
-**/app/**/*.js
+**/app/*.js*
+**/app/**/*.js*

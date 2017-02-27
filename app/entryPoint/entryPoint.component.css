@@ -20,19 +20,19 @@
     color: white !important;
     text-transform: uppercase;
 }
-.container{
-    width: 100%;
-    margin: 20px auto;
-}
 .right-Button
 {
     float: right;
 }
 
-tr[class="treegrid-child"] td div span.treegrid-caret.fa-angle-right.fa{
-    display: none;
+tr[class="treegrid-child"] td div p.uui-checkbox{
+    margin-left: 20px;
 }
 
-tr[class="treegrid-child"] td div span.skillName{
-    margin-left: 20px;
+.panel{
+    border: none !important;
+}
+
+.padding-bottom{
+    padding-bottom: 50px;
 }

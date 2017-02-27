@@ -1,0 +1,47 @@
+.score-value {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    padding-top: 6px;
+    /* DEFAULT VALUE */
+    border: 1px #CCCCCC solid;
+    background-color: #FFFFFF;
+    color: #CCCCCC;
+}
+
+.score-value-0 {
+    border: 1px #8E244D solid;
+    background-color: #8E244D;
+    color: #FFFFFF;
+}
+
+.score-value-1 {
+    border: 1px #B22746 solid;
+    background-color: #B22746;
+    color: #FFFFFF;
+}
+
+.score-value-2 {
+    border: 1px #FFDC19 solid;
+    background-color: #FFDC19;
+    color: #FFFFFF;
+}
+
+.score-value-3 {
+    border: 1px #FF9B19 solid;
+    background-color: #FF9B19;
+    color: #FFFFFF;
+}
+
+.score-value-4 {
+    border: 1px #A3C644 solid;
+    background-color: #A3C644;
+    color: #FFFFFF;
+}
+
+.score-value-5 {
+    border: 1px #7F993A solid;
+    background-color: #7F993A;
+    color: #FFFFFF;
+}

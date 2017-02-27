@@ -1,6 +1,11 @@
-/* Defines exercise entity */
+import { IComment } from './comment';
+
 export interface IExercise {
-    text: string;
-    complexity: string;
+    id: number;
+    title: string;
+    description: string;
+    selected: boolean;
     solution?: string;
+    comments?: IComment[];
+    rating: number;
 }

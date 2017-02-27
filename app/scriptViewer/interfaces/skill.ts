@@ -11,7 +11,7 @@ export interface ISkill {
     levelSet: number;
     competencyId: number;
     jobFunctionLevel: number;
-    topics: ITopic[];
+    topics?: ITopic[];
     questions?: IQuestion[];
     exercises?: IExercise[];
     id: number;
@@ -19,5 +19,7 @@ export interface ISkill {
     name: string;
     isSelectable: boolean;
     skillLevel?: number;
-    hasChilds?: boolean;
+    hasChildren?: boolean;
+    priority?: string;
+    startingFrom?: string;
 }

@@ -4,8 +4,6 @@
     <div style="width: 86px">
         <span *ngFor="let item of startCollection; let index = index"
             (click)='onStarClick(item)'
-            (mouseover)='onStarMouseOver(item)'
-            (mouseleave)='onStarMouseLeave()'
             [ngClass]="{ 'fa': true, 'fa-star-o': rating < item, 'fa-star': rating > index }"></span>
     </div>
 </div>

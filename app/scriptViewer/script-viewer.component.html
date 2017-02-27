@@ -2,12 +2,12 @@
     <div class="script-viewer-header">
         <div class="container">
             <div class="final-score-box">
-                <h2><span class="final-score-label-value">{{ scriptViewer.rating | number:'1.0-1' }}</span></h2><br>
+                <h2><span class="final-score-label-value">{{ getFinalScore() | number:'1.0-1' }}</span></h2><br>
                 <span class="final-score-label-text">Final Score</span>
             </div>
             <div class="script-viewer-title-box">
                 <h2>{{ scriptViewer.competencyName }} {{ scriptViewer.domain }}</h2>
-                <span class="competency-level-label-value">{{ scriptViewer.levelName }} - {{ scriptViewer.levelDescription }}</span>
+                <span class="competency-level-label-value">{{ scriptViewer.level.name }} - {{ scriptViewer.level.description }}</span>
             </div>
 
         </div>
@@ -25,17 +25,10 @@
                         </a>
                     </p>
                     <div class="skill-accordion-subtitle">
-                        <div [class]="'score-label-value ' + skill.ratingStyle">
-                            <h3>{{ skill.rating | number:'1.0-1' }}</h3>
-                        </div>
-                        <span [class]="'uui-label ' + skill.priorityStyle">{{ skill.priority }}</span>&nbsp;&nbsp;
+                        <tih-score [score]='getRatingBySkill(skill)' class="score-label-value"></tih-score>
+                        <span [class]="'uui-label ' + getSkillPriorityStyle(skill)">{{ skill.priority }}</span>&nbsp;&nbsp;
                         <span class="starting-label-value">{{ skill.startingFrom }}</span>&nbsp;&nbsp;
-                        <span class="topic-label-value "
-                              data-toggle="tooltip"
-                              data-container="body"
-                              data-html="true"
-                              data-placement="right"
-                              [attr.data-original-title]="skill.topicList">Topics</span>
+                        <span class="topic-label-value " data-toggle="tooltip" data-container="body" data-html="true" data-placement="right" [attr.data-original-title]="getTopicsBySkill(skill)">Topics</span>
                     </div>
                 </div>
                 <div class="accordion-collapse collapse in" [id]="'skill_' + skill.id">
@@ -53,17 +46,19 @@
                                             <tr>
                                                 <td>{{ question.question }}</td>
                                                 <td class="rating-cell">
-                                                    <ai-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></ai-star>
+                                                    <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                 </td>
                                                 <td class="comments-cell">
-                                                    <i [ngClass]="{ 'fa': true, 'fa-comment': question.comments, 'fa-comment-o': !question.comments, 'icon-button': true }" data-toggle="collapse"
-                                                        [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
-                                                        aria-expanded="false" [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
+                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }"
+                                                        data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
+                                                        [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
                                                 </td>
                                             </tr>
                                         </table>
                                         <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
-                                            <input type="text" class="uui-form-element comments-input" [(ngModel)]="question.comments" placeholder="Additional Comments" />
+                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.id, $event)"></tih-history-comment>
+                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)"
+                                            />
                                         </div>
                                     </td>
                                 </tr>
@@ -72,10 +67,10 @@
                         <!-- QUESTION & EXERCISES PICKER -->
                         <div class="modal uui-modal fade blue" [id]="'modalQuestion_Skill_' + skill.id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                             aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Question Picker</h4>
+                                        <h4 class="modal-title">{{ skill.name }}</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span></span><span></span></button>
                                     </div>
                                     <div class="modal-body">
@@ -112,7 +107,7 @@
                                                     </div>
                                                     <div [id]="'tabExercisesPicker_Skill_' + skill.id" class="tab-pane">
                                                         <br><br>
-                                                        <span *ngIf='skill.exercises && skill.exercises.length == 0'>No exercises available for <b>{{ skill.name }}</b>.</span>
+                                                        <span *ngIf='skill.exercises && skill.exercises.length == 0'>No exercises found for <b>{{ skill.name }}</b>.</span>
                                                         <table *ngIf='skill.exercises && skill.exercises.length'>
                                                             <tbody>
                                                                 <tr *ngFor="let exercise of skill.exercises">
@@ -146,37 +141,42 @@
     <br>
     <!-- EXERCISES SET -->
     <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
-    <section class="uui-tabs" *ngIf="scriptViewer.exercises && scriptViewer.exercises.length">
+    <section class="uui-tabs" *ngIf="getIndexFirstTab() >= 0">
         <div class="tabs-heading">
             <ul class="nav nav-tabs">
-                <li *ngFor="let exercise of scriptViewer.exercises | exerciseFilter : 'selected' : 'true'; let index = index" [class.active]="index == 0">
-                    <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
-                </li>
+                <template ngFor let-skill [ngForOf]="scriptViewer.skills" let-indexSkill="index">
+                    <li *ngFor="let exercise of skill.exercises | exerciseFilter : 'selected' : 'true'; let exIndex = index" [class.active]="indexSkill == getIndexFirstTab() && exIndex == 0">
+                        <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
+                    </li>
+                </template>
             </ul>
         </div>
         <div class="tabs-body">
             <div class="tab-content">
-                <div *ngFor="let exercise of scriptViewer.exercises | exerciseFilter : 'selected' : 'true'; let index = index" [id]="'tab_ex_' + exercise.id"
-                    [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index == 0 }">
-                    <h3><span class="ex-subtitle-label">Description</span></h3>
-                    <p class="gray">{{ exercise.description }}</p><br>
-                    <h3><span class="ex-subtitle-label">Score</span></h3>
-                    <table>
-                        <tr>
-                            <td class="ex-rating-cell">
-                                <ai-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></ai-star>
-                            </td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <input type="text" class="uui-form-element" style="width: 100%;" [(ngModel)]="exercise.comments" placeholder="Additional Comments"
-                                />
-                            </td>
-                        </tr>
-                    </table>
+                <template ngFor let-skill [ngForOf]="scriptViewer.skills" let-indexSkill="index">
+                    <div *ngFor="let exercise of skill.exercises | exerciseFilter : 'selected' : 'true'; let exIndex = index" [id]="'tab_ex_' + exercise.id"
+                        [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': (indexSkill == getIndexFirstTab() && exIndex == 0) }">
+                        <h3><span class="ex-subtitle-label">Description</span></h3>
+                        <p class="gray">{{ exercise.description }}</p><br>
+                        <h3><span class="ex-subtitle-label">Score</span></h3>
+                        <table>
+                            <tr>
+                                <td class="ex-rating-cell">
+                                    <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td class="ex-comment-cell">
+                                    <tih-history-comment [comments]="exercise.comments" (deleteCommentClicked)="deleteComment('exercise', skill.id, exercise.id, $event)"></tih-history-comment>
+                                    <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', skill.id, exercise.id, $event)"
+                                    />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </template>
             </div>
         </div>
-</div>
-</section>
+    </section>
 </div>
 </div>
 <br>

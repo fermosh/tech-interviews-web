@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
 
-import { ISkillMatrix } from './interfaces/skill-matrix'
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+
+import { ISkillMatrix } from '../scriptViewer/interfaces/skill-matrix';
 
 @Injectable()
-
-export class ScriptViewerService {
-    private baseUrl = 'api/interviewScriptData';
+export class SkillMatrixService {
+    private baseUrl = 'api/skillMatrix';
 
     constructor(private http: Http) { }
 
-    getScriptViewer(id: number): Observable<ISkillMatrix> {
+    getSkillMatrix(id: number): Observable<ISkillMatrix> {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            //.do(data => console.log('getScriptViewer(' + id + '): ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 

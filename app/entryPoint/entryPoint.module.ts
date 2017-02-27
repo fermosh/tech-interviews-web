@@ -2,16 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-// Imports for loading & configuring the in-memory web api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-
 import { CompetencyService } from './competency.service';
 import { LevelService } from './level.service';
 import { DomainService } from './domain.service';
+import { SkillMatrixService } from './SkillMatrix.service';
 import { EntryPointComponent } from './entryPoint.component';
 
-import { FilterCriteriaData } from './filter-criteria-data';
-
+import { LevelFilterPipe } from './pipes/level-filter.pipe';
+import { DomainFilterPipe } from './pipes/domain-filter.pipe';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -19,19 +17,17 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     SharedModule,
     ReactiveFormsModule,
-    InMemoryWebApiModule.forRoot(FilterCriteriaData),
     RouterModule.forChild([
-      { path: 'welcome', component: EntryPointComponent },
+      { path: '', component: EntryPointComponent }
     ])
   ],
-  declarations: [
-    EntryPointComponent
-  ],
+  declarations: [EntryPointComponent, LevelFilterPipe, DomainFilterPipe],
   providers: [
     CompetencyService,
     LevelService,
-    DomainService
+    DomainService,
+    SkillMatrixService
   ]
 })
 
-export class EntryPointModule {}
+export class EntryPointModule { }

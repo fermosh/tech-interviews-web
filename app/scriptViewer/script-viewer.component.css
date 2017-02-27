@@ -71,43 +71,7 @@
 
 .score-label-value {
     float: right;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    text-align: center;
-    padding-top: 6px;
     margin-top: -22px
-}
-
-.score-label-value-0 {
-    border: 1px #CCCCCC solid;
-    background-color: #FFFFFF;
-    color: #CCCCCC;
-}
-
-.score-label-value-1 {
-    background-color: #B22746;
-    color: #FFFFFF;
-}
-
-.score-label-value-2 {
-    background-color: #FFDC19;
-    color: #FFFFFF;
-}
-
-.score-label-value-3 {
-    background-color: #FF9B19;
-    color: #FFFFFF;
-}
-
-.score-label-value-4 {
-    background-color: #A3C644;
-    color: #FFFFFF;
-}
-
-.score-label-value-5 {
-    background-color: #7F993A;
-    color: #FFFFFF;
 }
 
 .priority-very-low-label-value {
@@ -149,7 +113,7 @@
 
 .rating-cell {
     text-align: right;
-    width: 100px;
+    width: 90px;
     color: #1A9CB0;
 }
 
@@ -198,4 +162,11 @@
     color: #1A9CB0;
     border-right: 1px #CCC solid;
     height: 55px;
+    vertical-align: top;
+    padding-top: 7px;
+}
+
+.ex-comment-cell {
+    padding-left: 10px;
+    vertical-align: top;
 }

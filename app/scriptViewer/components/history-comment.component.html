@@ -1,0 +1,14 @@
+<div class="comments-area" *ngIf='comments && comments.length'>
+    <div class="comment-box" *ngFor="let comment of comments" (mouseenter)='onCommentOver(comment)' (mouseleave)='onCommentLeave()'>
+        <div class="comment-header">
+            <div *ngIf="showDeleteOption(comment)" class="delete-icon" (click)='onDeleteClick(comment)'>
+                <i class="fa fa-remove"></i>
+            </div>
+            <i class="fa fa-user"></i>&nbsp;&nbsp;{{ comment.user }}&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fa fa-calendar"></i>&nbsp;&nbsp;{{ comment.date | date:'medium' }}
+        </div>
+        <div class="comment-content">
+            <p>{{ comment.text }}</p>
+        </div>
+    </div>
+</div>
