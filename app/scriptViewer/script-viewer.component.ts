@@ -21,6 +21,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     errorMessage: string;
     private sub: Subscription;
     private isScriptViewerRendered: boolean = false;
+    private isOnPreview: boolean = false;
 
     constructor(private _route: ActivatedRoute,
         private _scriptViewerService: ScriptViewerService) { }
@@ -43,6 +44,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
                 template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner" style="text-align:left; padding:15px; line-height:15px; max-width:none; background-color:rgba(0,0,0,0.7);"></div></div>',
                 color: 'black'
             });
+            jQuery('.uui-carousel').carousel({ interval: 0 });
             this.isScriptViewerRendered = true;
         }
     }
@@ -76,6 +78,15 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             skillIndex++;
         }
         return -1;
+    }
+
+    showPreview() {
+        if (this.isOnPreview) {
+            jQuery('.uui-carousel').carousel('prev');
+        } else {
+            jQuery('.uui-carousel').carousel('next');
+        }
+        this.isOnPreview = !this.isOnPreview;
     }
 
     // ----------------------------------------------------------------------------------

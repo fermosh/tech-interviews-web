@@ -1,0 +1,25 @@
+<div>
+    <h3>List of Skills Checked</h3>
+    <div *ngFor="let skill of interviewScript.skills">
+        <h4>{{ skill.name }}</h4>
+        <table>
+            <tbody>
+                <template ngFor let-question [ngForOf]="skill.questions" let-index="index">
+                    <tr>
+                        <td class="numberOfQuestion-cell">{{ index + 1 + ') ' }}</td>
+                        <td>{{ question.question }}</td>
+                    </tr>
+                    <tr *ngIf="question.comments && !question.comments.length">
+                        <td>&nbsp;</td>
+                        <td>No comments.</td>
+                    </tr>
+                    <tr *ngFor="let comment of question.comments">
+                        <td>&nbsp;</td>
+                        <td>{{ comment.text }}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        <br><br>
+    </div>
+<div>
