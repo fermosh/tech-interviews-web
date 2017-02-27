@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 @Component({
     selector: 'tih-score',
@@ -6,29 +6,19 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     styleUrls: ['app/shared/score.component.css']
 })
 
-export class ScoreComponent {
+export class ScoreComponent implements OnInit, OnChanges  {
     @Input() score: number;
+    private scoreStyle: string;
 
-    get scoreStyleClass(): string {
-        let scoreStyle: string = 'score-value-';
+    ngOnInit(): void {
+        this.scoreStyle = this.updateScoreStyle();
+    }
 
-        switch (true) {
-            case (this.score === 0): scoreStyle += '0';
-                break;
-            case (this.score < 2): scoreStyle += '1';
-                break;
-            case (this.score < 3): scoreStyle += '2';
-                break;
-            case (this.score < 4): scoreStyle += '3';
-                break;
-            case (this.score < 5): scoreStyle += '4';
-                break;
-            case (this.score === 5): scoreStyle += '5';
-                break;
-            default:
-                scoreStyle += '0';
-        }
+    ngOnChanges() {
+        this.scoreStyle = this.updateScoreStyle();
+    }
 
-        return scoreStyle;
+    updateScoreStyle(): string {
+        return 'score-value-' + Math.trunc(this.score);
     }
 }

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ISkillMatrix } from './interfaces/skill-matrix';
 import { ISkill } from './interfaces/skill';
+import { IQuestion } from './interfaces/question';
 import { IExercise } from './interfaces/exercise';
 import { IComment } from './interfaces/comment';
 
@@ -57,46 +58,25 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     /* SCRIPT VIEWER EVENTS */
 
     getFinalScore(): number {
-        let sum: number = 0;
         if (this.scriptViewer.skills && this.scriptViewer.skills.length > 0) {
-            for (let skill of this.scriptViewer.skills) {
-                sum += this.getRatingBySkill(skill);
-            }
-            return sum / this.scriptViewer.skills.length;
+            return this.scriptViewer.skills.map(skill => this.getRatingBySkill(skill)).reduce(function(a, b) { return a + b; }, 0) / this.scriptViewer.skills.length;
         }
         return 0;
     }
 
     getIndexFirstTab(): number {
-        let skillIndex: number = 0;
-        for (let skill of this.scriptViewer.skills) {
-            for (let exercise of skill.exercises) {
-                return skillIndex;
-            }
-            skillIndex++;
-        }
-        return -1;
+        return this.scriptViewer.skills.findIndex(s => s.exercises.filter(e => e.selected).length > 0);
     }
 
     // ----------------------------------------------------------------------------------
     /* SKILL EVENTS */
 
     getRatingBySkill(skill: ISkill): number {
-        let sum: number = 0;
-        let numberOfItems: number = 0;
-
-        if (skill.questions && skill.questions.length > 0) {
-            for (let question of skill.questions.filter(q => q.selected)) {
-                sum += question.rating;
-                numberOfItems++;
-            }
-        }
-        if (skill.exercises && skill.exercises.length > 0) {
-            for (let exercise of skill.exercises.filter(e => e.selected)) {
-                sum += exercise.rating;
-                numberOfItems++;
-            }
-        }
+        let selectedQuestions: IQuestion[] = skill.questions.filter(q => q.selected);
+        let selectedExercises: IExercise[] = skill.exercises.filter(e => e.selected);
+        let sum: number = selectedQuestions.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0)
+                          + selectedExercises.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0);
+        let numberOfItems: number = selectedQuestions.length + selectedExercises.length;
 
         if (sum > 0) {
             return sum / numberOfItems;
