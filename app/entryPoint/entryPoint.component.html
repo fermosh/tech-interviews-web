@@ -31,8 +31,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let skill of skillMatrixItems" [attr.data-grid-level]="skill.skillLevel" 
-                [ngClass]="skill.skillLevel === 1?'treegrid-parent':(skill.hasChildren ? 'treegrid-parent treegrid-child' : 'treegrid-child')">
+            <tr *ngFor="let skill of skillMatrixItems" [attr.data-grid-level]="skill.skillLevel" [ngClass]="skill.className">
                 <td>
                     <div *ngIf="skill.skillLevel == 1">
                         <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>

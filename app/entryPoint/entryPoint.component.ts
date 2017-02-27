@@ -122,8 +122,12 @@ export class EntryPointComponent {
             skillMatrix => {
 
                 // fill the skill picker source
-                this.skillMatrixItems = skillMatrix.skills.map(skill =>
-                     new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
+                this.skillMatrixItems = skillMatrix.skills.map(
+                    skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren,
+                    skill.skillLevel === 1 ? 'treegrid-parent' :
+                        (skill.hasChildren ? 'treegrid-parent treegrid-child' : 'treegrid-child')));
+
+                // make grid Visisble
                 this.isSkillGridVisible = true;
 
                 // initialize treegrid script
