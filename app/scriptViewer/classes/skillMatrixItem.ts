@@ -4,14 +4,14 @@ export class SkillMatrixItem {
     name: string;
     isSelected: boolean;
     skillLevel: number;
-    hasChilds: boolean;
+    hasChildren: boolean;
 
-    constructor(id: number, parentId: number, name: string, skillLevel: number, hasChilds: boolean) {
+    constructor(id: number, parentId: number, name: string, skillLevel: number, hasChildren: boolean) {
         this.id = id;
         this.parentId = parentId;
         this.name = name;
         this.skillLevel = skillLevel;
-        this.hasChilds = hasChilds;
+        this.hasChildren = hasChildren;
         this.isSelected = true;
     }
 }

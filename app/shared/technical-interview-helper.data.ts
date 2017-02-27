@@ -238,7 +238,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Hard skills',
                         isSelectable: true,
                         skillLevel: 1,
-                        hasChilds: true
+                        hasChildren: true
                     },
                     {
                         rootId: 7,
@@ -254,7 +254,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Management',
                         isSelectable: true,
                         skillLevel: 2,
-                        hasChilds: true
+                        hasChildren: true
                     },
                     {
                         rootId: 7,
@@ -270,7 +270,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'General Management',
                         isSelectable: true,
                         skillLevel: 3,
-                        hasChilds: true
+                        hasChildren: true
                     },
                     {
                         rootId: 7,
@@ -299,7 +299,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Leadership',
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: true
+                        hasChildren: true
                     },
                     {
                         rootId: 7,
@@ -315,7 +315,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Leadership 1',
                         isSelectable: true,
                         skillLevel: 5,
-                        hasChilds: false
+                        hasChildren: false
                     },
                     {
                         rootId: 7,
@@ -344,7 +344,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Planning and Organizing',
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false
+                        hasChildren: false
                     },
                     {
                         rootId: 7,
@@ -373,7 +373,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Delegation',
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false
+                        hasChildren: false
                     },
                     {
                         rootId: 7,
@@ -402,7 +402,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Control',
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false
+                        hasChildren: false
                     }]
             },
             {
@@ -432,7 +432,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Hard skills',
                         isSelectable: true,
                         skillLevel: 1,
-                        hasChilds: true
+                        hasChildren: true
                     },
                     {
                         rootId: 7,
@@ -448,7 +448,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Development',
                         isSelectable: true,
                         skillLevel: 2,
-                        hasChilds: true
+                        hasChildren: true
                     },
                     {
                         rootId: 7,
@@ -464,7 +464,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: '.Net Development',
                         isSelectable: true,
                         skillLevel: 3,
-                        hasChilds: true
+                        hasChildren: true
                     },
                     {
                         rootId: 7,
@@ -493,7 +493,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: '.Net Web development',
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: true
+                        hasChildren: true
                     },
                     {
                         rootId: 7,
@@ -509,7 +509,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: 'Asp.Net MVC',
                         isSelectable: true,
                         skillLevel: 5,
-                        hasChilds: false
+                        hasChildren: false
                     },
                     {
                         rootId: 7,
@@ -538,7 +538,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: '.Net WPF Development',
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false
+                        hasChildren: false
                     },
                     {
                         rootId: 7,
@@ -567,7 +567,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: '.Net Winforms development',
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false
+                        hasChildren: false
                     },
                     {
                         rootId: 7,
@@ -596,7 +596,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         name: '.Net Backen Development',
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false
+                        hasChildren: false
                     }]
             }];
 
@@ -628,7 +628,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         parentId: 479,
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false,
+                        hasChildren: false,
                         topics: [
                             {
                                 name: 'Code Conventions',
@@ -686,7 +686,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         parentId: 479,
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false,
+                        hasChildren: false,
                         topics: [
                             {
                                 name: '.NET Framework',
@@ -824,7 +824,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         parentId: 479,
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false,
+                        hasChildren: false,
                         topics: [
                             {
                                 name: 'Scrum/Agile - Base',
@@ -891,7 +891,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         parentId: 479,
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false,
+                        hasChildren: false,
                         topics: [
                             {
                                 name: 'Code Conventions',
@@ -949,7 +949,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         parentId: 479,
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false,
+                        hasChildren: false,
                         topics: [
                             {
                                 name: '.NET Framework',
@@ -1107,7 +1107,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         parentId: 479,
                         isSelectable: true,
                         skillLevel: 4,
-                        hasChilds: false,
+                        hasChildren: false,
                         topics: [
                             {
                                 name: 'Scrum/Agile - Base',

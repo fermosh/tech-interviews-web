@@ -11,7 +11,6 @@ import { LevelService } from './level.service';
 import { DomainService } from './domain.service';
 import { SkillMatrixService } from './SkillMatrix.service';
 
-import { ISkill } from '../scriptViewer/interfaces/skill';
 import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
 
 @Component({
@@ -60,7 +59,7 @@ export class EntryPointComponent {
                 if (this.competencyOptions.length > 0) {
                     this.competencyId = this.competencyOptions[0].id;
                 }
-                
+
                 // call the level initialization
                 this.initializeLevelData();
             },
@@ -114,16 +113,17 @@ export class EntryPointComponent {
     onSearch(): void {
 
         this.isSkillGridVisible = false;
-        
+
         // get the skillMatrixId from the selected domain
-        let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
+        let skillMatrixId = this.domainOptions.find(x => x.id == this.domainId).skillMatrixId;
 
         // call the service to get the skill matrix data
         this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
             skillMatrix => {
 
                 // fill the skill picker source
-                this.skillMatrixItems = skillMatrix.skills.map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChilds));
+                this.skillMatrixItems = skillMatrix.skills.map(skill =>
+                     new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
                 this.isSkillGridVisible = true;
 
                 // initialize treegrid script
@@ -157,7 +157,7 @@ export class EntryPointComponent {
     onNext(): void {
 
         // todo: here we will call to an api method to persist the list of selected skill ids
-        //let selectedSkills = this.skillMatrixItems.filter(x=> x.isSelected).map(x=> x.id);
+        // let selectedSkills = this.skillMatrixItems.filter(x=> x.isSelected).map(x=> x.id);
 
         let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
         this.router.navigate(['./script-viewer/' + skillMatrixId,]);
@@ -176,8 +176,7 @@ export class EntryPointComponent {
         let scriptId = 'treegridScript';
 
         // if the script is already added to the view lets remove it
-        if(this.isTreeCreated)
-        {
+        if (this.isTreeCreated){
             // remove script from dom
             this.elementRef.nativeElement.removeChild(document.getElementById(scriptId));
         }
@@ -196,7 +195,7 @@ export class EntryPointComponent {
     }
 
     cascadeChilds(skill: SkillMatrixItem): void {
-        if (!skill.hasChilds) {
+        if (!skill.hasChildren) {
             return;
         }
 
@@ -221,14 +220,6 @@ export class EntryPointComponent {
         parent.isSelected = !anyFalse;
 
         this.cascadeParent(parent);
-    }
-
-    getClassName(skill: SkillMatrixItem): string {
-        if (skill.skillLevel === 1) {
-            return 'treegrid-parent';
-        }
-
-        return skill.hasChilds ? 'treegrid-parent treegrid-child' : 'treegrid-child';
     }
 
     checkSearchButtonStatus(): void {
