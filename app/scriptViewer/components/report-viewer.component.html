@@ -2,7 +2,7 @@
     <h3>List of Skills Checked</h3>
     <br>
     <div *ngFor="let skill of interviewScript.skills">
-        <h4 class="skill-name">{{ skill.name }}</h4>
+        <h5 class="skill-name">{{ skill.name }}</h5>
         <span class="report-label">Score: </span><span>{{ getRatingBySkill(skill) | number:'1.0-1' }}</span><br><br>
         <table>
             <tbody>
@@ -22,13 +22,14 @@
                 </template>
             </tbody>
         </table>
-        <br><br>
+        <br>
     </div>
+    <br>
     <h3>Coding</h3>
     <br>
     <template ngFor let-skill [ngForOf]="interviewScript.skills" let-index="index">
         <div *ngFor="let exercise of skill.exercises">
-            <h4>{{ exercise.title }}</h4>
+            <h5>{{ exercise.title }}</h5>
             <table>
                 <tbody>
                     <tr>
@@ -48,7 +49,7 @@
                     </tr>
                 </tbody>
             </table>
-            <br><br>
+            <br>
         </div>
     </template>
 </div>
