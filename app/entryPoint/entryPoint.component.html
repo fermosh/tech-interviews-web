@@ -37,7 +37,7 @@
                         <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
                         <p class="uui-checkbox square-skin large">
                             <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}">{{skill.name}}</label>
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
                         </p>
                     </div>
                 </td>
@@ -46,7 +46,7 @@
                         <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
                         <p class="uui-checkbox square-skin large">
                             <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}">{{skill.name}}</label>
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
                         </p>
                     </div>
                 </td>
@@ -55,7 +55,7 @@
                         <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
                         <p class="uui-checkbox square-skin large">
                             <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}">{{skill.name}}</label>
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
                         </p>
                     </div>
                 </td>
@@ -64,7 +64,7 @@
                         <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
                         <p class="uui-checkbox square-skin large">
                             <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}">{{skill.name}}</label>
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
                         </p>
                     </div>
                 </td>
@@ -73,7 +73,7 @@
                         <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
                         <p class="uui-checkbox square-skin large">
                             <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}">{{skill.name}}</label>
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
                         </p>
                     </div>
                 </td>
