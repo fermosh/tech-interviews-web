@@ -4,8 +4,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ISkillMatrix } from './interfaces/skill-matrix';
 import { ISkill } from './interfaces/skill';
-import { IQuestion } from './interfaces/question';
-import { IExercise } from './interfaces/exercise';
 import { IComment } from './interfaces/comment';
 
 import { ScriptViewerService } from './script-viewer.service';
@@ -83,17 +81,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     /* SKILL EVENTS */
 
     getRatingBySkill(skill: ISkill): number {
-        let selectedQuestions: IQuestion[] = skill.questions.filter(q => q.selected);
-        let selectedExercises: IExercise[] = skill.exercises.filter(e => e.selected);
-        let sum: number = selectedQuestions.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0)
-                          + selectedExercises.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0);
-        let numberOfItems: number = selectedQuestions.length + selectedExercises.length;
-
-        if (sum > 0) {
-            return sum / numberOfItems;
-        } else {
-            return 0;
-        }
+        return this._scriptViewerService.getRatingBySkill(skill);
     }
 
     getTopicsBySkill(skill: ISkill): string {
