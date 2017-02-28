@@ -1,5 +1,6 @@
 <div>
     <h3>List of Skills Checked</h3>
+    <br>
     <div *ngFor="let skill of interviewScript.skills">
         <h4>{{ skill.name }}</h4>
         <table>
@@ -7,7 +8,7 @@
                 <template ngFor let-question [ngForOf]="skill.questions" let-index="index">
                     <tr>
                         <td class="numberOfQuestion-cell">{{ index + 1 + ') ' }}</td>
-                        <td>{{ question.question }}</td>
+                        <td class="report-label">{{ question.question }}</td>
                     </tr>
                     <tr *ngIf="question.comments && !question.comments.length">
                         <td>&nbsp;</td>
@@ -22,4 +23,28 @@
         </table>
         <br><br>
     </div>
-<div>
+    <br>
+    <h3>Coding</h3>
+    <br>
+    <template ngFor let-skill [ngForOf]="interviewScript.skills" let-index="index">
+        <div *ngFor="let exercise of skill.exercises">
+            <h4>{{ exercise.title }}</h4>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="report-label" style="width:80px;">Skill:</td>
+                        <td>{{ skill.name }}</td>
+                    </tr>
+                    <tr *ngIf="exercise.comments && !exercise.comments.length">
+                        <td colspan="2">No comments.</td>
+                    </tr>
+                    <tr *ngFor="let comment of exercise.comments">
+                        <td class="report-label">Comments:</td>
+                        <td>{{ comment.text }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+    </template>
+</div>
