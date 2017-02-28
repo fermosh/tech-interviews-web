@@ -36,3 +36,10 @@ tr[class="treegrid-child"] td div p.uui-checkbox{
 .padding-bottom{
     padding-bottom: 50px;
 }
+.childSelected::before
+{
+    width: 10px;
+    height: 10px;
+    border-width: 3px;
+    background: #666666;
+}

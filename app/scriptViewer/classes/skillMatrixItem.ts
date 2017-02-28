@@ -6,6 +6,7 @@ export class SkillMatrixItem {
     skillLevel: number;
     hasChildren: boolean;
     className?: string;
+    anyChildSelected: boolean;
 
     constructor(id: number, parentId: number, name: string, skillLevel: number, hasChildren: boolean, className: string) {
         this.id = id;
