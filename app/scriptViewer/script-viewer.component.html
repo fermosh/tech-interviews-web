@@ -15,7 +15,7 @@
     <div class="container">
         <button class="uui-button lime-green" style="float:right;" (click)="showPreview()">{{ !isOnPreview ? 'Interview Report' : 'Back to Script Viewer' }}</button>
         <br><br><br>
-        <div id="uuiCarousel" class="uui-carousel carousel slide" data-ride="carousel">
+        <div id="uuiCarousel" class="slide" data-ride="carousel">
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
                     <div>
@@ -185,6 +185,7 @@
         </div>
         <div class="item">
             <div>
+                <span class="interview-report-title">Technical Interview Report</span><br><br>
                 <tih-report-viewer [interviewScript]="scriptViewer"></tih-report-viewer>
             </div>
         </div>

@@ -171,11 +171,14 @@
     vertical-align: top;
 }
 
-
-.uui-carousel {
-    border: 0 solid #ccc;
+.interview-report-title {
+    font-family: 'Oswald Regular';
+    color: #1A9CB0;
+    text-transform: uppercase;
+    font-size: 18px;
 }
 
 .item {
     text-align: left;
+    padding: 2px;
 }
