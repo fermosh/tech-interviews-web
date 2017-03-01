@@ -1,6 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import 'node_modules/uui-framework/uui/js/uui-tree-grid.min.js';
 
 import { ICompetency } from './competency';
 import { IDomain } from './domain';
@@ -17,8 +16,8 @@ declare var jQuery: any;
 
 @Component({
     selector: 'ip-entryPoint',
-    templateUrl: 'app/entryPoint/entryPoint.component.html',
-    styleUrls: ['app/entryPoint/entryPoint.component.css']
+    templateUrl: './entryPoint.component.html',
+    styleUrls: ['./entryPoint.component.css']
 })
 export class EntryPointComponent {
     /* Initilize the filters identifiers */
