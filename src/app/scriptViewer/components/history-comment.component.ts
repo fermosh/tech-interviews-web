@@ -3,8 +3,8 @@ import { IComment } from '../interfaces/comment';
 
 @Component({
     selector: 'tih-history-comment',
-    templateUrl: 'app/scriptViewer/components/history-comment.component.html',
-    styleUrls: ['app/scriptViewer/components/history-comment.component.css']
+    templateUrl: 'history-comment.component.html',
+    styleUrls: ['history-comment.component.css']
 })
 
 export class HistoryCommentComponent {
@@ -12,7 +12,7 @@ export class HistoryCommentComponent {
     @Input() comments: IComment[];
     @Output() deleteCommentClicked: EventEmitter<IComment> =
         new EventEmitter<IComment>();
-    
+
     onDeleteClick(comment: IComment): void {
         this.deleteCommentClicked.emit(comment);
     }

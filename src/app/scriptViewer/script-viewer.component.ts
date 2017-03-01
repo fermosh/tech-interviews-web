@@ -13,8 +13,8 @@ import { ScriptViewerService } from './script-viewer.service';
 declare var jQuery: any;
 
 @Component({
-    templateUrl: 'app/scriptViewer/script-viewer.component.html',
-    styleUrls: ['app/scriptViewer/script-viewer.component.css']
+    templateUrl: 'script-viewer.component.html',
+    styleUrls: ['script-viewer.component.css']
 })
 
 export class ScriptViewerComponent implements OnInit, OnDestroy {

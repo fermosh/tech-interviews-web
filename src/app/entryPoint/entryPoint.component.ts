@@ -1,6 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import 'node_modules/uui-framework/uui/js/uui-tree-grid.min.js';
 
 import { ICompetency } from './competency';
 import { IDomain } from './domain';
@@ -15,14 +14,14 @@ import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
 
 @Component({
     selector: 'ip-entryPoint',
-    templateUrl: 'app/entryPoint/entryPoint.component.html',
-    styleUrls: ['app/entryPoint/entryPoint.component.css']
+    templateUrl: './entryPoint.component.html',
+    styleUrls: ['./entryPoint.component.css']
 })
 export class EntryPointComponent {
     /* Initilize the filters identifiers */
-    competencyId: number = 0;
-    levelId: number = 0;
-    domainId: number = 0;
+    competencyId: number;
+    levelId: number;
+    domainId: number;
 
     /* Declare options to store the filter data */
     competencyOptions: ICompetency[];
