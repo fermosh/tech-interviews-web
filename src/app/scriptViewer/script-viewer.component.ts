@@ -4,8 +4,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ISkillMatrix } from './interfaces/skill-matrix';
 import { ISkill } from './interfaces/skill';
-import { IQuestion } from './interfaces/question';
-import { IExercise } from './interfaces/exercise';
 import { IComment } from './interfaces/comment';
 
 import { ScriptViewerService } from './script-viewer.service';
@@ -13,8 +11,8 @@ import { ScriptViewerService } from './script-viewer.service';
 declare var jQuery: any;
 
 @Component({
-    templateUrl: 'script-viewer.component.html',
-    styleUrls: ['script-viewer.component.css']
+    templateUrl: 'app/scriptViewer/script-viewer.component.html',
+    styleUrls: ['app/scriptViewer/script-viewer.component.css']
 })
 
 export class ScriptViewerComponent implements OnInit, OnDestroy {
@@ -22,6 +20,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     errorMessage: string;
     private sub: Subscription;
     private isScriptViewerRendered: boolean = false;
+    private isOnPreview: boolean = false;
 
     constructor(private _route: ActivatedRoute,
         private _scriptViewerService: ScriptViewerService) { }
@@ -44,6 +43,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
                 template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner" style="text-align:left; padding:15px; line-height:15px; max-width:none; background-color:rgba(0,0,0,0.7);"></div></div>',
                 color: 'black'
             });
+            jQuery('#uuiCarousel').carousel({ interval: 0 });
             this.isScriptViewerRendered = true;
         }
     }
@@ -68,21 +68,20 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         return this.scriptViewer.skills.findIndex(s => s.exercises.filter(e => e.selected).length > 0);
     }
 
+    showPreview() {
+        if (this.isOnPreview) {
+            jQuery('#uuiCarousel').carousel('prev');
+        } else {
+            jQuery('#uuiCarousel').carousel('next');
+        }
+        this.isOnPreview = !this.isOnPreview;
+    }
+
     // ----------------------------------------------------------------------------------
     /* SKILL EVENTS */
 
     getRatingBySkill(skill: ISkill): number {
-        let selectedQuestions: IQuestion[] = skill.questions.filter(q => q.selected);
-        let selectedExercises: IExercise[] = skill.exercises.filter(e => e.selected);
-        let sum: number = selectedQuestions.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0)
-                          + selectedExercises.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0);
-        let numberOfItems: number = selectedQuestions.length + selectedExercises.length;
-
-        if (sum > 0) {
-            return sum / numberOfItems;
-        } else {
-            return 0;
-        }
+        return this._scriptViewerService.getRatingBySkill(skill);
     }
 
     getTopicsBySkill(skill: ISkill): string {
