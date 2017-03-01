@@ -7,8 +7,8 @@ import { ScriptViewerService } from '../script-viewer.service';
 
 @Component({
     selector: 'tih-report-viewer',
-    templateUrl: 'app/scriptViewer/components/report-viewer.component.html',
-    styleUrls: ['app/scriptViewer/components/report-viewer.component.css']
+    templateUrl: './report-viewer.component.html',
+    styleUrls: ['./report-viewer.component.css']
 })
 
 export class ReportViewerComponent {

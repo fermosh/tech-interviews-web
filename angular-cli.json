@@ -28,7 +28,6 @@
           "../node_modules/uui-framework/uui/js/lib/components/DataTables-1.10.2/js/jquery.dataTables.min.js",
           "../node_modules/uui-framework/uui/js/uui-tooltip.min.js",
           "../node_modules/core-js/client/shim.min.js",
-          "../node_modules/zone.js/dist/zone.js",
           "../node_modules/reflect-metadata/Reflect.js"
           ],
       "environments": {
