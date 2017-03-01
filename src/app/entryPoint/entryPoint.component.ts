@@ -1,5 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import 'node_modules/uui-framework/uui/js/uui-tree-grid.min.js';
 
 import { ICompetency } from './competency';
 import { IDomain } from './domain';
@@ -12,16 +13,18 @@ import { SkillMatrixService } from './SkillMatrix.service';
 
 import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
 
+declare var jQuery: any;
+
 @Component({
     selector: 'ip-entryPoint',
-    templateUrl: './entryPoint.component.html',
-    styleUrls: ['./entryPoint.component.css']
+    templateUrl: 'app/entryPoint/entryPoint.component.html',
+    styleUrls: ['app/entryPoint/entryPoint.component.css']
 })
 export class EntryPointComponent {
     /* Initilize the filters identifiers */
-    competencyId: number;
-    levelId: number;
-    domainId: number;
+    competencyId = 0;
+    levelId = 0;
+    domainId = 0;
 
     /* Declare options to store the filter data */
     competencyOptions: ICompetency[];
@@ -31,8 +34,7 @@ export class EntryPointComponent {
 
     /* Auxiliar flags */
     isSkillGridVisible: boolean;
-    isTreeCreated: boolean;
-    isSearchDisabled: boolean;
+    isSearchDisabled = true;
 
     /* Constructor to inject the diferent services */
     constructor(private router: Router, private elementRef: ElementRef,
@@ -47,7 +49,8 @@ export class EntryPointComponent {
         this.initializeCompetencyData();
     }
 
-    initializeCompetencyData(): void {
+    /*Get and fill the Competency dropdown data*/
+    private initializeCompetencyData(): void {
         // load competency dropdown
         this.competencyService.getCompetencies().subscribe(
             competencies => {
@@ -65,7 +68,8 @@ export class EntryPointComponent {
             error => console.log(<any>error));
     }
 
-    initializeLevelData(): void {
+    /*Get and fill the Level dropdown data*/
+    private initializeLevelData(): void {
         // load level dropdown
         this.levelService.getLevels().subscribe(
             levels => {
@@ -86,7 +90,8 @@ export class EntryPointComponent {
             error => console.log(<any>error));
     }
 
-    initializeDomainData(): void {
+    /*Get and fill the Domain dropdown data*/
+    private initializeDomainData(): void {
         // load domain dropdown
         this.domainService.getDomains().subscribe(
             domains => {
@@ -109,32 +114,6 @@ export class EntryPointComponent {
     /* End Initilizers */
 
     /*Start event functions*/
-    onSearch(): void {
-
-        this.isSkillGridVisible = false;
-
-        // get the skillMatrixId from the selected domain
-        let skillMatrixId = this.domainOptions.find(x => x.id == this.domainId).skillMatrixId;
-
-        // call the service to get the skill matrix data
-        this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
-            skillMatrix => {
-
-                // fill the skill picker source
-                this.skillMatrixItems = skillMatrix.skills.map(
-                    skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren,
-                    skill.skillLevel === 1 ? 'treegrid-parent' :
-                        (skill.hasChildren ? 'treegrid-parent treegrid-child' : 'treegrid-child')));
-
-                // make grid Visisble
-                this.isSkillGridVisible = true;
-
-                // initialize treegrid script
-                setTimeout(() => {this.createTree();}, 0);
-            },
-            error => console.log(<any>error));
-    }
-
     onCompetencyChange(competencyId: number): void {
         // reset level and domain selections
         this.levelId = 0;
@@ -157,79 +136,113 @@ export class EntryPointComponent {
         this.checkSearchButtonStatus();
     }
 
+    onSearch(): void {
+        // hide skill grid
+        this.isSkillGridVisible = false;
+
+        // get the skillMatrixId from the selected domain
+        let skillMatrixId = this.domainOptions.find(x => x.id == this.domainId).skillMatrixId;
+
+        // call the service to get the skill matrix data
+        this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
+            skillMatrix => {
+
+                // fill the skill picker source
+                this.skillMatrixItems = skillMatrix.skills.map(
+                    skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren,
+                        skill.skillLevel === 1 ? 'treegrid-parent' :
+                            (skill.hasChildren ? 'treegrid-parent treegrid-child' : 'treegrid-child')));
+
+                // make grid Visisble
+                this.isSkillGridVisible = true;
+
+                // initialize treegrid script
+                setTimeout(() => { this.createTree(); }, 0);
+            },
+            error => console.log(<any>error));
+    }
+
+    onSkillSelected(skill: SkillMatrixItem): void {
+        // verify or set childs selection
+        this.cascadeChilds(skill);
+
+        // ver or set parent selection
+        this.cascadeParent(skill);
+    }
+
     onNext(): void {
 
         // todo: here we will call to an api method to persist the list of selected skill ids
         // let selectedSkills = this.skillMatrixItems.filter(x=> x.isSelected).map(x=> x.id);
 
-        let skillMatrixId = this.domainOptions.find(x=> x.id == this.domainId).skillMatrixId;
-        this.router.navigate(['./script-viewer/' + skillMatrixId,]);
-    }
-
-    onSkillSelected(skill: SkillMatrixItem): void {
-        this.cascadeChilds(skill);
-        this.cascadeParent(skill);
+        let skillMatrixId = this.domainOptions.find(x => x.id == this.domainId).skillMatrixId;
+        this.router.navigate(['./script-viewer/' + skillMatrixId]);
     }
     /*End event functions*/
 
     /*Start helper functions */
-    createTree(): void {
-
-        // the id we use to add or remove the script
-        let scriptId = 'treegridScript';
-
-        // if the script is already added to the view lets remove it
-        if (this.isTreeCreated){
-            // remove script from dom
-            this.elementRef.nativeElement.removeChild(document.getElementById(scriptId));
-        }
-
-        // prepare the script element
-        let script = document.createElement('script');
-        script.id =  scriptId;
-        script.type = 'text/javascript';
-        script.innerHTML = '$(\'.uui-table.treegrid\').uui_tree_grid({ collapsed:false,padding_automation:false,padding:10 });';
-
-        // attach script element to the dom
-        this.elementRef.nativeElement.appendChild(script);
-
-        // set the flag to true
-        this.isTreeCreated = true;
+    private createTree(): void {
+        // calls this jQuery function to initialize the uui Tree Grid
+        jQuery('.uui-table.treegrid').uui_tree_grid({ collapsed: false,animate: true, padding_automation: false, padding: 0 });
     }
 
-    cascadeChilds(skill: SkillMatrixItem): void {
+    /* Verify or set childs selection when a Skill parent has changed*/
+    private cascadeChilds(skill: SkillMatrixItem): void {
+        // if the skill has no children we skip
         if (!skill.hasChildren) {
             return;
         }
 
+        // set the is selected parent flag for each child
         this.skillMatrixItems.filter(x => x.parentId == skill.id).forEach(x => {
             x.isSelected = skill.isSelected;
             this.cascadeChilds(x);
         });
+
+        // determines if the current skill has any child selected
+        skill.anyChildSelected = this.isAnyChildSelected(skill);
     }
 
-    cascadeParent(skill: SkillMatrixItem): void {
+    /* Verify or set childs selection when a Skill child has changed*/
+    private cascadeParent(skill: SkillMatrixItem): void {
+        // check if this is root skill
         if (skill.parentId == null) {
             return;
         }
 
+        // get the parent skill and double check if it is null
         let parent = this.skillMatrixItems.find(x => x.id == skill.parentId);
-        if (parent == null || parent.isSelected == skill.isSelected) {
+        if (parent == null) {
             return;
         }
 
-        let anyFalse = this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
+        // determines if the parent has any child selected
+        parent.anyChildSelected = this.isAnyChildSelected(parent);
 
-        parent.isSelected = !anyFalse;
+        // in the case the parent state is equal to the child skill state we skip
+        if (parent.isSelected == skill.isSelected) {
+            return;
+        }
 
+        // set the parent state acording to the children state
+        parent.isSelected = !this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
+
+        // evaluate the parent skill
         this.cascadeParent(parent);
     }
 
-    checkSearchButtonStatus(): void {
+    /* Function that returns true if the given skill has some child selected */
+    private isAnyChildSelected(parentSkill: SkillMatrixItem): boolean {
+        return this.skillMatrixItems.filter(x => x.parentId == parentSkill.id).some(x => x.isSelected);
+    }
+
+    // determines when the search button is enabled or not according to the dropdwns values
+    private checkSearchButtonStatus(): void {
         this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0 || this.domainId == 0);
     }
 
-    competencyComparer(first: ICompetency, second: ICompetency): number {
+    // ICompetency Comparer(for sorting purpose)
+    private competencyComparer(first: ICompetency, second: ICompetency): number {
         if (first.name > second.name) {
             return 1;
         }
@@ -241,7 +254,8 @@ export class EntryPointComponent {
         return 0;
     }
 
-    levelComparer(first: ILevel, second: ILevel): number {
+    // ILevel Comparer(for sorting purpose)
+    private levelComparer(first: ILevel, second: ILevel): number {
         if (first.name > second.name) {
             return 1;
         }
@@ -253,7 +267,8 @@ export class EntryPointComponent {
         return 0;
     }
 
-    domainComparer(first: IDomain, second: IDomain): number {
+    // IDomain Comparer(for sorting purpose)
+    private domainComparer(first: IDomain, second: IDomain): number {
         if (first.name > second.name) {
             return 1;
         }
