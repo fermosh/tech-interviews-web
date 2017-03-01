@@ -1,50 +1,37 @@
 <div class="report-template">
     <h3>List of Skills Checked</h3>
-    <br>
     <div *ngFor="let skill of interviewScript.skills">
-        <h5 class="skill-name">{{ skill.name }}</h5>
-        <span class="report-label">Score: </span><span>{{ getRatingBySkill(skill) | number:'1.0-1' }}</span><br><br>
-        <table>
-            <tbody>
-                <template ngFor let-question [ngForOf]="skill.questions" let-index="index">
-                    <tr>
-                        <td class="numberOfQuestion-cell">{{ index + 1 + ') ' }}</td>
-                        <td class="report-label">{{ question.question }}</td>
-                    </tr>
-                    <tr *ngIf="question.comments && !question.comments.length">
-                        <td>&nbsp;</td>
-                        <td>No comments.</td>
-                    </tr>
-                    <tr *ngFor="let comment of question.comments">
-                        <td>&nbsp;</td>
-                        <td>{{ comment.text }}</td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
+        <b><h6 class="skill-name">{{ skill.name }}</h6></b>
+        <span class="report-label"><i>Score: </i></span><span>{{ getRatingBySkill(skill) | number:'1.0-1' }}</span><br><br>
+        <ul>
+            <li *ngFor="let question of skill.questions; let index = index;">
+                <i>{{ index + 1 + ') ' + question.question }}</i>
+                <p *ngIf="question.comments && !question.comments.length">No comments.</p>
+                <p *ngFor="let comment of question.comments">{{ comment.text }}</p>
+            </li>
+        </ul>
         <br>
     </div>
     <br>
     <h3>Coding</h3>
-    <br>
     <template ngFor let-skill [ngForOf]="interviewScript.skills" let-index="index">
         <div *ngFor="let exercise of skill.exercises">
-            <h5>{{ exercise.title }}</h5>
+            <b><h6>{{ exercise.title }}</h6></b>
             <table>
                 <tbody>
                     <tr>
-                        <td class="report-label" style="width:80px;">Score:</td>
+                        <td class="report-label" style="width:80px;"><i>Score:</i></td>
                         <td>{{ exercise.rating }}</td>
                     </tr>
                     <tr>
-                        <td class="report-label">Skill:</td>
+                        <td class="report-label"><i>Skill:</i></td>
                         <td>{{ skill.name }}</td>
                     </tr>
                     <tr *ngIf="exercise.comments && !exercise.comments.length">
                         <td colspan="2">No comments.</td>
                     </tr>
                     <tr *ngFor="let comment of exercise.comments">
-                        <td class="report-label">Comments:</td>
+                        <td class="report-label"><i>Comments:</i></td>
                         <td>{{ comment.text }}</td>
                     </tr>
                 </tbody>
