@@ -18,8 +18,8 @@
 
     <button class="uui-button lime-green minus-margin-top {{ isSearchDisabled ? 'disable':'' }}" [disabled]="isSearchDisabled" (click)="onSearch()"><i class="fa fa-search"></i> Search</button>
 </div>
-<div [hidden]="!isSkillGridVisible" class="panel plus-margin-horizontal">
 
+<div [hidden]="!isSkillGridVisible" class="panel plus-margin-horizontal">
     <table class="uui-table treegrid hover small">
         <thead>
             <tr>
@@ -81,6 +81,6 @@
         </tbody>
     </table>
     <div class="panel plus-margin-horizontal plus-margin-vertical padding-bottom">
-        <button class="uui-button lime-green right-icon right-Button {{ isSearchDisabled ? 'disable':'' }}" (click)="onNext()" [disabled]="isSearchDisabled">Next<i class="fa fa-long-arrow-right"></i></button>
+        <button class="uui-button lime-green right-icon right-Button {{ isNextDisabled ? 'disable':'' }}" (click)="onNext()" [disabled]="isNextDisabled">Next<i class="fa fa-long-arrow-right"></i></button>
     </div>
 </div>
