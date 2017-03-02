@@ -2,8 +2,8 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 @Component({
     selector: 'tih-score',
-    templateUrl: 'score.component.html',
-    styleUrls: ['score.component.css']
+    templateUrl: './score.component.html',
+    styleUrls: ['./score.component.css']
 })
 
 export class ScoreComponent implements OnInit, OnChanges  {

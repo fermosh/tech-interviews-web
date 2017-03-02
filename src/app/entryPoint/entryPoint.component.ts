@@ -8,9 +8,9 @@ import { ILevel } from './level';
 import { CompetencyService } from './competency.service';
 import { LevelService } from './level.service';
 import { DomainService } from './domain.service';
-import { SkillMatrixService } from './SkillMatrix.service';
+import { SkillMatrixService } from './skill-matrix.service';
 
-import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
+import { SkillMatrixItem } from './../scriptViewer/classes/skillMatrixItem';
 
 declare var jQuery: any;
 

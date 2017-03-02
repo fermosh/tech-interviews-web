@@ -23,7 +23,7 @@ export class LevelService {
             .map(this.extractData)
             .catch(this.handleError);
     }
-    
+
     getLevel(id: number): Observable<ILevel> {
         if (id === 0) {
         return Observable.of(this.initializeProduct());

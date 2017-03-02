@@ -1,6 +1,6 @@
 /* Defines the skill matrix */
 import { ISkill } from './skill';
-import { ILevel } from '../../entryPoint/level';
+import { ILevel } from './../../entryPoint/level';
 
 export interface ISkillMatrix {
     id: number;

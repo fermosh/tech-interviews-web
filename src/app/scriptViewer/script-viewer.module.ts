@@ -7,7 +7,7 @@ import { ReportViewerComponent } from './components/report-viewer.component';
 import { QuestionFilterPipe } from './pipes/question-filter.pipe';
 import { ExerciseFilterPipe } from './pipes/exercise-filter.pipe';
 import { ScriptViewerService } from './script-viewer.service';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from './../shared/shared.module';
 
 @NgModule({
     imports: [
