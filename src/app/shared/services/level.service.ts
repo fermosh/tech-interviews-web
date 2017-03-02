@@ -10,65 +10,68 @@ import 'rxjs/add/operator/filter';
 
 import 'rxjs/add/observable/of';
 
-import { ITemplate } from './interfaces/template';
+import { ILevel } from '../interfaces/level';
 
 @Injectable()
-export class TemplateService {
-    private baseUrl = 'api/templates';
+export class LevelService {
+    private baseUrl = 'api/levels';
 
     constructor(private http: Http) { }
 
-    getTemplates(): Observable<ITemplate[]> {
+    getLevels(): Observable<ILevel[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getTemplate(id: number): Observable<ITemplate> {
+    getLevel(id: number): Observable<ILevel> {
         if (id === 0) {
-            return Observable.of(this.initializeTemplate());
+        return Observable.of(this.initializeProduct());
+        // return Observable.create((observer: any) => {
+        //     observer.next(this.initializeProduct());
+        //     observer.complete();
+        // });
         };
-
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getTemplate' + JSON.stringify(data)))
+            .do(data => console.log('getLevel: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    deleteTemplate(id: number): Observable<Response> {
+    deleteLevel(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteTemplate: ' + JSON.stringify(data)))
+            .do(data => console.log('deleteLevel: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    saveTemplate(template: ITemplate): Observable<ITemplate> {
+    saveLevel(level: ILevel): Observable<ILevel> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (template.id === 0) {
-            return this.createTemplate(template, options);
+        if (level.id === 0) {
+            return this.createLevel(level, options);
         }
-        return this.updateTemplate(template, options);
+        return this.updateLevel(level, options);
     }
 
-    private createTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
-        template.id = undefined;
-        return this.http.post(this.baseUrl, template, options)
+    private createLevel(level: ILevel, options: RequestOptions): Observable<ILevel> {
+        level.id = undefined;
+        return this.http.post(this.baseUrl, level, options)
             .map(this.extractData)
-            .do(data => console.log('createTemplate: ' + JSON.stringify(data)))
+            .do(data => console.log('createLevel: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    private updateTemplate(product: ITemplate, options: RequestOptions): Observable<ITemplate> {
+    private updateLevel(product: ILevel, options: RequestOptions): Observable<ILevel> {
         const url = `${this.baseUrl}/${product.id}`;
         return this.http.put(url, product, options)
             .map(() => product)
-            .do(data => console.log('updateTemplate: ' + JSON.stringify(data)))
+            .do(data => console.log('updateLevel: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -84,10 +87,13 @@ export class TemplateService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeTemplate(): ITemplate {
+    initializeProduct(): ILevel {
         // Return an initialized object
         return {
-            id: 0, skillIds: []
+            id: 0,
+            name: null,
+            description: null,
+            competencyId: 0
         };
     }
 }

@@ -1,23 +1,21 @@
 import { Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ICompetency } from '../shared/interfaces/competency';
+import { IDomain } from '../shared/interfaces/domain';
+import { ILevel } from '../shared/interfaces/level';
 
-import { ICompetency } from './competency';
-import { IDomain } from './domain';
-import { ILevel } from './level';
+import { CompetencyService } from '../shared/services/competency.service';
+import { LevelService } from '../shared/services/level.service';
+import { DomainService } from '../shared/services/domain.service';
+import { SkillMatrixService } from '../shared/services/SkillMatrix.service';
+import { TemplateService } from '../shared/services/template.service';
 
-import { CompetencyService } from './competency.service';
-import { LevelService } from './level.service';
-import { DomainService } from './domain.service';
-import { SkillMatrixService } from './SkillMatrix.service';
-import { TemplateService } from './template.service';
-
-import { SkillMatrixItem } from '../scriptViewer/classes/skillMatrixItem';
+import { SkillMatrixItem } from './classes/skillMatrixItem';
 
 declare var jQuery: any;
 
 @Component({
-    selector: 'ip-entryPoint',
     templateUrl: './entryPoint.component.html',
     styleUrls: ['./entryPoint.component.css']
 })

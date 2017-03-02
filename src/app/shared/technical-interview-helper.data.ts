@@ -1,10 +1,10 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-import { ICompetency } from '../entryPoint/competency';
+import { ICompetency } from './interfaces/competency';
 import { ISkillMatrix } from '../scriptViewer/interfaces/skill-matrix';
-import { IDomain } from '../entryPoint/domain';
-import { ILevel } from '../entryPoint/level';
-import { ITemplate } from '../entryPoint/interfaces/template';
+import { IDomain } from './interfaces/domain';
+import { ILevel } from './interfaces/level';
+import { ITemplate } from './interfaces/template';
 
 export class TechnicalInterviewData implements InMemoryDbService {
 
