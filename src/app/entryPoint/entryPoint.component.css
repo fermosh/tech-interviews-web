@@ -43,3 +43,8 @@ tr[class="treegrid-child"] td div p.uui-checkbox{
     border-width: 3px;
     background: #666666;
 }
+
+.panel select
+{
+    width: 220px;
+}
