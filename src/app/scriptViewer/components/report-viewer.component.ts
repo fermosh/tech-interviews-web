@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ISkillMatrix } from '../interfaces/skill-matrix';
-import { ISkill } from '../interfaces/skill';
-import { IQuestion } from '../interfaces/question';
-import { IExercise } from '../interfaces/exercise';
-import { ScriptViewerService } from '../script-viewer.service';
+import { ISkillMatrix } from './../interfaces/skill-matrix';
+import { ISkill } from './../interfaces/skill';
+import { ScriptViewerService } from './../script-viewer.service';
 
 @Component({
     selector: 'tih-report-viewer',

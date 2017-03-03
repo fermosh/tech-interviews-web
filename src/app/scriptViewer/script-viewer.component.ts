@@ -19,14 +19,14 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: ISkillMatrix;
     errorMessage: string;
     private sub: Subscription;
-    private isScriptViewerRendered: boolean = false;
-    private isOnPreview: boolean = false;
+    private isScriptViewerRendered: boolean;
+    private isOnPreview: boolean;
 
-    constructor(private _route: ActivatedRoute,
-        private _scriptViewerService: ScriptViewerService) { }
+    constructor(private route: ActivatedRoute,
+        private scriptViewerService: ScriptViewerService) { }
 
     ngOnInit(): void {
-        this.sub = this._route.params.subscribe(
+        this.sub = this.route.params.subscribe(
             params => {
                 let id = +params['templateId'];
                 this.getInterviewScript(id);
@@ -51,7 +51,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     }
 
     getInterviewScript(id: number) {
-        this._scriptViewerService.getScriptViewer(id)
+        this.scriptViewerService.getScriptViewer(id)
             .subscribe(scriptViewer => this.scriptViewer = scriptViewer,
             error => this.errorMessage = <any>error);
     }
@@ -84,11 +84,11 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     /* SKILL EVENTS */
 
     getRatingBySkill(skill: ISkill): number {
-        return this._scriptViewerService.getRatingBySkill(skill);
+        return this.scriptViewerService.getRatingBySkill(skill);
     }
 
     getTopicsBySkill(skill: ISkill): string {
-        let topicList: string = '';
+        let topicList: string;
 
         if (skill.topics && skill.topics.length > 0) {
             for (let topic of skill.topics) {

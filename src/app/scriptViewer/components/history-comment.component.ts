@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { IComment } from '../interfaces/comment';
+import { IComment } from './../interfaces/comment';
 
 @Component({
     selector: 'tih-history-comment',
-    templateUrl: 'history-comment.component.html',
-    styleUrls: ['history-comment.component.css']
+    templateUrl: './history-comment.component.html',
+    styleUrls: ['./history-comment.component.css']
 })
 
 export class HistoryCommentComponent {

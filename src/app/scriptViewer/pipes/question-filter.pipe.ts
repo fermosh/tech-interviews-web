@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { IQuestion } from '../interfaces/question';
+import { IQuestion } from './../interfaces/question';
 
 @Pipe({
     name: 'questionFilter',
