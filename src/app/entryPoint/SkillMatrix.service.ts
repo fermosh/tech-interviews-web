@@ -8,7 +8,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { ISkillMatrix } from '../../scriptViewer/interfaces/skill-matrix';
+import { ISkillMatrix } from '../scriptViewer/interfaces/skill-matrix';
 
 @Injectable()
 export class SkillMatrixService {

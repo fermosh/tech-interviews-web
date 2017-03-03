@@ -8,7 +8,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { ICompetency } from '../interfaces/competency';
+import { ICompetency } from './competency';
 
 @Injectable()
 export class CompetencyService {

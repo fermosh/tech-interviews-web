@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { IDomain } from '../../shared/interfaces/domain';
+import { IDomain } from '../domain';
 
 @Pipe({
     name: 'domainFilter'
@@ -11,7 +11,7 @@ export class DomainFilterPipe implements PipeTransform {
         if (!items) {
             return [];
         }
-
+        
         return items.filter(i => i.levelId == levelId);
     }
 }

@@ -8,7 +8,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { IDomain } from '../interfaces/Domain';
+import { IDomain } from './Domain';
 
 @Injectable()
 export class DomainService {
