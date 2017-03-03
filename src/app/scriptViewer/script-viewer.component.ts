@@ -18,6 +18,7 @@ declare var jQuery: any;
 export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: ISkillMatrix;
     errorMessage: string;
+    selectedSkill: ISkill;
     private sub: Subscription;
     private isScriptViewerRendered: boolean;
     private isOnPreview: boolean;
@@ -78,6 +79,10 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             jQuery('#uuiCarousel').carousel('next');
         }
         this.isOnPreview = !this.isOnPreview;
+    }
+
+    setSelectedSkill(skill: ISkill): void {
+        this.selectedSkill = skill;
     }
 
     // ----------------------------------------------------------------------------------
