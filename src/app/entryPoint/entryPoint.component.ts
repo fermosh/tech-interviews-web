@@ -219,6 +219,9 @@ export class EntryPointComponent {
 
     /* Verify or set childs selection when a Skill child has changed*/
     private cascadeParent(skill: SkillMatrixItem): void {
+
+        skill.anyChildSelected = this.isAnyChildSelected(skill);
+
         // check if this is root skill
         if (skill.parentId == null) {
             return;
@@ -234,12 +237,10 @@ export class EntryPointComponent {
         parent.anyChildSelected = this.isAnyChildSelected(parent);
 
         // in the case the parent state is equal to the child skill state we skip
-        if (parent.isSelected == skill.isSelected) {
-            return;
+        if (parent.isSelected !== skill.isSelected) {
+            // set the parent state acording to the children state
+            parent.isSelected = !this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
         }
-
-        // set the parent state acording to the children state
-        parent.isSelected = !this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
 
         // evaluate the parent skill
         this.cascadeParent(parent);
@@ -252,7 +253,7 @@ export class EntryPointComponent {
 
     /* Function that returns true if the given skill has some child selected */
     private isAnyChildSelected(parentSkill: SkillMatrixItem): boolean {
-        return this.skillMatrixItems.filter(x => x.parentId == parentSkill.id).some(x => x.isSelected);
+        return this.skillMatrixItems.filter(x => x.parentId == parentSkill.id).some(x => x.isSelected || x.anyChildSelected);
     }
 
     // determines when the search button is enabled or not according to the dropdwns values
