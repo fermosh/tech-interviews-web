@@ -181,7 +181,7 @@ export class EntryPointComponent {
     /*Start helper functions */
     private createTree(): void {
         // calls this jQuery function to initialize the uui Tree Grid
-        jQuery('.uui-table.treegrid').uui_tree_grid({ collapsed: false,animate: true, padding_automation: false, padding: 0 });
+        jQuery('.uui-table.treegrid').uui_tree_grid({ collapsed: false, animate: true, padding_automation: false, padding: 0 });
     }
 
     /* Verify or set childs selection when a Skill parent has changed*/
@@ -220,13 +220,11 @@ export class EntryPointComponent {
         // determines if the parent has any child selected
         parent.anyChildSelected = this.isAnyChildSelected(parent);
 
-        // // in the case the parent state is equal to the child skill state we skip
-        // if (parent.isSelected == skill.isSelected) {
-        //     return;
-        // }
-
-        // set the parent state acording to the children state
-        parent.isSelected = !this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
+        // in the case the parent state is equal to the child skill state we skip
+        if (parent.isSelected !== skill.isSelected) {
+            // set the parent state acording to the children state
+            parent.isSelected = !this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
+        }
 
         // evaluate the parent skill
         this.cascadeParent(parent);
