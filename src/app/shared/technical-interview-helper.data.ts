@@ -215,32 +215,68 @@ export class TechnicalInterviewData implements InMemoryDbService {
             {
                 id: 1,
                 text: `What's the purpose of standards/conventions in .NET C#?`,
-                tags: ['coding standards']
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
             },
             {
                 id: 2,
                 text: 'When to use string and when StringBuilder?',
-                tags: ['coding standards']
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
             },
             {
                 id: 3,
                 text: 'When to use var and when the exact data type?',
-                tags: ['coding standards']
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
             },
             {
                 id: 4,
                 text: 'What is SOLID? Explain the principles and provide examples',
-                tags: ['coding standards']
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
             },
             {
                 id: 5,
                 text: 'What is Value Type and Reference Type?',
-                tags: ['coding standards']
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
             },
             {
                 id: 6,
                 text: 'What is Boxing and Un-Boxing?',
-                tags: ['coding standards']
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
             }
         ];
 
