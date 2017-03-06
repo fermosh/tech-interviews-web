@@ -1,0 +1,101 @@
+    <div class="question-list-header">
+        <div class="container">
+            <div class="final-score-box">
+                <h2><span class="final-score-label-value">{{ getFinalScore() | number:'1.0-1' }}</span></h2><br>
+                <span class="final-score-label-text">Final Score</span>
+            </div>
+            <div class="question-list-title-box">
+                <h2>Question List</h2>
+                <span class="competency-level-label-value">{{ scriptViewer.level.name }} - {{ scriptViewer.level.description }}</span>
+            </div>
+        </div>
+    </div>
+    <br>
+    <table class="uui-table dynamic stripe records-per-page search showing-pages paging">
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let question of questions | questionFilter:listFilter'>
+                <td><a [routerLink]="['/question', question.id]">
+                    {{question.text}}
+                    </a>
+                </td>
+                <td>{{ question.tags[0] | lowercase }}</td>
+                <td>
+                    <a class="btn btn-primary" 
+                        [routerLink]="['/questionEdit', question.id]">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        var tDyn = $('.uui-table.dynamic'),
+            domElements = '';
+        tDyn.addClass('dataTable');
+        if (tDyn.hasClass('records-per-page')) {
+            domElements += 'l';
+        }
+        else {domElements += '';}
+        if (tDyn.hasClass('search')) {
+            domElements += 'f';
+        }
+        domElements += '<t>';
+        if (tDyn.hasClass('showing-pages')) {
+            domElements += 'i';
+        }
+        if (tDyn.hasClass('paging')) {
+            domElements += 'p';
+        }
+        tDyn.dataTable( {
+            'dom': domElements
+        });
+    </script>
+    <!--<div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]='listFilter' />
+            </div>
+        </div>
+        <div class='row' *ngIf='listFilter'>
+            <div class='col-md-6'>
+                <h3>Filtered by: {{listFilter}} </h3>
+            </div>
+        </div>
+
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+
+        <div class='table-responsive'>
+            <table class='table'
+                   *ngIf='questions && questions.length'>
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Tags</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let question of questions | questionFilter:listFilter'>
+                        <td><a [routerLink]="['/question', question.id]">
+                            {{question.text}}
+                            </a>
+                        </td>
+                        <td>{{ question.tags[0] | lowercase }}</td>
+                       <td>
+                            <a class="btn btn-primary" 
+                               [routerLink]="['/questionEdit', question.id]">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->

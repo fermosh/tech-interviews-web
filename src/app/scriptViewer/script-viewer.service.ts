@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { ISkillMatrix } from './interfaces/skill-matrix'
+import { ISkillMatrix } from './interfaces/skill-matrix';
 import { ISkill } from './interfaces/skill';
-import { IQuestion } from './interfaces/question';
-import { IExercise } from './interfaces/exercise';
+import { IInterviewQuestion } from './interfaces/interview-question';
+import { IInterviewExercise } from './interfaces/interview-exercise';
 
 @Injectable()
 
@@ -35,8 +35,8 @@ export class ScriptViewerService {
     }
 
     getRatingBySkill(skill: ISkill): number {
-        let selectedQuestions: IQuestion[] = skill.questions.filter(q => q.selected);
-        let selectedExercises: IExercise[] = skill.exercises.filter(e => e.selected);
+        let selectedQuestions: IInterviewQuestion[] = skill.interviewQuestions.filter(q => q.selected);
+        let selectedExercises: IInterviewExercise[] = skill.interviewExercises.filter(e => e.selected);
         let sum: number = selectedQuestions.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0)
                           + selectedExercises.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0);
         let numberOfItems: number = selectedQuestions.length + selectedExercises.length;

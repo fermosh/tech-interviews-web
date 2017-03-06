@@ -8,68 +8,68 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { ICompetency } from './competency';
+import { IQuestion } from './question';
 
 @Injectable()
-export class CompetencyService {
-    private baseUrl = 'api/competencies';
+export class QuestionService {
+    private baseUrl = 'api/questions';
 
     constructor(private http: Http) { }
 
-    getCompetencies(): Observable<ICompetency[]> {
+    getQuestions(): Observable<IQuestion[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getCompetency(id: number): Observable<ICompetency> {
+    getQuestion(id: number): Observable<IQuestion> {
         if (id === 0) {
-        return Observable.of(this.initializeCompetency());
+        return Observable.of(this.initializeQuestion());
         // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeCompetency());
+        //     observer.next(this.initializeQuestion());
         //     observer.complete();
         // });
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getCompetency: ' + JSON.stringify(data)))
+            .do(data => console.log('getQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    deleteCompetency(id: number): Observable<Response> {
+    deleteQuestion(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteCompetency: ' + JSON.stringify(data)))
+            .do(data => console.log('deleteQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    saveCompetency(competency: ICompetency): Observable<ICompetency> {
+    saveQuestion(question: IQuestion): Observable<IQuestion> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (competency.id === 0) {
-            return this.createCompetency(competency, options);
+        if (question.id === 0) {
+            return this.createQuestion(question, options);
         }
-        return this.updateCompetency(competency, options);
+        return this.updateQuestion(question, options);
     }
 
-    private createCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        competency.id = undefined;
-        return this.http.post(this.baseUrl, competency, options)
+    private createQuestion(question: IQuestion, options: RequestOptions): Observable<IQuestion> {
+        question.id = undefined;
+        return this.http.post(this.baseUrl, question, options)
             .map(this.extractData)
-            .do(data => console.log('createCompetency: ' + JSON.stringify(data)))
+            .do(data => console.log('createQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    private updateCompetency(Competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        const url = `${this.baseUrl}/${Competency.id}`;
-        return this.http.put(url, Competency, options)
-            .map(() => Competency)
-            .do(data => console.log('updateCompetency: ' + JSON.stringify(data)))
+    private updateQuestion(question: IQuestion, options: RequestOptions): Observable<IQuestion> {
+        const url = `${this.baseUrl}/${question.id}`;
+        return this.http.put(url, question, options)
+            .map(() => question)
+            .do(data => console.log('updateQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -85,11 +85,12 @@ export class CompetencyService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeCompetency(): ICompetency {
+    initializeQuestion(): IQuestion {
         // Return an initialized object
         return {
             id: 0,
-            name: null
+            text: '',
+            answer: null
         };
     }
 }
