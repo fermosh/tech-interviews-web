@@ -1,6 +1,6 @@
 /* Defines question entity */
 import { ISkill } from './../scriptViewer/interfaces/skill';
-import { ITag } from './tag';
+import { ITag } from './../shared/tag';
 
 export interface IQuestion {
     id: number;

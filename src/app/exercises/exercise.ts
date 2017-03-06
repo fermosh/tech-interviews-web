@@ -1,5 +1,5 @@
 /* Defines question entity */
-import { ITag } from './tag';
+import { ITag } from './../shared/tag';
 
 export interface IExercise {
     id: number;
