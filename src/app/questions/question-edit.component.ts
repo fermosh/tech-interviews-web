@@ -118,7 +118,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             questionText: this.question.text,
             questionAnswer: this.question.answer,
         });
-        this.questionForm.setControl('tags', this.fb.array(this.question.skills || []));
+        this.questionForm.setControl('tags', this.fb.array(this.question.tags || []));
     }
 
     deleteQuestion(): void {

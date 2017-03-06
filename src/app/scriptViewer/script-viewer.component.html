@@ -44,7 +44,7 @@
                                         <!-- QUESTIONS SET -->
                                         <table class="table" *ngIf='skill.interviewQuestions && skill.interviewQuestions.length'>
                                             <tbody>
-                                                <tr *ngIf="skill.questions && (skill.questions| questionFilter : 'selected' : 'true').length === 0">
+                                                <tr *ngIf="skill.interviewQuestions && (skill.interviewQuestions| questionFilter : 'selected' : 'true').length === 0">
                                                     <td class="table-cell">No questions selected.</td>
                                                 </tr>
                                                 <tr *ngFor="let question of skill.interviewQuestions | questionFilter : 'selected' : 'true'">
