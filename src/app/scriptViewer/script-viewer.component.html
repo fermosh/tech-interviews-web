@@ -42,14 +42,16 @@
                                             <span>Questions & Exercises</span>
                                         </div>
                                         <!-- QUESTIONS SET -->
-                                        <span *ngIf="skill.questions && (skill.questions| questionFilter : 'selected' : 'true').length === 0">No questions selected.</span>
                                         <table class="table" *ngIf='skill.questions && skill.questions.length'>
                                             <tbody>
+                                                <tr *ngIf="skill.questions && (skill.questions| questionFilter : 'selected' : 'true').length === 0">
+                                                    <td class="table-cell">No questions selected.</td>
+                                                </tr>
                                                 <tr *ngFor="let question of skill.questions | questionFilter : 'selected' : 'true'">
                                                     <td>
                                                         <table>
                                                             <tr>
-                                                                <td>{{ question.question }}</td>
+                                                                <td class="table-cell">{{ question.question }}</td>
                                                                 <td class="rating-cell">
                                                                     <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                                 </td>
@@ -77,6 +79,13 @@
                         <br>
                         <!-- EXERCISES SET -->
                         <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
+                        <table class="table" *ngIf="getIndexFirstTab() === -1">
+                            <tbody>
+                                <tr>
+                                    <td class="table-cell">No exercises selected.</td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <section class="uui-tabs" *ngIf="getIndexFirstTab() >= 0">
                             <div class="tabs-heading">
                                 <ul class="nav nav-tabs">

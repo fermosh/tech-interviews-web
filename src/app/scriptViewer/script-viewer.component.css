@@ -143,6 +143,10 @@
     width: 115px;
 }
 
+.question-picker-button:hover {
+    text-shadow: 1px 1px #DDD;
+}
+
 /* EXERCISE SETTING */
 
 .ex-tab-pane {

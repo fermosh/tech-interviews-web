@@ -664,7 +664,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 1,
                                 question: 'Whats the purpose of standards/conventions in .NET C#?',
                                 answer: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             },
@@ -672,7 +672,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 2,
                                 question: 'When to use string and when StringBuilder?',
                                 answer: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             },
@@ -680,7 +680,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 3,
                                 question: 'When to use var and when the exact data type?',
                                 answer: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             }
@@ -778,7 +778,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 1,
                                 question: 'What is SOLID? Explain the principles and provide examples',
                                 answer: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             },
@@ -786,7 +786,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 2,
                                 question: 'What is Value Type and Reference Type?',
                                 answer: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             },
@@ -794,7 +794,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 3,
                                 question: 'What is Boxing and Un-Boxing?',
                                 answer: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             }
@@ -808,7 +808,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                     such as madam or kayak. Write an function that receives an string
                                     parameters and return true if it is a palindrome.`,
                                 solution: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             },
@@ -819,7 +819,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                     Curly brackets or braces, [] Square brackets. Implement an algorithm
                                     to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
                                 solution: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             }
@@ -856,7 +856,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 1,
                                 question: 'Explain SCRUM',
                                 answer: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             },
@@ -864,7 +864,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 2,
                                 question: 'How do you face or deal with problems in an Agile project?',
                                 answer: '',
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             },
@@ -872,7 +872,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 3,
                                 answer: '',
                                 question: `When you need to solve something you don't know, how do you deal with it?`,
-                                selected: true,
+                                selected: false,
                                 rating: 0,
                                 comments: []
                             }
