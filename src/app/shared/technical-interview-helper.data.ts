@@ -1,13 +1,16 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-import { ICompetency } from './../entryPoint/competency';
-import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
-import { IDomain } from './../entryPoint/domain';
-import { ILevel } from './../entryPoint/level';
+import { ICompetency } from '../entryPoint/competency';
+import { ISkillMatrix } from '../scriptViewer/interfaces/skill-matrix';
+import { IDomain } from '../entryPoint/domain';
+import { ILevel } from '../entryPoint/level';
+import { ITemplate } from '../entryPoint/interfaces/template';
 
 export class TechnicalInterviewData implements InMemoryDbService {
 
     createDb() {
+        let templates: ITemplate[] = [];
+
         let competencies: ICompetency[] = [
             {
                 id: 1,
@@ -1179,6 +1182,6 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     }]
             }];
 
-        return { interviewScriptData, competencies, levels, domains, skillMatrix };
+        return { interviewScriptData, competencies, levels, domains, skillMatrix, templates };
     }
 }

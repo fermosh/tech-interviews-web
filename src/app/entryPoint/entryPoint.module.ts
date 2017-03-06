@@ -6,6 +6,7 @@ import { CompetencyService } from './competency.service';
 import { LevelService } from './level.service';
 import { DomainService } from './domain.service';
 import { SkillMatrixService } from './skill-matrix.service';
+import { TemplateService } from './template.service';
 import { EntryPointComponent } from './entryPoint.component';
 
 import { LevelFilterPipe } from './pipes/level-filter.pipe';
@@ -26,7 +27,8 @@ import { SharedModule } from './../shared/shared.module';
     CompetencyService,
     LevelService,
     DomainService,
-    SkillMatrixService
+    SkillMatrixService,
+    TemplateService
   ]
 })
 

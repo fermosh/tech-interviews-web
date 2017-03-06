@@ -12,6 +12,6 @@ export class LevelFilterPipe implements PipeTransform {
             return [];
         }
 
-        return items.filter(i => i.competencyId === competencyId);
+        return items.filter(i => i.competencyId == competencyId);
     }
 }
