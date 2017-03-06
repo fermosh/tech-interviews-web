@@ -4,6 +4,7 @@ import { ICompetency } from './../entryPoint/competency';
 import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
 import { IDomain } from './../entryPoint/domain';
 import { ILevel } from './../entryPoint/level';
+import { IQuestion } from './../questions/question';
 
 export class TechnicalInterviewData implements InMemoryDbService {
 
@@ -207,6 +208,75 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 name: 'L3',
                 description: '',
                 competencyId: 2
+            }
+        ];
+
+        let questions: IQuestion[] = [
+            {
+                id: 1,
+                text: `What's the purpose of standards/conventions in .NET C#?`,
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                text: 'When to use string and when StringBuilder?',
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
+            },
+            {
+                id: 3,
+                text: 'When to use var and when the exact data type?',
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
+            },
+            {
+                id: 4,
+                text: 'What is SOLID? Explain the principles and provide examples',
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
+            },
+            {
+                id: 5,
+                text: 'What is Value Type and Reference Type?',
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
+            },
+            {
+                id: 6,
+                text: 'What is Boxing and Un-Boxing?',
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
             }
         ];
 
@@ -659,33 +729,39 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: false
                             }
                         ],
-                        questions: [
+                        interviewQuestions: [
                             {
-                                id: 1,
-                                question: 'Whats the purpose of standards/conventions in .NET C#?',
-                                answer: '',
-                                selected: false,
+                                question: {
+                                    id: 1,
+                                    text: `What's the purpose of standards/conventions in .NET C#?`,
+                                    answer: ''
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             },
                             {
-                                id: 2,
-                                question: 'When to use string and when StringBuilder?',
-                                answer: '',
-                                selected: false,
+                                question: {
+                                    id: 2,
+                                    text: 'When to use string and when StringBuilder?',
+                                    answer: '',
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             },
                             {
-                                id: 3,
-                                question: 'When to use var and when the exact data type?',
-                                answer: '',
-                                selected: false,
+                                question: {
+                                    id: 3,
+                                    text: 'When to use var and when the exact data type?',
+                                    answer: '',
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             }
                         ],
-                        exercises: []
+                        interviewExercises: []
                     },
                     {
                         id: 2,
@@ -773,53 +849,63 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: true
                             }
                         ],
-                        questions: [
+                        interviewQuestions: [
                             {
-                                id: 1,
-                                question: 'What is SOLID? Explain the principles and provide examples',
-                                answer: '',
-                                selected: false,
+                                question: {
+                                    id: 1,
+                                    text: 'What is SOLID? Explain the principles and provide examples',
+                                    answer: ''
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             },
                             {
-                                id: 2,
-                                question: 'What is Value Type and Reference Type?',
-                                answer: '',
-                                selected: false,
+                                question: {
+                                    id: 2,
+                                    text: 'What is Value Type and Reference Type?',
+                                    answer: '',
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             },
                             {
-                                id: 3,
-                                question: 'What is Boxing and Un-Boxing?',
-                                answer: '',
-                                selected: false,
+                                question: {
+                                    id: 3,
+                                    text: 'What is Boxing and Un-Boxing?',
+                                    answer: '',
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             }
                         ],
-                        exercises: [
+                        interviewExercises: [
                             {
-                                id: 1,
-                                title: 'Palindrome',
-                                description: `A palindrome is a word, phrase, number, or other
-                                    sequence of characters which reads the same backward or forward,
-                                    such as madam or kayak. Write an function that receives an string
-                                    parameters and return true if it is a palindrome.`,
-                                solution: '',
-                                selected: false,
+                                exercise: {
+                                    id: 1,
+                                    title: 'Palindrome',
+                                    text: `A palindrome is a word, phrase, number, or other
+                                        sequence of characters which reads the same backward or forward,
+                                        such as madam or kayak. Write an function that receives an string
+                                        parameters and return true if it is a palindrome.`,
+                                    solution: ''
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             },
                             {
-                                id: 2,
-                                title: 'Balanced Brakets',
-                                description: `Type of Brackets: () Round brackets or parentheses, {}
-                                    Curly brackets or braces, [] Square brackets. Implement an algorithm
-                                    to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
-                                solution: '',
-                                selected: false,
+                                exercise: {
+                                    id: 2,
+                                    title: 'Balanced Brakets',
+                                    text: `Type of Brackets: () Round brackets or parentheses, {}
+                                        Curly brackets or braces, [] Square brackets. Implement an algorithm
+                                        to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
+                                    solution: '',
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             }
@@ -851,33 +937,39 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: true
                             }
                         ],
-                        questions: [
+                        interviewQuestions: [
                             {
-                                id: 1,
-                                question: 'Explain SCRUM',
-                                answer: '',
-                                selected: false,
+                                question: {
+                                    id: 7,
+                                    text: 'Explain SCRUM',
+                                    answer: '',
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             },
                             {
-                                id: 2,
-                                question: 'How do you face or deal with problems in an Agile project?',
-                                answer: '',
-                                selected: false,
+                                question: {
+                                    id: 8,
+                                    text: 'How do you face or deal with problems in an Agile project?',
+                                    answer: '',
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             },
                             {
-                                id: 3,
-                                answer: '',
-                                question: `When you need to solve something you don't know, how do you deal with it?`,
-                                selected: false,
+                                question: {
+                                    id: 9,
+                                    text: `When you need to solve something you don't know, how do you deal with it?`,
+                                    answer: ''
+                                },
+                                selected: true,
                                 rating: 0,
                                 comments: []
                             }
                         ],
-                        exercises: []
+                        interviewExercises: []
                     }]
             },
             {
@@ -922,33 +1014,39 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: false
                             }
                         ],
-                        questions: [
+                        interviewQuestions: [
                             {
-                                id: 1,
-                                question: `What's the purpose of standards/conventions in .NET C#?`,
-                                answer: '',
+                                question: {
+                                    id: 1,
+                                    text: `What's the purpose of standards/conventions in .NET C#?`,
+                                    answer: ''
+                                },
                                 selected: true,
                                 rating: 4.1,
                                 comments: []
                             },
                             {
-                                id: 2,
-                                question: 'When to use string and when StringBuilder?',
-                                answer: '',
+                                question: {
+                                    id: 2,
+                                    text: 'When to use string and when StringBuilder?',
+                                    answer: '',
+                                },
                                 selected: true,
                                 rating: 3,
                                 comments: []
                             },
                             {
-                                id: 3,
-                                question: 'When to use var and when the exact data type?',
-                                answer: '',
+                                question: {
+                                    id: 3,
+                                    text: 'When to use var and when the exact data type?',
+                                    answer: '',
+                                },
                                 selected: true,
                                 rating: 4,
                                 comments: []
                             }
                         ],
-                        exercises: []
+                        interviewExercises: []
                     },
                     {
                         id: 2,
@@ -1036,75 +1134,92 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: true
                             }
                         ],
-                        questions: [
+                        interviewQuestions: [
                             {
-                                id: 1,
-                                question: 'What is SOLID? Explain the principles and provide examples',
-                                answer: '',
+                                question: {
+                                    id: 1,
+                                    text: 'What is SOLID? Explain the principles and provide examples',
+                                    answer: ''
+                                },
                                 selected: true,
                                 rating: 3,
-                                comments: [{
-                                    text: `He did had an overall idea of the 5 principles but he was not able 
-                                        to explain nor them properly`,
-                                    user: `Victor Parra`,
-                                    date: new Date(`Feb 22, 2017, 4:54:35 PM`)
-                                }]
+                                comments: [
+                                    {
+                                        text: `He did had an overall idea of the 5 principles but he was not able 
+                                            to explain nor them properly`,
+                                        user: `Victor Parra`,
+                                        date: new Date(`Feb 22, 2017, 4:54:35 PM`)
+                                    }
+                                ]
                             },
                             {
-                                id: 2,
-                                question: 'What is Value Type and Reference Type?',
-                                answer: '',
+                                question: {
+                                    id: 2,
+                                    text: 'What is Value Type and Reference Type?',
+                                    answer: '',
+                                },
                                 selected: true,
                                 rating: 4,
-                                comments: [{
-                                    text: `He did explained on detail memory allocation process and 
-                                        how the runtime mamange primitives and objects...`,
-                                    user: `Victor Parra`,
-                                    date: new Date(`Feb 22, 2017, 4:35:12 PM`)
-                                }]
+                                comments: [
+                                    {
+                                        text: `He did explained on detail memory allocation process and 
+                                            how the runtime mamange primitives and objects...`,
+                                        user: `Victor Parra`,
+                                        date: new Date(`Feb 22, 2017, 4:35:12 PM`)
+                                    }
+                                ]
                             },
                             {
-                                id: 3,
-                                question: 'What is Boxing and Un-Boxing?',
-                                answer: '',
+                                question: {
+                                    id: 3,
+                                    text: 'What is Boxing and Un-Boxing?',
+                                    answer: '',
+                                },
                                 selected: true,
                                 rating: 4,
                                 comments: []
                             }
                         ],
-                        exercises: [
+                        interviewExercises: [
                             {
-                                id: 1,
-                                title: 'Palindrome',
-                                description: `A palindrome is a word, phrase, number, or other
-                                    sequence of characters which reads the same backward or forward,
-                                    such as madam or kayak. Write an function that receives an string
-                                    parameters and return true if it is a palindrome.`,
-                                solution: '',
+                                exercise: {
+                                    id: 1,
+                                    title: 'Palindrome',
+                                    text: `A palindrome is a word, phrase, number, or other
+                                        sequence of characters which reads the same backward or forward,
+                                        such as madam or kayak. Write an function that receives an string
+                                        parameters and return true if it is a palindrome.`,
+                                    solution: ''
+                                },
                                 selected: true,
                                 rating: 4,
-                                comments: [{
-                                    text: `Followed Microsoft's coding standards, applied SOLID principles, 
-                                        and good clean overall coding`,
-                                    user: `Victor Parra`,
-                                    date: new Date(`Feb 23, 2017, 12:26:55 PM`)
-                                }]
+                                comments: [
+                                    {
+                                        text: `Followed Microsoft's coding standards, applied SOLID principles, 
+                                            and good clean overall coding`,
+                                        user: `Victor Parra`,
+                                        date: new Date(`Feb 23, 2017, 12:26:55 PM`)
+                                    }
+                                ]
                             },
                             {
-                                id: 2,
-                                title: 'Balanced Brakets',
-                                description: `Type of Brackets: () Round brackets or parentheses, {}
-                                    Curly brackets or braces, [] Square brackets. Implement an algorithm
-                                    to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
-                                solution: '',
+                                exercise: {
+                                    id: 2,
+                                    title: 'Balanced Brakets',
+                                    text: `Type of Brackets: () Round brackets or parentheses, {}
+                                        Curly brackets or braces, [] Square brackets. Implement an algorithm
+                                        to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
+                                    solution: '',
+                                },
                                 selected: true,
                                 rating: 5,
-                                comments: [{
-                                    text: `Outstanding implementation using only two lines of code`,
-                                    user: `Victor Parra`,
-                                    date: new Date(`Feb 23, 2017, 11:58:04 PM`)
-                                }]
-
+                                comments: [
+                                    {
+                                        text: `Outstanding implementation using only two lines of code`,
+                                        user: `Victor Parra`,
+                                        date: new Date(`Feb 23, 2017, 11:58:04 PM`)
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -1134,51 +1249,63 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: true
                             }
                         ],
-                        questions: [
+                        interviewQuestions: [
                             {
-                                id: 1,
-                                question: 'Explain SCRUM',
-                                answer: '',
+                                question: {
+                                    id: 1,
+                                    text: 'Explain SCRUM',
+                                    answer: '',
+                                },
                                 selected: true,
-                                rating: 3,
-                                comments: [{
-                                    text: `Was able to identify roles such Scrum Master, Product Owner, etc. but he's not
-                                        familiar with ceremonies and what is performed in those other than scrum`,
-                                    user: `Victor Parra`,
-                                    date: new Date(`Feb 23, 2017, 12:33:15 PM`)
-                                }]
+                                rating: 7,
+                                comments: [
+                                    {
+                                        text: `Was able to identify roles such Scrum Master, Product Owner, etc. but he's not
+                                            familiar with ceremonies and what is performed in those other than scrum`,
+                                        user: `Victor Parra`,
+                                        date: new Date(`Feb 23, 2017, 12:33:15 PM`)
+                                    }
+                                ]
                             },
                             {
-                                id: 2,
-                                question: 'How do you face or deal with problems in an Agile project?',
-                                answer: '',
+                                question: {
+                                    id: 8,
+                                    text: 'How do you face or deal with problems in an Agile project?',
+                                    answer: '',
+                                },
                                 selected: true,
                                 rating: 3,
-                                comments: [{
-                                    text: `When I asked him about a real prolem such includind a user story
-                                        to the sprint whitout capatity abailable he answer that you cannot do that.`,
-                                    user: `Victor Parra`,
-                                    date: new Date(`Feb 23, 2017, 12:36:02 PM`)
-                                }]
+                                comments: [
+                                    {
+                                        text: `When I asked him about a real prolem such includind a user story
+                                            to the sprint whitout capatity abailable he answer that you cannot do that.`,
+                                        user: `Victor Parra`,
+                                        date: new Date(`Feb 23, 2017, 12:36:02 PM`)
+                                    }
+                                ]
                             },
                             {
-                                id: 3,
-                                answer: '',
-                                question: `When you need to solve something you don't know, how do you deal with it?`,
+                                question: {
+                                    id: 9,
+                                    text: `When you need to solve something you don't know, how do you deal with it?`,
+                                    answer: ''
+                                },
                                 selected: true,
                                 rating: 4,
-                                comments: [{
-                                    text: `It looks like he is self driven and able to learn things on his own, good
-                                        analytic and troubleshooting habilities`,
-                                    user: `Victor Parra`,
-                                    date: new Date(`Feb 23, 2017, 12:40:33 PM`)
-                                }]
+                                comments: [
+                                    {
+                                        text: `It looks like he is self driven and able to learn things on his own, good
+                                            analytic and troubleshooting habilities`,
+                                        user: `Victor Parra`,
+                                        date: new Date(`Feb 23, 2017, 12:40:33 PM`)
+                                    }
+                                ]
                             }
                         ],
-                        exercises: []
+                        interviewExercises: []
                     }]
             }];
 
-        return { interviewScriptData, competencies, levels, domains, skillMatrix };
+        return { competencies, domains, levels, questions, skillMatrix, interviewScriptData };
     }
 }
