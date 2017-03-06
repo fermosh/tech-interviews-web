@@ -1,32 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-
-// Imports for loading & configuring the in-memory web api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-
 import { QuestionListComponent } from './question-list.component';
 import { QuestionDetailComponent } from './question-detail.component';
 import { QuestionDetailGuard, QuestionEditGuard } from './question-guard.service';
 import { QuestionEditComponent } from './question-edit.component';
-
-import { QuestionFilterPipe } from './question-filter.pipe';
 import { QuestionService } from './question.service';
-
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     SharedModule,
     ReactiveFormsModule,
-
     RouterModule.forChild([
       { path: 'questions', component: QuestionListComponent },
       { path: 'question/:id',
         canActivate: [ QuestionDetailGuard],
         component: QuestionDetailComponent
       },
-      { path: 'questionEdit/:id',
+      { path: 'question-edit/:id',
         canDeactivate: [ QuestionEditGuard ],
         component: QuestionEditComponent },
     ])
@@ -34,8 +26,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     QuestionListComponent,
     QuestionDetailComponent,
-    QuestionEditComponent,
-    QuestionFilterPipe
+    QuestionEditComponent
   ],
   providers: [
     QuestionService,
@@ -43,4 +34,5 @@ import { SharedModule } from '../shared/shared.module';
     QuestionEditGuard
   ]
 })
-export class QuestionModule {}
+
+export class QuestionModule { }
