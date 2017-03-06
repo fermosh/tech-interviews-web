@@ -1,12 +1,12 @@
     <div class="question-list-header">
         <div class="container">
             <div class="final-score-box">
-                <h2><span class="final-score-label-value">{{ getFinalScore() | number:'1.0-1' }}</span></h2><br>
+                <h2><span class="final-score-label-value">TITLE</span></h2><br>
                 <span class="final-score-label-text">Final Score</span>
             </div>
             <div class="question-list-title-box">
                 <h2>Question List</h2>
-                <span class="competency-level-label-value">{{ scriptViewer.level.name }} - {{ scriptViewer.level.description }}</span>
+                <span class="competency-level-label-value">AJDAKDS</span>
             </div>
         </div>
     </div>
@@ -24,9 +24,9 @@
                     {{question.text}}
                     </a>
                 </td>
-                <td>{{ question.tags[0] | lowercase }}</td>
+                <td>{{ question.tags[0].text | lowercase }}</td>
                 <td>
-                    <a class="btn btn-primary" 
+                    <a class="uui-button small" 
                         [routerLink]="['/questionEdit', question.id]">
                         Edit
                     </a>
