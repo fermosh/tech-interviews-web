@@ -152,10 +152,7 @@ describe('Level Service', () => {
             // act
             service.getLevel(mockItem.id).subscribe(result => {
                 // assert
-                expect(result.id).toEqual(mockItem.id);
-                expect(result.name).toEqual(mockItem.name);
-                expect(result.description).toEqual(mockItem.description);
-                expect(result.competencyId).toEqual(mockItem.competencyId);
+                expect(result).toBeDefined();
                 expect(result).toEqual(mockItem);
             });
         })));
@@ -178,7 +175,7 @@ describe('Level Service', () => {
     describe('SaveLevel(Method)', () => {
 
         // test to validate the SaveLevel method saves an item succesfully
-        it('should save an item succesfully', async(inject([LevelService, MockBackend], (service: LevelService, mock) => {
+        it('should create an item succesfully', async(inject([LevelService, MockBackend], (service: LevelService, mock) => {
 
             // arrange
             let mockItem: ILevel = { id: 0, name: 'New L1', description: 'Junior Software Engineer', competencyId: 1 };
@@ -192,10 +189,7 @@ describe('Level Service', () => {
             service.saveLevel(mockItem).subscribe(result => {
                 // assert
                 expect(result).toBeDefined();
-                expect(result.id).toEqual(response.id);
-                expect(result.name).toEqual(response.name);
-                expect(result.description).toEqual(response.description);
-                expect(result.competencyId).toEqual(response.competencyId);
+                expect(result).toEqual(response);
             });
         })));
 
@@ -212,10 +206,7 @@ describe('Level Service', () => {
             service.saveLevel(mockItem).subscribe(result => {
                 // assert
                 expect(result).toBeDefined();
-                expect(result.id).toEqual(mockItem.id);
-                expect(result.name).toEqual(mockItem.name);
-                expect(result.description).toEqual(mockItem.description);
-                expect(result.competencyId).toEqual(mockItem.competencyId);
+                expect(result).toEqual(mockItem);
             });
         })));
 

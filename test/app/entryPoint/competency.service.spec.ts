@@ -105,8 +105,6 @@ describe('Competency Service', () => {
             // act
             service.getCompetency(mockItem.id).subscribe(result => {
                 // assert
-                expect(result.id).toEqual(mockItem.id);
-                expect(result.name).toEqual(mockItem.name);
                 expect(result).toEqual(mockItem);
             });
         })));
@@ -129,7 +127,7 @@ describe('Competency Service', () => {
     describe('SaveCompetency(Method)', () => {
 
         // test to validate the SaveCompetency method saves an item succesfully
-        it('should save an item succesfully', async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
+        it('should create an item succesfully', async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
 
             // arrange
             let mockItem: ICompetency = { id: 0, name: 'New Competency' };
@@ -143,8 +141,7 @@ describe('Competency Service', () => {
             service.saveCompetency(mockItem).subscribe(result => {
                 // assert
                 expect(result).toBeDefined();
-                expect(result.id).toEqual(response.id);
-                expect(result.name).toEqual(response.name);
+                expect(result).toEqual(response);
             });
         })));
 
@@ -162,8 +159,7 @@ describe('Competency Service', () => {
             service.saveCompetency(mockItem).subscribe(result => {
                 // assert
                 expect(result).toBeDefined();
-                expect(result.id).toEqual(mockItem.id);
-                expect(result.name).toEqual(mockItem.name);
+                expect(result).toEqual(mockItem);
             });
         })));
 
