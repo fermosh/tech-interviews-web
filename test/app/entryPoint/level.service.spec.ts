@@ -9,54 +9,11 @@ describe('Level Service', () => {
 
     // array to mock http requests
     const levelResult: ILevel[] = [
-        {
-            id: 1,
-            name: 'L1',
-            description: 'Junior Software Engineer',
-            competencyId: 1
-        },
-        {
-            id: 2,
-            name: 'L2',
-            description: 'Software Engineer',
-            competencyId: 1
-        },
-        {
-            id: 3,
-            name: 'L3',
-            description: 'Senior Software Engineer',
-            competencyId: 1
-        },
-        {
-            id: 4,
-            name: 'L4',
-            description: 'Lead Software Engineer',
-            competencyId: 1
-        },
-        {
-            id: 5,
-            name: 'L5',
-            description: 'Chief Software Engineer',
-            competencyId: 1
-        },
-        {
-            id: 6,
-            name: 'L1',
-            description: '',
-            competencyId: 2
-        },
-        {
-            id: 7,
-            name: 'L2',
-            description: '',
-            competencyId: 2
-        },
-        {
-            id: 8,
-            name: 'L3',
-            description: '',
-            competencyId: 2
-        }
+        { id: 1, name: 'L1', description: 'Junior Software Engineer', competencyId: 1 },
+        { id: 2, name: 'L2', description: 'Software Engineer', competencyId: 1 },
+        { id: 3, name: 'L3', description: 'Senior Software Engineer', competencyId: 1 },
+        { id: 4, name: 'L4', description: 'Lead Software Engineer', competencyId: 1 },
+        { id: 5, name: 'L5', description: 'Chief Software Engineer', competencyId: 1 }
     ];
 
     // test initialization

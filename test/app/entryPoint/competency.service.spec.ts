@@ -33,33 +33,33 @@ describe('Competency Service', () => {
         // test to validate the getCompetencies method is an array and returns the expected value array
         it('should be an Array and return the expected result',
             async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
-            // arrange
-            mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: competencyResult }) })));
-            });
+                // arrange
+                mock.connections.subscribe(conn => {
+                    conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: competencyResult }) })));
+                });
 
-            // act
-            service.getCompetencies().subscribe(result => {
-                // assert
-                expect(result).toEqual(jasmine.any(Array));
-                expect(result).toEqual(competencyResult);
-            });
-        })));
+                // act
+                service.getCompetencies().subscribe(result => {
+                    // assert
+                    expect(result).toEqual(jasmine.any(Array));
+                    expect(result).toEqual(competencyResult);
+                });
+            })));
 
         // test to validate the getCompetencies method returns the expected quantity of items
         it('should return ' + competencyResult.length + ' elements',
-        async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
-            // arrange
-            mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: competencyResult }) })));
-            });
+            async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
+                // arrange
+                mock.connections.subscribe(conn => {
+                    conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: competencyResult }) })));
+                });
 
-            // act
-            service.getCompetencies().subscribe(result => {
-                // assert
-                expect(result.length).toEqual(competencyResult.length);
-            });
-        })));
+                // act
+                service.getCompetencies().subscribe(result => {
+                    // assert
+                    expect(result.length).toEqual(competencyResult.length);
+                });
+            })));
 
         // test to validate the getCompetencies method returns an exception
         it('should return an exception', async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
@@ -186,7 +186,7 @@ describe('Competency Service', () => {
             // arrange
             let itemId = 1;
 
-            let mockResponse = new Response(new ResponseOptions({body: null, status: 204, type: null, statusText: 'No Content' }));
+            let mockResponse = new Response(new ResponseOptions({ body: null, status: 204, type: null, statusText: 'No Content' }));
 
             mock.connections.subscribe(conn => {
                 conn.mockRespond(mockResponse);
