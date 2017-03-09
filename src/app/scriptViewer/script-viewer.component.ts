@@ -5,6 +5,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { ISkillMatrix } from './interfaces/skill-matrix';
 import { ISkill } from './interfaces/skill';
 import { IComment } from './interfaces/comment';
+import { IQuestion } from './../questions/question';
+import { IExercise } from './../exercises/exercise';
+import { ITag } from './../questions/tag';
+import { IInterviewQuestion } from './interfaces/interview-question';
+import { QuestionExerciseBank } from './interfaces/question-exercise-bank';
 
 import { ScriptViewerService } from './script-viewer.service';
 
@@ -18,8 +23,9 @@ declare var jQuery: any;
 export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: ISkillMatrix;
     errorMessage: string;
-    selectedSkill: ISkill;
     private sub: Subscription;
+    private selectedSkill: ISkill;
+    private questionExerciseBank: QuestionExerciseBank[];
     private isScriptViewerRendered: boolean;
     private isOnPreview: boolean;
 
@@ -53,19 +59,56 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
 
     getInterviewScript(id: number) {
         this.scriptViewerService.getScriptViewer(id)
-            .subscribe(scriptViewer => this.scriptViewer = scriptViewer,
+            .subscribe(scriptViewer => {
+                this.scriptViewer = scriptViewer;
+                this.getQuestionExerciseBank(id);
+            },
             error => this.errorMessage = <any>error);
+    }
+
+    getQuestionExerciseBank(templateId: number) {
+        this.scriptViewerService.getQuestionsByTemplateId(templateId)
+            .subscribe(questionBank => {
+                this.mapQuestionBank(questionBank);
+                this.scriptViewerService.getExercisesByTemplateId(templateId)
+                    .subscribe(exerciseBank => this.mapExerciseBank(exerciseBank),
+                    error => this.errorMessage = <any>error);
+            },
+            error => this.errorMessage = <any>error);
+    }
+
+    mapQuestionBank(questions: IQuestion[]) {
+        let questionsBySkill: IQuestion[];
+        this.questionExerciseBank = this.scriptViewer.skills.map(s => <QuestionExerciseBank>new Object({ id: s.id, interviewQuestions: [], interviewExercises: [] }));
+        for (let skill of this.questionExerciseBank) {
+            questionsBySkill = questions.filter(q => q.tags.some(t => t.id === skill.id));
+            questionsBySkill.forEach(q => skill.interviewQuestions.push({
+                question: q,
+                rating: 0,
+                comments: [],
+                selected: false
+            }));
+        }
+    }
+
+    mapExerciseBank(exercises: IExercise[]) {
+        let exercisesBySkill: IExercise[];
+        for (let skill of this.questionExerciseBank) {
+            exercisesBySkill = exercises.filter(e => e.tags.some(t => t.id === skill.id));
+            exercisesBySkill.forEach(e => skill.interviewExercises.push({
+                exercise: e,
+                rating: 0,
+                comments: [],
+                selected: false
+            }));
+        }
     }
 
     // ----------------------------------------------------------------------------------
     /* SCRIPT VIEWER EVENTS */
 
-    getFinalScore(): number {
-        if (this.scriptViewer.skills && this.scriptViewer.skills.length > 0) {
-            return this.scriptViewer.skills.map(skill => this.getRatingBySkill(skill)).reduce(function(a, b) { return a + b; }, 0)
-                 / this.scriptViewer.skills.length;
-        }
-        return 0;
+    getFinalRating(): number {
+        return this.scriptViewerService.getFinalRating(this.scriptViewer.skills);
     }
 
     getIndexFirstTab(): number {
@@ -73,42 +116,33 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     }
 
     showPreview() {
-        if (this.isOnPreview) {
-            jQuery('#uuiCarousel').carousel('prev');
-        } else {
-            jQuery('#uuiCarousel').carousel('next');
-        }
+        jQuery('#uuiCarousel').carousel(this.isOnPreview ? 'prev' : 'next');
         this.isOnPreview = !this.isOnPreview;
-    }
-
-    setSelectedSkill(skill: ISkill): void {
-        this.selectedSkill = skill;
     }
 
     // ----------------------------------------------------------------------------------
     /* SKILL EVENTS */
+
+    setSelectedSkill(skill: ISkill): void {
+        this.selectedSkill = skill;
+        this.questionExerciseBank
+            .filter(b => b.id === skill.id)
+            .forEach(b => {
+                b.interviewQuestions.map(q => q.selected = skill.interviewQuestions.some(i => i.question.id === q.question.id));
+                b.interviewExercises.map(q => q.selected = skill.interviewExercises.some(i => i.exercise.id === q.exercise.id));
+            });
+    }
 
     getRatingBySkill(skill: ISkill): number {
         return this.scriptViewerService.getRatingBySkill(skill);
     }
 
     getTopicsBySkill(skill: ISkill): string {
-        let topicList: string;
-
         if (skill.topics && skill.topics.length > 0) {
-            for (let topic of skill.topics) {
-                if (topic.isRequired) {
-                    topicList += '- ' + topic.name + '';
-                } else {
-                    topicList += `<span style='color:#888;'>- ` + topic.name + '</span>';
-                }
-                topicList += '<br>';
-            }
+            return skill.topics.map(t => t.isRequired ? ('- ' + t.name) : (`<span style='color:#888;'>- ` + t.name + `</span>`)).join('<br>');
         } else {
-            topicList = 'No topics related';
+            return 'No topics related';
         }
-
-        return topicList;
     }
 
     getSkillPriorityStyle(skill: ISkill): string {
@@ -116,9 +150,38 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         return 'priority-' + priorityStyle + '-label-value';
     }
 
+    saveSelectedQuestions(): void {
+        let index: number;
+        for (let question of this.questionExerciseBank.filter(b => b.id === this.selectedSkill.id)[0].interviewQuestions) {
+            if (question.selected) {
+                if (!this.selectedSkill.interviewQuestions.some(iq => iq.question.id === question.question.id)) {   // Question selected and is not part of the Intervie Script
+                    this.selectedSkill.interviewQuestions.push({ question: question.question, rating: 0, comments: [], selected: true });
+                }
+            } else {
+                if (this.selectedSkill.interviewQuestions.some(iq => iq.question.id === question.question.id)) {    // Question unselected and is part of the Interview Script
+                    index = this.selectedSkill.interviewQuestions.indexOf(this.selectedSkill.interviewQuestions.filter(iq => iq.question.id === question.question.id)[0]);
+                    this.selectedSkill.interviewQuestions.splice(index, 1);
+                }
+            }
+        }
+        for (let exercise of this.questionExerciseBank.filter(b => b.id === this.selectedSkill.id)[0].interviewExercises) {
+            if (exercise.selected) {
+                if (!this.selectedSkill.interviewExercises.some(ie => ie.exercise.id === exercise.exercise.id)) {   // Exercise selected and is not part of the Intervie Script
+                    this.selectedSkill.interviewExercises.push({ exercise: exercise.exercise, rating: 0, comments: [], selected: true });
+                }
+            } else {
+                if (this.selectedSkill.interviewExercises.some(ie => ie.exercise.id === exercise.exercise.id)) {    // Exercise unselected and is part of the Interview Script
+                    index = this.selectedSkill.interviewExercises.indexOf(this.selectedSkill.interviewExercises.filter(ie => ie.exercise.id === exercise.exercise.id)[0]);
+                    this.selectedSkill.interviewExercises.splice(index, 1);
+                }
+            }
+        }
+        jQuery('#popupPicker').modal('hide');
+    }
+
     // ----------------------------------------------------------------------------------
     /* QUESTION AND EXERCISE EVENTS */
-
+    
     addComment(type: string, skillId: number, typeId: number, event: any): void {
         let comment: IComment = { text: event.target.value, user: 'Logged User Name', date: new Date() };
         switch (type) {

@@ -147,6 +147,15 @@
     text-shadow: 1px 1px #DDD;
 }
 
+.related-skills-label {
+    height: 17px;
+    line-height: 16px;
+    padding: 0 6px;
+    background: #eee;
+    border-color: #ccc;
+    color: #999!important;
+}
+
 /* EXERCISE SETTING */
 
 .ex-tab-pane {
@@ -173,6 +182,14 @@
 .ex-comment-cell {
     padding-left: 10px;
     vertical-align: top;
+}
+
+.ex-tilte-picker {
+    margin-bottom: 2px;
+}
+
+.ex-descr-picker {
+    margin: 0 0 12px 25px;
 }
 
 .interview-report-title {
