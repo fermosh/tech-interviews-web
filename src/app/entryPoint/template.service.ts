@@ -32,7 +32,6 @@ export class TemplateService {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getTemplate' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -42,7 +41,6 @@ export class TemplateService {
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteTemplate: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -60,7 +58,6 @@ export class TemplateService {
         template.id = undefined;
         return this.http.post(this.baseUrl, template, options)
             .map(this.extractData)
-            .do(data => console.log('createTemplate: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -68,7 +65,6 @@ export class TemplateService {
         const url = `${this.baseUrl}/${product.id}`;
         return this.http.put(url, product, options)
             .map(() => product)
-            .do(data => console.log('updateTemplate: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
