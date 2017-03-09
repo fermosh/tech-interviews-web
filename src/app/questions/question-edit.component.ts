@@ -10,14 +10,19 @@ import { IQuestion } from './question';
 import { QuestionService } from './question.service';
 import { NumberValidator } from '../shared/number.validator';
 import { GenericValidator } from '../shared/generic.validator';
+import { SkillMatrixService } from './../entryPoint/skill-matrix.service';
+
+declare var jQuery: any;
 
 @Component({
-    templateUrl: './question-edit.component.html'
+    templateUrl: './question-edit.component.html',
+    styleUrls: ['./question-edit.component.css']
 })
 export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
-    pageTitle: string = 'Question Edit';
+    title: string = 'Question Edit';
+    isPageRendered: boolean;
     errorMessage: string;
     questionForm: FormGroup;
     question: IQuestion;
@@ -28,22 +33,24 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     private validationMessages: { [key: string]: { [key: string]: string } };
     private genericValidator: GenericValidator;
 
-    get tags(): FormArray {
-        return <FormArray>this.questionForm.get('tags');
-    }
-
     constructor(private fb: FormBuilder,
                 private route: ActivatedRoute,
                 private router: Router,
-                private questionService: QuestionService) {
+                private questionService: QuestionService,
+                private skillMatrixService: SkillMatrixService) {
 
         // Defines all of the validation messages for the form.
         // These could instead be retrieved from a file or database.
         this.validationMessages = {
-            productName: {
+            questionText: {
                 required: 'Question text is required.',
-                minlength: 'Question text be at least twenty characters.',
-                maxlength: 'Question text cannot exceed 256 characters.'
+                minlength: 'Question text must be at least twenty characters.',
+                maxlength: 'Question text cannot exceed 200 characters.'
+            },
+            questionTags: {
+                required: 'Question tag is required',
+                minlength: 'You can select at least 1 Question tag',
+                maxlength: 'You can select at most 1 Question tag',
             }
         };
 
@@ -55,10 +62,12 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit(): void {
         this.questionForm = this.fb.group({
             questionText: ['', [Validators.required,
-                               Validators.minLength(3),
-                               Validators.maxLength(50)]],
-            tags: this.fb.array([]),
-            questionAnswer: ''
+                               Validators.minLength(20),
+                               Validators.maxLength(200)]],
+            questionAnswer: '',
+            questionTags: ['', [Validators.required,
+                               Validators.minLength(1),
+                               Validators.maxLength(1)]],
         });
 
         // Read the question Id from the route parameter
@@ -68,6 +77,26 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.getQuestion(id);
             }
         );
+    }
+
+    fillAutocomplete(tags: string[]): void {
+        jQuery('#tagIt').uui_tagit({'autocomplete': {
+            'delay': 0,
+            'minLength': 2,
+            'source': tags
+        }});
+    }
+
+    ngAfterViewChecked(): void {
+        if (this.question && !this.isPageRendered) {
+
+            this.skillMatrixService.getSkillMatrix(13).subscribe(
+                skillMatrix => { this.fillAutocomplete(skillMatrix.skills.map(skill => skill.name));
+            },
+            error => console.log(<any>error));
+
+            this.isPageRendered = true;
+        }
     }
 
     ngOnDestroy(): void {
@@ -85,10 +114,6 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    addTag(): void {
-        this.tags.push(new FormControl());
-    }
-
     getQuestion(id: number): void {
         this.questionService.getQuestion(id)
             .subscribe(
@@ -104,9 +129,9 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.question = question;
 
         if (this.question.id === 0) {
-            this.pageTitle = 'Add Question';
+            this.title = 'Add Question';
         } else {
-            this.pageTitle = `Edit Question: ${this.question.text}`;
+            this.title = `Edit Question: ${this.question.text}`;
         }
 
         // Update the data on the form
@@ -114,7 +139,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             questionText: this.question.text,
             questionAnswer: this.question.answer,
         });
-        this.questionForm.setControl('tags', this.fb.array(this.question.tags || []));
+        this.questionForm.setControl('questionTags', this.fb.array(['Java', 'JavaScript']));
     }
 
     deleteQuestion(): void {
@@ -150,6 +175,6 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     onSaveComplete(): void {
         // Reset the form to clear the flags
         this.questionForm.reset();
-        this.router.navigate(['/questions']);
+        this.router.navigate(['/question-list']);
     }
 }

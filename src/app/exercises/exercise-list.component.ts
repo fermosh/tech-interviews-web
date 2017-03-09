@@ -13,7 +13,6 @@ export class ExerciseListComponent implements OnInit {
     private isPageRendered: boolean;
     listFilter: string;
     errorMessage: string;
-
     exercises: IExercise[];
 
     constructor(private exerciseService: ExerciseService) { }

@@ -25,9 +25,9 @@
                     <div class="menu-wrapper">
                         <div class="menu-scroll">
                             <ul class="nav navbar-nav">
-                                <li><a href="#"><span>Skill Matrix</span></a></li>                                
-                                <li><a [routerLink]="['/questions']"><span>Questions</span></a></li>
-                                <li><a [routerLink]="['/exercises']"><span>Exercises</span></a></li>
+                                <li><a [routerLink]="['/entryPoint']"><span>Skill Matrix</span></a></li>
+                                <li><a [routerLink]="['/question-list']"><span>Questions</span></a></li>
+                                <li><a [routerLink]="['/exercise-list']"><span>Exercises</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -37,13 +37,12 @@
             <a href="#" class="brand-logo">
                 <span class="logo">
                     <img src="assets/ic_logo_UUi.svg" alt="" />
-                </span>
-                {{title}}
+                </span> {{title}}
             </a>
             <ul class="uui-navigation nav navbar-nav">
                 <li class="active"><a [routerLink]="['/entryPoint']">Skill Matrix</a></li>
-                <li><a [routerLink]="['/questions']">Questions</a></li>
-                <li><a [routerLink]="['/exercises']">Exercises</a></li>
+                <li><a [routerLink]="['/question-list']">Questions</a></li>
+                <li><a [routerLink]="['/exercise-list']">Exercises</a></li>
             </ul>
         </nav>
     </div>

@@ -13,7 +13,7 @@ export  class ExerciseDetailGuard implements CanActivate {
         if (isNaN(id) || id < 1) {
             alert('Invalid Exercise Id');
             // start a new navigation to redirect to list page
-            this.router.navigate(['/exercises']);
+            this.router.navigate(['/exercise-list']);
             // abort current navigation
             return false;
         };
@@ -26,7 +26,7 @@ export  class ExerciseEditGuard implements CanDeactivate<ExerciseEditComponent>
 
     canDeactivate(component: ExerciseEditComponent): boolean {
         if (component.exerciseForm.dirty) {
-            let exerciseTitle = component.exerciseForm.get('ExerciseTitle').value || 'New Exercise';
+            let exerciseTitle = component.exerciseForm.get('exerciseTitle').value || 'New Exercise';
             return confirm(`Navigate away and lose all changes to ${exerciseTitle}?`);
         }
         return true;

@@ -13,12 +13,9 @@ export class QuestionListComponent implements OnInit {
     isPageRendered: boolean;
     listFilter: string;
     errorMessage: string;
-
     questions: IQuestion[];
 
-    constructor(private questionService: QuestionService) {
-
-    }
+    constructor(private questionService: QuestionService) { }
 
     ngOnInit(): void {
         this.questionService.getQuestions()

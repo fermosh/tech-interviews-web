@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      { path: 'questions', component: QuestionListComponent },
+      { path: 'question-list', component: QuestionListComponent },
       { path: 'question/:id',
         canActivate: [ QuestionDetailGuard],
         component: QuestionDetailComponent

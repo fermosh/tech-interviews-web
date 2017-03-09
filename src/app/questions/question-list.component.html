@@ -18,14 +18,13 @@
             </thead>
             <tbody>
                 <tr *ngFor='let question of questions'>
-                    <td><a [routerLink]="['/question', question.id]">
+                    <td><a [routerLink]="['/question-edit', question.id]">
                         {{question.text}}
                         </a>
                     </td>
                     <td>{{question.tags[0].text | lowercase}}</td>
                     <td>
-                        <a class="uui-button small" 
-                            [routerLink]="['/question-edit', question.id]">
+                        <a class="uui-button small" [routerLink]="['/question-edit', question.id]">
                             Edit
                         </a>
                     </td>

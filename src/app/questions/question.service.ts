@@ -90,7 +90,8 @@ export class QuestionService {
         return {
             id: 0,
             text: '',
-            answer: null
+            answer: null,
+            tags: []
         };
     }
 }
