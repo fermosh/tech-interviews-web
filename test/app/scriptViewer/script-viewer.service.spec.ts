@@ -33,7 +33,7 @@ describe('Script Viewer Service: ', () => {
                                 isRequired: true
                             }
                         ],
-                        questions: [
+                        interviewQuestions: [
                             {
                                 id: 1,
                                 question: 'What is SOLID? Explain the principles and provide examples',
@@ -51,7 +51,7 @@ describe('Script Viewer Service: ', () => {
                                 comments: []
                             }
                         ],
-                        exercises: [
+                        interviewExercises: [
                             {
                                 id: 1,
                                 title: 'Palindrome',
@@ -88,7 +88,7 @@ describe('Script Viewer Service: ', () => {
                                 isRequired: true
                             }
                         ],
-                        questions: [
+                        interviewQuestions: [
                             {
                                 id: 1,
                                 question: 'What is SOLID? Explain the principles and provide examples',
@@ -106,7 +106,7 @@ describe('Script Viewer Service: ', () => {
                                 comments: []
                             }
                         ],
-                        exercises: [
+                        interviewExercises: [
                             {
                                 id: 1,
                                 title: 'Palindrome',
