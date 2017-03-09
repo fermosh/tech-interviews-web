@@ -168,7 +168,7 @@ describe('Exercise Service', () => {
 
             // arrange
             let mockItem: IExercise = {
-                id: 1,
+                id: 0,
                 title: 'Palindrome',
                 text: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
@@ -187,7 +187,25 @@ describe('Exercise Service', () => {
                 ]
             };
 
-            let response = { id: 1, text: mockItem.text };
+            let response: IExercise = {
+                id: 1,
+                title: 'Palindrome',
+                text: `A palindrome is a word, phrase, number, or other
+                    sequence of characters which reads the same backward or forward,
+                    such as madam or kayak. Write an function that receives an string
+                    parameters and return true if it is a palindrome.`,
+                solution: '',
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    },
+                    {
+                        id: 2,
+                        text: 'Algorithms'
+                    }
+                ]
+            };
 
             mock.connections.subscribe(conn => {
                 conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: response }) })));

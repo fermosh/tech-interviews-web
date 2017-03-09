@@ -186,7 +186,7 @@ describe('Question Service', () => {
 
             // arrange
             let mockItem: IQuestion = {
-                id: 6,
+                id: 0,
                 text: 'What is Boxing and Un-Boxing?',
                 answer: ``,
                 tags: [
@@ -197,7 +197,18 @@ describe('Question Service', () => {
                 ]
             };
 
-            let response = { id: 1, text: mockItem.text };
+            let response: IQuestion = {
+                id: 1,
+                text: 'What is Boxing and Un-Boxing?',
+                answer: ``,
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    }
+                ]
+            };
+
 
             mock.connections.subscribe(conn => {
                 conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: response }) })));
@@ -216,8 +227,8 @@ describe('Question Service', () => {
 
             // arrange
             let mockItem: IQuestion = {
-                id: 6,
-                text: 'What is Boxing and Un-Boxing?',
+                id: 1,
+                text: `What's the purpose of standards/conventions in .NET C#?`,
                 answer: ``,
                 tags: [
                     {
