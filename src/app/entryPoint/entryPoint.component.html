@@ -1,0 +1,86 @@
+<div class="panel">
+    <h3 class="dark-gray plus-margin-horizontal plus-margin-vertical">Please, select the candidate's profile:</h3>
+
+    <select [(ngModel)]="competencyId" (change)="onCompetencyChange($event.target.value)" name="competency" class="selectpicker uui-form-element plus-margin-horizontal"
+        title="Competency">
+        <option *ngFor="let competencyOption of competencyOptions" [attr.value]="competencyOption.id">{{competencyOption.name}}</option>
+    </select>
+
+    <select [(ngModel)]="levelId" (change)="onLevelChange($event.target.value)" name="level" class="uui-form-element plus-margin-horizontal" title="Level">
+        <option value="0" *ngIf="levelId == 0">Choose a level</option>
+        <option *ngFor="let levelOption of levelOptions | levelFilter:competencyId" [attr.value]="levelOption.id">{{levelOption.name}}</option>
+    </select>
+
+    <select [(ngModel)]="domainId" (change)="onDomainChange($event.target.value)" name="domain" class="uui-form-element plus-margin-horizontal" title="Domain">
+        <option value="0" *ngIf="domainId == 0">Choose a domain</option>
+        <option *ngFor="let domainOption of domainOptions  | domainFilter: levelId" [attr.value]="domainOption.id">{{domainOption.name}}</option>
+    </select>
+
+    <button class="uui-button lime-green minus-margin-top {{ isSearchDisabled ? 'disable':'' }}" [disabled]="isSearchDisabled" (click)="onSearch()"><i class="fa fa-search"></i> Search</button>
+</div>
+
+<div [hidden]="!isSkillGridVisible" class="panel plus-margin-horizontal">
+    <table class="uui-table treegrid hover small">
+        <thead>
+            <tr>
+                <th>Categories</th>
+                <th>Group</th>
+                <th>Subgroup</th>
+                <th>Skill</th>
+                <th>Subskill</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let skill of skillMatrixItems" [attr.data-grid-level]="skill.skillLevel" [ngClass]="skill.className">
+                <td>
+                    <div *ngIf="skill.skillLevel == 1">
+                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
+                        <p class="uui-checkbox square-skin large">
+                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
+                        </p>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="skill.skillLevel == 2">
+                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
+                        <p class="uui-checkbox square-skin large">
+                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
+                        </p>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="skill.skillLevel == 3">
+                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
+                        <p class="uui-checkbox square-skin large">
+                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
+                        </p>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="skill.skillLevel == 4">
+                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
+                        <p class="uui-checkbox square-skin large">
+                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
+                        </p>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="skill.skillLevel == 5">
+                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
+                        <p class="uui-checkbox square-skin large">
+                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="panel plus-margin-horizontal plus-margin-vertical padding-bottom">
+        <button class="uui-button lime-green right-icon right-Button {{ isNextDisabled ? 'disable':'' }}" (click)="onNext()" [disabled]="isNextDisabled">Next<i class="fa fa-long-arrow-right"></i></button>
+    </div>
+</div>

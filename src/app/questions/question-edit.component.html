@@ -1,0 +1,58 @@
+<div *ngIf='question'>
+    <div class="question-edit-header">
+        <div class="container">
+            <div class="question-edit-title-box">
+                <h2>{{title}}</h2>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <form class="form-horizontal" novalidate (ngSubmit)="saveQuestion()" [formGroup]="questionForm">
+            <fieldset>
+                <div class="form-group" [ngClass]="{'has-error': displayMessage.text }">
+                    <label class="col-md-2 control-label" for="textId">Text</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="textId" type="text" placeholder="Text (required)" formControlName="questionText" />
+                        <span class="help-block" *ngIf="displayMessage.questionText">
+                                {{displayMessage.questionText}}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': displayMessage.answer}">
+                    <label class="col-md-2 control-label" for="answerId">Answer</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="answerId" placeholder="Answer" rows=3 formControlName="questionAnswer"></textarea>
+                        <span class="help-block" *ngIf="displayMessage.answer">
+                                {{displayMessage.questionAnswer}}
+                        </span>
+                    </div>
+                </div>
+                <div formArrayName="questionTags" [ngClass]="{'has-error': displayMessage.tag}">
+                    <label class="col-md-2 control-label" for="questionTags">Tags</label>
+                    <ul id="tagIt">
+                        <!--<li class="form-control" *ngFor="let tag of questionTags; let i=index" [id]="i" placeholder="Tag" [formControlName]="i"></li>-->
+                        <!--<div class="form-group" *ngFor="let tag of questionTags; let i=index">
+                            <li class="form-control" [id]="i" placeholder="Tag" [formControlName]="i"></li>
+                        </div>-->
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2"></label>
+                    <div class="uui-input-group horizontal">
+                        <button class="uui-button transparent" type="submit" [disabled]='!questionForm.valid'>
+                            Save
+                        </button>
+                        <button class="uui-button transparent" [routerLink]="['/question-list']">
+                            Cancel
+                        </button>
+                        <button class="uui-button transparent" (click)="deleteQuestion()">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+    </div>
+</div>

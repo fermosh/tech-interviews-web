@@ -1,0 +1,50 @@
+.minus-margin-top
+{
+    margin-top: -3px;
+    margin-left: 5px;
+}
+.plus-margin-horizontal
+{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.plus-margin-vertical
+{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.uui-table thead tr {
+    background-color:rgba(102,102,102,0.95);
+}
+.uui-table thead tr th{
+    color: white !important;
+    text-transform: uppercase;
+}
+.right-Button
+{
+    float: right;
+}
+
+tr[class="treegrid-child"] td div p.uui-checkbox{
+    margin-left: 20px;
+}
+
+.panel{
+    border: none !important;
+}
+
+.padding-bottom{
+    padding-bottom: 50px;
+}
+.childSelected::before
+{
+    width: 10px;
+    height: 10px;
+    border-width: 3px;
+    background: #666666;
+}
+
+.panel select
+{
+    width: 220px;
+}

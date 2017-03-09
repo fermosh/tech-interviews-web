@@ -1,0 +1,65 @@
+<header>
+    <div class="uui-header navigation-header">
+        <nav>
+            <!--Responsive html-layout-->
+            <div class="uui-responsive-header">
+                <div class="responsive-header">
+                    <div class="responsive-toggle-box">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="responsive-hide-menu">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <a href="#" class="responsive-brand-logo">
+                        <span class="arrow fa fa-angle-left"></span>
+                        <span class="logo">
+                            <img src="assets/ic_logo_UUi.svg" alt="" />
+                        </span>
+                        <span class="title">{{title}}</span>
+                    </a>
+                </div>
+                <div class="responsive-menu">
+                    <div class="menu-wrapper">
+                        <div class="menu-scroll">
+                            <ul class="nav navbar-nav">
+                                <li><a [routerLink]="['/entryPoint']"><span>Skill Matrix</span></a></li>
+                                <li><a [routerLink]="['/question-list']"><span>Questions</span></a></li>
+                                <li><a [routerLink]="['/exercise-list']"><span>Exercises</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---->
+            <a href="#" class="brand-logo">
+                <span class="logo">
+                    <img src="assets/ic_logo_UUi.svg" alt="" />
+                </span> {{title}}
+            </a>
+            <ul class="uui-navigation nav navbar-nav">
+                <li class="active"><a [routerLink]="['/entryPoint']">Skill Matrix</a></li>
+                <li><a [routerLink]="['/question-list']">Questions</a></li>
+                <li><a [routerLink]="['/exercise-list']">Exercises</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class='uui-main-container'>
+    <router-outlet></router-outlet>
+</div>
+<footer>
+    <div class="uui-footer">
+        <div class="footer-logo-copyright">
+            <div class="epam-logo">
+                <img src="assets/Logo_Epam_Color.svg" alt="" />
+            </div>
+            <p class="copyright">© 2017 EPAM Systems. All Rights Reserved.</p>
+        </div>
+        <div class="footer-build">
+            <p class="build">Build version v <span>1.0.0.0</span></p>
+        </div>
+    </div>
+</footer>

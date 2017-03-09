@@ -1,0 +1,67 @@
+<div *ngIf='exercise'>
+    <div class="exercise-edit-header">
+        <div class="container">
+            <div class="exercise-edit-title-box">
+                <h2>{{title}}</h2>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <form class="form-horizontal" novalidate (ngSubmit)="saveExercise()" [formGroup]="exerciseForm">
+            <fieldset>
+                <div class="form-group" [ngClass]="{'has-error': displayMessage.title }">
+                    <label class="col-md-2 control-label" for="titleId">Title</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="titleId" type="text" placeholder="Title (required)" formControlName="exerciseTitle" />
+                        <span class="help-block" *ngIf="displayMessage.exerciseTitle">
+                                {{displayMessage.exerciseTitle}}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': displayMessage.body }">
+                    <label class="col-md-2 control-label" for="BodyId">Body</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="bodyId" placeholder="Body (required)" rows=3 formControlName="exerciseBody"></textarea>
+                        <span class="help-block" *ngIf="displayMessage.exerciseBody">
+                                {{displayMessage.exerciseBody}}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': displayMessage.answer}">
+                    <label class="col-md-2 control-label" for="answerId">Answer</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="answerId" placeholder="Answer" rows=3 formControlName="exerciseAnswer"></textarea>
+                        <span class="help-block" *ngIf="displayMessage.answer">
+                                {{displayMessage.exerciseAnswer}}
+                        </span>
+                    </div>
+                </div>
+                <div formArrayName="exerciseTags" [ngClass]="{'has-error': displayMessage.tag}">
+                    <label class="col-md-2 control-label" for="exerciseTags">Tags</label>
+                    <ul id="tagIt">
+                        <!--<li class="form-control" *ngFor="let tag of exerciseTags; let i=index" [id]="i" placeholder="Tag" [formControlName]="i"></li>-->
+                        <!--<div class="form-group" *ngFor="let tag of exerciseTags; let i=index">
+                            <li class="form-control" [id]="i" placeholder="Tag" [formControlName]="i"></li>
+                        </div>-->
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2"></label>
+                    <div class="uui-input-group horizontal">
+                        <button class="uui-button transparent" type="submit" [disabled]='!exerciseForm.valid'>
+                            Save
+                        </button>
+                        <button class="uui-button transparent" [routerLink]="['/exercise-list']">
+                            Cancel
+                        </button>
+                        <button class="uui-button transparent" (click)="deleteExercise()">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+    </div>
+</div>

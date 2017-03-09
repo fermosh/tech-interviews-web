@@ -1,0 +1,35 @@
+<div *ngIf='exercises'>
+    <div class="exercise-list-header">
+        <div class="container">
+            <div class="exercise-list-title-box">
+                <h2>{{title}}</h2>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <table class="uui-table dynamic stripe records-per-page search showing-pages paging">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Tags</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let exercise of exercises'>
+                    <td><a [routerLink]="['/exercise', exercise.id]">
+                        {{exercise.title}}
+                        </a>
+                    </td>
+                    <td>{{exercise.tags[0].text | lowercase}}</td>
+                    <td>
+                        <a class="uui-button small" [routerLink]="['/exercise-edit', exercise.id]">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

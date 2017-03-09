@@ -1,0 +1,18 @@
+.question-list-header {
+    background-color: #1A9CB0;
+    color: #FFFFFF;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.question-list-title-box {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0;
+}
+
+.question-list-title-box h2 {
+    text-transform: none;
+    margin-bottom: 2px;
+}
