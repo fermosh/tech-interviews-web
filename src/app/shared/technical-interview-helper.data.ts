@@ -5,10 +5,13 @@ import { IDomain } from './../entryPoint/domain';
 import { ILevel } from './../entryPoint/level';
 import { IQuestion } from './../questions/question';
 import { IExercise } from './../exercises/exercise';
+import { ITemplate } from '../entryPoint/interfaces/template';
 
 export class TechnicalInterviewData implements InMemoryDbService {
 
     createDb() {
+        let templates: ITemplate[] = [];
+
         let competencies: ICompetency[] = [
             {
                 id: 1,
@@ -1346,6 +1349,6 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     }]
             }];
 
-        return { competencies, domains, levels, questions, exercises, skillMatrix, interviewScriptData };
+        return { competencies, domains, levels, questions, exercises, skillMatrix, interviewScriptData, templates };
     }
 }
