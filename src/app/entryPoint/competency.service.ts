@@ -25,15 +25,10 @@ export class CompetencyService {
     getCompetency(id: number): Observable<ICompetency> {
         if (id === 0) {
         return Observable.of(this.initializeProduct());
-        // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeProduct());
-        //     observer.complete();
-        // });
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getCompetency: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -43,7 +38,6 @@ export class CompetencyService {
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteCompetency: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -61,7 +55,6 @@ export class CompetencyService {
         competency.id = undefined;
         return this.http.post(this.baseUrl, competency, options)
             .map(this.extractData)
-            .do(data => console.log('createCompetency: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -69,7 +62,6 @@ export class CompetencyService {
         const url = `${this.baseUrl}/${product.id}`;
         return this.http.put(url, product, options)
             .map(() => product)
-            .do(data => console.log('updateCompetency: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 

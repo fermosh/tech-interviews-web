@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 import { DomainService } from './../../../src/app/entryPoint/domain.service';
 import { IDomain } from './../../../src/app/entryPoint/domain';
 
-describe('Domain Service', () => {
+describe('Domain Service: ', () => {
 
     // array to mock http requests
     const domainResult: IDomain[] = [
@@ -32,7 +32,7 @@ describe('Domain Service', () => {
         expect(service).toBeDefined();
     })));
 
-    describe('getDomains(Method)', () => {
+    describe('getDomains method', () => {
 
         // test to validate the getDomains method is an array and returns the expected value array
         it('should be an Array and return the expected result',
@@ -80,7 +80,7 @@ describe('Domain Service', () => {
         })));
     });
 
-    describe('getDomain(Method)', () => {
+    describe('getDomain method', () => {
 
         // test to validate the getDomain method returns a defined value
         it('should return a defined item', async(inject([DomainService, MockBackend], (service: DomainService, mock) => {
@@ -129,7 +129,7 @@ describe('Domain Service', () => {
         })));
     });
 
-    describe('saveDomain(Method)', () => {
+    describe('saveDomain method', () => {
 
         // test to validate the saveDomain method saves an item succesfully
         it('should create an item succesfully', async(inject([DomainService, MockBackend], (service: DomainService, mock) => {
@@ -187,7 +187,7 @@ describe('Domain Service', () => {
         })));
     });
 
-    describe('deleteDomain(Method)', () => {
+    describe('deleteDomain method', () => {
 
         // test to validate the deleteDomain method deletes an item succesfully
         it('should delete an item succesfully', async(inject([DomainService, MockBackend], (service: DomainService, mock) => {

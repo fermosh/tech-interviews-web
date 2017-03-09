@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 import { LevelService } from './../../../src/app/entryPoint/level.service';
 import { ILevel } from './../../../src/app/entryPoint/level';
 
-describe('Level Service', () => {
+describe('Level Service: ', () => {
 
     // array to mock http requests
     const levelResult: ILevel[] = [
@@ -34,7 +34,7 @@ describe('Level Service', () => {
         expect(service).toBeDefined();
     })));
 
-    describe('GetLevels(Method)', () => {
+    describe('GetLevels method', () => {
 
         // test to validate the getLevels method is an array and returns the expected value array
         it('should be an Array and return the expected result', async(inject([LevelService, MockBackend], (service: LevelService, mock) => {
@@ -80,7 +80,7 @@ describe('Level Service', () => {
         })));
     });
 
-    describe('GetLevel(Method)', () => {
+    describe('GetLevel method', () => {
 
         // test to validate the GetLevel method returns a defined value
         it('should return a defined item', async(inject([LevelService, MockBackend], (service: LevelService, mock) => {
@@ -129,7 +129,7 @@ describe('Level Service', () => {
         })));
     });
 
-    describe('SaveLevel(Method)', () => {
+    describe('SaveLevel method', () => {
 
         // test to validate the SaveLevel method saves an item succesfully
         it('should create an item succesfully', async(inject([LevelService, MockBackend], (service: LevelService, mock) => {
@@ -184,7 +184,7 @@ describe('Level Service', () => {
         })));
     });
 
-    describe('DeleteLevel(Method)', () => {
+    describe('DeleteLevel method', () => {
 
         // test to validate the DeleteLevel method deletes an item succesfully
         it('should delete an item succesfully', async(inject([LevelService, MockBackend], (service: LevelService, mock) => {

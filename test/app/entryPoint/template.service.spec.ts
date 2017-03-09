@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 import { TemplateService } from './../../../src/app/entryPoint/template.service';
 import { ITemplate } from './../../../src/app/entryPoint/interfaces/template';
 
-describe('Template Service', () => {
+describe('Template Service: ', () => {
 
     // array to mock http requests
     const templateResult: ITemplate[] = [{ id: 1, skillIds: [1, 2] }, { id: 2, skillIds: [3, 4] }, { id: 3, skillIds: [5, 6] }];
@@ -28,7 +28,7 @@ describe('Template Service', () => {
         expect(service).toBeDefined();
     })));
 
-    describe('getTemplates(Method)', () => {
+    describe('getTemplates method', () => {
 
         // test to validate the getTemplates method is an array and returns the expected value array
         it('should be an Array and return the expected result',
@@ -76,7 +76,7 @@ describe('Template Service', () => {
         })));
     });
 
-    describe('getTemplate(Method)', () => {
+    describe('getTemplate method', () => {
 
         // test to validate the getTemplate method returns a defined value
         it('should return a defined item', async(inject([TemplateService, MockBackend], (service: TemplateService, mock) => {
@@ -125,7 +125,7 @@ describe('Template Service', () => {
         })));
     });
 
-    describe('saveTemplate(Method)', () => {
+    describe('saveTemplate method', () => {
 
         // test to validate the saveTemplate method saves an item succesfully
         it('should create an item succesfully', async(inject([TemplateService, MockBackend], (service: TemplateService, mock) => {
@@ -180,7 +180,7 @@ describe('Template Service', () => {
         })));
     });
 
-    describe('deleteTemplate(Method)', () => {
+    describe('deleteTemplate method', () => {
 
         // test to validate the deleteTemplate method deletes an item succesfully
         it('should delete an item succesfully', async(inject([TemplateService, MockBackend], (service: TemplateService, mock) => {

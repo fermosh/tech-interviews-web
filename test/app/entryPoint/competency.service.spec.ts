@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 import { CompetencyService } from './../../../src/app/entryPoint/competency.service';
 import { ICompetency } from './../../../src/app/entryPoint/competency';
 
-describe('Competency Service', () => {
+describe('Competency Service: ', () => {
 
     // array to mock http requests
     const competencyResult: ICompetency[] = [{ id: 1, name: '.Net' }, { id: 2, name: 'Javascript' }, { id: 3, name: 'DevOps' }];
@@ -28,7 +28,7 @@ describe('Competency Service', () => {
         expect(service).toBeDefined();
     })));
 
-    describe('GetCompetencies(Method)', () => {
+    describe('GetCompetencies method', () => {
 
         // test to validate the getCompetencies method is an array and returns the expected value array
         it('should be an Array and return the expected result',
@@ -76,7 +76,7 @@ describe('Competency Service', () => {
         })));
     });
 
-    describe('GetCompetency(Method)', () => {
+    describe('GetCompetency method', () => {
 
         // test to validate the GetCompetency method returns a defined value
         it('should return a defined item', async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
@@ -124,7 +124,7 @@ describe('Competency Service', () => {
         })));
     });
 
-    describe('SaveCompetency(Method)', () => {
+    describe('SaveCompetency method', () => {
 
         // test to validate the SaveCompetency method saves an item succesfully
         it('should create an item succesfully', async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
@@ -179,7 +179,7 @@ describe('Competency Service', () => {
         })));
     });
 
-    describe('DeleteCompetency(Method)', () => {
+    describe('DeleteCompetency method', () => {
 
         // test to validate the DeleteCompetency method deletes an item succesfully
         it('should delete an item succesfully', async(inject([CompetencyService, MockBackend], (service: CompetencyService, mock) => {
