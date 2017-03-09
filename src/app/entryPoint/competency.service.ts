@@ -24,7 +24,7 @@ export class CompetencyService {
 
     getCompetency(id: number): Observable<ICompetency> {
         if (id === 0) {
-        return Observable.of(this.initializeCompetency());
+            return Observable.of(this.initializeCompetency());
         // return Observable.create((observer: any) => {
         //     observer.next(this.initializeCompetency());
         //     observer.complete();
@@ -33,7 +33,6 @@ export class CompetencyService {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getCompetency: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -43,7 +42,6 @@ export class CompetencyService {
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteCompetency: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -61,15 +59,13 @@ export class CompetencyService {
         competency.id = undefined;
         return this.http.post(this.baseUrl, competency, options)
             .map(this.extractData)
-            .do(data => console.log('createCompetency: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    private updateCompetency(Competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        const url = `${this.baseUrl}/${Competency.id}`;
-        return this.http.put(url, Competency, options)
-            .map(() => Competency)
-            .do(data => console.log('updateCompetency: ' + JSON.stringify(data)))
+    private updateCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
+        const url = `${this.baseUrl}/${competency.id}`;
+        return this.http.put(url, competency, options)
+            .map(() => competency)
             .catch(this.handleError);
     }
 

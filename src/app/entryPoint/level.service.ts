@@ -27,15 +27,10 @@ export class LevelService {
     getLevel(id: number): Observable<ILevel> {
         if (id === 0) {
         return Observable.of(this.initializeProduct());
-        // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeProduct());
-        //     observer.complete();
-        // });
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getLevel: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -45,7 +40,6 @@ export class LevelService {
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteLevel: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -63,7 +57,6 @@ export class LevelService {
         level.id = undefined;
         return this.http.post(this.baseUrl, level, options)
             .map(this.extractData)
-            .do(data => console.log('createLevel: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -71,7 +64,6 @@ export class LevelService {
         const url = `${this.baseUrl}/${product.id}`;
         return this.http.put(url, product, options)
             .map(() => product)
-            .do(data => console.log('updateLevel: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
