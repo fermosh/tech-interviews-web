@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { IExercise } from './../interfaces/exercise';
+import { IInterviewExercise } from './../interfaces/interview-exercise';
 
 @Pipe({
     name: 'exerciseFilter',
@@ -8,7 +8,7 @@ import { IExercise } from './../interfaces/exercise';
 
 export class ExerciseFilterPipe implements PipeTransform {
 
-    transform(items: IExercise[], field: string, value: string): IExercise[] {
+    transform(items: IInterviewExercise[], field: string, value: string): IInterviewExercise[] {
         if (!items) {
             return [];
         }

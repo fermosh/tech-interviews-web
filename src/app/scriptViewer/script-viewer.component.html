@@ -54,16 +54,14 @@
                                                                     <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                                 </td>
                                                                 <td class="comments-cell">
-                                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }"
-                                                                        data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
+                                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }" data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
                                                                         [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                         <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
                                                             <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.id, $event)"></tih-history-comment>
-                                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)"
-                                                            />
+                                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)" />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -110,91 +108,88 @@
                                             </table>
                                 </div>
                                 </template>
+                                </div>
                             </div>
+                        </section>
                     </div>
-                    </section>
                 </div>
-            </div>
-            <div class="item">
-                <div>
-                    <span class="interview-report-title">Technical Interview Report</span><br><br>
-                    <tih-report-viewer [interviewScript]="scriptViewer"></tih-report-viewer>
+                <div class="item">
+                    <div>
+                        <span class="interview-report-title">Technical Interview Report</span><br><br>
+                        <tih-report-viewer [interviewScript]="scriptViewer"></tih-report-viewer>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- QUESTION & EXERCISES PICKER -->
-<div class="modal uui-modal fade blue" id="popupPicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-    *ngIf="selectedSkill">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{{ selectedSkill.name }}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span></span><span></span></button>
-            </div>
-            <div class="modal-body">
-                <br>
-                <section class="uui-tabs">
-                    <div class="tabs-heading">
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a data-toggle="tab" href="#tabQuestions">Questions</a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#tabExercises">Exercises</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tabs-body">
-                        <div class="tab-content">
-                            <div id="tabQuestions" class="tab-pane active">
-                                <br><br>
-                                <table *ngIf='selectedSkill.questions && selectedSkill.questions.length'>
-                                    <tbody>
-                                        <tr *ngFor="let question of selectedSkill.questions">
-                                            <td>
-                                                <p class="uui-checkbox square-skin large">
-                                                    <input type="checkbox" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id"
-                                                    />
-                                                    <label [for]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id">{{ question.question }}</label>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br><br>
-                            </div>
-                            <div id="tabExercises" class="tab-pane">
-                                <br><br>
-                                <span *ngIf='selectedSkill.exercises && selectedSkill.exercises.length == 0'>No exercises found for <b>{{ selectedSkill.name }}</b>.</span>
-                                <table *ngIf='selectedSkill.exercises && selectedSkill.exercises.length'>
-                                    <tbody>
-                                        <tr *ngFor="let exercise of selectedSkill.exercises">
-                                            <td>
-                                                <p class="uui-checkbox square-skin large">
-                                                    <input type="checkbox" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Skill' + selectedSkill.id + '_Exercise_' + exercise.id"
-                                                    />
-                                                    <label [for]="'cbxExercise_Skill' + selectedSkill.id + '_Exercise_' + exercise.id">{{ exercise.title }}</label>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br><br>
+    <!-- QUESTION & EXERCISES PICKER -->
+    <div class="modal uui-modal fade blue" id="popupPicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" *ngIf="selectedSkill">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ selectedSkill.name }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span></span><span></span></button>
+                </div>
+                <div class="modal-body">
+                    <br>
+                    <section class="uui-tabs">
+                        <div class="tabs-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#tabQuestions">Questions</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tabExercises">Exercises</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tabs-body">
+                            <div class="tab-content">
+                                <div id="tabQuestions" class="tab-pane active">
+                                    <br><br>
+                                    <table *ngIf='selectedSkill.questions && selectedSkill.questions.length'>
+                                        <tbody>
+                                            <tr *ngFor="let question of selectedSkill.questions">
+                                                <td>
+                                                    <p class="uui-checkbox square-skin large">
+                                                        <input type="checkbox" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id" />
+                                                        <label [for]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id">{{ question.question }}</label>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br><br>
+                                </div>
+                                <div id="tabExercises" class="tab-pane">
+                                    <br><br>
+                                    <span *ngIf='selectedSkill.exercises && selectedSkill.exercises.length == 0'>No exercises found for <b>{{ selectedSkill.name }}</b>.</span>
+                                    <table *ngIf='selectedSkill.exercises && selectedSkill.exercises.length'>
+                                        <tbody>
+                                            <tr *ngFor="let exercise of selectedSkill.exercises">
+                                                <td>
+                                                    <p class="uui-checkbox square-skin large">
+                                                        <input type="checkbox" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Skill' + selectedSkill.id + '_Exercise_' + exercise.id" />
+                                                        <label [for]="'cbxExercise_Skill' + selectedSkill.id + '_Exercise_' + exercise.id">{{ exercise.title }}</label>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br><br>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="uui-button lime-green">Ok</button>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="uui-button lime-green">Ok</button>
+                </div>
             </div>
         </div>
     </div>
-    </div>
 
-    </div>
-    <br>
-    <br>
+</div>
+<br>
+<br>

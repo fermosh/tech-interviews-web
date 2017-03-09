@@ -69,7 +69,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     }
 
     getIndexFirstTab(): number {
-        return this.scriptViewer.skills.findIndex(s => s.exercises.filter(e => e.selected).length > 0);
+        return this.scriptViewer.skills.findIndex(s => s.interviewExercises.filter(e => e.selected).length > 0);
     }
 
     showPreview() {
@@ -123,10 +123,12 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         let comment: IComment = { text: event.target.value, user: 'Logged User Name', date: new Date() };
         switch (type) {
             case 'question':
-                this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === typeId)[0].comments.push(comment);
+                this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
+                    .filter(q => q.question.id === typeId)[0].comments.push(comment);
                 break;
             case 'exercise':
-                this.scriptViewer.skills.filter(s => s.id === skillId)[0].exercises.filter(e => e.id === typeId)[0].comments.push(comment);
+                this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewExercises
+                    .filter(e => e.exercise.id === typeId)[0].comments.push(comment);
                 break;
         }
         event.target.value = null;
@@ -137,16 +139,16 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
 
         switch (type) {
             case 'question':
-                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === typeId)[0].
-                    comments.indexOf(comment);
-                this.scriptViewer.skills.filter(s => s.id === skillId)[0].questions.filter(q => q.id === typeId)[0].comments.
-                    splice(index, 1);
+                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
+                    .filter(q => q.question.id === typeId)[0].comments.indexOf(comment);
+                this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
+                    .filter(q => q.question.id === typeId)[0].comments.splice(index, 1);
                 break;
             case 'exercise':
-                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].exercises.filter(e => e.id === typeId)[0].
-                    comments.indexOf(comment);
-                this.scriptViewer.skills.filter(s => s.id === skillId)[0].exercises.filter(e => e.id === typeId)[0].comments.
-                    splice(index, 1);
+                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewExercises
+                    .filter(e => e.exercise.id === typeId)[0].comments.indexOf(comment);
+                this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewExercises
+                    .filter(e => e.exercise.id === typeId)[0].comments.splice(index, 1);
                 break;
         }
     }

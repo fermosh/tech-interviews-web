@@ -1,0 +1,35 @@
+<div *ngIf='questions'>
+    <div class="question-list-header">
+        <div class="container">
+            <div class="question-list-title-box">
+                <h2>{{title}}</h2>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <table class="uui-table dynamic stripe records-per-page search showing-pages paging">
+            <thead>
+                <tr>
+                    <th>Text</th>
+                    <th>Tags</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let question of questions'>
+                    <td><a [routerLink]="['/question-edit', question.id]">
+                        {{question.text}}
+                        </a>
+                    </td>
+                    <td>{{question.tags[0].text | lowercase}}</td>
+                    <td>
+                        <a class="uui-button small" [routerLink]="['/question-edit', question.id]">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

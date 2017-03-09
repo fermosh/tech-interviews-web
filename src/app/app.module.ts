@@ -8,6 +8,8 @@ import { AppComponent }  from './app.component';
 /* Feature Modules */
 import { ScriptViewerModule } from './scriptViewer/script-viewer.module';
 import { EntryPointModule } from './entryPoint/entryPoint.module';
+import { QuestionModule } from './questions/question.module';
+import { ExerciseModule } from './exercises/exercise.module';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { EntryPointModule } from './entryPoint/entryPoint.module';
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ]),
     EntryPointModule,
-    ScriptViewerModule
+    ScriptViewerModule,
+    QuestionModule,
+    ExerciseModule
   ],
   exports: [RouterModule],
   declarations: [

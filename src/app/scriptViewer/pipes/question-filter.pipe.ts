@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { IQuestion } from './../interfaces/question';
+import { IInterviewQuestion } from './../interfaces/interview-question';
 
 @Pipe({
     name: 'questionFilter',
@@ -8,7 +8,7 @@ import { IQuestion } from './../interfaces/question';
 
 export class QuestionFilterPipe implements PipeTransform {
 
-    transform(items: IQuestion[], field: string, value: string): IQuestion[] {
+    transform(items: IInterviewQuestion[], field: string, value: string): IInterviewQuestion[] {
         if (!items) {
             return [];
         }

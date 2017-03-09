@@ -8,64 +8,68 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { ICompetency } from './competency';
+import { IExercise } from './exercise';
 
 @Injectable()
-export class CompetencyService {
-    private baseUrl = 'api/competencies';
+export class ExerciseService {
+    private baseUrl = 'api/exercises';
 
     constructor(private http: Http) { }
 
-    getCompetencies(): Observable<ICompetency[]> {
+    getExercises(): Observable<IExercise[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getCompetency(id: number): Observable<ICompetency> {
+    getExercise(id: number): Observable<IExercise> {
         if (id === 0) {
-            return Observable.of(this.initializeCompetency());
+        return Observable.of(this.initializeExercise());
         // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeCompetency());
+        //     observer.next(this.initializeQuestion());
         //     observer.complete();
         // });
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
+            .do(data => console.log('getExercise: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    deleteCompetency(id: number): Observable<Response> {
+    deleteExercise(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
+            .do(data => console.log('deleteExercise: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    saveCompetency(competency: ICompetency): Observable<ICompetency> {
+    saveExercise(question: IExercise): Observable<IExercise> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (competency.id === 0) {
-            return this.createCompetency(competency, options);
+        if (question.id === 0) {
+            return this.createExercise(question, options);
         }
-        return this.updateCompetency(competency, options);
+        return this.updateExercise(question, options);
     }
 
-    private createCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        competency.id = undefined;
-        return this.http.post(this.baseUrl, competency, options)
+    private createExercise(exercise: IExercise, options: RequestOptions): Observable<IExercise> {
+        exercise.id = undefined;
+        return this.http.post(this.baseUrl, exercise, options)
             .map(this.extractData)
+            .do(data => console.log('createExercise: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    private updateCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        const url = `${this.baseUrl}/${competency.id}`;
-        return this.http.put(url, competency, options)
-            .map(() => competency)
+    private updateExercise(exercise: IExercise, options: RequestOptions): Observable<IExercise> {
+        const url = `${this.baseUrl}/${exercise.id}`;
+        return this.http.put(url, exercise, options)
+            .map(() => exercise)
+            .do(data => console.log('updateExercise: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -81,11 +85,12 @@ export class CompetencyService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeCompetency(): ICompetency {
+    initializeExercise(): IExercise {
         // Return an initialized object
         return {
             id: 0,
-            name: null
+            title: '',
+            text: ''
         };
     }
 }
