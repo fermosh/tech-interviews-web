@@ -56,7 +56,7 @@
                                                     <td>
                                                         <table>
                                                             <tr>
-                                                                <td>{{ question.question }}</td>
+                                                                <td>{{ question.question.text }}</td>
                                                                 <td class="rating-cell">
                                                                     <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                                 </td>

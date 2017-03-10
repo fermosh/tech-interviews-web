@@ -897,7 +897,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
             {
                 id: 14,
                 competencyName: '.Net',
-                domain: 'Azure development',
+                domain: 'Azure Development',
                 level:
                 {
                     id: 4,

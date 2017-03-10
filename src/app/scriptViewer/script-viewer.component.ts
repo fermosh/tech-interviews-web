@@ -7,7 +7,7 @@ import { ISkill } from './interfaces/skill';
 import { IComment } from './interfaces/comment';
 import { IQuestion } from './../questions/question';
 import { IExercise } from './../exercises/exercise';
-import { ITag } from './../questions/tag';
+import { ITag } from './../shared/tag';
 import { IInterviewQuestion } from './interfaces/interview-question';
 import { QuestionExerciseBank } from './interfaces/question-exercise-bank';
 
