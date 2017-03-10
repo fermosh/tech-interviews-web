@@ -4,8 +4,8 @@
         <b><h6 class="skill-name">{{ skill.name }}</h6></b>
         <span class="report-label"><i>Score: </i></span><span>{{ getRatingBySkill(skill) | number:'1.0-1' }}</span><br><br>
         <ul>
-            <li *ngFor="let question of skill.questions; let index = index;">
-                <i>{{ index + 1 + ') ' + question.question }}</i>
+            <li *ngFor="let question of skill.interviewQuestions; let index = index;">
+                <i>{{ index + 1 + ') ' + question.question.text }}</i>
                 <p *ngIf="question.comments && !question.comments.length">No comments.</p>
                 <p *ngFor="let comment of question.comments">{{ comment.text }}</p>
             </li>
@@ -15,7 +15,7 @@
     <br>
     <h3>Coding</h3>
     <template ngFor let-skill [ngForOf]="interviewScript.skills" let-index="index">
-        <div *ngFor="let exercise of skill.exercises">
+        <div *ngFor="let exercise of skill.interviewExercises">
             <b><h6>{{ exercise.title }}</h6></b>
             <table>
                 <tbody>

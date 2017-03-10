@@ -4,7 +4,7 @@ import { IComment } from './comment';
 
 export interface IInterviewQuestion {
     question: IQuestion;
-    selected: boolean;
-    comments?: IComment[];
     rating: number;
+    comments?: IComment[];
+    selected?: boolean;
 }

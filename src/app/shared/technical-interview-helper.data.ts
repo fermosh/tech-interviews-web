@@ -47,70 +47,70 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
                 levelId: 1,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 4,
                 name: 'Azure development',
                 competencyId: 1,
                 levelId: 1,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 5,
                 name: 'FrontEnd web development',
                 competencyId: 1,
                 levelId: 2,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 6,
                 name: 'Backend development',
                 competencyId: 1,
                 levelId: 2,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 7,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
                 levelId: 2,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 8,
                 name: 'Azure development',
                 competencyId: 1,
                 levelId: 2,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 9,
                 name: 'FrontEnd web development',
                 competencyId: 1,
                 levelId: 3,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 10,
                 name: 'Backend development',
                 competencyId: 1,
                 levelId: 3,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 11,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
                 levelId: 3,
-				skillMatrixId: 13
+                skillMatrixId: 13
             },
             {
                 id: 12,
                 name: 'Azure development',
                 competencyId: 1,
                 levelId: 4,
-				skillMatrixId: 14
+                skillMatrixId: 14
             },
             {
                 id: 13,
@@ -524,12 +524,12 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 competencyName: '.Net',
                 domain: 'Azure development',
                 level:
-                    {
-                        id: 4,
-                        name: 'L4',
-                        description: 'Lead Software Engineer',
-                        competencyId: 1
-                    },
+                {
+                    id: 4,
+                    name: 'L4',
+                    description: 'Lead Software Engineer',
+                    competencyId: 1
+                },
                 skills: [
                     {
                         rootId: 7,
@@ -772,38 +772,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: false
                             }
                         ],
-                        interviewQuestions: [
-                            {
-                                question: {
-                                    id: 1,
-                                    text: `What's the purpose of standards/conventions in .NET C#?`,
-                                    answer: ''
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            },
-                            {
-                                question: {
-                                    id: 2,
-                                    text: 'When to use string and when StringBuilder?',
-                                    answer: '',
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            },
-                            {
-                                question: {
-                                    id: 3,
-                                    text: 'When to use var and when the exact data type?',
-                                    answer: '',
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            }
-                        ],
+                        interviewQuestions: [],
                         interviewExercises: []
                     },
                     {
@@ -892,67 +861,8 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: true
                             }
                         ],
-                        interviewQuestions: [
-                            {
-                                question: {
-                                    id: 1,
-                                    text: 'What is SOLID? Explain the principles and provide examples',
-                                    answer: ''
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            },
-                            {
-                                question: {
-                                    id: 2,
-                                    text: 'What is Value Type and Reference Type?',
-                                    answer: '',
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            },
-                            {
-                                question: {
-                                    id: 3,
-                                    text: 'What is Boxing and Un-Boxing?',
-                                    answer: '',
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            }
-                        ],
-                        interviewExercises: [
-                            {
-                                exercise: {
-                                    id: 1,
-                                    title: 'Palindrome',
-                                    text: `A palindrome is a word, phrase, number, or other
-                                        sequence of characters which reads the same backward or forward,
-                                        such as madam or kayak. Write an function that receives an string
-                                        parameters and return true if it is a palindrome.`,
-                                    solution: ''
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            },
-                            {
-                                exercise: {
-                                    id: 2,
-                                    title: 'Balanced Brakets',
-                                    text: `Type of Brackets: () Round brackets or parentheses, {}
-                                        Curly brackets or braces, [] Square brackets. Implement an algorithm
-                                        to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
-                                    solution: '',
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            }
-                        ]
+                        interviewQuestions: [],
+                        interviewExercises: []
                     },
                     {
                         id: 3,
@@ -980,52 +890,21 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 isRequired: true
                             }
                         ],
-                        interviewQuestions: [
-                            {
-                                question: {
-                                    id: 7,
-                                    text: 'Explain SCRUM',
-                                    answer: '',
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            },
-                            {
-                                question: {
-                                    id: 8,
-                                    text: 'How do you face or deal with problems in an Agile project?',
-                                    answer: '',
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            },
-                            {
-                                question: {
-                                    id: 9,
-                                    text: `When you need to solve something you don't know, how do you deal with it?`,
-                                    answer: ''
-                                },
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            }
-                        ],
+                        interviewQuestions: [],
                         interviewExercises: []
                     }]
             },
             {
                 id: 14,
                 competencyName: '.Net',
-                domain: 'Azure development',
+                domain: 'Azure Development',
                 level:
-                    {
-                        id: 4,
-                        name: 'L4',
-                        description: 'Lead Software Engineer',
-                        competencyId: 14
-                    },
+                {
+                    id: 4,
+                    name: 'L4',
+                    description: 'Lead Software Engineer',
+                    competencyId: 14
+                },
                 skills: [
                     {
                         id: 1,
@@ -1062,9 +941,18 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 question: {
                                     id: 1,
                                     text: `What's the purpose of standards/conventions in .NET C#?`,
-                                    answer: ''
+                                    answer: '',
+                                    tags: [
+                                        {
+                                            id: 1,
+                                            text: 'Code Standards'
+                                        },
+                                        {
+                                            id: 1002,
+                                            text: 'Other .NET Development'
+                                        }
+                                    ]
                                 },
-                                selected: true,
                                 rating: 4.1,
                                 comments: []
                             },
@@ -1073,8 +961,13 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                     id: 2,
                                     text: 'When to use string and when StringBuilder?',
                                     answer: '',
+                                    tags: [
+                                        {
+                                            id: 1,
+                                            text: 'Code Standards'
+                                        }
+                                    ]
                                 },
-                                selected: true,
                                 rating: 3,
                                 comments: []
                             },
@@ -1083,8 +976,13 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                     id: 3,
                                     text: 'When to use var and when the exact data type?',
                                     answer: '',
+                                    tags: [
+                                        {
+                                            id: 1,
+                                            text: 'Code Standards'
+                                        }
+                                    ]
                                 },
-                                selected: true,
                                 rating: 4,
                                 comments: []
                             }
@@ -1180,11 +1078,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         interviewQuestions: [
                             {
                                 question: {
-                                    id: 1,
+                                    id: 4,
                                     text: 'What is SOLID? Explain the principles and provide examples',
-                                    answer: ''
+                                    answer: '',
+                                    tags: [
+                                        {
+                                            id: 2,
+                                            text: '.NET Development'
+                                        }
+                                    ]
                                 },
-                                selected: true,
                                 rating: 3,
                                 comments: [
                                     {
@@ -1197,11 +1100,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                             },
                             {
                                 question: {
-                                    id: 2,
+                                    id: 5,
                                     text: 'What is Value Type and Reference Type?',
                                     answer: '',
+                                    tags: [
+                                        {
+                                            id: 2,
+                                            text: '.NET Development'
+                                        }
+                                    ]
                                 },
-                                selected: true,
                                 rating: 4,
                                 comments: [
                                     {
@@ -1214,11 +1122,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                             },
                             {
                                 question: {
-                                    id: 3,
+                                    id: 6,
                                     text: 'What is Boxing and Un-Boxing?',
                                     answer: '',
+                                    tags: [
+                                        {
+                                            id: 2,
+                                            text: '.NET Development'
+                                        }
+                                    ]
                                 },
-                                selected: true,
                                 rating: 4,
                                 comments: []
                             }
@@ -1232,7 +1145,13 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                         sequence of characters which reads the same backward or forward,
                                         such as madam or kayak. Write an function that receives an string
                                         parameters and return true if it is a palindrome.`,
-                                    solution: ''
+                                    solution: '',
+                                    tags: [
+                                        {
+                                            id: 2,
+                                            text: '.NET Development'
+                                        }
+                                    ]
                                 },
                                 selected: true,
                                 rating: 4,
@@ -1253,6 +1172,12 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                         Curly brackets or braces, [] Square brackets. Implement an algorithm
                                         to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
                                     solution: '',
+                                    tags: [
+                                        {
+                                            id: 2,
+                                            text: '.NET Development'
+                                        }
+                                    ]
                                 },
                                 selected: true,
                                 rating: 5,
@@ -1295,12 +1220,17 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         interviewQuestions: [
                             {
                                 question: {
-                                    id: 1,
+                                    id: 7,
                                     text: 'Explain SCRUM',
                                     answer: '',
+                                    tags: [
+                                        {
+                                            id: 3,
+                                            text: 'Scrum / Agile'
+                                        }
+                                    ]
                                 },
-                                selected: true,
-                                rating: 7,
+                                rating: 5,
                                 comments: [
                                     {
                                         text: `Was able to identify roles such Scrum Master, Product Owner, etc. but he's not
@@ -1315,8 +1245,13 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                     id: 8,
                                     text: 'How do you face or deal with problems in an Agile project?',
                                     answer: '',
+                                    tags: [
+                                        {
+                                            id: 3,
+                                            text: 'Scrum / Agile'
+                                        }
+                                    ]
                                 },
-                                selected: true,
                                 rating: 3,
                                 comments: [
                                     {
@@ -1331,9 +1266,14 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 question: {
                                     id: 9,
                                     text: `When you need to solve something you don't know, how do you deal with it?`,
-                                    answer: ''
+                                    answer: '',
+                                    tags: [
+                                        {
+                                            id: 3,
+                                            text: 'Scrum / Agile'
+                                        }
+                                    ]
                                 },
-                                selected: true,
                                 rating: 4,
                                 comments: [
                                     {
@@ -1349,6 +1289,156 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     }]
             }];
 
-        return { competencies, domains, levels, questions, exercises, skillMatrix, interviewScriptData, templates };
+        let questionsByTemplateId: IQuestion[] = [
+            {
+                id: 1,
+                text: `What's the purpose of standards/conventions in .NET C#?`,
+                answer: '',
+                tags: [
+                    {
+                        id: 1,
+                        text: 'Code Standards'
+                    },
+                    {
+                        id: 1002,
+                        text: 'Other .NET Development'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                text: 'When to use string and when StringBuilder?',
+                answer: '',
+                tags: [
+                    {
+                        id: 1,
+                        text: 'Code Standards'
+                    }
+                ]
+            },
+            {
+                id: 3,
+                text: 'When to use var and when the exact data type?',
+                answer: '',
+                tags: [
+                    {
+                        id: 1,
+                        text: 'Code Standards'
+                    }
+                ]
+            },
+            {
+                id: 4,
+                text: 'What is SOLID? Explain the principles and provide examples',
+                answer: '',
+                tags: [
+                    {
+                        id: 1001,
+                        text: 'Other Code Standards'
+                    },
+                    {
+                        id: 2,
+                        text: 'NET Development'
+                    },
+                    {
+                        id: 1003,
+                        text: 'Other Scrum / Agile'
+                    }
+                ]
+            },
+            {
+                id: 5,
+                text: 'What is Value Type and Reference Type?',
+                answer: '',
+                tags: [
+                    {
+                        id: 2,
+                        text: 'NET Development'
+                    }
+                ]
+            },
+            {
+                id: 6,
+                text: 'What is Boxing and Un-Boxing?',
+                answer: '',
+                tags: [
+                    {
+                        id: 2,
+                        text: 'NET Development'
+                    }
+                ]
+            },
+            {
+                id: 7,
+                text: 'Explain SCRUM',
+                answer: '',
+                tags: [
+                    {
+                        id: 3,
+                        text: 'Scrum / Agile'
+                    }
+                ]
+            },
+            {
+                id: 8,
+                text: 'How do you face or deal with problems in an Agile project?',
+                answer: '',
+                tags: [
+                    {
+                        id: 3,
+                        text: 'Scrum / Agile'
+                    }
+                ]
+            },
+            {
+                id: 9,
+                text: `When you need to solve something you don't know, how do you deal with it?`,
+                answer: '',
+                tags: [
+                    {
+                        id: 3,
+                        text: 'Scrum / Agile'
+                    }
+                ]
+            },
+        ];
+
+        let exercisesByTemplateId: IExercise[] = [
+            {
+                id: 1,
+                title: 'Palindrome',
+                text: `A palindrome is a word, phrase, number, or other
+                                        sequence of characters which reads the same backward or forward,
+                                        such as madam or kayak. Write an function that receives an string
+                                        parameters and return true if it is a palindrome.`,
+                solution: '',
+                tags: [
+                    {
+                        id: 1001,
+                        text: 'Other Code Standards'
+                    },
+                    {
+                        id: 2,
+                        text: '.NET Development'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: 'Balanced Brakets',
+                text: `Type of Brackets: () Round brackets or parentheses, {}
+                                        Curly brackets or braces, [] Square brackets. Implement an algorithm
+                                        to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
+                solution: '',
+                tags: [
+                    {
+                        id: 2,
+                        text: '.NET Development'
+                    }
+                ]
+            }
+        ];
+
+        return { competencies, domains, levels, questions, exercises, skillMatrix, interviewScriptData, templates, questionsByTemplateId, exercisesByTemplateId };
     }
 }

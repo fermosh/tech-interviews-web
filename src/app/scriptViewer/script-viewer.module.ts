@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { ScriptViewerComponent } from './script-viewer.component';
 import { HistoryCommentComponent } from './components/history-comment.component';
 import { ReportViewerComponent } from './components/report-viewer.component';
-import { QuestionFilterPipe } from './pipes/question-filter.pipe';
-import { ExerciseFilterPipe } from './pipes/exercise-filter.pipe';
+import { QuestionBankFilterPipe } from './pipes/question-bank-filter.pipe';
+import { ExerciseBankFilterPipe } from './pipes/exercise-bank-filter.pipe';
 import { ScriptViewerService } from './script-viewer.service';
 import { SharedModule } from './../shared/shared.module';
 
@@ -18,8 +18,8 @@ import { SharedModule } from './../shared/shared.module';
     ],
     declarations: [
         ScriptViewerComponent,
-        QuestionFilterPipe,
-        ExerciseFilterPipe,
+        QuestionBankFilterPipe,
+        ExerciseBankFilterPipe,
         HistoryCommentComponent,
         ReportViewerComponent
     ],
