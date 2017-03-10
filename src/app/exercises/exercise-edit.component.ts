@@ -6,8 +6,8 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/merge';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { IQuestion } from './question';
-import { QuestionService } from './question.service';
+import { IExercise } from './exercise';
+import { ExerciseService } from './exercise.service';
 import { NumberValidator } from '../shared/number.validator';
 import { GenericValidator } from '../shared/generic.validator';
 import { SkillMatrixService } from './../entryPoint/skill-matrix.service';
@@ -15,17 +15,17 @@ import { SkillMatrixService } from './../entryPoint/skill-matrix.service';
 declare var jQuery: any;
 
 @Component({
-    templateUrl: './question-edit.component.html',
-    styleUrls: ['./question-edit.component.css']
+    templateUrl: './exercise-edit.component.html',
+    styleUrls: ['./exercise-edit.component.css']
 })
-export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
-    title: string = 'Question Edit';
+    title: string = 'Exercise Edit';
     isPageRendered: boolean;
     errorMessage: string;
-    questionForm: FormGroup;
-    question: IQuestion;
+    exerciseForm: FormGroup;
+    exercise: IExercise;
     private sub: Subscription;
 
     // Use with the generic validation message class
@@ -36,21 +36,26 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private fb: FormBuilder,
                 private route: ActivatedRoute,
                 private router: Router,
-                private questionService: QuestionService,
+                private exerciseService: ExerciseService,
                 private skillMatrixService: SkillMatrixService) {
 
         // Defines all of the validation messages for the form.
         // These could instead be retrieved from a file or database.
         this.validationMessages = {
-            questionText: {
-                required: 'Question text is required.',
-                minlength: 'Question text must be at least twenty characters.',
-                maxlength: 'Question text cannot exceed 200 characters.'
+            exerciseTitle: {
+                required: 'Exercise title is required.',
+                minlength: 'Exercise title must be at least five characters.',
+                maxlength: 'Exercise title cannot exceed 2000 characters.'
             },
-            questionTags: {
-                required: 'Question tag is required',
-                minlength: 'You can select at least 1 Question tag',
-                maxlength: 'You can select at most 1 Question tag',
+            exerciseBody: {
+                required: 'Exercise body is required.',
+                minlength: 'Exercise body must be at least twenty characters.',
+                maxlength: 'Exercise body cannot exceed 200 characters.'
+            },
+            exerciseTags: {
+                required: 'Exercise tag is required',
+                minlength: 'You can select at least 1 Exercise tag',
+                maxlength: 'You can select at most 1 Exercise tag',
             }
         };
 
@@ -60,21 +65,24 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.questionForm = this.fb.group({
-            questionText: ['', [Validators.required,
-                               Validators.minLength(20),
+        this.exerciseForm = this.fb.group({
+            exerciseTitle: ['', [Validators.required,
+                               Validators.minLength(5),
                                Validators.maxLength(200)]],
-            questionAnswer: '',
-            questionTags: ['', [Validators.required,
+            exerciseBody: ['', [Validators.required,
+                               Validators.minLength(20),
+                               Validators.maxLength(2000)]],
+            exerciseAnswer: '',
+            exerciseTags: ['', [Validators.required,
                                Validators.minLength(1),
                                Validators.maxLength(1)]],
         });
 
-        // Read the question Id from the route parameter
+        // Read the exercise Id from the route parameter
         this.sub = this.route.params.subscribe(
             params => {
                 let id = +params['id'];
-                this.getQuestion(id);
+                this.getExercise(id);
             }
         );
     }
@@ -88,7 +96,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewChecked(): void {
-        if (this.question && !this.isPageRendered) {
+        if (this.exercise && !this.isPageRendered) {
 
             this.skillMatrixService.getSkillMatrix(13).subscribe(
                 skillMatrix => { this.fillAutocomplete(skillMatrix.skills.map(skill => skill.name));
@@ -109,46 +117,47 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             .map((formControl: ElementRef) => Observable.fromEvent(formControl.nativeElement, 'blur'));
 
         // Merge the blur event observable with the valueChanges observable
-        Observable.merge(this.questionForm.valueChanges, ...controlBlurs).debounceTime(800).subscribe(value => {
-            this.displayMessage = this.genericValidator.processMessages(this.questionForm);
+        Observable.merge(this.exerciseForm.valueChanges, ...controlBlurs).debounceTime(800).subscribe(value => {
+            this.displayMessage = this.genericValidator.processMessages(this.exerciseForm);
         });
     }
 
-    getQuestion(id: number): void {
-        this.questionService.getQuestion(id)
+    getExercise(id: number): void {
+        this.exerciseService.getExercise(id)
             .subscribe(
-                (question: IQuestion) => this.onQuestionRetrieved(question),
+                (exercise: IExercise) => this.onExerciseRetrieved(exercise),
                 (error: any) => this.errorMessage = <any>error
             );
     }
 
-    onQuestionRetrieved(question: IQuestion): void {
-        if (this.questionForm) {
-            this.questionForm.reset();
+    onExerciseRetrieved(exercise: IExercise): void {
+        if (this.exerciseForm) {
+            this.exerciseForm.reset();
         }
-        this.question = question;
+        this.exercise = exercise;
 
-        if (this.question.id === 0) {
-            this.title = 'Add Question';
+        if (this.exercise.id === 0) {
+            this.title = 'Add Exercise';
         } else {
-            this.title = `Edit Question: ${this.question.text}`;
+            this.title = `Edit Exercise: ${this.exercise.title}`;
         }
 
         // Update the data on the form
-        this.questionForm.patchValue({
-            questionText: this.question.text,
-            questionAnswer: this.question.answer,
+        this.exerciseForm.patchValue({
+            exerciseTitle: this.exercise.title,
+            exerciseBody: this.exercise.text,
+            exerciseAnswer: this.exercise.solution,
         });
-        this.questionForm.setControl('questionTags', this.fb.array(['Java', 'JavaScript']));
+        this.exerciseForm.setControl('exerciseTags', this.fb.array(['Java', 'JavaScript']));
     }
 
     deleteQuestion(): void {
-        if (this.question.id === 0) {
+        if (this.exercise.id === 0) {
             // Don't delete, it was never saved.
             this.onSaveComplete();
        } else {
-            if (confirm(`Really delete the question: ${this.question.text}?`)) {
-                this.questionService.deleteQuestion(this.question.id)
+            if (confirm(`Really delete the exercise: ${this.exercise.title}?`)) {
+                this.exerciseService.deleteExercise(this.exercise.id)
                     .subscribe(
                         () => this.onSaveComplete(),
                         (error: any) => this.errorMessage = <any>error
@@ -157,24 +166,24 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    saveQuestion(): void {
-        if (this.questionForm.dirty && this.questionForm.valid) {
-            // Copy the form values over the question object values
-            let q = Object.assign({}, this.question, this.questionForm.value);
+    saveExercise(): void {
+        if (this.exerciseForm.dirty && this.exerciseForm.valid) {
+            // Copy the form values over the exercise object values
+            let q = Object.assign({}, this.exercise, this.exerciseForm.value);
 
-            this.questionService.saveQuestion(q)
+            this.exerciseService.saveExercise(q)
                 .subscribe(
                     () => this.onSaveComplete(),
                     (error: any) => this.errorMessage = <any>error
                 );
-        } else if (!this.questionForm.dirty) {
+        } else if (!this.exerciseForm.dirty) {
             this.onSaveComplete();
         }
     }
 
     onSaveComplete(): void {
         // Reset the form to clear the flags
-        this.questionForm.reset();
-        this.router.navigate(['/question-list']);
+        this.exerciseForm.reset();
+        this.router.navigate(['/exercise-list']);
     }
 }

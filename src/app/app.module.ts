@@ -9,6 +9,7 @@ import { AppComponent }  from './app.component';
 import { ScriptViewerModule } from './scriptViewer/script-viewer.module';
 import { EntryPointModule } from './entryPoint/entryPoint.module';
 import { QuestionModule } from './questions/question.module';
+import { ExerciseModule } from './exercises/exercise.module';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { QuestionModule } from './questions/question.module';
     ]),
     EntryPointModule,
     ScriptViewerModule,
-    QuestionModule
+    QuestionModule,
+    ExerciseModule
   ],
   exports: [RouterModule],
   declarations: [

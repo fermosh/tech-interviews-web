@@ -56,21 +56,19 @@
                                                     <td>
                                                         <table>
                                                             <tr>
-                                                                <td>{{ question.question.text }}</td>
+                                                                <td>{{ question.question }}</td>
                                                                 <td class="rating-cell">
                                                                     <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                                 </td>
                                                                 <td class="comments-cell">
-                                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }"
-                                                                        data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.question.id"
-                                                                        [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.question.id"></i>
+                                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }" data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
+                                                                        [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
                                                                 </td>
                                                             </tr>
                                                         </table>
-                                                        <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.question.id">
-                                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.question.id, $event)"></tih-history-comment>
-                                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.question.id, $event)"
-                                                            />
+                                                        <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
+                                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.id, $event)"></tih-history-comment>
+                                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)" />
                                                         </div>
                                                     </td>
                                                 </tr>

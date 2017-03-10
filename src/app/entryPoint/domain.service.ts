@@ -25,10 +25,6 @@ export class DomainService {
     getDomain(id: number): Observable<IDomain> {
         if (id === 0) {
         return Observable.of(this.initializeProduct());
-        // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeProduct());
-        //     observer.complete();
-        // });
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
@@ -42,7 +38,6 @@ export class DomainService {
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteDomain: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -60,7 +55,6 @@ export class DomainService {
         Domain.id = undefined;
         return this.http.post(this.baseUrl, Domain, options)
             .map(this.extractData)
-            .do(data => console.log('createDomain: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -68,7 +62,6 @@ export class DomainService {
         const url = `${this.baseUrl}/${product.id}`;
         return this.http.put(url, product, options)
             .map(() => product)
-            .do(data => console.log('updateDomain: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 

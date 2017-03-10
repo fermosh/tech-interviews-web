@@ -6,70 +6,65 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 import 'rxjs/add/observable/of';
 
-import { IQuestion } from './question';
+import { ITemplate } from './interfaces/template';
 
 @Injectable()
-export class QuestionService {
-    private baseUrl = 'api/questions';
+export class TemplateService {
+    private baseUrl = 'api/templates';
 
     constructor(private http: Http) { }
 
-    getQuestions(): Observable<IQuestion[]> {
+    getTemplates(): Observable<ITemplate[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getQuestion(id: number): Observable<IQuestion> {
+    getTemplate(id: number): Observable<ITemplate> {
         if (id === 0) {
-        return Observable.of(this.initializeQuestion());
-        // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeQuestion());
-        //     observer.complete();
-        // });
+            return Observable.of(this.initializeTemplate());
         };
+
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    deleteQuestion(id: number): Observable<Response> {
+    deleteTemplate(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    saveQuestion(question: IQuestion): Observable<IQuestion> {
+    saveTemplate(template: ITemplate): Observable<ITemplate> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (question.id === 0) {
-            return this.createQuestion(question, options);
+        if (template.id === 0) {
+            return this.createTemplate(template, options);
         }
-        return this.updateQuestion(question, options);
+        return this.updateTemplate(template, options);
     }
 
-    private createQuestion(question: IQuestion, options: RequestOptions): Observable<IQuestion> {
-        question.id = undefined;
-        return this.http.post(this.baseUrl, question, options)
+    private createTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
+        template.id = undefined;
+        return this.http.post(this.baseUrl, template, options)
             .map(this.extractData)
-            .do(data => console.log('createQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    private updateQuestion(question: IQuestion, options: RequestOptions): Observable<IQuestion> {
-        const url = `${this.baseUrl}/${question.id}`;
-        return this.http.put(url, question, options)
-            .map(() => question)
-            .do(data => console.log('updateQuestion: ' + JSON.stringify(data)))
+    private updateTemplate(product: ITemplate, options: RequestOptions): Observable<ITemplate> {
+        const url = `${this.baseUrl}/${product.id}`;
+        return this.http.put(url, product, options)
+            .map(() => product)
             .catch(this.handleError);
     }
 
@@ -85,13 +80,10 @@ export class QuestionService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeQuestion(): IQuestion {
+    initializeTemplate(): ITemplate {
         // Return an initialized object
         return {
-            id: 0,
-            text: '',
-            answer: null,
-            tags: []
+            id: 0, skillIds: []
         };
     }
 }

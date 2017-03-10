@@ -1,28 +1,28 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { IQuestion } from './question';
-import { QuestionService } from './question.service';
+import { IExercise } from './exercise';
+import { ExerciseService } from './exercise.service';
 
 @Component({
-    templateUrl: './question-detail.component.html'
+    templateUrl: './exercise-detail.component.html'
 })
-export class QuestionDetailComponent implements OnInit, OnDestroy {
-    title: string = 'Question Detail';
-    question: IQuestion;
+export class ExerciseDetailComponent implements OnInit, OnDestroy {
+    title: string = 'Exercise Detail';
+    exercise: IExercise;
     errorMessage: string;
     private sub: Subscription;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
-                private questionService: QuestionService) {
+                private exerciseService: ExerciseService) {
     }
 
     ngOnInit(): void {
         this.sub = this.route.params.subscribe(
             params => {
                 let id = +params['id'];
-                this.getQuestion(id);
+                this.getExercise(id);
         });
     }
 
@@ -30,17 +30,17 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    getQuestion(id: number) {
-        this.questionService.getQuestion(id).subscribe(
-            question => this.question = question,
+    getExercise(id: number) {
+        this.exerciseService.getExercise(id).subscribe(
+            exercise => this.exercise = exercise,
             error => this.errorMessage = <any>error);
     }
 
     onBack(): void {
-        this.router.navigate(['/questions']);
+        this.router.navigate(['/exercises']);
     }
 
     onRatingClicked(message: string): void {
-        this.title = 'Question Detail: ' + message;
+        this.title = 'Exercise Detail: ' + message;
     }
 }

@@ -8,23 +8,23 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { IQuestion } from './question';
+import { IExercise } from './exercise';
 
 @Injectable()
-export class QuestionService {
-    private baseUrl = 'api/questions';
+export class ExerciseService {
+    private baseUrl = 'api/exercises';
 
     constructor(private http: Http) { }
 
-    getQuestions(): Observable<IQuestion[]> {
+    getExercises(): Observable<IExercise[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getQuestion(id: number): Observable<IQuestion> {
+    getExercise(id: number): Observable<IExercise> {
         if (id === 0) {
-        return Observable.of(this.initializeQuestion());
+        return Observable.of(this.initializeExercise());
         // return Observable.create((observer: any) => {
         //     observer.next(this.initializeQuestion());
         //     observer.complete();
@@ -33,43 +33,43 @@ export class QuestionService {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getQuestion: ' + JSON.stringify(data)))
+            .do(data => console.log('getExercise: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    deleteQuestion(id: number): Observable<Response> {
+    deleteExercise(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteQuestion: ' + JSON.stringify(data)))
+            .do(data => console.log('deleteExercise: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    saveQuestion(question: IQuestion): Observable<IQuestion> {
+    saveExercise(question: IExercise): Observable<IExercise> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         if (question.id === 0) {
-            return this.createQuestion(question, options);
+            return this.createExercise(question, options);
         }
-        return this.updateQuestion(question, options);
+        return this.updateExercise(question, options);
     }
 
-    private createQuestion(question: IQuestion, options: RequestOptions): Observable<IQuestion> {
-        question.id = undefined;
-        return this.http.post(this.baseUrl, question, options)
+    private createExercise(exercise: IExercise, options: RequestOptions): Observable<IExercise> {
+        exercise.id = undefined;
+        return this.http.post(this.baseUrl, exercise, options)
             .map(this.extractData)
-            .do(data => console.log('createQuestion: ' + JSON.stringify(data)))
+            .do(data => console.log('createExercise: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    private updateQuestion(question: IQuestion, options: RequestOptions): Observable<IQuestion> {
-        const url = `${this.baseUrl}/${question.id}`;
-        return this.http.put(url, question, options)
-            .map(() => question)
-            .do(data => console.log('updateQuestion: ' + JSON.stringify(data)))
+    private updateExercise(exercise: IExercise, options: RequestOptions): Observable<IExercise> {
+        const url = `${this.baseUrl}/${exercise.id}`;
+        return this.http.put(url, exercise, options)
+            .map(() => exercise)
+            .do(data => console.log('updateExercise: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -85,13 +85,12 @@ export class QuestionService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeQuestion(): IQuestion {
+    initializeExercise(): IExercise {
         // Return an initialized object
         return {
             id: 0,
-            text: '',
-            answer: null,
-            tags: []
+            title: '',
+            text: ''
         };
     }
 }

@@ -9,13 +9,14 @@ import { CompetencyService } from './competency.service';
 import { LevelService } from './level.service';
 import { DomainService } from './domain.service';
 import { SkillMatrixService } from './skill-matrix.service';
+import { TemplateService } from './template.service';
+
 
 import { SkillMatrixItem } from './../scriptViewer/classes/skillMatrixItem';
 
 declare var jQuery: any;
 
 @Component({
-    selector: 'ip-entryPoint',
     templateUrl: './entryPoint.component.html',
     styleUrls: ['./entryPoint.component.css']
 })
@@ -34,13 +35,15 @@ export class EntryPointComponent {
     /* Auxiliar flags */
     isSkillGridVisible: boolean;
     isSearchDisabled = true;
+    isNextDisabled = false;
 
     /* Constructor to inject the diferent services */
     constructor(private router: Router, private elementRef: ElementRef,
         private competencyService: CompetencyService,
         private levelService: LevelService,
         private domainService: DomainService,
-        private skillMatrixService: SkillMatrixService) {
+        private skillMatrixService: SkillMatrixService,
+        private templateService: TemplateService) {
     };
 
     /* Start Initilizers */
@@ -157,6 +160,9 @@ export class EntryPointComponent {
 
                 // initialize treegrid script
                 setTimeout(() => { this.createTree(); }, 0);
+
+                // check if the next button is enabled
+                this.checkNextButtonStatus();
             },
             error => console.log(<any>error));
     }
@@ -167,22 +173,31 @@ export class EntryPointComponent {
 
         // ver or set parent selection
         this.cascadeParent(skill);
+
+        // check if the next button is enabled
+        this.checkNextButtonStatus();
     }
 
     onNext(): void {
 
-        // todo: here we will call to an api method to persist the list of selected skill ids
-        // let selectedSkills = this.skillMatrixItems.filter(x=> x.isSelected).map(x=> x.id);
+        // verify at least one skil is selected
+        if (!this.isAnySkillSelected()) {
+            console.log('No skill was selected');
+            return;
+        }
 
-        let skillMatrixId = this.domainOptions.find(x => x.id == this.domainId).skillMatrixId;
-        this.router.navigate(['./script-viewer/' + skillMatrixId]);
+        this.templateService.saveTemplate({ id: 0, skillIds: this.skillMatrixItems.filter(x => x.isSelected).map(x => x.id) }).subscribe(
+            result => {
+                // navigate to the scriptViewer and pass the just created template id
+                this.router.navigate(['./script-viewer/' + result.id]);
+            });
     }
     /*End event functions*/
 
     /*Start helper functions */
     private createTree(): void {
         // calls this jQuery function to initialize the uui Tree Grid
-        jQuery('.uui-table.treegrid').uui_tree_grid({ collapsed: false,animate: true, padding_automation: false, padding: 0 });
+        jQuery('.uui-table.treegrid').uui_tree_grid({ collapsed: false, animate: true, padding_automation: false, padding: 0 });
     }
 
     /* Verify or set childs selection when a Skill parent has changed*/
@@ -204,6 +219,9 @@ export class EntryPointComponent {
 
     /* Verify or set childs selection when a Skill child has changed*/
     private cascadeParent(skill: SkillMatrixItem): void {
+
+        skill.anyChildSelected = this.isAnyChildSelected(skill);
+
         // check if this is root skill
         if (skill.parentId == null) {
             return;
@@ -219,25 +237,33 @@ export class EntryPointComponent {
         parent.anyChildSelected = this.isAnyChildSelected(parent);
 
         // in the case the parent state is equal to the child skill state we skip
-        if (parent.isSelected == skill.isSelected) {
-            return;
+        if (parent.isSelected !== skill.isSelected) {
+            // set the parent state acording to the children state
+            parent.isSelected = !this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
         }
-
-        // set the parent state acording to the children state
-        parent.isSelected = !this.skillMatrixItems.filter(x => x.parentId == parent.id).some(x => !x.isSelected);
 
         // evaluate the parent skill
         this.cascadeParent(parent);
     }
 
+    /* Function that returns true if there is at least one skill selected */
+    private isAnySkillSelected(): boolean {
+        return this.skillMatrixItems.some(x => x.isSelected);
+    }
+
     /* Function that returns true if the given skill has some child selected */
     private isAnyChildSelected(parentSkill: SkillMatrixItem): boolean {
-        return this.skillMatrixItems.filter(x => x.parentId == parentSkill.id).some(x => x.isSelected);
+        return this.skillMatrixItems.filter(x => x.parentId == parentSkill.id).some(x => x.isSelected || x.anyChildSelected);
     }
 
     // determines when the search button is enabled or not according to the dropdwns values
     private checkSearchButtonStatus(): void {
         this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0 || this.domainId == 0);
+    }
+
+    // determines when the next button is enabled or not according to the selected skills
+    private checkNextButtonStatus(): void {
+        this.isNextDisabled  = !this.isAnySkillSelected();
     }
 
     // ICompetency Comparer(for sorting purpose)

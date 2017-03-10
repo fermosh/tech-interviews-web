@@ -1,15 +1,17 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-
 import { ICompetency } from './../entryPoint/competency';
 import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
 import { IDomain } from './../entryPoint/domain';
 import { ILevel } from './../entryPoint/level';
 import { IQuestion } from './../questions/question';
 import { IExercise } from './../exercises/exercise';
+import { ITemplate } from '../entryPoint/interfaces/template';
 
 export class TechnicalInterviewData implements InMemoryDbService {
 
     createDb() {
+        let templates: ITemplate[] = [];
+
         let competencies: ICompetency[] = [
             {
                 id: 1,
@@ -276,6 +278,46 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     {
                         id: 1,
                         text: '.Net'
+                    }
+                ]
+            }
+        ];
+
+        let exercises: IExercise[] = [
+            {
+                id: 1,
+                title: 'Palindrome',
+                text: `A palindrome is a word, phrase, number, or other
+                    sequence of characters which reads the same backward or forward,
+                    such as madam or kayak. Write an function that receives an string
+                    parameters and return true if it is a palindrome.`,
+                solution: '',
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    },
+                    {
+                        id: 2,
+                        text: 'Algorithms'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: 'Balanced Brakets',
+                text: `Type of Brackets: () Round brackets or parentheses, {}
+                    Curly brackets or braces, [] Square brackets. Implement an algorithm
+                    to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
+                solution: '',
+                tags: [
+                    {
+                        id: 1,
+                        text: '.Net'
+                    },
+                    {
+                        id: 2,
+                        text: 'Algorithms'
                     }
                 ]
             }
@@ -1397,6 +1439,6 @@ export class TechnicalInterviewData implements InMemoryDbService {
             }
         ];
 
-        return { competencies, domains, levels, questions, skillMatrix, interviewScriptData, questionsByTemplateId, exercisesByTemplateId };
+        return { competencies, domains, levels, questions, exercises, skillMatrix, interviewScriptData, templates, questionsByTemplateId, exercisesByTemplateId };
     }
 }

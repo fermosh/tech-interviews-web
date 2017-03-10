@@ -1,7 +1,7 @@
-<div *ngIf='questions'>
-    <div class="question-list-header">
+<div *ngIf='exercises'>
+    <div class="exercise-list-header">
         <div class="container">
-            <div class="question-list-title-box">
+            <div class="exercise-list-title-box">
                 <h2>{{title}}</h2>
             </div>
         </div>
@@ -11,20 +11,20 @@
         <table class="uui-table dynamic stripe records-per-page search showing-pages paging">
             <thead>
                 <tr>
-                    <th>Text</th>
+                    <th>Title</th>
                     <th>Tags</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor='let question of questions'>
-                    <td><a [routerLink]="['/question-edit', question.id]">
-                        {{question.text}}
+                <tr *ngFor='let exercise of exercises'>
+                    <td><a [routerLink]="['/exercise', exercise.id]">
+                        {{exercise.title}}
                         </a>
                     </td>
-                    <td>{{question.tags[0].text | lowercase}}</td>
+                    <td>{{exercise.tags[0].text | lowercase}}</td>
                     <td>
-                        <a class="uui-button small" [routerLink]="['/question-edit', question.id]">
+                        <a class="uui-button small" [routerLink]="['/exercise-edit', exercise.id]">
                             Edit
                         </a>
                     </td>
