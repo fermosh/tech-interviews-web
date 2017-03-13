@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CompetencyService } from './competency.service';
-import { LevelService } from './level.service';
-import { DomainService } from './domain.service';
+import { CompetencyService } from './services/competency.service';
+import { LevelService } from './services/level.service';
+import { DomainService } from './services/domain.service';
 import { SkillMatrixService } from './skill-matrix.service';
-import { TemplateService } from './template.service';
+import { TemplateService } from './services/template.service';
 import { EntryPointComponent } from './entryPoint.component';
 import { SkillPickerComponent } from './components/skillPicker.component';
 

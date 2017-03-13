@@ -10,7 +10,7 @@ import 'rxjs/add/operator/filter';
 
 import 'rxjs/add/observable/of';
 
-import { ITemplate } from './interfaces/template';
+import { ITemplate } from '../interfaces/template';
 
 @Injectable()
 export class TemplateService {

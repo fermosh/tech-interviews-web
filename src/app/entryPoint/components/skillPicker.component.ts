@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SkillMatrixItem } from './../../scriptViewer/classes/skillMatrixItem';
+import { SkillMatrixItem } from '../classes/skillMatrixItem';
 
 declare var jQuery: any;
 

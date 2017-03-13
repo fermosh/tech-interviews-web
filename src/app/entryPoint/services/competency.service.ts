@@ -8,23 +8,27 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { IDomain } from './Domain';
+import { ICompetency } from '../interfaces/competency';
 
 @Injectable()
-export class DomainService {
-    private baseUrl = 'api/domains';
+export class CompetencyService {
+    private baseUrl = 'api/competencies';
 
     constructor(private http: Http) { }
 
-    getDomains(): Observable<IDomain[]> {
+    getCompetencies(): Observable<ICompetency[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getDomain(id: number): Observable<IDomain> {
+    getCompetency(id: number): Observable<ICompetency> {
         if (id === 0) {
-        return Observable.of(this.initializeProduct());
+            return Observable.of(this.initializeCompetency());
+        // return Observable.create((observer: any) => {
+        //     observer.next(this.initializeCompetency());
+        //     observer.complete();
+        // });
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
@@ -32,7 +36,7 @@ export class DomainService {
             .catch(this.handleError);
     }
 
-    deleteDomain(id: number): Observable<Response> {
+    deleteCompetency(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -41,27 +45,27 @@ export class DomainService {
             .catch(this.handleError);
     }
 
-    saveDomain(Domain: IDomain): Observable<IDomain> {
+    saveCompetency(competency: ICompetency): Observable<ICompetency> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (Domain.id === 0) {
-            return this.createDomain(Domain, options);
+        if (competency.id === 0) {
+            return this.createCompetency(competency, options);
         }
-        return this.updateDomain(Domain, options);
+        return this.updateCompetency(competency, options);
     }
 
-    private createDomain(Domain: IDomain, options: RequestOptions): Observable<IDomain> {
-        Domain.id = undefined;
-        return this.http.post(this.baseUrl, Domain, options)
+    private createCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
+        competency.id = undefined;
+        return this.http.post(this.baseUrl, competency, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private updateDomain(product: IDomain, options: RequestOptions): Observable<IDomain> {
-        const url = `${this.baseUrl}/${product.id}`;
-        return this.http.put(url, product, options)
-            .map(() => product)
+    private updateCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
+        const url = `${this.baseUrl}/${competency.id}`;
+        return this.http.put(url, competency, options)
+            .map(() => competency)
             .catch(this.handleError);
     }
 
@@ -77,14 +81,11 @@ export class DomainService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeProduct(): IDomain {
+    initializeCompetency(): ICompetency {
         // Return an initialized object
         return {
             id: 0,
-            name: null,
-            competencyId: 0,
-            levelId: 0,
-            skillMatrixId: 0
+            name: null
         };
     }
 }

@@ -6,25 +6,23 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-
 import 'rxjs/add/observable/of';
 
-import { ILevel } from './level';
+import { IDomain } from '../interfaces/domain';
 
 @Injectable()
-export class LevelService {
-    private baseUrl = 'api/levels';
+export class DomainService {
+    private baseUrl = 'api/domains';
 
     constructor(private http: Http) { }
 
-    getLevels(): Observable<ILevel[]> {
+    getDomains(): Observable<IDomain[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getLevel(id: number): Observable<ILevel> {
+    getDomain(id: number): Observable<IDomain> {
         if (id === 0) {
         return Observable.of(this.initializeProduct());
         };
@@ -34,7 +32,7 @@ export class LevelService {
             .catch(this.handleError);
     }
 
-    deleteLevel(id: number): Observable<Response> {
+    deleteDomain(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -43,24 +41,24 @@ export class LevelService {
             .catch(this.handleError);
     }
 
-    saveLevel(level: ILevel): Observable<ILevel> {
+    saveDomain(Domain: IDomain): Observable<IDomain> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (level.id === 0) {
-            return this.createLevel(level, options);
+        if (Domain.id === 0) {
+            return this.createDomain(Domain, options);
         }
-        return this.updateLevel(level, options);
+        return this.updateDomain(Domain, options);
     }
 
-    private createLevel(level: ILevel, options: RequestOptions): Observable<ILevel> {
-        level.id = undefined;
-        return this.http.post(this.baseUrl, level, options)
+    private createDomain(Domain: IDomain, options: RequestOptions): Observable<IDomain> {
+        Domain.id = undefined;
+        return this.http.post(this.baseUrl, Domain, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private updateLevel(product: ILevel, options: RequestOptions): Observable<ILevel> {
+    private updateDomain(product: IDomain, options: RequestOptions): Observable<IDomain> {
         const url = `${this.baseUrl}/${product.id}`;
         return this.http.put(url, product, options)
             .map(() => product)
@@ -79,13 +77,14 @@ export class LevelService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeProduct(): ILevel {
+    initializeProduct(): IDomain {
         // Return an initialized object
         return {
             id: 0,
             name: null,
-            description: null,
-            competencyId: 0
+            competencyId: 0,
+            levelId: 0,
+            skillMatrixId: 0
         };
     }
 }

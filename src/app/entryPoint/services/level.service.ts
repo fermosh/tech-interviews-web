@@ -6,29 +6,27 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 import 'rxjs/add/observable/of';
 
-import { ICompetency } from './competency';
+import { ILevel } from '../interfaces/level';
 
 @Injectable()
-export class CompetencyService {
-    private baseUrl = 'api/competencies';
+export class LevelService {
+    private baseUrl = 'api/levels';
 
     constructor(private http: Http) { }
 
-    getCompetencies(): Observable<ICompetency[]> {
+    getLevels(): Observable<ILevel[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getCompetency(id: number): Observable<ICompetency> {
+    getLevel(id: number): Observable<ILevel> {
         if (id === 0) {
-            return Observable.of(this.initializeCompetency());
-        // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeCompetency());
-        //     observer.complete();
-        // });
+        return Observable.of(this.initializeProduct());
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
@@ -36,7 +34,7 @@ export class CompetencyService {
             .catch(this.handleError);
     }
 
-    deleteCompetency(id: number): Observable<Response> {
+    deleteLevel(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -45,27 +43,27 @@ export class CompetencyService {
             .catch(this.handleError);
     }
 
-    saveCompetency(competency: ICompetency): Observable<ICompetency> {
+    saveLevel(level: ILevel): Observable<ILevel> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (competency.id === 0) {
-            return this.createCompetency(competency, options);
+        if (level.id === 0) {
+            return this.createLevel(level, options);
         }
-        return this.updateCompetency(competency, options);
+        return this.updateLevel(level, options);
     }
 
-    private createCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        competency.id = undefined;
-        return this.http.post(this.baseUrl, competency, options)
+    private createLevel(level: ILevel, options: RequestOptions): Observable<ILevel> {
+        level.id = undefined;
+        return this.http.post(this.baseUrl, level, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private updateCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        const url = `${this.baseUrl}/${competency.id}`;
-        return this.http.put(url, competency, options)
-            .map(() => competency)
+    private updateLevel(product: ILevel, options: RequestOptions): Observable<ILevel> {
+        const url = `${this.baseUrl}/${product.id}`;
+        return this.http.put(url, product, options)
+            .map(() => product)
             .catch(this.handleError);
     }
 
@@ -81,11 +79,13 @@ export class CompetencyService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeCompetency(): ICompetency {
+    initializeProduct(): ILevel {
         // Return an initialized object
         return {
             id: 0,
-            name: null
+            name: null,
+            description: null,
+            competencyId: 0
         };
     }
 }

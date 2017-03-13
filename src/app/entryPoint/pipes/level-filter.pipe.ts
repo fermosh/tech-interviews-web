@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { ILevel } from './../level';
+import { ILevel } from '../interfaces/level';
 
 @Pipe({
     name: 'levelFilter'

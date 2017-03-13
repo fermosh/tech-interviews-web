@@ -3,19 +3,19 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 // interfaces
-import { ICompetency } from './competency';
-import { IDomain } from './domain';
-import { ILevel } from './level';
+import { ICompetency } from './interfaces/competency';
+import { IDomain } from './interfaces/domain';
+import { ILevel } from './interfaces/level';
 import { ITemplate } from './interfaces/template';
 
 // services
-import { CompetencyService } from './competency.service';
-import { LevelService } from './level.service';
-import { DomainService } from './domain.service';
+import { CompetencyService } from './services/competency.service';
+import { LevelService } from './services/level.service';
+import { DomainService } from './services/domain.service';
 import { SkillMatrixService } from './skill-matrix.service';
-import { TemplateService } from './template.service';
+import { TemplateService } from './services/template.service';
 
-import { SkillMatrixItem } from './../scriptViewer/classes/skillMatrixItem';
+import { SkillMatrixItem } from './classes/skillMatrixItem';
 @Component({
     templateUrl: './entryPoint.component.html',
     styleUrls: ['./entryPoint.component.css']

@@ -2,8 +2,8 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { LevelService } from './../../../src/app/entryPoint/level.service';
-import { ILevel } from './../../../src/app/entryPoint/level';
+import { LevelService } from './../../../src/app/entryPoint/services/level.service';
+import { ILevel } from './../../../src/app/entryPoint/interfaces/level';
 
 describe('Level Service: ', () => {
 

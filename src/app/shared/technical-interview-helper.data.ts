@@ -1,8 +1,8 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { ICompetency } from './../entryPoint/competency';
+import { ICompetency } from './../entryPoint/interfaces/competency';
 import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
-import { IDomain } from './../entryPoint/domain';
-import { ILevel } from './../entryPoint/level';
+import { IDomain } from './../entryPoint/interfaces/domain';
+import { ILevel } from './../entryPoint/interfaces/level';
 import { IQuestion } from './../questions/question';
 import { IExercise } from './../exercises/exercise';
 import { ITemplate } from '../entryPoint/interfaces/template';

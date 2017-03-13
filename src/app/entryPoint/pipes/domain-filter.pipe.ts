@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { IDomain } from './../domain';
+import { IDomain } from '../interfaces/domain';
 
 @Pipe({
     name: 'domainFilter'
