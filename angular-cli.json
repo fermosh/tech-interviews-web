@@ -32,8 +32,8 @@
             "../node_modules/core-js/client/shim.min.js",
             "../node_modules/reflect-metadata/Reflect.js"
         ],
+        "environmentSource":"environments/environment.ts",
         "environments": {
-            "source": "environments/environment.ts",
             "dev": "environments/environment.ts",
             "prod": "environments/environment.prod.ts"
         }
