@@ -2,8 +2,8 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { DomainService } from './../../../src/app/entryPoint/domain.service';
-import { IDomain } from './../../../src/app/entryPoint/domain';
+import { DomainService } from './../../../src/app/shared/services/domain.service';
+import { IDomain } from './../../../src/app/shared/classes/domain';
 
 describe('Domain Service: ', () => {
 

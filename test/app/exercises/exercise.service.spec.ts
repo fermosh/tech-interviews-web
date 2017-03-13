@@ -1,31 +1,25 @@
 import { async, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { ExerciseService } from './../../../src/app/exercises/exercise.service';
-import { IExercise } from './../../../src/app/exercises/exercise';
+import { ExerciseService } from './../../../src/app/shared/services/exercise.service';
+import { Exercise } from './../../../src/app/shared/classes/exercise';
 
 describe('Exercise Service', () => {
 
     // array to mock http requests
-    const exerciseResult: IExercise[] = [
+    const exerciseResult: Exercise[] = [
         {
             id: 1,
             title: 'Palindrome',
-            text: `A palindrome is a word, phrase, number, or other
+            body: `A palindrome is a word, phrase, number, or other
                 sequence of characters which reads the same backward or forward,
                 such as madam or kayak. Write an function that receives an string
                 parameters and return true if it is a palindrome.`,
             solution: '',
-            tags: [
-                {
-                    id: 1,
-                    text: '.Net'
-                },
-                {
-                    id: 2,
-                    text: 'Algorithms'
-                }
-            ]
+            tag: {
+                id: 1,
+                text: '.Net'
+            }
         },
         {
             id: 2,
@@ -167,44 +161,32 @@ describe('Exercise Service', () => {
         it('should create an item succesfully', async(inject([ExerciseService, MockBackend], (service: ExerciseService, mock) => {
 
             // arrange
-            let mockItem: IExercise = {
+            let mockItem: Exercise = {
                 id: 0,
                 title: 'Palindrome',
-                text: `A palindrome is a word, phrase, number, or other
+                body: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    },
-                    {
-                        id: 2,
-                        text: 'Algorithms'
-                    }
-                ]
+                tag: {
+                    id: 1,
+                    text: '.Net'
+                }
             };
 
-            let response: IExercise = {
+            let response: Exercise = {
                 id: 1,
                 title: 'Palindrome',
-                text: `A palindrome is a word, phrase, number, or other
+                body: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    },
-                    {
-                        id: 2,
-                        text: 'Algorithms'
-                    }
-                ]
+                tag: {
+                    id: 1,
+                    text: '.Net'
+                }
             };
 
             mock.connections.subscribe(conn => {
@@ -223,24 +205,18 @@ describe('Exercise Service', () => {
         it('should update an item succesfully', async(inject([ExerciseService, MockBackend], (service: ExerciseService, mock) => {
 
             // arrange
-            let mockItem: IExercise = {
+            let mockItem: Exercise = {
                 id: 1,
                 title: 'Palindrome',
-                text: `A palindrome is a word, phrase, number, or other
+                body: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    },
-                    {
-                        id: 2,
-                        text: 'Algorithms'
-                    }
-                ]
+                tag: {
+                    id: 1,
+                    text: '.Net'
+                }
             };
 
             mock.connections.subscribe(conn => {
@@ -259,24 +235,18 @@ describe('Exercise Service', () => {
         it('should return an exception', async(inject([ExerciseService, MockBackend], (service: ExerciseService, mock) => {
 
             // arrange
-            let mockItem: IExercise = {
+            let mockItem: Exercise = {
                 id: 1,
                 title: 'Palindrome',
-                text: `A palindrome is a word, phrase, number, or other
+                body: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    },
-                    {
-                        id: 2,
-                        text: 'Algorithms'
-                    }
-                ]
+                tag: {
+                    id: 1,
+                    text: '.Net'
+                }
             };
 
             mock.connections.subscribe(conn => {

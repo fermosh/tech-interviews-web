@@ -6,70 +6,63 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/of';
 
-import { IQuestion } from './question';
+import { ILevel } from './../classes/level';
 
 @Injectable()
-export class QuestionService {
-    private baseUrl = 'api/questions';
+export class LevelService {
+    private baseUrl = 'api/levels';
 
     constructor(private http: Http) { }
 
-    getQuestions(): Observable<IQuestion[]> {
+    getLevels(): Observable<ILevel[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getQuestion(id: number): Observable<IQuestion> {
+    getLevel(id: number): Observable<ILevel> {
         if (id === 0) {
-        return Observable.of(this.initializeQuestion());
-        // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeQuestion());
-        //     observer.complete();
-        // });
+        return Observable.of(this.initializeProduct());
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    deleteQuestion(id: number): Observable<Response> {
+    deleteLevel(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    saveQuestion(question: IQuestion): Observable<IQuestion> {
+    saveLevel(level: ILevel): Observable<ILevel> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (question.id === 0) {
-            return this.createQuestion(question, options);
+        if (level.id === 0) {
+            return this.createLevel(level, options);
         }
-        return this.updateQuestion(question, options);
+        return this.updateLevel(level, options);
     }
 
-    private createQuestion(question: IQuestion, options: RequestOptions): Observable<IQuestion> {
-        question.id = undefined;
-        return this.http.post(this.baseUrl, question, options)
+    private createLevel(level: ILevel, options: RequestOptions): Observable<ILevel> {
+        level.id = undefined;
+        return this.http.post(this.baseUrl, level, options)
             .map(this.extractData)
-            .do(data => console.log('createQuestion: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    private updateQuestion(question: IQuestion, options: RequestOptions): Observable<IQuestion> {
-        const url = `${this.baseUrl}/${question.id}`;
-        return this.http.put(url, question, options)
-            .map(() => question)
-            .do(data => console.log('updateQuestion: ' + JSON.stringify(data)))
+    private updateLevel(product: ILevel, options: RequestOptions): Observable<ILevel> {
+        const url = `${this.baseUrl}/${product.id}`;
+        return this.http.put(url, product, options)
+            .map(() => product)
             .catch(this.handleError);
     }
 
@@ -85,13 +78,13 @@ export class QuestionService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeQuestion(): IQuestion {
+    initializeProduct(): ILevel {
         // Return an initialized object
         return {
             id: 0,
-            text: '',
-            answer: null,
-            tags: []
+            name: null,
+            description: null,
+            competencyId: 0
         };
     }
 }

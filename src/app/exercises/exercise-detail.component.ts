@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { IExercise } from './exercise';
-import { ExerciseService } from './exercise.service';
+import { Exercise } from './../shared/classes/exercise';
+import { ExerciseService } from './../shared/services/exercise.service';
 
 @Component({
     templateUrl: './exercise-detail.component.html'
 })
 export class ExerciseDetailComponent implements OnInit, OnDestroy {
     title: string = 'Exercise Detail';
-    exercise: IExercise;
+    exercise: Exercise;
     errorMessage: string;
     private sub: Subscription;
 

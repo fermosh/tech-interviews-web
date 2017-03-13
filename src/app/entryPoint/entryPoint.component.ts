@@ -1,17 +1,13 @@
 import { Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { ICompetency } from './competency';
-import { IDomain } from './domain';
-import { ILevel } from './level';
-
-import { CompetencyService } from './competency.service';
-import { LevelService } from './level.service';
-import { DomainService } from './domain.service';
+import { ICompetency } from './../shared/classes/competency';
+import { IDomain } from './../shared/classes/domain';
+import { ILevel } from './../shared/classes/level';
+import { CompetencyService } from './../shared/services/competency.service';
+import { LevelService } from './../shared/services/level.service';
+import { DomainService } from './../shared/services/domain.service';
 import { SkillMatrixService } from './skill-matrix.service';
 import { TemplateService } from './template.service';
-
-
 import { SkillMatrixItem } from './../scriptViewer/classes/skillMatrixItem';
 
 declare var jQuery: any;

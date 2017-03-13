@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { IQuestion } from './question';
-import { QuestionService } from './question.service';
+import { Question } from './../shared/classes/question';
+import { QuestionService } from './../shared/services/question.service';
 
 @Component({
     templateUrl: './question-detail.component.html'
 })
 export class QuestionDetailComponent implements OnInit, OnDestroy {
     title: string = 'Question Detail';
-    question: IQuestion;
+    question: Question;
     errorMessage: string;
     private sub: Subscription;
 

@@ -1,8 +1,8 @@
-import { IInterviewQuestion } from './interview-question';
-import { IInterviewExercise } from './interview-exercise';
+import { InterviewQuestion } from './../classes/interview-question';
+import { InterviewExercise } from './../classes/interview-exercise';
 
 export interface QuestionExerciseBank {
     id: number; // Skill Id
-    interviewQuestions?: IInterviewQuestion[];
-    interviewExercises?: IInterviewExercise[];
+    interviewQuestions?: InterviewQuestion[];
+    interviewExercises?: InterviewExercise[];
 }

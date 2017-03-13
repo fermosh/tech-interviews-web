@@ -6,11 +6,16 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/merge';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { IQuestion } from './question';
-import { QuestionService } from './question.service';
+import { Question } from './../shared/classes/question';
+import { QuestionService } from './../shared/services/question.service';
 import { NumberValidator } from '../shared/number.validator';
 import { GenericValidator } from '../shared/generic.validator';
 import { SkillMatrixService } from './../entryPoint/skill-matrix.service';
+import { CompetencyService } from './../shared/services/competency.service';
+import { ICompetency } from './../shared/classes/competency';
+import { Tag } from './../shared/classes/tag';
+import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
+
 
 declare var jQuery: any;
 
@@ -22,10 +27,12 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
     title: string = 'Question Edit';
+    tags: Tag[];
+    competencies: ICompetency[];
     isPageRendered: boolean;
     errorMessage: string;
     questionForm: FormGroup;
-    question: IQuestion;
+    question: Question;
     private sub: Subscription;
 
     // Use with the generic validation message class
@@ -37,20 +44,19 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
                 private route: ActivatedRoute,
                 private router: Router,
                 private questionService: QuestionService,
-                private skillMatrixService: SkillMatrixService) {
+                private skillMatrixService: SkillMatrixService,
+                private competencyService: CompetencyService) {
 
         // Defines all of the validation messages for the form.
         // These could instead be retrieved from a file or database.
         this.validationMessages = {
-            questionText: {
-                required: 'Question text is required.',
-                minlength: 'Question text must be at least twenty characters.',
-                maxlength: 'Question text cannot exceed 200 characters.'
+            body: {
+                required: 'Question body is required.',
+                minlength: 'Question body must be at least twenty characters.',
+                maxlength: 'Question body cannot exceed 200 characters.'
             },
-            questionTags: {
-                required: 'Question tag is required',
-                minlength: 'You can select at least 1 Question tag',
-                maxlength: 'You can select at most 1 Question tag',
+            answer: {
+                maxlength: 'Solution cannot exceed 4000 characters.'
             }
         };
 
@@ -61,13 +67,12 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit(): void {
         this.questionForm = this.fb.group({
-            questionText: ['', [Validators.required,
-                               Validators.minLength(20),
-                               Validators.maxLength(200)]],
-            questionAnswer: '',
-            questionTags: ['', [Validators.required,
-                               Validators.minLength(1),
-                               Validators.maxLength(1)]],
+            body: ['', [Validators.required,
+                        Validators.minLength(20),
+                        Validators.maxLength(200)]],
+            answer: ['', [ Validators.maxLength(4000)]],
+            skillId: 0,
+            competencyId: 0
         });
 
         // Read the question Id from the route parameter
@@ -77,26 +82,9 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.getQuestion(id);
             }
         );
-    }
 
-    fillAutocomplete(tags: string[]): void {
-        jQuery('#tagIt').uui_tagit({'autocomplete': {
-            'delay': 0,
-            'minLength': 2,
-            'source': tags
-        }});
-    }
-
-    ngAfterViewChecked(): void {
-        if (this.question && !this.isPageRendered) {
-
-            this.skillMatrixService.getSkillMatrix(13).subscribe(
-                skillMatrix => { this.fillAutocomplete(skillMatrix.skills.map(skill => skill.name));
-            },
-            error => console.log(<any>error));
-
-            this.isPageRendered = true;
-        }
+        this.getTags(13);
+        this.getCompetencies();
     }
 
     ngOnDestroy(): void {
@@ -114,15 +102,39 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    getQuestion(id: number): void {
-        this.questionService.getQuestion(id)
+    getTags(id: number): void {
+        this.skillMatrixService.getSkillMatrix(id)
             .subscribe(
-                (question: IQuestion) => this.onQuestionRetrieved(question),
+                (skillMatrix: ISkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
                 (error: any) => this.errorMessage = <any>error
             );
     }
 
-    onQuestionRetrieved(question: IQuestion): void {
+    onTagsRetrieved(tags: Tag[]): void {
+        this.tags = tags;
+    }
+
+    getCompetencies(): void {
+        this.competencyService.getCompetencies()
+            .subscribe(
+                (competencies: ICompetency[]) => this.onCompetenciesRetrieved(competencies),
+                (error: any) => this.errorMessage = <any>error
+            );
+    }
+
+    onCompetenciesRetrieved(competencies: ICompetency[]): void {
+        this.competencies = competencies;
+    }
+
+    getQuestion(id: number): void {
+        this.questionService.getQuestion(id)
+            .subscribe(
+                (question: Question) => this.onQuestionRetrieved(question),
+                (error: any) => this.errorMessage = <any>error
+            );
+    }
+
+    onQuestionRetrieved(question: Question): void {
         if (this.questionForm) {
             this.questionForm.reset();
         }
@@ -131,15 +143,16 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.question.id === 0) {
             this.title = 'Add Question';
         } else {
-            this.title = `Edit Question: ${this.question.text}`;
+            this.title = `Edit Question: ${this.question.body}`;
         }
 
         // Update the data on the form
         this.questionForm.patchValue({
-            questionText: this.question.text,
-            questionAnswer: this.question.answer,
+            body: this.question.body,
+            answer: this.question.answer,
+            skillId: this.question.tag.id,
+            competencyId: this.question.competency.id
         });
-        this.questionForm.setControl('questionTags', this.fb.array(['Java', 'JavaScript']));
     }
 
     deleteQuestion(): void {
@@ -147,7 +160,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             // Don't delete, it was never saved.
             this.onSaveComplete();
        } else {
-            if (confirm(`Really delete the question: ${this.question.text}?`)) {
+            if (confirm(`Really delete the question: ${this.question.body}?`)) {
                 this.questionService.deleteQuestion(this.question.id)
                     .subscribe(
                         () => this.onSaveComplete(),

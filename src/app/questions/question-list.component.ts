@@ -1,6 +1,6 @@
 import { Component, OnInit }  from '@angular/core';
-import { IQuestion } from './question';
-import { QuestionService } from './question.service';
+import { Question } from './../shared/classes/question';
+import { QuestionService } from './../shared/services/question.service';
 
 declare var jQuery: any;
 
@@ -13,7 +13,7 @@ export class QuestionListComponent implements OnInit {
     isPageRendered: boolean;
     listFilter: string;
     errorMessage: string;
-    questions: IQuestion[];
+    questions: Question[];
 
     constructor(private questionService: QuestionService) { }
 
