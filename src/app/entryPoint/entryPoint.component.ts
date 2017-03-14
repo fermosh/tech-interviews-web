@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
+
 import { ICompetency } from './../shared/classes/competency';
 import { IDomain } from './../shared/classes/domain';
 import { ILevel } from './../shared/classes/level';
@@ -8,28 +8,14 @@ import { CompetencyService } from './../shared/services/competency.service';
 import { LevelService } from './../shared/services/level.service';
 import { DomainService } from './../shared/services/domain.service';
 import { SkillMatrixService } from './skill-matrix.service';
-import { TemplateService } from './template.service';
-import { SkillMatrixItem } from './../scriptViewer/classes/skillMatrixItem';
-
-declare var jQuery: any;
-=======
+import { TemplateService } from './services/template.service';
+import { ITemplate } from './interfaces/template';
+import { SkillMatrixItem } from './classes/skillMatrixItem';
 import { Observable } from 'rxjs/Observable';
 
-// interfaces
-import { ICompetency } from './interfaces/competency';
-import { IDomain } from './interfaces/domain';
-import { ILevel } from './interfaces/level';
-import { ITemplate } from './interfaces/template';
+declare var jQuery: any;
 
-// services
-import { CompetencyService } from './services/competency.service';
-import { LevelService } from './services/level.service';
-import { DomainService } from './services/domain.service';
-import { SkillMatrixService } from './skill-matrix.service';
-import { TemplateService } from './services/template.service';
->>>>>>> develop
 
-import { SkillMatrixItem } from './classes/skillMatrixItem';
 @Component({
     templateUrl: './entryPoint.component.html',
     styleUrls: ['./entryPoint.component.css']
