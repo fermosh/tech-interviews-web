@@ -154,8 +154,7 @@ export class EntryPointComponent {
         this.saveTemplate(this.skills.filter(x => x.isSelected).map(x => x.id)).subscribe(
             result => {
                 // navigate to the scriptViewer and pass the just created template id
-                console.log(result);
-                // this.router.navigate(['./script-viewer/' + result.id]);
+                this.router.navigate(['./script-viewer/' + result.id]);
             });
     }
 

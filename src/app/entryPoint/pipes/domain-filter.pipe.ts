@@ -12,6 +12,6 @@ export class DomainFilterPipe implements PipeTransform {
             return [];
         }
 
-        return items.filter(i => i.levelId === levelId);
+        return items.filter(i => i.levelId == levelId);
     }
 }
