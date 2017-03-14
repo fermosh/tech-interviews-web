@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { IInterviewScript } from './interfaces/interview-script';
-import { ISkill } from './interfaces/skill';
-import { IComment } from './interfaces/comment';
-import { IQuestion } from './../questions/question';
-import { IExercise } from './../exercises/exercise';
-import { IInterviewQuestion } from './interfaces/interview-question';
-import { IInterviewExercise } from './interfaces/interview-exercise';
+import { Skill } from './../shared/classes/skill';
+import { IComment } from './../shared/classes/comment';
+import { Question } from './../shared/classes/question';
+import { Exercise } from './../shared/classes/exercise';
+import { InterviewQuestion } from './classes/interview-question';
+import { InterviewExercise } from './classes/interview-exercise';
 
 import { ScriptViewerService } from './script-viewer.service';
 
@@ -23,9 +23,9 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: IInterviewScript;
     errorMessage: string;
     private sub: Subscription;
-    private selectedSkill: ISkill;
-    private questionBank: IInterviewQuestion[];
-    private exerciseBank: IInterviewExercise[];
+    private selectedSkill: Skill;
+    private questionBank: InterviewQuestion[];
+    private exerciseBank: InterviewExercise[];
     private isScriptViewerRendered: boolean;
     private isOnPreview: boolean;
 
@@ -79,26 +79,27 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             error => this.errorMessage = <any>error);
     }
 
-    mapQuestionBank(questions: IQuestion[]) {
+    mapQuestionBank(questions: Question[]) {
         // 1. Fill 'Question Bank' with data retrieved from service.
-        this.questionBank = questions.map(q => <IInterviewQuestion>new Object({ question: q, rating: 0, comments: [], selected: false }));
+        this.questionBank = questions.map(q => <InterviewQuestion>new Object({ id: q.id, body: q.body, answer: q.answer, tag: q.tag, rating: 0, comments: [], selected: false }));
 
         // 2. Complete the 'Question Bank' with those questions existing in the Interview but not in the DB Bank 
         this.scriptViewer.skills.forEach(s => s.interviewQuestions.forEach(siq => {
-            if (!this.questionBank.some(qb => qb.question.id === siq.question.id)) {
-                this.questionBank.push({ question: siq.question, rating: siq.rating, comments: siq.comments, selected: siq.selected });
+            if (!this.questionBank.some(qb => qb.id === siq.id)) {
+                this.questionBank.push({ id: siq.id, body: siq.body, answer: siq.answer, tag: siq.tag, rating: siq.rating, comments: siq.comments, selected: siq.selected });
             }
         }));
     }
 
-    mapExerciseBank(exercises: IExercise[]) {
+    mapExerciseBank(exercises: Exercise[]) { 
+        this.exerciseBank = [];
         // 1. Fill 'Exercise Bank' with data retrieved from service.
-        this.exerciseBank = exercises.map(e => <IInterviewExercise>new Object({ exercise: e, rating: 0, comments: [], selected: false }));
+        this.exerciseBank = exercises.map(e => <InterviewExercise>new Object({ id: e.id, title: e.title, body: e.body, solution: e.solution, tag: e.tag, rating: 0, comments: [], selected: false }));
 
         // 2. Complete the 'Exercise Bank' with those exercises existing in the Interview but not in the DB Bank 
         this.scriptViewer.interviewExercises.forEach(ie => {
-            if (!this.exerciseBank.some(eb => eb.exercise.id === ie.exercise.id)) {
-                this.exerciseBank.push({ exercise: ie.exercise, rating: ie.rating, comments: ie.comments, selected: ie.selected });
+            if (!this.exerciseBank.some(eb => eb.id === ie.id)) {
+                this.exerciseBank.push({ id: ie.id, title: ie.title, body: ie.body, solution: ie.solution, tag: ie.tag, rating: ie.rating, comments: ie.comments, selected: ie.selected });
             }
         });
     }
@@ -118,21 +119,21 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     // ----------------------------------------------------------------------------------
     /* SKILL EVENTS */
 
-    setSelectedSkillAndQuestions(skill: ISkill): void {
+    setSelectedSkillAndQuestions(skill: Skill): void {
         this.selectedSkill = skill;
-        this.questionBank.map(qb => qb.selected = this.selectedSkill.interviewQuestions.some(iq => iq.question.id === qb.question.id));
+        this.questionBank.map(qb => qb.selected = this.selectedSkill.interviewQuestions.some(iq => iq.id === qb.id));
     }
 
     setSelectedExercises(): void {
-        this.exerciseBank.map(eb => eb.selected = this.scriptViewer.interviewExercises.some(ie => ie.exercise.id === eb.exercise.id));
+        this.exerciseBank.map(eb => eb.selected = this.scriptViewer.interviewExercises.some(ie => ie.id === eb.id));
     }
 
 
-    getRatingBySkill(skill: ISkill): number {
+    getRatingBySkill(skill: Skill): number {
         return this.scriptViewerService.getRatingBySkill(skill);
     }
 
-    getTopicsBySkill(skill: ISkill): string {
+    getTopicsBySkill(skill: Skill): string {
         if (skill.topics && skill.topics.length > 0) {
             return skill.topics.map(t => t.isRequired ? ('- ' + t.name) : (`<span style='color:#888;'>- ` + t.name + `</span>`)).join('<br>');
         } else {
@@ -140,21 +141,21 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         }
     }
 
-    getSkillPriorityStyle(skill: ISkill): string {
+    getSkillPriorityStyle(skill: Skill): string {
         let priorityStyle: string = skill.priority.toLowerCase().trim().replace(' ', '-');
         return 'priority-' + priorityStyle + '-label-value';
     }
 
     saveSelectedQuestions(): void {
         let index: number;
-        for (let question of this.questionBank.filter(qb => qb.question.tags.id === this.selectedSkill.id)) {
+        for (let question of this.questionBank.filter(qb => qb.tag.id === this.selectedSkill.id)) {
             if (question.selected) {
-                if (!this.selectedSkill.interviewQuestions.some(iq => iq.question.id === question.question.id)) {   // Question selected and is not part of the Intervie Script
-                    this.selectedSkill.interviewQuestions.push({ question: question.question, rating: 0, comments: [], selected: true });
+                if (!this.selectedSkill.interviewQuestions.some(iq => iq.id === question.id)) {   // Question selected and is not part of the Intervie Script
+                    this.selectedSkill.interviewQuestions.push({ id: question.id, body: question.body, answer: question.answer, tag: question.tag, rating: 0, comments: [], selected: true });
                 }
             } else {
-                if (this.selectedSkill.interviewQuestions.some(iq => iq.question.id === question.question.id)) {    // Question unselected and is part of the Interview Script
-                    index = this.selectedSkill.interviewQuestions.indexOf(this.selectedSkill.interviewQuestions.filter(iq => iq.question.id === question.question.id)[0]);
+                if (this.selectedSkill.interviewQuestions.some(iq => iq.id === question.id)) {    // Question unselected and is part of the Interview Script
+                    index = this.selectedSkill.interviewQuestions.indexOf(this.selectedSkill.interviewQuestions.filter(iq => iq.id === question.id)[0]);
                     this.selectedSkill.interviewQuestions.splice(index, 1);
                 }
             }
@@ -166,12 +167,12 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         let index: number;
         for (let exercise of this.exerciseBank) {
             if (exercise.selected) {
-                if (!this.scriptViewer.interviewExercises.some(ie => ie.exercise.id === exercise.exercise.id)) {   // Exercise selected and is not part of the Intervie Script
-                    this.scriptViewer.interviewExercises.push({ exercise: exercise.exercise, rating: 0, comments: [], selected: true });
+                if (!this.scriptViewer.interviewExercises.some(ie => ie.id === exercise.id)) {   // Exercise selected and is not part of the Intervie Script
+                    this.scriptViewer.interviewExercises.push({ id: exercise.id, title: exercise.title, body: exercise.body, solution: exercise.solution, tag: exercise.tag, rating: 0, comments: [], selected: true });
                 }
             } else {
-                if (this.scriptViewer.interviewExercises.some(ie => ie.exercise.id === exercise.exercise.id)) {    // Exercise unselected and is part of the Interview Script
-                    index = this.scriptViewer.interviewExercises.indexOf(this.scriptViewer.interviewExercises.filter(ie => ie.exercise.id === exercise.exercise.id)[0]);
+                if (this.scriptViewer.interviewExercises.some(ie => ie.id === exercise.id)) {    // Exercise unselected and is part of the Interview Script
+                    index = this.scriptViewer.interviewExercises.indexOf(this.scriptViewer.interviewExercises.filter(ie => ie.id === exercise.id)[0]);
                     this.scriptViewer.interviewExercises.splice(index, 1);
                 }
             }
@@ -186,11 +187,11 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         switch (type) {
             case 'question':
                 this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
-                    .filter(q => q.question.id === typeId)[0].comments.push(comment);
+                    .filter(q => q.id === typeId)[0].comments.push(comment);
                 break;
             case 'exercise':
                 this.scriptViewer.interviewExercises
-                    .filter(e => e.exercise.id === typeId)[0].comments.push(comment);
+                    .filter(e => e.id === typeId)[0].comments.push(comment);
                 break;
         }
         event.target.value = null;
@@ -202,15 +203,15 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         switch (type) {
             case 'question':
                 index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
-                    .filter(q => q.question.id === typeId)[0].comments.indexOf(comment);
+                    .filter(q => q.id === typeId)[0].comments.indexOf(comment);
                 this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
-                    .filter(q => q.question.id === typeId)[0].comments.splice(index, 1);
+                    .filter(q => q.id === typeId)[0].comments.splice(index, 1);
                 break;
             case 'exercise':
                 index = this.scriptViewer.interviewExercises
-                    .filter(e => e.exercise.id === typeId)[0].comments.indexOf(comment);
+                    .filter(e => e.id === typeId)[0].comments.indexOf(comment);
                 this.scriptViewer.interviewExercises
-                    .filter(e => e.exercise.id === typeId)[0].comments.splice(index, 1);
+                    .filter(e => e.id === typeId)[0].comments.splice(index, 1);
                 break;
         }
     }

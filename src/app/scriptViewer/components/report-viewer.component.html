@@ -5,7 +5,7 @@
         <span class="report-label"><i>Score: </i></span><span>{{ getRatingBySkill(skill) | number:'1.0-1' }}</span><br><br>
         <ul>
             <li *ngFor="let question of skill.interviewQuestions; let index = index;">
-                <i>{{ index + 1 + ') ' + question.question.text }}</i>
+                <i>{{ index + 1 + ') ' + question.body }}</i>
                 <p *ngIf="question.comments && !question.comments.length">No comments.</p>
                 <p *ngFor="let comment of question.comments">{{ comment.text }}</p>
             </li>
@@ -15,7 +15,7 @@
     <br>
     <h3>Coding</h3>
     <div *ngFor="let exercise of interviewScript.interviewExercises">
-        <b><h6>{{ exercise.exercise.title }}</h6></b>
+        <b><h6>{{ exercise.title }}</h6></b>
         <table>
             <tbody>
                 <tr>
@@ -25,9 +25,10 @@
                 <tr>
                     <td class="report-label"><i>Skills:</i></td>
                     <td>
-                        <template ngFor let-tag [ngForOf]="exercise.exercise.tags" let-last="last">
+                        <!--<template ngFor let-tag [ngForOf]="exercise.tags" let-last="last">
                             <span>{{ tag.text }}</span><span *ngIf="!last">, </span>
-                        </template>
+                        </template>-->
+                        <span>{{ exercise.tag.name }}</span>
                     </td>
                 </tr>
                 <tr *ngIf="exercise.comments && !exercise.comments.length">

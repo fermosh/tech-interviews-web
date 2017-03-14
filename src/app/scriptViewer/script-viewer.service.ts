@@ -3,9 +3,9 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { IInterviewScript } from './interfaces/interview-script';
-import { ISkill } from './interfaces/skill';
-import { IQuestion } from './../questions/question';
-import { IExercise } from './../exercises/exercise';
+import { Skill } from './../shared/classes/skill';
+import { Question } from './../shared/classes/question';
+import { Exercise } from './../shared/classes/exercise';
 
 @Injectable()
 
@@ -24,14 +24,14 @@ export class ScriptViewerService {
             .catch(this.handleError);
     }
 
-    getQuestionsByTemplateId(id: number): Observable<IQuestion[]> {
+    getQuestionsByTemplateId(id: number): Observable<Question[]> {
         const url = this.questionsBankUrl; //`${this.questionsCatalogUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getExercisesByTemplateId(id: number): Observable<IExercise[]> {
+    getExercisesByTemplateId(id: number): Observable<Exercise[]> {
         const url = this.exercisesBankUrl; //`${this.questionsCatalogUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
@@ -70,7 +70,7 @@ export class ScriptViewerService {
         }
     }
 
-    getRatingBySkill(skill: ISkill): number {
+    getRatingBySkill(skill: Skill): number {
         let sum: number = skill.interviewQuestions.map(q => q.rating).reduce(function (a, b) { return a + b; }, 0);
         let numberOfItems: number = skill.interviewQuestions.length;
 

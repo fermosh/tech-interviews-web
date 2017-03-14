@@ -1072,11 +1072,11 @@ export class TechnicalInterviewData implements InMemoryDbService {
                         ],
                         interviewQuestions: [
                             {
-                                id: 1,
+                                id: 4,
                                 body: 'What is SOLID? Explain the principles and provide examples',
                                 answer: '',
                                 tag: {
-                                    id: 973,
+                                    id: 2,
                                     name: 'Development'
                                 },
                                 selected: true,
@@ -1091,11 +1091,11 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 ]
                             },
                             {
-                                id: 2,
+                                id: 5,
                                 body: 'What is Value Type and Reference Type?',
                                 answer: '',
                                 tag: {
-                                    id: 973,
+                                    id: 2,
                                     name: 'Development'
                                 },
                                 selected: true,
@@ -1110,11 +1110,11 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 ]
                             },
                             {
-                                id: 3,
+                                id: 6,
                                 body: 'What is Boxing and Un-Boxing?',
                                 answer: '',
                                 tag: {
-                                    id: 973,
+                                    id: 2,
                                     name: 'Development'
                                 },
                                 selected: true,
@@ -1367,6 +1367,6 @@ export class TechnicalInterviewData implements InMemoryDbService {
             }
         ];
 
-        return { competencies, domains, levels, questions, exercises, skillMatrix, interviewScriptData, templates };
+        return { competencies, domains, levels, questions, exercises, skillMatrix, interviewScriptData, templates, questionsByTemplateId, exercisesByTemplateId };
     }
 }
