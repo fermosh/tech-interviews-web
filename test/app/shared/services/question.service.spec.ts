@@ -1,8 +1,8 @@
 import { async, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { QuestionService } from './../../../src/app/shared/services/question.service';
-import { Question } from './../../../src/app/shared/classes/question';
+import { QuestionService } from './../../../../src/app/shared/services/question.service';
+import { Question } from './../../../../src/app/shared/classes/question';
 
 describe('Question Service', () => {
 

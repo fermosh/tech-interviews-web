@@ -1,8 +1,8 @@
 import { async, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { ExerciseService } from './../../../src/app/shared/services/exercise.service';
-import { Exercise } from './../../../src/app/shared/classes/exercise';
+import { ExerciseService } from './../../../../src/app/shared/services/exercise.service';
+import { Exercise } from './../../../../src/app/shared/classes/exercise';
 
 describe('Exercise Service', () => {
 
