@@ -2,29 +2,32 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { IDomain } from '../interfaces/domain';
+import { Question } from './../classes/question';
 
 @Injectable()
-export class DomainService {
-    private baseUrl = 'api/domains';
+export class QuestionService {
+    private baseUrl = 'api/questions';
 
     constructor(private http: Http) { }
 
-    getDomains(): Observable<IDomain[]> {
+    getQuestions(): Observable<Question[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getDomain(id: number): Observable<IDomain> {
+    getQuestion(id: number): Observable<Question> {
         if (id === 0) {
-        return Observable.of(this.initializeProduct());
+        return Observable.of(this.initializeQuestion());
+        // return Observable.create((observer: any) => {
+        //     observer.next(this.initializeQuestion());
+        //     observer.complete();
+        // });
         };
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
@@ -32,7 +35,7 @@ export class DomainService {
             .catch(this.handleError);
     }
 
-    deleteDomain(id: number): Observable<Response> {
+    deleteQuestion(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -41,27 +44,27 @@ export class DomainService {
             .catch(this.handleError);
     }
 
-    saveDomain(Domain: IDomain): Observable<IDomain> {
+    saveQuestion(question: Question): Observable<Question> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (Domain.id === 0) {
-            return this.createDomain(Domain, options);
+        if (question.id === 0) {
+            return this.createQuestion(question, options);
         }
-        return this.updateDomain(Domain, options);
+        return this.updateQuestion(question, options);
     }
 
-    private createDomain(Domain: IDomain, options: RequestOptions): Observable<IDomain> {
-        Domain.id = undefined;
-        return this.http.post(this.baseUrl, Domain, options)
+    private createQuestion(question: Question, options: RequestOptions): Observable<Question> {
+        question.id = undefined;
+        return this.http.post(this.baseUrl, question, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private updateDomain(product: IDomain, options: RequestOptions): Observable<IDomain> {
-        const url = `${this.baseUrl}/${product.id}`;
-        return this.http.put(url, product, options)
-            .map(() => product)
+    private updateQuestion(question: Question, options: RequestOptions): Observable<Question> {
+        const url = `${this.baseUrl}/${question.id}`;
+        return this.http.put(url, question, options)
+            .map(() => question)
             .catch(this.handleError);
     }
 
@@ -77,14 +80,20 @@ export class DomainService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeProduct(): IDomain {
+    initializeQuestion(): Question {
         // Return an initialized object
         return {
             id: 0,
-            name: null,
-            competencyId: 0,
-            levelId: 0,
-            skillMatrixId: 0
+            body: '',
+            answer: null,
+            tag : {
+                id: 0,
+                name: ''
+            },
+            competency: {
+                id: 0,
+                name: ''
+            }
         };
     }
 }

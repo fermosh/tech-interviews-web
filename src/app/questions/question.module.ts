@@ -5,7 +5,7 @@ import { QuestionListComponent } from './question-list.component';
 import { QuestionDetailComponent } from './question-detail.component';
 import { QuestionDetailGuard, QuestionEditGuard } from './question-guard.service';
 import { QuestionEditComponent } from './question-edit.component';
-import { QuestionService } from './question.service';
+import { QuestionService } from './../shared/services/question.service';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({

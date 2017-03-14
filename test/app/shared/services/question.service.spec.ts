@@ -1,67 +1,57 @@
 import { async, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { QuestionService } from './../../../src/app/questions/question.service';
-import { IQuestion } from './../../../src/app/questions/question';
+import { QuestionService } from './../../../../src/app/shared/services/question.service';
+import { Question } from './../../../../src/app/shared/classes/question';
 
 describe('Question Service', () => {
 
     // array to mock http requests
-    const questionResult: IQuestion[] = [
+    const questionResult: Question[] = [
         {
             id: 1,
-            text: `What's the purpose of standards/conventions in .NET C#?`,
+            body: `What's the purpose of standards/conventions in .NET C#?`,
             answer: ``,
-            tags: [
-                {
-                    id: 1,
-                    text: '.Net'
-                }
-            ]
+            tag: {
+                id: 1,
+                text: '.Net'
+            }
         },
         {
             id: 2,
             text: 'When to use string and when StringBuilder?',
             answer: ``,
-            tags: [
-                {
-                    id: 1,
-                    text: '.Net'
-                }
-            ]
+            tag: {
+                id: 1,
+                text: '.Net'
+            }
         },
         {
             id: 3,
             text: 'When to use var and when the exact data type?',
             answer: ``,
-            tags: [
-                {
-                    id: 1,
-                    text: '.Net'
-                }
-            ]
+            tag: {
+                id: 1,
+                text: '.Net'
+            }
         },
         {
             id: 4,
             text: 'What is SOLID? Explain the principles and provide examples',
             answer: ``,
-            tags: [
-                {
-                    id: 1,
-                    text: '.Net'
-                }
-            ]
+            tag: {
+                id: 1,
+                text: '.Net'
+            }
         },
         {
             id: 5,
             text: 'What is Value Type and Reference Type?',
             answer: ``,
-            tags: [
-                {
-                    id: 1,
-                    text: '.Net'
-                }
-            ]
+            tag: {
+                id: 1,
+                text: '.Net'
+            }
         }
     ];
 
@@ -185,7 +175,7 @@ describe('Question Service', () => {
         it('should create an item succesfully', async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
 
             // arrange
-            let mockItem: IQuestion = {
+            let mockItem: Question = {
                 id: 0,
                 text: 'What is Boxing and Un-Boxing?',
                 answer: ``,
@@ -197,7 +187,7 @@ describe('Question Service', () => {
                 ]
             };
 
-            let response: IQuestion = {
+            let response: Question = {
                 id: 1,
                 text: 'What is Boxing and Un-Boxing?',
                 answer: ``,
@@ -226,7 +216,7 @@ describe('Question Service', () => {
         it('should update an item succesfully', async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
 
             // arrange
-            let mockItem: IQuestion = {
+            let mockItem: Question = {
                 id: 1,
                 text: `What's the purpose of standards/conventions in .NET C#?`,
                 answer: ``,
@@ -254,7 +244,7 @@ describe('Question Service', () => {
         it('should return an exception', async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
 
             // arrange
-            let mockItem: IQuestion = {
+            let mockItem: Question = {
                 id: 6,
                 text: 'What is Boxing and Un-Boxing?',
                 answer: ``,

@@ -2,31 +2,30 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { ICompetency } from '../interfaces/competency';
+import { Exercise } from './../classes/exercise';
 
 @Injectable()
-export class CompetencyService {
-    private baseUrl = 'api/competencies';
+export class ExerciseService {
+    private baseUrl = 'api/exercises';
 
     constructor(private http: Http) { }
 
-    getCompetencies(): Observable<ICompetency[]> {
+    getExercises(): Observable<Exercise[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getCompetency(id: number): Observable<ICompetency> {
+    getExercise(id: number): Observable<Exercise> {
         if (id === 0) {
-            return Observable.of(this.initializeCompetency());
+        return Observable.of(this.initializeExercise());
         // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeCompetency());
+        //     observer.next(this.initializeQuestion());
         //     observer.complete();
         // });
         };
@@ -36,7 +35,7 @@ export class CompetencyService {
             .catch(this.handleError);
     }
 
-    deleteCompetency(id: number): Observable<Response> {
+    deleteExercise(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -45,27 +44,27 @@ export class CompetencyService {
             .catch(this.handleError);
     }
 
-    saveCompetency(competency: ICompetency): Observable<ICompetency> {
+    saveExercise(question: Exercise): Observable<Exercise> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (competency.id === 0) {
-            return this.createCompetency(competency, options);
+        if (question.id === 0) {
+            return this.createExercise(question, options);
         }
-        return this.updateCompetency(competency, options);
+        return this.updateExercise(question, options);
     }
 
-    private createCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        competency.id = undefined;
-        return this.http.post(this.baseUrl, competency, options)
+    private createExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
+        exercise.id = undefined;
+        return this.http.post(this.baseUrl, exercise, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private updateCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        const url = `${this.baseUrl}/${competency.id}`;
-        return this.http.put(url, competency, options)
-            .map(() => competency)
+    private updateExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
+        const url = `${this.baseUrl}/${exercise.id}`;
+        return this.http.put(url, exercise, options)
+            .map(() => exercise)
             .catch(this.handleError);
     }
 
@@ -81,11 +80,20 @@ export class CompetencyService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeCompetency(): ICompetency {
+    initializeExercise(): Exercise {
         // Return an initialized object
         return {
             id: 0,
-            name: null
+            title: '',
+            body: '',
+            tag : {
+                id: 0,
+                name: ''
+            },
+            competency: {
+                id: 0,
+                name: ''
+            }
         };
     }
 }

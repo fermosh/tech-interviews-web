@@ -12,17 +12,19 @@
             <thead>
                 <tr>
                     <th>Text</th>
-                    <th>Tags</th>
+                    <th>Competency</th>
+                    <th>Skill</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor='let question of questions'>
                     <td><a [routerLink]="['/question-edit', question.id]">
-                        {{question.text}}
+                        {{question.body}}
                         </a>
                     </td>
-                    <td>{{question.tags[0].text | lowercase}}</td>
+                    <td>{{question.competency.name}}</td>
+                    <td>{{question.tag.name}}</td>
                     <td>
                         <a class="uui-button small" [routerLink]="['/question-edit', question.id]">
                             Edit

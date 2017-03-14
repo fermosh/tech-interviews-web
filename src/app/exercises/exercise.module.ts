@@ -5,7 +5,7 @@ import { ExerciseListComponent } from './exercise-list.component';
 import { ExerciseDetailComponent } from './exercise-detail.component';
 import { ExerciseDetailGuard, ExerciseEditGuard } from './exercise-guard.service';
 import { ExerciseEditComponent } from './exercise-edit.component';
-import { ExerciseService } from './exercise.service';
+import { ExerciseService } from './../shared/services/exercise.service';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({

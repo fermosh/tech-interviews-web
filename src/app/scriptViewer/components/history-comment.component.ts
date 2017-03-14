@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { IComment } from './../interfaces/comment';
+import { IComment } from './../../shared/classes/comment';
 
 @Component({
     selector: 'tih-history-comment',

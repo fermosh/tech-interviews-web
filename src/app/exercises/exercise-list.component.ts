@@ -1,6 +1,6 @@
 import { Component, OnInit }  from '@angular/core';
-import { IExercise } from './exercise';
-import { ExerciseService } from './exercise.service';
+import { Exercise } from './../shared/classes/exercise';
+import { ExerciseService } from './../shared/services/exercise.service';
 
 declare var jQuery: any;
 
@@ -13,7 +13,7 @@ export class ExerciseListComponent implements OnInit {
     private isPageRendered: boolean;
     listFilter: string;
     errorMessage: string;
-    exercises: IExercise[];
+    exercises: Exercise[];
 
     constructor(private exerciseService: ExerciseService) { }
 

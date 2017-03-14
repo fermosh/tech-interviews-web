@@ -1,6 +1,6 @@
 import { PipeTransform, Pipe } from '@angular/core';
 import { QuestionExerciseBank } from './../interfaces/question-exercise-bank';
-import { IInterviewExercise } from './../interfaces/interview-exercise';
+import { InterviewExercise } from './../classes/interview-exercise';
 
 @Pipe({
     name: 'exerciseBankFilter',
@@ -9,7 +9,7 @@ import { IInterviewExercise } from './../interfaces/interview-exercise';
 
 export class ExerciseBankFilterPipe implements PipeTransform {
 
-    transform(bank: QuestionExerciseBank[], skillId: number): IInterviewExercise[] {
+    transform(bank: QuestionExerciseBank[], skillId: number): InterviewExercise[] {
         if (!bank) {
             return [];
         }
