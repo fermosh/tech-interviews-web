@@ -2,7 +2,7 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { TemplateService } from './../../../src/app/entryPoint/template.service';
+import { TemplateService } from './../../../src/app/entryPoint/services/template.service';
 import { ITemplate } from './../../../src/app/entryPoint/interfaces/template';
 
 describe('Template Service: ', () => {

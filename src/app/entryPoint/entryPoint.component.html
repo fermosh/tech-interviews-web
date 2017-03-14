@@ -19,67 +19,8 @@
     <button class="uui-button lime-green minus-margin-top {{ isSearchDisabled ? 'disable':'' }}" [disabled]="isSearchDisabled" (click)="onSearch()"><i class="fa fa-search"></i> Search</button>
 </div>
 
-<div [hidden]="!isSkillGridVisible" class="panel plus-margin-horizontal">
-    <table class="uui-table treegrid hover small">
-        <thead>
-            <tr>
-                <th>Categories</th>
-                <th>Group</th>
-                <th>Subgroup</th>
-                <th>Skill</th>
-                <th>Subskill</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let skill of skillMatrixItems" [attr.data-grid-level]="skill.skillLevel" [ngClass]="skill.className">
-                <td>
-                    <div *ngIf="skill.skillLevel == 1">
-                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
-                        <p class="uui-checkbox square-skin large">
-                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
-                        </p>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="skill.skillLevel == 2">
-                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
-                        <p class="uui-checkbox square-skin large">
-                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
-                        </p>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="skill.skillLevel == 3">
-                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
-                        <p class="uui-checkbox square-skin large">
-                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
-                        </p>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="skill.skillLevel == 4">
-                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
-                        <p class="uui-checkbox square-skin large">
-                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
-                        </p>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="skill.skillLevel == 5">
-                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
-                        <p class="uui-checkbox square-skin large">
-                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
-                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
-                        </p>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div *ngIf="isSkillGridVisible" class="panel plus-margin-horizontal">
+    <app-skill-picker [skills]="skills" (selectionChanged)="onPickerSelectionChanged()" [header]="skillPickerLegend"></app-skill-picker>
     <div class="panel plus-margin-horizontal plus-margin-vertical padding-bottom">
         <button class="uui-button lime-green right-icon right-Button {{ isNextDisabled ? 'disable':'' }}" (click)="onNext()" [disabled]="isNextDisabled">Next<i class="fa fa-long-arrow-right"></i></button>
     </div>

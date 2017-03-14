@@ -1,4 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+
 import { ICompetency } from './../shared/classes/competency';
 import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
 import { IDomain } from './../shared/classes/domain';
