@@ -39,6 +39,10 @@
 
 /* SKILL SETTING */
 
+.accordion-item {
+    box-shadow: 0 1px 3px 0 rgba(51,51,51,.4) !important;
+}
+
 .skill-accordion-toggle-title {
     padding-bottom: 5px !important;
 }

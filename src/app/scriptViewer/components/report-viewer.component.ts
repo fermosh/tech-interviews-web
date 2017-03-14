@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ISkillMatrix } from './../interfaces/skill-matrix';
+import { IInterviewScript } from './../interfaces/interview-script';
 import { Skill } from './../../shared/classes/skill';
 import { ScriptViewerService } from './../script-viewer.service';
 
@@ -10,7 +10,7 @@ import { ScriptViewerService } from './../script-viewer.service';
 })
 
 export class ReportViewerComponent {
-    @Input() interviewScript: ISkillMatrix[];
+    @Input() interviewScript: IInterviewScript[];
 
     constructor(private _scriptViewerService: ScriptViewerService) { }
 

@@ -1,5 +1,4 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { QuestionExerciseBank } from './../interfaces/question-exercise-bank';
 import { InterviewQuestion } from './../classes/interview-question';
 
 @Pipe({
@@ -8,11 +7,10 @@ import { InterviewQuestion } from './../classes/interview-question';
 })
 
 export class QuestionBankFilterPipe implements PipeTransform {
-
-    transform(bank: QuestionExerciseBank[], skillId: number): InterviewQuestion[] {
-        if (!bank) {
+    transform(questionBank: InterviewQuestion[], skillId: number): InterviewQuestion[] {
+        if (!questionBank) {
             return [];
         }
-        return bank.filter(b => b.id === skillId).map(b => b.interviewQuestions)[0];
+        return questionBank.filter(qb => qb.tag.id === skillId);
     }
 }
