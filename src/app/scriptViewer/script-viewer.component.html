@@ -38,9 +38,9 @@
                                 </div>
                                 <div class="accordion-collapse collapse in" [id]="'skill_' + skill.id">
                                     <div class="accordion-body">
-                                        <div class="question-picker-button" data-toggle="modal" data-target="#popupPicker" (click)="setSelectedSkill(skill)">
+                                        <div class="question-picker-button" data-toggle="modal" data-target="#questionPicker" (click)="setSelectedSkillAndQuestions(skill)">
                                             <i class="fa fa-pencil"></i>
-                                            <span>Questions & Exercises</span>
+                                            <span>Questions</span>
                                         </div>
                                         <!-- QUESTIONS SET -->
                                         <table class="table" *ngIf='skill.interviewQuestions && skill.interviewQuestions.length === 0'>
@@ -61,14 +61,16 @@
                                                                     <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                                 </td>
                                                                 <td class="comments-cell">
-                                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }" data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
-                                                                        [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
+                                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }"
+                                                                        data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.question.id"
+                                                                        [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.question.id"></i>
                                                                 </td>
                                                             </tr>
                                                         </table>
-                                                        <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
-                                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.id, $event)"></tih-history-comment>
-                                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)" />
+                                                        <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.question.id">
+                                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.question.id, $event)"></tih-history-comment>
+                                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.question.id, $event)"
+                                                            />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -82,46 +84,46 @@
                         <br>
                         <!-- EXERCISES SET -->
                         <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
-                        <table class="table" *ngIf="getIndexFirstTab() === -1">
+                        <div class="question-picker-button" data-toggle="modal" data-target="#exercisePicker" (click)="setSelectedExercises(skill)">
+                            <i class="fa fa-pencil"></i>
+                            <span>Exercises</span>
+                        </div>
+                        <table class="table" *ngIf="scriptViewer.interviewExercises && scriptViewer.interviewExercises.length === 0">
                             <tbody>
                                 <tr>
                                     <td class="table-cell">No exercises selected.</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <section class="uui-tabs" *ngIf="getIndexFirstTab() >= 0">
+                        <section class="uui-tabs" *ngIf="scriptViewer.interviewExercises && scriptViewer.interviewExercises.length">
                             <div class="tabs-heading">
                                 <ul class="nav nav-tabs">
-                                    <template ngFor let-skill [ngForOf]="scriptViewer.skills" let-indexSkill="index">
-                                        <li *ngFor="let exercise of skill.interviewExercises; let exIndex = index" [class.active]="indexSkill == getIndexFirstTab() && exIndex == 0">
-                                            <a data-toggle="tab" [href]="'#tab_ex_' + exercise.exercise.id">{{ exercise.exercise.title }}</a>
-                                        </li>
-                                    </template>
+                                    <li *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [class.active]="index === 0">
+                                        <a data-toggle="tab" [href]="'#tab_ex_' + exercise.exercise.id">{{ exercise.exercise.title }}</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="tabs-body">
                                 <div class="tab-content">
-                                    <template ngFor let-skill [ngForOf]="scriptViewer.skills" let-indexSkill="index">
-                                        <div *ngFor="let exercise of skill.interviewExercises; let exIndex = index" [id]="'tab_ex_' + exercise.exercise.id"
-                                            [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': (indexSkill == getIndexFirstTab() && exIndex == 0) }">
-                                            <h3><span class="ex-subtitle-label">Description</span></h3>
-                                            <p class="gray">{{ exercise.exercise.text }}</p><br>
-                                            <h3><span class="ex-subtitle-label">Score</span></h3>
-                                            <table>
-                                                <tr>
-                                                    <td class="ex-rating-cell">
-                                                        <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
-                                                    </td>
-                                                    <td>&nbsp;</td>
-                                                    <td class="ex-comment-cell">
-                                                        <tih-history-comment [comments]="exercise.comments" (deleteCommentClicked)="deleteComment('exercise', skill.id, exercise.exercise.id, $event)"></tih-history-comment>
-                                                        <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', skill.id, exercise.exercise.id, $event)"
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </template>
+                                    <div *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [id]="'tab_ex_' + exercise.exercise.id"
+                                        [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index === 0 }">
+                                        <h3><span class="ex-subtitle-label">Description</span></h3>
+                                        <p class="gray">{{ exercise.exercise.text }}</p><br>
+                                        <h3><span class="ex-subtitle-label">Score</span></h3>
+                                        <table>
+                                            <tr>
+                                                <td class="ex-rating-cell">
+                                                    <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
+                                                </td>
+                                                <td>&nbsp;</td>
+                                                <td class="ex-comment-cell">
+                                                    <tih-history-comment [comments]="exercise.comments" (deleteCommentClicked)="deleteComment('exercise', 0, exercise.exercise.id, $event)"></tih-history-comment>
+                                                    <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', 0, exercise.exercise.id, $event)"
+                                                    />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -137,83 +139,71 @@
         </div>
     </div>
 
-    <!-- QUESTION & EXERCISES PICKER -->
-    <div class="modal uui-modal fade blue" id="popupPicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    <!-- QUESTION PICKER -->
+    <div class="modal uui-modal fade blue" id="questionPicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
         *ngIf="selectedSkill">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">{{ selectedSkill.name }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span></span><span></span></button>
                 </div>
                 <div class="modal-body">
-                    <section class="uui-tabs">
-                        <div class="tabs-heading">
-                            <ul class="nav nav-tabs">
-                                <li class="active">
-                                    <a data-toggle="tab" href="#tabQuestions">Questions</a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#tabExercises">Exercises</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tabs-body">
-                            <div class="tab-content">
-                                <div id="tabQuestions" class="tab-pane active">
-                                    <!-- QUESTION PICKER -->
-                                    <br>
-                                    <span *ngIf='questionExerciseBank && (questionExerciseBank | questionBankFilter : selectedSkill.id).length === 0'>No questions found for <b>{{ selectedSkill.name }}</b>.</span>
-                                    <table *ngIf='questionExerciseBank && (questionExerciseBank | questionBankFilter : selectedSkill.id).length'>
-                                        <tbody>
-                                            <tr *ngFor="let question of questionExerciseBank | questionBankFilter : selectedSkill.id">
-                                                <td>
-                                                    <p class="uui-checkbox square-skin large">
-                                                        <input type="checkbox" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.question.id"
-                                                        />
-                                                        <label [for]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.question.id">{{ question.question.text }}</label>
-                                                        <template [ngIf]="question.question.tags && question.question.tags.length > 1">
-                                                            <template ngFor let-tag [ngForOf]="question.question.tags">
-                                                                <span *ngIf="selectedSkill.id !== tag.id" class="uui-label lime-green related-skills-label">{{ '+ ' + (tag.text) }}</span>
-                                                            </template>
-                                                        </template>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div id="tabExercises" class="tab-pane">
-                                    <!-- EXERCISE PICKER -->
-                                    <br>
-                                    <span *ngIf='questionExerciseBank && (questionExerciseBank | exerciseBankFilter : selectedSkill.id).length === 0'>No exercises found for <b>{{ selectedSkill.name }}</b>.</span>
-                                    <table *ngIf='questionExerciseBank && (questionExerciseBank | exerciseBankFilter : selectedSkill.id).length'>
-                                        <tbody>
-                                            <tr *ngFor="let exercise of questionExerciseBank | exerciseBankFilter : selectedSkill.id">
-                                                <td>
-                                                    <p class="uui-checkbox square-skin large ex-tilte-picker">
-                                                        <input type="checkbox" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Skill' + selectedSkill.id + '_Exercise_' + exercise.exercise.id"
-                                                        />
-                                                        <label [for]="'cbxExercise_Skill' + selectedSkill.id + '_Exercise_' + exercise.exercise.id">{{ exercise.exercise.title }}</label>
-                                                        <template [ngIf]="exercise.exercise.tags && exercise.exercise.tags.length > 1">
-                                                            <template ngFor let-tag [ngForOf]="exercise.exercise.tags">
-                                                                <span *ngIf="selectedSkill.id !== tag.id" class="uui-label lime-green related-skills-label">{{ '+ ' + (tag.text) }}</span>
-                                                            </template>
-                                                        </template>
-                                                    </p>
-                                                    <p class="uui-description-text ex-descr-picker">{{ exercise.exercise.text }}</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <span *ngIf='questionBank && (questionBank | questionBankFilter : selectedSkill.id).length === 0'>No questions found for <b>{{ selectedSkill.name }}</b>.</span>
+                    <table *ngIf='questionBank && (questionBank | questionBankFilter : selectedSkill.id).length'>
+                        <tbody>
+                            <tr *ngFor="let question of questionBank | questionBankFilter : selectedSkill.id">
+                                <td>
+                                    <p class="uui-checkbox square-skin large">
+                                        <input type="checkbox" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.question.id"
+                                        />
+                                        <label [for]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.question.id">{{ question.question.text }}</label>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="uui-button transparent">Cancel</button>
                     <button type="button" class="uui-button lime-green" (click)="saveSelectedQuestions()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCISE PICKER -->
+    <div class="modal uui-modal fade blue" id="exercisePicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Exercises</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span></span><span></span></button>
+                </div>
+                <div class="modal-body">
+                    <span *ngIf='exerciseBank && exerciseBank.length === 0'>No exercises found.</span>
+                    <table *ngIf='exerciseBank && exerciseBank.length'>
+                        <tbody>
+                            <tr *ngFor="let exercise of exerciseBank">
+                                <td>
+                                    <p class="uui-checkbox square-skin large ex-tilte-picker">
+                                        <input type="checkbox" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.exercise.id" />
+                                        <label [for]="'cbxExercise_Exercise_' + exercise.exercise.id">{{ exercise.exercise.title }}</label>
+                                        <template [ngIf]="exercise.exercise.tags && exercise.exercise.tags.length > 1">
+                                            <template ngFor let-tag [ngForOf]="exercise.exercise.tags">
+                                                <span class="uui-label lime-green related-skills-label">{{ '+ ' + (tag.text) }}</span>
+                                            </template>
+                                        </template>
+                                    </p>
+                                    <p class="uui-description-text ex-descr-picker">{{ exercise.exercise.text }}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="uui-button transparent">Cancel</button>
+                    <button type="button" class="uui-button lime-green" (click)="saveSelectedExercises()">Save Changes</button>
                 </div>
             </div>
         </div>

@@ -6,5 +6,5 @@ export interface IQuestion {
     id: number;
     text: string;
     answer?: string;
-    tags?: ITag[];
+    tags?: ITag;
 }

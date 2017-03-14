@@ -1,7 +1,6 @@
 /* Defines the skill entity */
 import { ITopic } from './topic';
 import { IInterviewQuestion } from './interview-question';
-import { IInterviewExercise } from './interview-exercise';
 
 export interface ISkill {
     rootId: number;
@@ -13,7 +12,6 @@ export interface ISkill {
     jobFunctionLevel: number;
     topics?: ITopic[];
     interviewQuestions?: IInterviewQuestion[];
-    interviewExercises?: IInterviewExercise[];
     id: number;
     parentId: number;
     name: string;

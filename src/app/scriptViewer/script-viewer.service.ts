@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { ISkillMatrix } from './interfaces/skill-matrix';
+import { IInterviewScript } from './interfaces/interview-script';
 import { ISkill } from './interfaces/skill';
 import { IQuestion } from './../questions/question';
 import { IExercise } from './../exercises/exercise';
@@ -16,7 +16,7 @@ export class ScriptViewerService {
 
     constructor(private http: Http) { }
 
-    getScriptViewer(id: number): Observable<ISkillMatrix> {
+    getScriptViewer(id: number): Observable<IInterviewScript> {
         const url = `${this.interviewScriptUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
@@ -50,22 +50,29 @@ export class ScriptViewerService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    getFinalRating(skills: ISkill[]): number {
-        if (skills && skills.length > 0) {
-            let sum: number = skills.map(skill => this.getRatingBySkill(skill)).reduce(function(a, b) { return a + b; }, 0);
-            let numberOfItems: number = skills.filter(s => s.interviewQuestions.length || s.interviewExercises.filter(e => e.selected).length).length;
+    getFinalRating(interviewScript: IInterviewScript): number {
+        let sum: number = 0;
+        let numberOfItems: number = 0;
 
-            if (sum > 0) {
-                return sum / numberOfItems;
-            }
+        if (interviewScript.skills && interviewScript.skills.length > 0) {
+            sum = interviewScript.skills.map(skill => this.getRatingBySkill(skill)).reduce(function (a, b) { return a + b; }, 0);
+            numberOfItems = interviewScript.skills.filter(s => s.interviewQuestions.length).length;
         }
-        return 0;
+        if (interviewScript.interviewExercises && interviewScript.interviewExercises.length > 0) {
+            sum = interviewScript.interviewExercises.map(ie => ie.rating).reduce(function (a, b) { return a + b; }, 0);
+            numberOfItems = interviewScript.interviewExercises.length;
+        }
+
+        if (sum > 0) {
+            return sum / numberOfItems;
+        } else {
+            return 0;
+        }
     }
 
     getRatingBySkill(skill: ISkill): number {
-        let sum: number = skill.interviewQuestions.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0)
-                          + skill.interviewExercises.map(q => q.rating).reduce(function(a, b) { return a + b; }, 0);
-        let numberOfItems: number = skill.interviewQuestions.length + skill.interviewExercises.length;
+        let sum: number = skill.interviewQuestions.map(q => q.rating).reduce(function (a, b) { return a + b; }, 0);
+        let numberOfItems: number = skill.interviewQuestions.length;
 
         if (sum > 0) {
             return sum / numberOfItems;
