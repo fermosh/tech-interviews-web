@@ -2,8 +2,8 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { CompetencyService } from './../../../src/app/entryPoint/competency.service';
-import { ICompetency } from './../../../src/app/entryPoint/competency';
+import { CompetencyService } from './../../../../src/app/shared/services/competency.service';
+import { ICompetency } from './../../../../src/app/shared/classes/competency';
 
 describe('Competency Service: ', () => {
 

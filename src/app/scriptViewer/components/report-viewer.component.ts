@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IInterviewScript } from './../interfaces/interview-script';
-import { ISkill } from './../interfaces/skill';
+import { Skill } from './../../shared/classes/skill';
 import { ScriptViewerService } from './../script-viewer.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class ReportViewerComponent {
 
     constructor(private _scriptViewerService: ScriptViewerService) { }
 
-    getRatingBySkill(skill: ISkill): number {
+    getRatingBySkill(skill: Skill): number {
         return this._scriptViewerService.getRatingBySkill(skill);
     }
 }

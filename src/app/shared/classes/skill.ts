@@ -1,8 +1,10 @@
 /* Defines the skill entity */
 import { ITopic } from './topic';
-import { IInterviewQuestion } from './interview-question';
+import { Tag } from './tag';
+import { InterviewQuestion } from './../../scriptViewer/classes/interview-question';
+import { InterviewExercise } from './../../scriptViewer/classes/interview-exercise';
 
-export interface ISkill {
+export class Skill extends Tag {
     rootId: number;
     displayOrder: number;
     requiredSkillLevel: number;
@@ -11,10 +13,9 @@ export interface ISkill {
     competencyId: number;
     jobFunctionLevel: number;
     topics?: ITopic[];
-    interviewQuestions?: IInterviewQuestion[];
-    id: number;
+    interviewQuestions?: InterviewQuestion[];
+    interviewExercises?: InterviewExercise[];
     parentId: number;
-    name: string;
     isSelectable: boolean;
     skillLevel?: number;
     hasChildren?: boolean;

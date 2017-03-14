@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, CanDeactivate } from '@angular/router';
-
 import { QuestionEditComponent } from './question-edit.component';
 
 @Injectable()
@@ -27,8 +26,8 @@ export  class QuestionEditGuard implements CanDeactivate<QuestionEditComponent>
 
     canDeactivate(component: QuestionEditComponent): boolean {
         if (component.questionForm.dirty) {
-            let questionText = component.questionForm.get('questionText').value || 'New Question';
-            return confirm(`Navigate away and lose all changes to ${questionText}?`);
+            let body = component.questionForm.get('body').value || 'New Question';
+            return confirm(`Navigate away and lose all changes to ${body}?`);
         }
         return true;
     }

@@ -2,40 +2,40 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-
 import 'rxjs/add/observable/of';
 
-import { ITemplate } from './interfaces/template';
+import { Exercise } from './../classes/exercise';
 
 @Injectable()
-export class TemplateService {
-    private baseUrl = 'api/templates';
+export class ExerciseService {
+    private baseUrl = 'api/exercises';
 
     constructor(private http: Http) { }
 
-    getTemplates(): Observable<ITemplate[]> {
+    getExercises(): Observable<Exercise[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getTemplate(id: number): Observable<ITemplate> {
+    getExercise(id: number): Observable<Exercise> {
         if (id === 0) {
-            return Observable.of(this.initializeTemplate());
+        return Observable.of(this.initializeExercise());
+        // return Observable.create((observer: any) => {
+        //     observer.next(this.initializeQuestion());
+        //     observer.complete();
+        // });
         };
-
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    deleteTemplate(id: number): Observable<Response> {
+    deleteExercise(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -44,27 +44,27 @@ export class TemplateService {
             .catch(this.handleError);
     }
 
-    saveTemplate(template: ITemplate): Observable<ITemplate> {
+    saveExercise(question: Exercise): Observable<Exercise> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (template.id === 0) {
-            return this.createTemplate(template, options);
+        if (question.id === 0) {
+            return this.createExercise(question, options);
         }
-        return this.updateTemplate(template, options);
+        return this.updateExercise(question, options);
     }
 
-    private createTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
-        template.id = undefined;
-        return this.http.post(this.baseUrl, template, options)
+    private createExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
+        exercise.id = undefined;
+        return this.http.post(this.baseUrl, exercise, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private updateTemplate(product: ITemplate, options: RequestOptions): Observable<ITemplate> {
-        const url = `${this.baseUrl}/${product.id}`;
-        return this.http.put(url, product, options)
-            .map(() => product)
+    private updateExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
+        const url = `${this.baseUrl}/${exercise.id}`;
+        return this.http.put(url, exercise, options)
+            .map(() => exercise)
             .catch(this.handleError);
     }
 
@@ -80,10 +80,20 @@ export class TemplateService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeTemplate(): ITemplate {
+    initializeExercise(): Exercise {
         // Return an initialized object
         return {
-            id: 0, skillIds: []
+            id: 0,
+            title: '',
+            body: '',
+            tag : {
+                id: 0,
+                name: ''
+            },
+            competency: {
+                id: 0,
+                name: ''
+            }
         };
     }
 }

@@ -6,33 +6,36 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 import 'rxjs/add/observable/of';
 
-import { IDomain } from './Domain';
+import { ITemplate } from '../interfaces/template';
 
 @Injectable()
-export class DomainService {
-    private baseUrl = 'api/domains';
+export class TemplateService {
+    private baseUrl = 'api/templates';
 
     constructor(private http: Http) { }
 
-    getDomains(): Observable<IDomain[]> {
+    getTemplates(): Observable<ITemplate[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getDomain(id: number): Observable<IDomain> {
+    getTemplate(id: number): Observable<ITemplate> {
         if (id === 0) {
-        return Observable.of(this.initializeProduct());
+            return Observable.of(this.initializeTemplate());
         };
+
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    deleteDomain(id: number): Observable<Response> {
+    deleteTemplate(id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -41,24 +44,24 @@ export class DomainService {
             .catch(this.handleError);
     }
 
-    saveDomain(Domain: IDomain): Observable<IDomain> {
+    saveTemplate(template: ITemplate): Observable<ITemplate> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (Domain.id === 0) {
-            return this.createDomain(Domain, options);
+        if (template.id === 0) {
+            return this.createTemplate(template, options);
         }
-        return this.updateDomain(Domain, options);
+        return this.updateTemplate(template, options);
     }
 
-    private createDomain(Domain: IDomain, options: RequestOptions): Observable<IDomain> {
-        Domain.id = undefined;
-        return this.http.post(this.baseUrl, Domain, options)
+    private createTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
+        template.id = undefined;
+        return this.http.post(this.baseUrl, template, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private updateDomain(product: IDomain, options: RequestOptions): Observable<IDomain> {
+    private updateTemplate(product: ITemplate, options: RequestOptions): Observable<ITemplate> {
         const url = `${this.baseUrl}/${product.id}`;
         return this.http.put(url, product, options)
             .map(() => product)
@@ -77,14 +80,10 @@ export class DomainService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeProduct(): IDomain {
+    initializeTemplate(): ITemplate {
         // Return an initialized object
         return {
-            id: 0,
-            name: null,
-            competencyId: 0,
-            levelId: 0,
-            skillMatrixId: 0
+            id: 0, skillIds: []
         };
     }
 }

@@ -12,7 +12,8 @@
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Tags</th>
+                    <th>Competency</th>
+                    <th>Skill</th>
                     <th></th>
                 </tr>
             </thead>
@@ -22,7 +23,8 @@
                         {{exercise.title}}
                         </a>
                     </td>
-                    <td>{{exercise.tags[0].text | lowercase}}</td>
+                    <td>{{exercise.tag.name}}</td>
+                    <td>{{exercise.competency.name}}</td>
                     <td>
                         <a class="uui-button small" [routerLink]="['/exercise-edit', exercise.id]">
                             Edit
