@@ -6,4 +6,5 @@ export class InterviewExercise extends Exercise {
     selected: boolean;
     comments?: IComment[];
     rating: number;
+    canBeRemoved?: boolean;
 }
