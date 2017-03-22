@@ -19,14 +19,14 @@
             </thead>
             <tbody>
                 <tr *ngFor='let question of questions'>
-                    <td><a [routerLink]="['/question-edit', question.id]">
+                    <td><a [routerLink]="['/questions', question.id]">
                         {{question.body}}
                         </a>
                     </td>
                     <td>{{question.competency.name}}</td>
                     <td>{{question.tag.name}}</td>
                     <td>
-                        <a class="uui-button small" [routerLink]="['/question-edit', question.id]">
+                        <a class="uui-button small" [routerLink]="['/questions', question.id]">
                             Edit
                         </a>
                     </td>

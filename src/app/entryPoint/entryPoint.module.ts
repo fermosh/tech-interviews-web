@@ -11,22 +11,13 @@ import { SkillPickerComponent } from './components/skillPicker.component';
 import { LevelFilterPipe } from './pipes/level-filter.pipe';
 import { DomainFilterPipe } from './pipes/domain-filter.pipe';
 import { SharedModule } from './../shared/shared.module';
-import { Observable } from 'rxjs/Observable';
-
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-
+import { EntryPointRoutingModule } from './entryPoint-routing.module';
 
 @NgModule({
   imports: [
     SharedModule,
     ReactiveFormsModule,
-    RouterModule.forChild([
-      { path: '', component: EntryPointComponent }
-    ])
+    EntryPointRoutingModule
   ],
   declarations: [EntryPointComponent, SkillPickerComponent, LevelFilterPipe, DomainFilterPipe],
   providers: [

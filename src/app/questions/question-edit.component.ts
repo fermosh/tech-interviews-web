@@ -188,6 +188,6 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     onSaveComplete(): void {
         // Reset the form to clear the flags
         this.questionForm.reset();
-        this.router.navigate(['/question-list']);
+        this.router.navigate(['/questions']);
     }
 }

@@ -192,6 +192,6 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     onSaveComplete(): void {
         // Reset the form to clear the flags
         this.exerciseForm.reset();
-        this.router.navigate(['/exercise-list']);
+        this.router.navigate(['/exercises']);
     }
 }
