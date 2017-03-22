@@ -6,5 +6,5 @@ export class InterviewQuestion extends Question {
     rating: number;
     comments?: IComment[];
     selected?: boolean;
-    canBeRemoved?: boolean;
+    removable?: boolean;
 }

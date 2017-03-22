@@ -153,14 +153,14 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         this.selectedSkill = skill;
         this.questionBank.map(qb => {
             qb.selected = this.selectedSkill.interviewQuestions.some(iq => iq.id === qb.id);
-            qb.canBeRemoved = !this.selectedSkill.interviewQuestions.filter(iq => iq.id === qb.id).some(iq => iq.rating > 0 || (iq.comments && iq.comments.length > 0));
+            qb.removable = !this.selectedSkill.interviewQuestions.filter(iq => iq.id === qb.id).some(iq => iq.rating > 0 || (iq.comments && iq.comments.length > 0));
         });
     }
 
     setSelectedExercises(): void {
         this.exerciseBank.map(eb => {
             eb.selected = this.scriptViewer.interviewExercises.some(ie => ie.id === eb.id);
-            eb.canBeRemoved = !this.scriptViewer.interviewExercises.filter(ie => ie.id === eb.id).some(ie => ie.rating > 0 || (ie.comments && ie.comments.length > 0));
+            eb.removable = !this.scriptViewer.interviewExercises.filter(ie => ie.id === eb.id).some(ie => ie.rating > 0 || (ie.comments && ie.comments.length > 0));
         });
     }
 

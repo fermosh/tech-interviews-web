@@ -181,8 +181,8 @@
                         <tbody>
                             <tr *ngFor="let question of questionBank | questionBankFilter : selectedSkill.id">
                                 <td>
-                                    <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true,  'disable': !question.canBeRemoved }">
-                                        <input type="checkbox" [attr.disabled]="question.canBeRemoved ? null : ''" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id"
+                                    <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true,  'disable': !question.removable }">
+                                        <input type="checkbox" [attr.disabled]="question.removable ? null : ''" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id"
                                         />
                                         <label [for]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id">{{ question.body }}</label>
                                     </p>
@@ -213,8 +213,8 @@
                         <tbody>
                             <tr *ngFor="let exercise of exerciseBank">
                                 <td>
-                                    <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true, 'ex-tilte-picker': true,  'disable': !exercise.canBeRemoved }">
-                                        <input type="checkbox" [attr.disabled]="exercise.canBeRemoved ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id"
+                                    <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true, 'ex-tilte-picker': true,  'disable': !exercise.removable }">
+                                        <input type="checkbox" [attr.disabled]="exercise.removable ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id"
                                         />
                                         <label [for]="'cbxExercise_Exercise_' + exercise.id">{{ exercise.title }}</label>
                                         <!--<template [ngIf]="exercise.tags && exercise.tags.length > 1">
