@@ -26,6 +26,8 @@
 
 .final-score-box {
     float: right;
+    margin-left: 30px;
+    text-align: center;
 }
 
 .final-score-label-text {
@@ -34,17 +36,40 @@
 }
 
 .final-score-label-value {
-    float: right;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 7px;
+    margin-bottom: 5px;
+    border: 1px solid #FFF;
+}
+
+.average-final-score-label-value {
+    background-color: rgba(255,255,255,.9);
+    color: #1A9CB0;
+    border: 1px solid #1A9CB0;
+}
+
+.final-score-label-value h2 {
+    margin-bottom: 0px;
+}
+
+.script-viewer-top-btn {
+    float:right;
+    margin-left: 5px;
 }
 
 /* SKILL SETTING */
 
-.accordion-item {
-    box-shadow: 0 1px 3px 0 rgba(51,51,51,.4) !important;
-}
-
 .skill-accordion-toggle-title {
     padding-bottom: 5px !important;
+}
+
+.skill-accordion-title {
+    width: inherit !important;
+    padding-right: 10px !important;
 }
 
 .skill-accordion-subtitle {
@@ -113,6 +138,12 @@
     color: #8B5A9F;
 }
 
+.uui-checkbox.square-skin input:disabled+label:after {
+    border-color: #eee;
+    background: #e5e5e5;
+    color: #aaa;
+}
+
 /* QUESTION SETTING */
 
 .rating-cell {
@@ -140,15 +171,8 @@
     cursor: pointer;
     color: #8B5A9F;
     font-family: 'Oswald Regular';
-    font-size: 11px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    width: 115px;
-}
-
-.question-picker-button:hover {
-    text-shadow: 1px 1px #DDD;
+    font-size: 20px;
+    display: inline-block;
 }
 
 .related-skills-label {
@@ -172,6 +196,7 @@
     color: #666666;
     text-transform: none;
     font-size: 16px;
+    margin-bottom: 5px;
 }
 
 .ex-rating-cell {
@@ -194,6 +219,14 @@
 
 .ex-descr-picker {
     margin: 0 0 12px 25px;
+}
+
+.ex-score-label-value {
+    display: inline-block;
+    -ms-transform: scale(0.7, 0.7); /* IE 9 */
+    -webkit-transform: scale(0.7, 0.7); /* Safari */
+    transform: scale(0.7, 0.7);
+    margin-right: -5px;
 }
 
 .interview-report-title {

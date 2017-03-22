@@ -2,8 +2,22 @@
     <div class="script-viewer-header">
         <div class="container">
             <div class="final-score-box">
-                <h2><span class="final-score-label-value">{{ getFinalRating() | number:'1.0-1' }}</span></h2><br>
+                <div class="final-score-label-value average-final-score-label-value">
+                    <h2><span>{{ getFinalRating() | number:'1.0-1' }}</span></h2>
+                </div>
                 <span class="final-score-label-text">Final Score</span>
+            </div>
+            <div class="final-score-box">
+                <div class="final-score-label-value">
+                    <h2><span>{{ getExercisesRating() | number:'1.0-1' }}</span></h2>
+                </div>
+                <span class="final-score-label-text">Exercises</span>
+            </div>
+            <div class="final-score-box">
+                <div class="final-score-label-value">
+                    <h2><span>{{ getSkillsRating() | number:'1.0-1' }}</span></h2>
+                </div>
+                <span class="final-score-label-text">Skills</span>
             </div>
             <div class="script-viewer-title-box">
                 <h2>{{ scriptViewer.competencyName }} {{ scriptViewer.domain }}</h2>
@@ -13,7 +27,8 @@
     </div>
     <br>
     <div class="container">
-        <button class="uui-button lime-green" style="float:right;" (click)="showPreview()">{{ !isOnPreview ? 'Interview Report' : 'Back to Script Viewer' }}</button>
+        <button class="uui-button lime-green script-viewer-top-btn" (click)="showPreview()">{{ !isOnPreview ? 'Interview Report' : 'Back to Script Viewer' }}</button>
+        <button class="uui-button lime-green script-viewer-top-btn" (click)="copyToClipBoard()" id="btnCopyToClipBoard" *ngIf="isOnPreview">Copy to ClipBoard</button>
         <br><br><br>
         <div id="uuiCarousel" class="slide" data-ride="carousel">
             <div class="carousel-inner" role="listbox">
@@ -21,12 +36,17 @@
                     <div>
                         <!-- SKILLS SET -->
                         <section class="uui-accordion cards-accordion" id="accordion-skills" *ngIf="scriptViewer.skills && scriptViewer.skills.length">
-                            <div class="panel accordion-item" *ngFor='let skill of scriptViewer.skills'>
+                            <div class="panel accordion-item" *ngFor='let skill of scriptViewer.skills' (mouseenter)="onMouseEnterSkill(skill.id)">
                                 <div class="accordion-heading">
                                     <p class="accordion-title">
-                                        <a data-toggle="collapse" class="accordion-toggle skill-accordion-toggle-title" [href]="'#skill_' + skill.id">
+                                        <a data-toggle="collapse" class="accordion-toggle skill-accordion-toggle-title skill-accordion-title" [href]="'#skill_' + skill.id">
                                             <span class="skill-label-value">{{ skill.name }}</span>
                                         </a>
+                                        <span *ngIf="hoverSkillId === skill.id">
+                                            <div class="question-picker-button" title="Question Picker" data-toggle="modal" data-target="#questionPicker" (click)="setSelectedSkillAndQuestions(skill)">
+                                                <i class="fa fa-pencil"></i>
+                                            </div>
+                                        </span>
                                     </p>
                                     <div class="skill-accordion-subtitle">
                                         <tih-score *ngIf="(skill.interviewQuestions && skill.interviewQuestions.length) || (skill.interviewExercises && skill.interviewExercises.length)"
@@ -38,10 +58,7 @@
                                 </div>
                                 <div class="accordion-collapse collapse in" [id]="'skill_' + skill.id">
                                     <div class="accordion-body">
-                                        <div class="question-picker-button" data-toggle="modal" data-target="#questionPicker" (click)="setSelectedSkillAndQuestions(skill)">
-                                            <i class="fa fa-pencil"></i>
-                                            <span>Questions</span>
-                                        </div>
+                                        <br>
                                         <!-- QUESTIONS SET -->
                                         <table class="table" *ngIf='skill.interviewQuestions && skill.interviewQuestions.length === 0'>
                                             <tbody>
@@ -83,50 +100,60 @@
                         <br>
                         <br>
                         <!-- EXERCISES SET -->
-                        <h3 class="medium-gray" style="text-transform: none;">Exercises</h3>
-                        <div class="question-picker-button" data-toggle="modal" data-target="#exercisePicker" (click)="setSelectedExercises(skill)">
-                            <i class="fa fa-pencil"></i>
-                            <span>Exercises</span>
-                        </div>
-                        <table class="table" *ngIf="scriptViewer.interviewExercises && scriptViewer.interviewExercises.length === 0">
-                            <tbody>
-                                <tr>
-                                    <td class="table-cell">No exercises selected.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <section class="uui-tabs" *ngIf="scriptViewer.interviewExercises && scriptViewer.interviewExercises.length">
-                            <div class="tabs-heading">
-                                <ul class="nav nav-tabs">
-                                    <li *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [class.active]="index === 0">
-                                        <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="tabs-body">
-                                <div class="tab-content">
-                                    <div *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [id]="'tab_ex_' + exercise.id"
-                                        [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index === 0 }">
-                                        <h3><span class="ex-subtitle-label">Description</span></h3>
-                                        <p class="gray">{{ exercise.body }}</p><br>
-                                        <h3><span class="ex-subtitle-label">Score</span></h3>
-                                        <table>
-                                            <tr>
-                                                <td class="ex-rating-cell">
-                                                    <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
-                                                </td>
-                                                <td>&nbsp;</td>
-                                                <td class="ex-comment-cell">
-                                                    <tih-history-comment [comments]="exercise.comments" (deleteCommentClicked)="deleteComment('exercise', 0, exercise.id, $event)"></tih-history-comment>
-                                                    <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', 0, exercise.id, $event)"
-                                                    />
-                                                </td>
-                                            </tr>
-                                        </table>
+                        <div (mouseenter)="onMouseEnterExercises()">
+                            <h3 class="medium-gray" style="text-transform: none;">Exercises&nbsp;&nbsp;
+                                <div *ngIf="hoverExercises" title="Exercise Picker" class="question-picker-button" data-toggle="modal" data-target="#exercisePicker"
+                                    (click)="setSelectedExercises(skill)">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                            </h3>
+                            <table class="table" *ngIf="scriptViewer.interviewExercises && scriptViewer.interviewExercises.length === 0">
+                                <tbody>
+                                    <tr>
+                                        <td class="table-cell">No exercises selected.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <section class="uui-tabs" *ngIf="scriptViewer.interviewExercises && scriptViewer.interviewExercises.length">
+                                <div class="tabs-heading">
+                                    <ul class="nav nav-tabs">
+                                        <li *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [class.active]="index === 0">
+                                            <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}
+                                                <tih-score class="ex-score-label-value" [score]='exercise.rating'></tih-score></a>                                            
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tabs-body">
+                                    <div class="tab-content">
+                                        <div *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [id]="'tab_ex_' + exercise.id" [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index === 0 }">
+                                            <h3 class="ex-subtitle-label">Related Skills</h3>
+                                            <p class="gray">
+                                                <!--<template ngFor let-tag [ngForOf]="exercise.tags" let-last="last">
+                                                    <span>{{ tag.text }}</span><span *ngIf="!last">, </span>
+                                                </template>-->
+                                                <span>{{ exercise.tag.name }}</span>
+                                            </p><br>
+                                            <h3 class="ex-subtitle-label">Description</h3>
+                                            <p class="gray">{{ exercise.body }}</p><br>
+                                            <h3 class="ex-subtitle-label">Score</h3>
+                                            <table>
+                                                <tr>
+                                                    <td class="ex-rating-cell">
+                                                        <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td class="ex-comment-cell">
+                                                        <tih-history-comment [comments]="exercise.comments" (deleteCommentClicked)="deleteComment('exercise', 0, exercise.id, $event)"></tih-history-comment>
+                                                        <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', 0, exercise.id, $event)"
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+                        </div>
                     </div>
                 </div>
                 <div class="item">
@@ -154,8 +181,8 @@
                         <tbody>
                             <tr *ngFor="let question of questionBank | questionBankFilter : selectedSkill.id">
                                 <td>
-                                    <p class="uui-checkbox square-skin large">
-                                        <input type="checkbox" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id"
+                                    <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true,  'disable': !question.removable }">
+                                        <input type="checkbox" [attr.disabled]="question.removable ? null : ''" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id"
                                         />
                                         <label [for]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id">{{ question.body }}</label>
                                     </p>
@@ -186,8 +213,9 @@
                         <tbody>
                             <tr *ngFor="let exercise of exerciseBank">
                                 <td>
-                                    <p class="uui-checkbox square-skin large ex-tilte-picker">
-                                        <input type="checkbox" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id" />
+                                    <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true, 'ex-tilte-picker': true,  'disable': !exercise.removable }">
+                                        <input type="checkbox" [attr.disabled]="exercise.removable ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id"
+                                        />
                                         <label [for]="'cbxExercise_Exercise_' + exercise.id">{{ exercise.title }}</label>
                                         <!--<template [ngIf]="exercise.tags && exercise.tags.length > 1">
                                             <template ngFor let-tag [ngForOf]="exercise.tags">
