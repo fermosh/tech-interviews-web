@@ -7,7 +7,7 @@ import { ILevel } from './../shared/classes/level';
 import { CompetencyService } from './../shared/services/competency.service';
 import { LevelService } from './../shared/services/level.service';
 import { DomainService } from './../shared/services/domain.service';
-import { SkillMatrixService } from './skill-matrix.service';
+import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { TemplateService } from './services/template.service';
 import { ITemplate } from './interfaces/template';
 import { SkillMatrixItem } from './classes/skillMatrixItem';

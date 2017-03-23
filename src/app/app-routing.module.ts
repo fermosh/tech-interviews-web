@@ -1,13 +1,11 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { PageNotFoundComponent }    from './not-found.component';
-
 import { CanDeactivateGuard }       from './can-deactivate-guard.service';
 import { AuthGuard }                from './auth-guard.service';
 import { SelectivePreloadingStrategy } from './selective-preloading-strategy';
 
-const appRoutes: Routes = [
+const routes: Routes = [
     {
         path: 'questions',
         loadChildren: 'app/questions/question.module#QuestionModule'
@@ -32,13 +30,11 @@ const appRoutes: Routes = [
     {
         imports: [
             RouterModule.forRoot(
-                appRoutes,
+                routes,
                 { preloadingStrategy: SelectivePreloadingStrategy }
             )
         ],
-        exports: [
-            RouterModule
-        ],
+        exports: [RouterModule],
         providers: [
             CanDeactivateGuard,
             SelectivePreloadingStrategy

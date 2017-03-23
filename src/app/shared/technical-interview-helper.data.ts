@@ -1,11 +1,11 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { ICompetency } from './../shared/classes/competency';
-import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
+import { ICompetency } from './classes/competency';
+import { ISkillMatrix } from './classes/skill-matrix';
 import { IInterviewScript } from './../scriptViewer/interfaces/interview-script';
-import { IDomain } from './../shared/classes/domain';
-import { ILevel } from './../shared/classes/level';
-import { Question } from './../shared/classes/question';
-import { Exercise } from './../shared/classes/exercise';
+import { IDomain } from './classes/domain';
+import { ILevel } from './classes/level';
+import { Question } from './classes/question';
+import { Exercise } from './classes/exercise';
 import { ITemplate } from '../entryPoint/interfaces/template';
 
 export class TechnicalInterviewData implements InMemoryDbService {

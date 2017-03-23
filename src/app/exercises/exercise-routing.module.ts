@@ -4,13 +4,13 @@ import { ExerciseListComponent } from './exercise-list.component';
 import { ExerciseEditComponent } from './exercise-edit.component';
 import { CanDeactivateGuard }     from '../can-deactivate-guard.service';
 
-const exerciseRoutes: Routes = [
+const routes: Routes = [
     {
         path: '',
         component: ExerciseListComponent,
     },
     {
-        path: ':id',
+        path: 'exercises/:id',
         component: ExerciseEditComponent,
         canDeactivate: [CanDeactivateGuard],
     }
@@ -18,12 +18,8 @@ const exerciseRoutes: Routes = [
 
 @NgModule(
     {
-        imports: [
-            RouterModule.forChild(exerciseRoutes)
-        ],
-        exports: [
-            RouterModule
-        ],
+        imports: [RouterModule.forChild(routes)],
+        exports: [RouterModule],
     }
 )
 

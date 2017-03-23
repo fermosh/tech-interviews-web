@@ -7,22 +7,26 @@ import { ExerciseEditComponent } from './exercise-edit.component';
 import { ExerciseService } from './../shared/services/exercise.service';
 import { ExerciseRoutingModule } from './exercise-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 
-@NgModule({
-  imports: [
-    SharedModule,
-    ReactiveFormsModule,
-    ExerciseRoutingModule
-  ],
-  declarations: [
-    ExerciseListComponent,
-    ExerciseEditComponent
-  ],
-  providers: [
-    ExerciseService,
-    ExerciseDetailGuard,
-    ExerciseEditGuard
-  ]
-})
+@NgModule(
+    {
+        imports: [
+            SharedModule,
+            ReactiveFormsModule,
+            ExerciseRoutingModule
+        ],
+        declarations: [
+            ExerciseListComponent,
+            ExerciseEditComponent
+        ],
+        providers: [
+            ExerciseService,
+            SkillMatrixService,
+            ExerciseDetailGuard,
+            ExerciseEditGuard
+        ]
+    }
+)
 
 export class ExerciseModule { }

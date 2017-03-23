@@ -4,13 +4,13 @@ import { QuestionListComponent } from './question-list.component';
 import { QuestionEditComponent } from './question-edit.component';
 import { CanDeactivateGuard }     from '../can-deactivate-guard.service';
 
-const questionRoutes: Routes = [
+const routes: Routes = [
     {
         path: '',
         component: QuestionListComponent,
     },
     {
-        path: ':id',
+        path: 'questions/:id',
         component: QuestionEditComponent,
         canDeactivate: [CanDeactivateGuard],
     }
@@ -18,12 +18,8 @@ const questionRoutes: Routes = [
 
 @NgModule(
     {
-        imports: [
-            RouterModule.forChild(questionRoutes)
-        ],
-        exports: [
-            RouterModule
-        ],
+        imports: [RouterModule.forChild(routes)],
+        exports: [RouterModule],
     }
 )
 
