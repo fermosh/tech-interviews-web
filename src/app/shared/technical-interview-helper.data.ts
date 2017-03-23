@@ -6,7 +6,7 @@ import { IDomain } from './classes/domain';
 import { ILevel } from './classes/level';
 import { Question } from './classes/question';
 import { Exercise } from './classes/exercise';
-import { ITemplate } from '../entryPoint/interfaces/template';
+import { ITemplate } from './classes/template';
 
 export class TechnicalInterviewData implements InMemoryDbService {
 

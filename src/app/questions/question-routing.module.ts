@@ -7,12 +7,12 @@ import { CanDeactivateGuard }     from '../can-deactivate-guard.service';
 const routes: Routes = [
     {
         path: '',
-        component: QuestionListComponent,
+        component: QuestionListComponent
     },
     {
-        path: 'questions/:id',
+        path: ':id',
         component: QuestionEditComponent,
-        canDeactivate: [CanDeactivateGuard],
+        canDeactivate: [CanDeactivateGuard]
     }
 ];
 

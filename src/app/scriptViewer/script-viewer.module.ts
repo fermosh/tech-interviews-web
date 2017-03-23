@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ScriptViewerComponent } from './script-viewer.component';
 import { HistoryCommentComponent } from './components/history-comment.component';
 import { ReportViewerComponent } from './components/report-viewer.component';
@@ -27,4 +27,9 @@ import { ScriptViewerRoutingModule } from './script-viewer-routing.module';
     ]
 })
 
-export class ScriptViewerModule { }
+export class ScriptViewerModule {
+  constructor(router: Router) {
+    console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
+  }
+    
+ }

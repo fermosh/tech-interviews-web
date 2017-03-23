@@ -10,7 +10,7 @@ const routes: Routes = [
         component: ExerciseListComponent,
     },
     {
-        path: 'exercises/:id',
+        path: ':id',
         component: ExerciseEditComponent,
         canDeactivate: [CanDeactivateGuard],
     }
