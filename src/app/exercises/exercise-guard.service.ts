@@ -26,7 +26,7 @@ export  class ExerciseEditGuard implements CanDeactivate<ExerciseEditComponent>
 
     canDeactivate(component: ExerciseEditComponent): boolean {
         if (component.exerciseForm.dirty) {
-            let exerciseTitle = component.exerciseForm.get('exerciseTitle').value || 'New Exercise';
+            let exerciseTitle = component.exerciseForm.get('title').value || 'New Exercise';
             return confirm(`Navigate away and lose all changes to ${exerciseTitle}?`);
         }
         return true;

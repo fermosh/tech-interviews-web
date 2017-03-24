@@ -19,7 +19,7 @@ const routes: Routes = [
         loadChildren: 'app/entryPoint/entryPoint.module#EntryPointModule'
     },
     {
-        path: 'scriptViewer',
+        path: 'script-viewer',
         loadChildren: 'app/scriptViewer/script-viewer.module#ScriptViewerModule'
     },
     { path: '',   redirectTo: '/entryPoint', pathMatch: 'full' },

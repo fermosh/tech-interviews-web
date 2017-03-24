@@ -14,6 +14,7 @@ import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { TemplateService } from './../shared/services/template.service';
 import { QuestionService } from './../shared/services/question.service';
 import { ExerciseService } from './../shared/services/exercise.service';
+import { ScriptViewerService } from '../scriptViewer/script-viewer.service';
 
 
 import { TechnicalInterviewData } from './technical-interview-helper.data';
@@ -39,7 +40,8 @@ import { TechnicalInterviewData } from './technical-interview-helper.data';
         SkillMatrixService,
         TemplateService,
         QuestionService,
-        ExerciseService
+        ExerciseService,
+        ScriptViewerService
       ]
   }
 )

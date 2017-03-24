@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ExerciseListComponent } from './exercise-list.component';
 import { ExerciseEditComponent } from './exercise-edit.component';
 import { CanDeactivateGuard }     from '../can-deactivate-guard.service';
+import { ExerciseEditGuard } from './exercise-guard.service';
 
 const routes: Routes = [
     {
@@ -12,7 +13,7 @@ const routes: Routes = [
     {
         path: ':id',
         component: ExerciseEditComponent,
-        canDeactivate: [CanDeactivateGuard],
+        canDeactivate: [ExerciseEditGuard],
     }
 ];
 

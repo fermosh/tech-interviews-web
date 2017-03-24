@@ -35,7 +35,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.sub = this.route.params.subscribe(
             params => {
-                let id = +params['templateId'];
+                let id = +params['id'];
                 this.getInterviewScript(id);
             });
     }
