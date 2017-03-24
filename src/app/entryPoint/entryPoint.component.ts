@@ -27,9 +27,9 @@ export class EntryPointComponent {
     domainId = 0;
 
     /* Declare options to store the filter data */
-    competencyOptions: ICompetency[];
-    levelOptions: ILevel[];
-    domainOptions: IDomain[];
+    competencies: ICompetency[];
+    levels: ILevel[];
+    domains: IDomain[];
 
     /*Skills for the skill picker*/
     skills: SkillMatrixItem[];
@@ -42,9 +42,12 @@ export class EntryPointComponent {
     skillPickerLegend = '';
 
     /* Constructor to inject the diferent services */
-    constructor(private competencyService: CompetencyService,private levelService: LevelService, private domainService: DomainService,
-        private skillMatrixService: SkillMatrixService, private templateService: TemplateService, private router: Router) {
-    };
+    constructor(private competencyService: CompetencyService,
+        private levelService: LevelService,
+        private domainService: DomainService,
+        private skillMatrixService: SkillMatrixService,
+        private templateService: TemplateService,
+        private router: Router) { };
 
     /* Start Initilizers */
     ngOnInit(): void {
@@ -57,11 +60,11 @@ export class EntryPointComponent {
         this.competencyService.getCompetencies().subscribe(
             competencies => {
                 // fill the available competencies with the ones from the datasource
-                this.competencyOptions = competencies.sort((c1, c2) => this.competencyComparer(c1, c2));
+                this.competencies = competencies.sort((c1, c2) => this.competencyComparer(c1, c2));
 
                 // if there is more than one competency use the first one
-                if (this.competencyOptions.length > 0) {
-                    this.competencyId = this.competencyOptions[0].id;
+                if (this.competencies.length > 0) {
+                    this.competencyId = this.competencies[0].id;
                 }
 
                 // call the level initialization
@@ -76,10 +79,10 @@ export class EntryPointComponent {
         this.levelService.getLevels().subscribe(
             levels => {
                 // fill the available levels
-                this.levelOptions = levels.sort((l1, l2) => this.levelComparer(l1, l2));
+                this.levels = levels.sort((l1, l2) => this.levelComparer(l1, l2));
 
                 // possible levels
-                let possibleLevels = this.levelOptions.filter(x => x.competencyId == this.competencyId);
+                let possibleLevels = this.levels.filter(x => x.competencyId == this.competencyId);
 
                 // if there is more than one level use the first one
                 if (possibleLevels.length > 0) {
@@ -98,10 +101,10 @@ export class EntryPointComponent {
         this.domainService.getDomains().subscribe(
             domains => {
                 // fill the available domains
-                this.domainOptions = domains.sort((d1, d2) => this.domainComparer(d1, d2));
+                this.domains = domains.sort((d1, d2) => this.domainComparer(d1, d2));
 
                 // possible levels
-                let possibleDomains = this.domainOptions.filter(x => x.levelId == this.levelId);
+                let possibleDomains = this.domains.filter(x => x.levelId == this.levelId);
 
                 // if there is more than one domain use the first one
                 if (possibleDomains.length > 0) {
@@ -163,7 +166,7 @@ export class EntryPointComponent {
         this.isSkillGridVisible = false;
 
         // get the skillMatrixId from the selected domain
-        let skillMatrixId = this.domainOptions.find(x => x.id == this.domainId).skillMatrixId;
+        let skillMatrixId = this.domains.find(x => x.id == this.domainId).skillMatrixId;
 
         // call the service to get the skill matrix data
         this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
@@ -202,7 +205,7 @@ export class EntryPointComponent {
     private getLabel(): string {
 
         let label = '';
-        let competency =  this.competencyOptions.find(x => x.id == this.competencyId);
+        let competency =  this.competencies.find(x => x.id == this.competencyId);
 
         if (competency == undefined){
             return label;
@@ -210,7 +213,7 @@ export class EntryPointComponent {
 
         label = competency.name;
 
-        let domain =  this.domainOptions.find(x => x.id == this.domainId);
+        let domain =  this.domains.find(x => x.id == this.domainId);
 
         if (domain == undefined) {
             return label;
@@ -218,7 +221,7 @@ export class EntryPointComponent {
 
         label = label + ' ' + domain.name;
 
-        let level =  this.levelOptions.find(x => x.id == this.levelId);
+        let level =  this.levels.find(x => x.id == this.levelId);
 
         if (level == undefined){
             return label;

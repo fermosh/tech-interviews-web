@@ -7,12 +7,14 @@ import { DomainFilterPipe } from './pipes/domain-filter.pipe';
 import { SharedModule } from './../shared/shared.module';
 import { EntryPointRoutingModule } from './entryPoint-routing.module';
 
-@NgModule({
-  imports: [
-    SharedModule,
-    EntryPointRoutingModule
-  ],
-  declarations: [EntryPointComponent, SkillPickerComponent, LevelFilterPipe, DomainFilterPipe]
-})
+@NgModule(
+    {
+        imports: [
+            SharedModule,
+            EntryPointRoutingModule
+        ],
+        declarations: [EntryPointComponent, SkillPickerComponent, LevelFilterPipe, DomainFilterPipe]
+    }
+)
 
 export class EntryPointModule { }

@@ -13,7 +13,7 @@ export  class QuestionDetailGuard implements CanActivate {
         if (isNaN(id) || id < 1) {
             alert('Invalid question Id');
             // start a new navigation to redirect to list page
-            this.router.navigate(['/question-list']);
+            this.router.navigate(['/questions']);
             // abort current navigation
             return false;
         };

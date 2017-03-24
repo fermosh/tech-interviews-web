@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, CanDeactivate } from '@angular/router';
-
 import { ExerciseEditComponent } from './exercise-edit.component';
 
 @Injectable()
@@ -13,7 +12,7 @@ export  class ExerciseDetailGuard implements CanActivate {
         if (isNaN(id) || id < 1) {
             alert('Invalid Exercise Id');
             // start a new navigation to redirect to list page
-            this.router.navigate(['/exercise-list']);
+            this.router.navigate(['/exercises']);
             // abort current navigation
             return false;
         };
