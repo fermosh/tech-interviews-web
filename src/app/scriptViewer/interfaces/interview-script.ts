@@ -1,7 +1,7 @@
 /* Defines the skill matrix */
-import { ISkill } from './skill';
-import { ILevel } from './../../entryPoint/level';
-import { IInterviewExercise } from './interview-exercise';
+import { Skill } from './../../shared/classes/skill';
+import { ILevel } from './../../shared/classes/level';
+import { InterviewExercise } from './../classes/interview-exercise';
 
 export interface IInterviewScript {
     id: number;
@@ -10,6 +10,6 @@ export interface IInterviewScript {
     competencyName: string;
     domain: string;
     level: ILevel;
-    skills?: ISkill[];
-    interviewExercises?: IInterviewExercise[];
+    skills?: Skill[];
+    interviewExercises?: InterviewExercise[];
 }

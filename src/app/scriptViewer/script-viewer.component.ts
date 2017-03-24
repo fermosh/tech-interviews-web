@@ -44,7 +44,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         this.hoverExercises = false;
         this.sub = this.route.params.subscribe(
             params => {
-                let id = +params['templateId'];
+                let id = +params['id'];
                 this.getInterviewScript(id);
             });
     }
