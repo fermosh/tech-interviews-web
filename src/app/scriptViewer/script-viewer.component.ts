@@ -19,7 +19,7 @@ declare var jQuery: any;
     styleUrls: ['./script-viewer.component.css']
 })
 
-export class ScriptViewerComponent implements OnInit, OnDestroy {
+export class ScriptViewerComponent implements OnInit {
     scriptViewer: IInterviewScript;
     errorMessage: string;
     private sub: Subscription;
@@ -33,15 +33,11 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         private scriptViewerService: ScriptViewerService) { }
 
     ngOnInit(): void {
-        this.sub = this.route.params.subscribe(
+        this.route.params.subscribe(
             params => {
                 let id = +params['templateId'];
                 this.getInterviewScript(id);
             });
-    }
-
-    ngOnDestroy() {
-        this.sub.unsubscribe();
     }
 
     ngAfterViewChecked(): void {

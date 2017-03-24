@@ -1,9 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockBackend } from '@angular/http/testing';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
 /* Module and component */
 import { EntryPointModule } from '../../../src/app/entryPoint/entryPoint.module';
 import { EntryPointComponent } from '../../../src/app/entryPoint/entryPoint.component';
+
+import { SkillPickerComponent } from '../../../src/app/entryPoint/components/skillPicker.component';
+import { LevelFilterPipe } from '../../../src/app/entryPoint/pipes/level-filter.pipe';
+import { DomainFilterPipe } from '../../../src/app/entryPoint/pipes/domain-filter.pipe';
+
 /* Services */
 import { CompetencyService } from '../../../src/app/shared/services/competency.service';
 import { LevelService } from '../../../src/app/shared/services/level.service';
@@ -25,7 +32,8 @@ describe('Entry Point Component', () => {
     // Asynchronous beforeEach(to prepare testing module)
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [EntryPointModule],
+            imports: [FormsModule],
+            declarations: [EntryPointComponent, SkillPickerComponent, LevelFilterPipe, DomainFilterPipe],
             providers: [{ provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } }]
         }).overrideComponent(EntryPointComponent, {
             set: {
