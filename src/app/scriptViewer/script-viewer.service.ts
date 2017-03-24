@@ -55,9 +55,41 @@ export class ScriptViewerService {
         let numberOfItems: number = 0;
 
         if (interviewScript.skills && interviewScript.skills.length > 0) {
+            sum += this.getSkillsRating(interviewScript);
+            numberOfItems++;
+        }
+        if (interviewScript.interviewExercises && interviewScript.interviewExercises.length > 0) {
+            sum += this.getExercisesRating(interviewScript);
+            numberOfItems++;
+        }
+
+        if (sum > 0) {
+            return sum / numberOfItems;
+        } else {
+            return 0;
+        }
+    }
+
+    getSkillsRating(interviewScript: IInterviewScript): number {
+        let sum: number = 0;
+        let numberOfItems: number = 0;
+
+        if (interviewScript.skills && interviewScript.skills.length > 0) {
             sum = interviewScript.skills.map(skill => this.getRatingBySkill(skill)).reduce(function (a, b) { return a + b; }, 0);
             numberOfItems = interviewScript.skills.filter(s => s.interviewQuestions.length).length;
         }
+
+        if (sum > 0) {
+            return sum / numberOfItems;
+        } else {
+            return 0;
+        }
+    }
+
+    getExercisesRating(interviewScript: IInterviewScript): number {
+        let sum: number = 0;
+        let numberOfItems: number = 0;
+
         if (interviewScript.interviewExercises && interviewScript.interviewExercises.length > 0) {
             sum = interviewScript.interviewExercises.map(ie => ie.rating).reduce(function (a, b) { return a + b; }, 0);
             numberOfItems = interviewScript.interviewExercises.length;

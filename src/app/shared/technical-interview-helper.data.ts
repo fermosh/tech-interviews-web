@@ -1155,7 +1155,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 7,
                                 body: 'Explain SCRUM',
                                 answer: '',
-                                tags: {
+                                tag: {
                                     id: 3,
                                     name: 'Scrum / Agile'
                                 },
@@ -1173,7 +1173,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 8,
                                 body: 'How do you face or deal with problems in an Agile project?',
                                 answer: '',
-                                tags: {
+                                tag: {
                                     id: 3,
                                     name: 'Scrum / Agile'
                                 },
@@ -1191,7 +1191,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 9,
                                 body: `When you need to solve something you don't know, how do you deal with it?`,
                                 answer: '',
-                                tags: {
+                                tag: {
                                     id: 3,
                                     name: 'Scrum / Agile'
                                 },
