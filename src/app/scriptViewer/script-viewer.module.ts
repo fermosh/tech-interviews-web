@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
 import { ScriptViewerComponent } from './script-viewer.component';
 import { HistoryCommentComponent } from './components/history-comment.component';
 import { ReportViewerComponent } from './components/report-viewer.component';

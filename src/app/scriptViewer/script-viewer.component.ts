@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 import { IInterviewScript } from './interfaces/interview-script';
 import { Skill } from './../shared/classes/skill';
@@ -28,11 +29,19 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     private exerciseBank: InterviewExercise[];
     private isScriptViewerRendered: boolean;
     private isOnPreview: boolean;
+    private hoverSkillId: number;
+    private hoverExercises: boolean;
+    sortablejsOptions: SortablejsOptions = {
+        animation: 150,
+        handle: '.fa-bars'
+    };
 
     constructor(private route: ActivatedRoute,
         private scriptViewerService: ScriptViewerService) { }
 
     ngOnInit(): void {
+        this.hoverSkillId = 0;
+        this.hoverExercises = false;
         this.sub = this.route.params.subscribe(
             params => {
                 let id = +params['id'];
@@ -81,17 +90,17 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
 
     mapQuestionBank(questions: Question[]) {
         // 1. Fill 'Question Bank' with data retrieved from service.
-        this.questionBank = questions.map(q => <InterviewQuestion>new Object({ id: q.id, body: q.body, answer: q.answer, tag: q.tag, rating: 0, comments: [], selected: false }));
+        this.questionBank = questions.map(q => <InterviewQuestion>new Object({ id: q.id, body: q.body, answer: q.answer, tag: q.tag, rating: 0, comments: [], selected: false, order: -1 }));
 
         // 2. Complete the 'Question Bank' with those questions existing in the Interview but not in the DB Bank 
         this.scriptViewer.skills.forEach(s => s.interviewQuestions.forEach(siq => {
             if (!this.questionBank.some(qb => qb.id === siq.id)) {
-                this.questionBank.push({ id: siq.id, body: siq.body, answer: siq.answer, tag: siq.tag, rating: siq.rating, comments: siq.comments, selected: siq.selected });
+                this.questionBank.push({ id: siq.id, body: siq.body, answer: siq.answer, tag: siq.tag, rating: siq.rating, comments: siq.comments, selected: siq.selected, order: siq.order });
             }
         }));
     }
 
-    mapExerciseBank(exercises: Exercise[]) { 
+    mapExerciseBank(exercises: Exercise[]) {
         this.exerciseBank = [];
         // 1. Fill 'Exercise Bank' with data retrieved from service.
         this.exerciseBank = exercises.map(e => <InterviewExercise>new Object({ id: e.id, title: e.title, body: e.body, solution: e.solution, tag: e.tag, rating: 0, comments: [], selected: false }));
@@ -111,23 +120,55 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         return this.scriptViewerService.getFinalRating(this.scriptViewer);
     }
 
-    showPreview() {
+    getSkillsRating(): number {
+        return this.scriptViewerService.getSkillsRating(this.scriptViewer);
+    }
+
+    getExercisesRating(): number {
+        return this.scriptViewerService.getExercisesRating(this.scriptViewer);
+    }
+
+    showPreview(): void {
         jQuery('#uuiCarousel').carousel(this.isOnPreview ? 'prev' : 'next');
         this.isOnPreview = !this.isOnPreview;
+    }
+
+    copyToClipBoard(): void {
+        jQuery("#clipBoard")[0].innerText = jQuery(".report-template")[0].innerText;
+        let copyTextarea: any = document.querySelector('#clipBoard');
+        copyTextarea.select();
+
+        try {
+            let successful = document.execCommand('copy');
+            console.log('Copying text command was ' + (successful ? 'successful' : 'unsuccessful'));
+        } catch (err) {
+            console.log('Unable to copy.');
+        }
     }
 
     // ----------------------------------------------------------------------------------
     /* SKILL EVENTS */
 
+    onMouseEnterSkill(skillId: number): void {
+        this.hoverSkillId = skillId;
+        this.hoverExercises = false;
+    }
+
     setSelectedSkillAndQuestions(skill: Skill): void {
         this.selectedSkill = skill;
-        this.questionBank.map(qb => qb.selected = this.selectedSkill.interviewQuestions.some(iq => iq.id === qb.id));
+        this.questionBank.map(qb => {
+            qb.selected = this.selectedSkill.interviewQuestions.some(iq => iq.id === qb.id);
+            qb.removable = !this.selectedSkill.interviewQuestions.filter(iq => iq.id === qb.id).some(iq => iq.rating > 0 || (iq.comments && iq.comments.length > 0));
+            qb.order = this.selectedSkill.interviewQuestions.indexOf(this.selectedSkill.interviewQuestions.filter(iq => iq.id === qb.id)[0]);
+        });
     }
 
     setSelectedExercises(): void {
-        this.exerciseBank.map(eb => eb.selected = this.scriptViewer.interviewExercises.some(ie => ie.id === eb.id));
+        this.exerciseBank.map(eb => {
+            eb.selected = this.scriptViewer.interviewExercises.some(ie => ie.id === eb.id);
+            eb.removable = !this.scriptViewer.interviewExercises.filter(ie => ie.id === eb.id).some(ie => ie.rating > 0 || (ie.comments && ie.comments.length > 0));
+        });
     }
-
 
     getRatingBySkill(skill: Skill): number {
         return this.scriptViewerService.getRatingBySkill(skill);
@@ -181,6 +222,11 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     }
     // ----------------------------------------------------------------------------------
     /* QUESTION AND EXERCISE EVENTS */
+
+    onMouseEnterExercises(): void {
+        this.hoverSkillId = 0;
+        this.hoverExercises = true;
+    }
 
     addComment(type: string, skillId: number, typeId: number, event: any): void {
         let comment: IComment = { text: event.target.value, user: 'Logged User Name', date: new Date() };
