@@ -1,19 +1,18 @@
 <div class="panel">
     <h3 class="dark-gray plus-margin-horizontal plus-margin-vertical">Please, select the candidate's profile:</h3>
 
-    <select [(ngModel)]="competencyId" (change)="onCompetencyChange($event.target.value)" name="competency" class="selectpicker uui-form-element plus-margin-horizontal"
-        title="Competency">
-        <option *ngFor="let competencyOption of competencyOptions" [attr.value]="competencyOption.id">{{competencyOption.name}}</option>
+    <select [(ngModel)]="competencyId" (change)="onCompetencyChange($event.target.value)" name="competency" class="selectpicker uui-form-element plus-margin-horizontal" title="Competency">
+        <option *ngFor="let competency of competencies" [attr.value]="competency.id">{{competency.name}}</option>
     </select>
 
     <select [(ngModel)]="levelId" (change)="onLevelChange($event.target.value)" name="level" class="uui-form-element plus-margin-horizontal" title="Level">
         <option value="0" *ngIf="levelId == 0">Choose a level</option>
-        <option *ngFor="let levelOption of levelOptions | levelFilter:competencyId" [attr.value]="levelOption.id">{{levelOption.name}}</option>
+        <option *ngFor="let level of levels | levelFilter:competencyId" [attr.value]="level.id">{{level.name}}</option>
     </select>
 
     <select [(ngModel)]="domainId" (change)="onDomainChange($event.target.value)" name="domain" class="uui-form-element plus-margin-horizontal" title="Domain">
         <option value="0" *ngIf="domainId == 0">Choose a domain</option>
-        <option *ngFor="let domainOption of domainOptions  | domainFilter: levelId" [attr.value]="domainOption.id">{{domainOption.name}}</option>
+        <option *ngFor="let doamin of domains  | domainFilter: levelId" [attr.value]="domain.id">{{domain.name}}</option>
     </select>
 
     <button class="uui-button lime-green minus-margin-top {{ isSearchDisabled ? 'disable':'' }}" [disabled]="isSearchDisabled" (click)="onSearch()"><i class="fa fa-search"></i> Search</button>
