@@ -43,7 +43,6 @@
     margin-right: auto;
     padding-top: 7px;
     margin-bottom: 5px;
-    border: 1px solid #FFF;
 }
 
 .average-final-score-label-value {
@@ -146,6 +145,13 @@
 
 /* QUESTION SETTING */
 
+.sortable-question {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+
 .rating-cell {
     text-align: right;
     width: 90px;
@@ -182,6 +188,12 @@
     background: #eee;
     border-color: #ccc;
     color: #999!important;
+}
+
+.fa-bars {
+    cursor: move;
+    cursor: -webkit-grabbing;
+    margin-right: 5px;
 }
 
 /* EXERCISE SETTING */

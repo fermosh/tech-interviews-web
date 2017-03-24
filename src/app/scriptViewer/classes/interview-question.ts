@@ -7,4 +7,5 @@ export class InterviewQuestion extends Question {
     comments?: IComment[];
     selected?: boolean;
     removable?: boolean;
+    order?: number;
 }

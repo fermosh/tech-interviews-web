@@ -67,32 +67,31 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <table class="table" *ngIf='skill.interviewQuestions && skill.interviewQuestions.length'>
-                                            <tbody>
-                                                <tr *ngFor="let question of skill.interviewQuestions">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>{{ question.body }}</td>
-                                                                <td class="rating-cell">
-                                                                    <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
-                                                                </td>
-                                                                <td class="comments-cell">
-                                                                    <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }"
-                                                                        data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
-                                                                        [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                        <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
-                                                            <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.id, $event)"></tih-history-comment>
-                                                            <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)"
-                                                            />
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <template [ngIf]="skill.interviewQuestions && skill.interviewQuestions.length">
+                                            <div [sortablejs]="skill.interviewQuestions" [sortablejsOptions]="sortablejsOptions">
+                                                <div *ngFor="let question of skill.interviewQuestions" class="sortable-question">
+                                                    <table>
+                                                        <tr>
+                                                            <td><span class="fa fa-bars" aria-hidden="true"></span>{{ question.body
+                                                                }}</td>
+                                                            <td class="rating-cell">
+                                                                <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
+                                                            </td>
+                                                            <td class="comments-cell">
+                                                                <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }"
+                                                                    data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
+                                                                    [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
+                                                        <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.id, $event)"></tih-history-comment>
+                                                        <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +118,7 @@
                                     <ul class="nav nav-tabs">
                                         <li *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [class.active]="index === 0">
                                             <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}
-                                                <tih-score class="ex-score-label-value" [score]='exercise.rating'></tih-score></a>                                            
+                                                <tih-score class="ex-score-label-value" [score]='exercise.rating'></tih-score></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -193,7 +192,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="uui-button transparent">Cancel</button>
-                    <button type="button" class="uui-button lime-green" (click)="saveSelectedQuestions()">Save Changes</button>
+                    <button type="button" class="uui-button lime-green" (click)="saveSelectedQuestions()">Accept</button>
                 </div>
             </div>
         </div>
@@ -232,7 +231,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="uui-button transparent">Cancel</button>
-                    <button type="button" class="uui-button lime-green" (click)="saveSelectedExercises()">Save Changes</button>
+                    <button type="button" class="uui-button lime-green" (click)="saveSelectedExercises()">Accept</button>
                 </div>
             </div>
         </div>

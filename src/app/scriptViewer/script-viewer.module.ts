@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SortablejsModule } from 'angular-sortablejs'
 
 import { ScriptViewerComponent } from './script-viewer.component';
 import { HistoryCommentComponent } from './components/history-comment.component';
@@ -11,6 +12,7 @@ import { SharedModule } from './../shared/shared.module';
 @NgModule({
     imports: [
         SharedModule,
+        SortablejsModule,
         RouterModule.forChild([
             { path: 'script-viewer/:templateId', component: ScriptViewerComponent }
         ])
