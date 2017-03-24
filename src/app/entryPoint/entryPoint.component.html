@@ -12,7 +12,7 @@
 
     <select [(ngModel)]="domainId" (change)="onDomainChange($event.target.value)" name="domain" class="uui-form-element plus-margin-horizontal" title="Domain">
         <option value="0" *ngIf="domainId == 0">Choose a domain</option>
-        <option *ngFor="let doamin of domains  | domainFilter: levelId" [attr.value]="domain.id">{{domain.name}}</option>
+        <option *ngFor="let domain of domains | domainFilter: levelId" [attr.value]="domain.id">{{domain.name}}</option>
     </select>
 
     <button class="uui-button lime-green minus-margin-top {{ isSearchDisabled ? 'disable':'' }}" [disabled]="isSearchDisabled" (click)="onSearch()"><i class="fa fa-search"></i> Search</button>
