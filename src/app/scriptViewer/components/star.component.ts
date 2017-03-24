@@ -17,6 +17,6 @@ export class StarComponent {
     }
 
     private onStarClick(selectedRating: number): void {
-        this.rating = selectedRating;
+        this.rating = (this.rating !== selectedRating) ? selectedRating : 0;
     }
 }

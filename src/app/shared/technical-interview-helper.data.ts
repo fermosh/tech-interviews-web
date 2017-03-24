@@ -1,12 +1,12 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { ICompetency } from './../shared/classes/competency';
-import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
-import { IInterviewScript } from './../scriptViewer/interfaces/interview-script';
-import { IDomain } from './../shared/classes/domain';
-import { ILevel } from './../shared/classes/level';
-import { Question } from './../shared/classes/question';
-import { Exercise } from './../shared/classes/exercise';
-import { ITemplate } from '../entryPoint/interfaces/template';
+import { ICompetency } from './classes/competency';
+import { SkillMatrix } from './classes/skill-matrix';
+import { InterviewScript } from './../scriptViewer/classes/interview-script';
+import { IDomain } from './classes/domain';
+import { ILevel } from './classes/level';
+import { Question } from './classes/question';
+import { Exercise } from './classes/exercise';
+import { ITemplate } from './classes/template';
 
 export class TechnicalInterviewData implements InMemoryDbService {
 
@@ -332,7 +332,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
             }
         ];
 
-        let skillMatrix: ISkillMatrix[] = [
+        let skillMatrix: SkillMatrix[] = [
             {
                 id: 13,
                 hasContent: true,
@@ -740,7 +740,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
             }
         ];
 
-        let interviewScriptData: IInterviewScript[] = [
+        let interviewScriptData: InterviewScript[] = [
             {
                 id: 13,
                 competencyName: '.Net',
@@ -1155,7 +1155,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 7,
                                 body: 'Explain SCRUM',
                                 answer: '',
-                                tags: {
+                                tag: {
                                     id: 3,
                                     name: 'Scrum / Agile'
                                 },
@@ -1173,7 +1173,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 8,
                                 body: 'How do you face or deal with problems in an Agile project?',
                                 answer: '',
-                                tags: {
+                                tag: {
                                     id: 3,
                                     name: 'Scrum / Agile'
                                 },
@@ -1191,7 +1191,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                 id: 9,
                                 body: `When you need to solve something you don't know, how do you deal with it?`,
                                 answer: '',
-                                tags: {
+                                tag: {
                                     id: 3,
                                     name: 'Scrum / Agile'
                                 },

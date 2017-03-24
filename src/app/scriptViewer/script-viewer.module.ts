@@ -1,28 +1,27 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
 import { ScriptViewerComponent } from './script-viewer.component';
 import { HistoryCommentComponent } from './components/history-comment.component';
 import { ReportViewerComponent } from './components/report-viewer.component';
 import { QuestionBankFilterPipe } from './pipes/question-bank-filter.pipe';
-import { ScriptViewerService } from './script-viewer.service';
+import { StarComponent } from './components/star.component';
+import { ScoreComponent } from './components/score.component';
 import { SharedModule } from './../shared/shared.module';
+import { SortablejsModule } from 'angular-sortablejs';
+import { ScriptViewerRoutingModule } from './script-viewer-routing.module';
 
 @NgModule({
     imports: [
         SharedModule,
-        RouterModule.forChild([
-            { path: 'script-viewer/:templateId', component: ScriptViewerComponent }
-        ])
+        SortablejsModule,
+        ScriptViewerRoutingModule
     ],
     declarations: [
         ScriptViewerComponent,
         QuestionBankFilterPipe,
         HistoryCommentComponent,
+        StarComponent,
+        ScoreComponent,
         ReportViewerComponent
-    ],
-    providers: [
-        ScriptViewerService
     ]
 })
 

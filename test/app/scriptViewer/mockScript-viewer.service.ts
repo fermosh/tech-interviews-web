@@ -3,14 +3,13 @@ import 'rxjs/add/observable/of';
 
 import { ScriptViewerService } from '../../../src/app/scriptViewer/script-viewer.service';
 
-import { IInterviewScript } from '../../../src/app/scriptViewer/interfaces/interview-script';
+import { InterviewScript } from '../../../src/app/scriptViewer/classes/interview-script';
 import { Skill } from '../../../src/app/shared/classes/skill';
 import { Question } from '../../../src/app/shared/classes/question';
 import { Exercise } from '../../../src/app/shared/classes/exercise';
 
 export class MockScriptViewerService extends ScriptViewerService {
-
-    private interviewScripts: IInterviewScript = {
+    private interviewScripts: InterviewScript = {
         id: 13,
         competencyName: '.Net',
         domain: 'Front-End Web Developemnt',
@@ -173,59 +172,23 @@ export class MockScriptViewerService extends ScriptViewerService {
         interviewExercises: []
     };
 
-    private exercisesByTemplateId: Exercise[] = [
-        {
-            id: 1,
-            title: 'Palindrome',
-            body: `A palindrome is a word, phrase, number, or other
-                                        sequence of characters which reads the same backward or forward,
-                                        such as madam or kayak. Write an function that receives an string
-                                        parameters and return true if it is a palindrome.`,
-            solution: '',
-            tag: { id: 1, name: 'Code Standards' }
-        },
-        {
-            id: 2,
-            title: 'Balanced Brakets',
-            body: `Type of Brackets: () Round brackets or parentheses, {}
-                                        Curly brackets or braces, [] Square brackets. Implement an algorithm
-                                        to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
-            solution: '',
-            tag: { id: 2, name: '.NET Development' }
-        }
-    ];
-
-    private questionsByTemplateId: Question[] = [
-        {
-            id: 1,
-            body: `What's the purpose of standards/conventions in .NET C#?`,
-            answer: '',
-            tag: { id: 1, name: 'Code Standards' }
-        },
-        {
-            id: 2,
-            body: 'When to use string and when StringBuilder?',
-            answer: '',
-            tag: { id: 1, name: 'Code Standards' }
-        }];
-
     constructor() {
         super(null);
     }
 
-    getScriptViewer(id: number): Observable<IInterviewScript> {
+    getScriptViewer(id: number): Observable<InterviewScript> {
         return Observable.of(this.interviewScripts);
     }
 
-    getQuestionsByTemplateId(id: number): Observable<Question[]> {
-        return Observable.of(this.questionsByTemplateId);
+    getFinalRating(interviewScript: InterviewScript): number {
+        return 5;
     }
 
-    getExercisesByTemplateId(id: number): Observable<Exercise[]> {
-        return Observable.of(this.exercisesByTemplateId);
+    getSkillsRating(interviewScript: InterviewScript): number {
+        return 5;
     }
 
-    getFinalRating(interviewScript: IInterviewScript): number {
+    getExercisesRating(interviewScript: InterviewScript): number {
         return 5;
     }
 

@@ -40,9 +40,9 @@
                 </span> {{title}}
             </a>
             <ul class="uui-navigation nav navbar-nav">
-                <li class="active"><a [routerLink]="['/entryPoint']">Skill Matrix</a></li>
-                <li><a [routerLink]="['/question-list']">Questions</a></li>
-                <li><a [routerLink]="['/exercise-list']">Exercises</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['/entryPoint']">Skill Matrix</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['/questions']">Questions</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['/exercises']">Exercises</a></li>
             </ul>
         </nav>
     </div>

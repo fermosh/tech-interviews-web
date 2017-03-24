@@ -19,14 +19,14 @@
             </thead>
             <tbody>
                 <tr *ngFor='let exercise of exercises'>
-                    <td><a [routerLink]="['/exercise', exercise.id]">
+                    <td><a [routerLink]="['/exercises', exercise.id]">
                         {{exercise.title}}
                         </a>
                     </td>
                     <td>{{exercise.tag.name}}</td>
                     <td>{{exercise.competency.name}}</td>
                     <td>
-                        <a class="uui-button small" [routerLink]="['/exercise-edit', exercise.id]">
+                        <a class="uui-button small" [routerLink]="['/exercises', exercise.id]">
                             Edit
                         </a>
                     </td>

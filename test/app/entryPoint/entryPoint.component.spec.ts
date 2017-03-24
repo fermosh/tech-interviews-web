@@ -15,14 +15,14 @@ import { DomainFilterPipe } from '../../../src/app/entryPoint/pipes/domain-filte
 import { CompetencyService } from '../../../src/app/shared/services/competency.service';
 import { LevelService } from '../../../src/app/shared/services/level.service';
 import { DomainService } from '../../../src/app/shared/services/domain.service';
-import { SkillMatrixService } from '../../../src/app/entryPoint/skill-matrix.service';
-import { TemplateService } from '../../../src/app/entryPoint/services/template.service';
+import { SkillMatrixService } from '../../../src/app/shared/services/skill-matrix.service';
+import { TemplateService } from '../../../src/app/shared/services/template.service';
 /* Mock Services */
 import { MockCompetencyService } from '../shared/services/mockCompetency.service';
 import { MockLevelService } from '../shared/services/mockLevel.service';
 import { MockDomainService } from '../shared/services/mockDomain.service';
-import { MockSkillMatrixService } from '../entryPoint/mockSkill-matrix.service';
-import { MockTemplateService } from '../entryPoint/services/mockTemplate.service';
+import { MockSkillMatrixService } from '../shared/services/mockSkill-matrix.service';
+import { MockTemplateService } from '../shared/services/mockTemplate.service';
 
 describe('Entry Point Component', () => {
 
@@ -88,7 +88,7 @@ describe('Entry Point Component', () => {
             component.ngOnInit();
 
             // assert
-            expect(component.competencyOptions.length).toBe(3);
+            expect(component.competencies.length).toBe(3);
             expect(component.competencyId).toBe(1);
         });
 
@@ -97,7 +97,7 @@ describe('Entry Point Component', () => {
             component.ngOnInit();
 
             // assert
-            expect(component.levelOptions.length).toBe(5);
+            expect(component.levels.length).toBe(5);
             expect(component.levelId).toBe(1);
         });
 
@@ -106,16 +106,8 @@ describe('Entry Point Component', () => {
             component.ngOnInit();
 
             // assert
-            expect(component.domainOptions.length).toBe(20);
+            expect(component.domains.length).toBe(20);
             expect(component.domainId).toBe(4);
-        });
-
-        it('should have 20 domains', () => {
-            // act
-            component.ngOnInit();
-
-            // assert
-            expect(component.domainOptions.length).toBe(20);
         });
     });
 });

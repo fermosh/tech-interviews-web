@@ -1,7 +1,7 @@
 import { Response, ResponseOptions } from '@angular/http';
 
-import { TemplateService } from '../../../../src/app/entryPoint/services/template.service';
-import { ITemplate } from '../../../../src/app/entryPoint/interfaces/template';
+import { TemplateService } from '../../../../src/app/shared/services/template.service';
+import { ITemplate } from '../../../../src/app/shared/classes/template';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';

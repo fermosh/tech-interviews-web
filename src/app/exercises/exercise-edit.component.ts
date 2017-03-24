@@ -8,12 +8,12 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Exercise } from './../shared/classes/exercise';
 import { ExerciseService } from './../shared/services/exercise.service';
-import { NumberValidator } from '../shared/validators/number.validator';
-import { GenericValidator } from '../shared//validators/generic.validator';
-import { SkillMatrixService } from './../entryPoint/skill-matrix.service';
+import { NumberValidator } from './../shared/validators/number.validator';
+import { GenericValidator } from './../shared//validators/generic.validator';
+import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { CompetencyService } from './../shared/services/competency.service';
 import { Tag } from './../shared/classes/tag';
-import { ISkillMatrix } from './../scriptViewer/interfaces/skill-matrix';
+import { SkillMatrix } from './../shared/classes/skill-matrix';
 import { ICompetency } from './../shared/classes/competency';
 
 declare var jQuery: any;
@@ -108,7 +108,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getTags(id: number): void {
         this.skillMatrixService.getSkillMatrix(id)
             .subscribe(
-                (skillMatrix: ISkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
+                (skillMatrix: SkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
                 (error: any) => this.errorMessage = <any>error
             );
     }
@@ -192,6 +192,6 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     onSaveComplete(): void {
         // Reset the form to clear the flags
         this.exerciseForm.reset();
-        this.router.navigate(['/exercise-list']);
+        this.router.navigate(['/exercises']);
     }
 }

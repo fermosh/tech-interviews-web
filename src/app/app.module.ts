@@ -4,32 +4,28 @@ import { HttpModule } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AppComponent }  from './app.component';
+import { SharedModule } from './shared/shared.module';
 
 /* Feature Modules */
-import { ScriptViewerModule } from './scriptViewer/script-viewer.module';
-import { EntryPointModule } from './entryPoint/entryPoint.module';
-import { QuestionModule } from './questions/question.module';
-import { ExerciseModule } from './exercises/exercise.module';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent }   from './not-found.component';
 
-@NgModule({
-  imports: [
-    FormsModule,
-    BrowserModule,
-    HttpModule,
-    RouterModule.forRoot([
-      { path: '', redirectTo: '', pathMatch: 'full' },
-      { path: '**', redirectTo: '', pathMatch: 'full' }
-    ]),
-    EntryPointModule,
-    ScriptViewerModule,
-    QuestionModule,
-    ExerciseModule
-  ],
-  exports: [RouterModule],
-  declarations: [
-    AppComponent
-  ],
-  bootstrap: [ AppComponent ]
-})
+@NgModule(
+    {
+        imports: [
+            FormsModule,
+            BrowserModule,
+            HttpModule,
+            SharedModule,
+            AppRoutingModule
+        ],
+        exports: [RouterModule],
+        declarations: [
+            AppComponent,
+            PageNotFoundComponent,
+        ],
+        bootstrap: [ AppComponent ]
+    }
+)
 
 export class AppModule { }

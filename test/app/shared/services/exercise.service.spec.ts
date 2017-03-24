@@ -18,24 +18,24 @@ describe('Exercise Service', () => {
             solution: '',
             tag: {
                 id: 1,
-                text: '.Net'
+                name: '.Net'
             }
         },
         {
             id: 2,
             title: 'Balanced Brakets',
-            text: `Type of Brackets: () Round brackets or parentheses, {}
+            body: `Type of Brackets: () Round brackets or parentheses, {}
                 Curly brackets or braces, [] Square brackets. Implement an algorithm
                 to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
             solution: '',
-            tags: [
+            tag: [
                 {
                     id: 1,
-                    text: '.Net'
+                    name: '.Net'
                 },
                 {
                     id: 2,
-                    text: 'Algorithms'
+                    name: 'Algorithms'
                 }
             ]
         }
