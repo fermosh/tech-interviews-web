@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { StarComponent } from './star.component';
-import { ScoreComponent } from './score.component';
-
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { CompetencyService } from './../shared/services/competency.service';
@@ -26,12 +23,6 @@ import { TechnicalInterviewData } from './technical-interview-helper.data';
     exports: [
         CommonModule,
         FormsModule,
-        StarComponent,
-        ScoreComponent
-    ],
-    declarations: [
-        StarComponent,
-        ScoreComponent
     ],
     providers: [
         CompetencyService,

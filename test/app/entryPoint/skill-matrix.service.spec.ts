@@ -3,12 +3,12 @@ import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from 
 import { MockBackend } from '@angular/http/testing';
 
 import { SkillMatrixService } from './../../../src/app/shared/services/skill-matrix.service';
-import { ISkillMatrix } from './../../../src/app/shared/classes/skill-matrix';
+import { SkillMatrix } from './../../../src/app/shared/classes/skill-matrix';
 
 describe('Skill Matrix Service: ', () => {
 
     // array to mock http requests
-    const skillMatrixResult: ISkillMatrix[] = [{
+    const skillMatrixResult: SkillMatrix[] = [{
         id: 13, hasContent: true, competencyName: '.Net', domain: 'FrontEnd web development',
         level: { id: 3, name: 'L3', description: 'Senior Software Engineer', competencyId: 13 },
         skills: [{

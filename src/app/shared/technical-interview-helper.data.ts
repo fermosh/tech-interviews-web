@@ -1,7 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { ICompetency } from './classes/competency';
-import { ISkillMatrix } from './classes/skill-matrix';
-import { IInterviewScript } from './../scriptViewer/interfaces/interview-script';
+import { SkillMatrix } from './classes/skill-matrix';
+import { InterviewScript } from './../scriptViewer/classes/interview-script';
 import { IDomain } from './classes/domain';
 import { ILevel } from './classes/level';
 import { Question } from './classes/question';
@@ -332,7 +332,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
             }
         ];
 
-        let skillMatrix: ISkillMatrix[] = [
+        let skillMatrix: SkillMatrix[] = [
             {
                 id: 13,
                 hasContent: true,
@@ -740,7 +740,7 @@ export class TechnicalInterviewData implements InMemoryDbService {
             }
         ];
 
-        let interviewScriptData: IInterviewScript[] = [
+        let interviewScriptData: InterviewScript[] = [
             {
                 id: 13,
                 competencyName: '.Net',

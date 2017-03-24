@@ -2,7 +2,7 @@
 import { Skill } from './skill';
 import { ILevel } from './level';
 
-export interface ISkillMatrix {
+export class SkillMatrix {
     id: number;
     hasContent?: boolean;
     competencyId?: number;

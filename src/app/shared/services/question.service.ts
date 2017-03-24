@@ -12,11 +12,20 @@ import { Question } from './../classes/question';
 @Injectable()
 export class QuestionService {
     private baseUrl = 'api/questions';
+    private questionsBankUrl = 'api/questionsByTemplateId';
 
     constructor(private http: Http) { }
 
     getQuestions(): Observable<Question[]> {
         return this.http.get(this.baseUrl)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    getQuestionsByTemplateId(id: number): Observable<Question[]> {
+        //const url = `${this.questionsBankUrl}/${id}`;
+        const url = this.questionsBankUrl;
+        return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }

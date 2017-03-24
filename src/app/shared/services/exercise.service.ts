@@ -12,11 +12,20 @@ import { Exercise } from './../classes/exercise';
 @Injectable()
 export class ExerciseService {
     private baseUrl = 'api/exercises';
+    private exercisesBankUrl = 'api/exercisesByTemplateId';
 
     constructor(private http: Http) { }
 
     getExercises(): Observable<Exercise[]> {
         return this.http.get(this.baseUrl)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    getExercisesByTemplateId(id: number): Observable<Exercise[]> {
+        //const url = `${this.exercisesBankUrl}/${id}`;
+        const url = this.exercisesBankUrl;
+        return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }

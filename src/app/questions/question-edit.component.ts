@@ -14,7 +14,7 @@ import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { CompetencyService } from './../shared/services/competency.service';
 import { ICompetency } from './../shared/classes/competency';
 import { Tag } from './../shared/classes/tag';
-import { ISkillMatrix } from './../shared/classes/skill-matrix';
+import { SkillMatrix } from './../shared/classes/skill-matrix';
 
 
 declare var jQuery: any;
@@ -105,7 +105,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getTags(id: number): void {
         this.skillMatrixService.getSkillMatrix(id)
             .subscribe(
-                (skillMatrix: ISkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
+                (skillMatrix: SkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
                 (error: any) => this.errorMessage = <any>error
             );
     }

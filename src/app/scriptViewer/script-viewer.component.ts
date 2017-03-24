@@ -3,13 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { SortablejsOptions } from 'angular-sortablejs';
 
-import { IInterviewScript } from './interfaces/interview-script';
+import { InterviewScript } from './classes/interview-script';
 import { Skill } from './../shared/classes/skill';
 import { IComment } from './../shared/classes/comment';
 import { Question } from './../shared/classes/question';
 import { Exercise } from './../shared/classes/exercise';
 import { InterviewQuestion } from './classes/interview-question';
 import { InterviewExercise } from './classes/interview-exercise';
+import { QuestionService } from './../shared/services/question.service';
+import { ExerciseService } from './../shared/services/exercise.service';
 
 import { ScriptViewerService } from './script-viewer.service';
 
@@ -21,7 +23,7 @@ declare var jQuery: any;
 })
 
 export class ScriptViewerComponent implements OnInit, OnDestroy {
-    scriptViewer: IInterviewScript;
+    scriptViewer: InterviewScript;
     errorMessage: string;
     private sub: Subscription;
     private selectedSkill: Skill;
@@ -37,7 +39,9 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     };
 
     constructor(private route: ActivatedRoute,
-        private scriptViewerService: ScriptViewerService) { }
+        private scriptViewerService: ScriptViewerService,
+        private questionService: QuestionService,
+        private exerciseService: ExerciseService) { }
 
     ngOnInit(): void {
         this.hoverSkillId = 0;
@@ -77,13 +81,13 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     }
 
     getQuestionBank(templateId: number) {
-        this.scriptViewerService.getQuestionsByTemplateId(templateId)
+        this.questionService.getQuestionsByTemplateId(templateId)
             .subscribe(questionBank => this.mapQuestionBank(questionBank),
             error => this.errorMessage = <any>error);
     }
 
     getExerciseBank(templateId: number) {
-        this.scriptViewerService.getExercisesByTemplateId(templateId)
+        this.exerciseService.getExercisesByTemplateId(templateId)
             .subscribe(exerciseBank => this.mapExerciseBank(exerciseBank),
             error => this.errorMessage = <any>error);
     }
