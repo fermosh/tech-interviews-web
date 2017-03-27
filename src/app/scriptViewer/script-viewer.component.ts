@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { SortablejsOptions } from 'angular-sortablejs';
@@ -22,9 +22,10 @@ declare var jQuery: any;
     styleUrls: ['./script-viewer.component.css']
 })
 
-export class ScriptViewerComponent implements OnInit {
+export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: InterviewScript;
     errorMessage: string;
+    private sub: Subscription;
     private selectedSkill: Skill;
     private questionBank: InterviewQuestion[];
     private exerciseBank: InterviewExercise[];
@@ -43,15 +44,17 @@ export class ScriptViewerComponent implements OnInit {
         private exerciseService: ExerciseService) { }
 
     ngOnInit(): void {
-
         this.hoverSkillId = 0;
         this.hoverExercises = false;
-
-        this.route.params.subscribe(
+        this.sub = this.route.params.subscribe(
             params => {
                 let id = +params['id'];
                 this.getInterviewScript(id);
             });
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     ngAfterViewChecked(): void {
