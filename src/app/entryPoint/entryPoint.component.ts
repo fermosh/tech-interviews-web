@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ICompetency } from './../shared/classes/competency';
-import { IDomain } from './../shared/classes/domain';
+import { ICompetency } from './classes/competency';
 import { ILevel } from './../shared/classes/level';
-import { CompetencyService } from './../shared/services/competency.service';
-import { LevelService } from './../shared/services/level.service';
-import { DomainService } from './../shared/services/domain.service';
+
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { TemplateService } from './../shared/services/template.service';
+import { PositionService } from './../shared/services/position.service';
+
 import { ITemplate } from './../shared/classes/template';
 import { SkillMatrixItem } from './classes/skillMatrixItem';
 import { Observable } from 'rxjs/Observable';
 
 declare var jQuery: any;
-
 
 @Component({
     templateUrl: './entryPoint.component.html',
@@ -28,8 +26,8 @@ export class EntryPointComponent {
 
     /* Declare options to store the filter data */
     competencies: ICompetency[];
+
     levels: ILevel[];
-    domains: IDomain[];
 
     /*Skills for the skill picker*/
     skills: SkillMatrixItem[];
@@ -42,86 +40,40 @@ export class EntryPointComponent {
     skillPickerLegend = '';
 
     /* Constructor to inject the diferent services */
-    constructor(private competencyService: CompetencyService,
-        private levelService: LevelService,
-        private domainService: DomainService,
+    constructor(
         private skillMatrixService: SkillMatrixService,
         private templateService: TemplateService,
+        private positionService: PositionService,
         private router: Router) { };
 
     /* Start Initilizers */
     ngOnInit(): void {
-        this.initializeCompetencyData();
+        this.initializeFilterData();
     }
 
     // Get and fill the Competency dropdown data*/
-    private initializeCompetencyData(): void {
-        // load competency dropdown
-        this.competencyService.getCompetencies().subscribe(
-            competencies => {
-                // fill the available competencies with the ones from the datasource
-                this.competencies = competencies.sort((c1, c2) => this.competencyComparer(c1, c2));
+    private initializeFilterData(): void {
 
-                // if there is more than one competency use the first one
-                if (this.competencies.length > 0) {
-                    this.competencyId = this.competencies[0].id;
-                }
+        this.levels = [
+            {id: 1, name: 'L1', description: 'Level 1'},
+            {id: 2, name: 'L2', description: 'Level 2'},
+            {id: 3, name: 'L3', description: 'Level 3'},
+            {id: 4, name: 'L4', description: 'Level 4'},
+            {id: 5, name: 'L5', description: 'Level 5'}
+            ];
 
-                // call the level initialization
-                this.initializeLevelData();
-            },
-            error => console.log(<any>error));
-    }
-
-    // Get and fill the Level dropdown data*/
-    private initializeLevelData(): void {
-        // load level dropdown
-        this.levelService.getLevels().subscribe(
-            levels => {
-                // fill the available levels
-                this.levels = levels.sort((l1, l2) => this.levelComparer(l1, l2));
-
-                // possible levels
-                let possibleLevels = this.levels.filter(x => x.competencyId == this.competencyId);
-
-                // if there is more than one level use the first one
-                if (possibleLevels.length > 0) {
-                    this.levelId = possibleLevels[0].id;
-                }
-
-                // call the domain initialization
-                this.initializeDomainData();
-            },
-            error => console.log(<any>error));
-    }
-
-    // Get and fill the Domain dropdown data*/
-    private initializeDomainData(): void {
-        // load domain dropdown
-        this.domainService.getDomains().subscribe(
-            domains => {
-                // fill the available domains
-                this.domains = domains.sort((d1, d2) => this.domainComparer(d1, d2));
-
-                // possible levels
-                let possibleDomains = this.domains.filter(x => x.levelId == this.levelId);
-
-                // if there is more than one domain use the first one
-                if (possibleDomains.length > 0) {
-                    this.domainId = possibleDomains[0].id;
-                }
-
-                // verify the search status
-                this.checkSearchButtonStatus();
-            },
-            error => console.log(<any>error));
+        this.positionService.getPosition().subscribe(
+            position => {
+                // se va a imprimir
+                this.competencies = position.competencies;
+            }
+        );
     }
     /* End Initilizers */
 
     /*Start event functions*/
     private onCompetencyChange(competencyId: number): void {
         // reset level and domain selections
-        this.levelId = 0;
         this.domainId = 0;
 
         // verify the search status
@@ -129,9 +81,6 @@ export class EntryPointComponent {
     }
 
     private onLevelChange(levelId: number): void {
-        // reset domain selections
-        this.domainId = 0;
-
         // verify the search status
         this.checkSearchButtonStatus();
     }
@@ -166,25 +115,28 @@ export class EntryPointComponent {
         this.isSkillGridVisible = false;
 
         // get the skillMatrixId from the selected domain
-        let skillMatrixId = this.domains.find(x => x.id == this.domainId).skillMatrixId;
+        let selectedCompetencyId = this.domainId == 0 ? this.competencyId : this.domainId;
 
-        // call the service to get the skill matrix data
-        this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
-            skillMatrix => {
+        // here we call th skillMatrix Service to get all the skills
 
-                // fill the skill picker source
-                this.skills = skillMatrix.skills.map(
-                    skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
 
-                // set the skillPicker header
-                this.skillPickerLegend = this.getLabel();
+        // // call the service to get the skill matrix data
+        // this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
+        //     skillMatrix => {
 
-                // make grid Visisble
-                this.isSkillGridVisible = true;
+        //         // fill the skill picker source
+        //         this.skills = skillMatrix.skills.map(
+        //             skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
 
-                this.checkNextButtonStatus();
-            },
-            error => console.log(<any>error));
+        //         // set the skillPicker header
+        //         this.skillPickerLegend = this.getLabel();
+
+        //         // make grid Visisble
+        //         this.isSkillGridVisible = true;
+
+        //         this.checkNextButtonStatus();
+        //     },
+        //     error => console.log(<any>error));
     }
     /*End event functions*/
 
@@ -213,7 +165,7 @@ export class EntryPointComponent {
 
         label = competency.name;
 
-        let domain =  this.domains.find(x => x.id == this.domainId);
+        let domain =  this.competencies.find(x => x.id == this.domainId);
 
         if (domain == undefined) {
             return label;
@@ -237,46 +189,7 @@ export class EntryPointComponent {
 
     // determines when the search button is enabled or not according to the dropdwns values
     private checkSearchButtonStatus(): void {
-        this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0 || this.domainId == 0);
-    }
-
-    // ICompetency Comparer(for sorting purpose)
-    private competencyComparer(first: ICompetency, second: ICompetency): number {
-        if (first.name > second.name) {
-            return 1;
-        }
-
-        if (first.name < second.name) {
-            return -1;
-        }
-
-        return 0;
-    }
-
-    // ILevel Comparer(for sorting purpose)
-    private levelComparer(first: ILevel, second: ILevel): number {
-        if (first.name > second.name) {
-            return 1;
-        }
-
-        if (first.name < second.name) {
-            return -1;
-        }
-
-        return 0;
-    }
-
-    // IDomain Comparer(for sorting purpose)
-    private domainComparer(first: IDomain, second: IDomain): number {
-        if (first.name > second.name) {
-            return 1;
-        }
-
-        if (first.name < second.name) {
-            return -1;
-        }
-
-        return 0;
+        this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0);
     }
     /*End helper functions */
 }

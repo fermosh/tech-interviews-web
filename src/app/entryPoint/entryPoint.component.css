@@ -3,10 +3,9 @@
     margin-top: -3px;
     margin-left: 5px;
 }
-.plus-margin-horizontal
+.plus-margin-5
 {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 5px;
 }
 .plus-margin-vertical
 {
@@ -16,9 +15,14 @@
 .panel{
     border: none !important;
 }
-.panel select
+select
 {
     width: 220px;
+}
+select[name='level']
+{
+    min-width: 100px;
+    width: 100px;
 }
 .right-Button
 {
@@ -26,4 +30,10 @@
 }
 .padding-bottom{
     padding-bottom: 50px;
+}
+.inline-container{
+    margin: 5px;
+    float: left;
+    min-height: 64px;
+    border: 1px solid brown;
 }

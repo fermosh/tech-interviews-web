@@ -4,15 +4,12 @@ import { FormsModule } from '@angular/forms';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { CompetencyService } from './../shared/services/competency.service';
-import { LevelService } from './../shared/services/level.service';
-import { DomainService } from './../shared/services/domain.service';
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { TemplateService } from './../shared/services/template.service';
 import { QuestionService } from './../shared/services/question.service';
 import { ExerciseService } from './../shared/services/exercise.service';
 import { ScriptViewerService } from '../scriptViewer/script-viewer.service';
-
+import { PositionService } from '../shared/services/position.service';
 
 import { TechnicalInterviewData } from './technical-interview-helper.data';
 
@@ -25,14 +22,12 @@ import { TechnicalInterviewData } from './technical-interview-helper.data';
         FormsModule,
     ],
     providers: [
-        CompetencyService,
-        LevelService,
-        DomainService,
         SkillMatrixService,
         TemplateService,
         QuestionService,
         ExerciseService,
-        ScriptViewerService
+        ScriptViewerService,
+        PositionService
       ]
   }
 )

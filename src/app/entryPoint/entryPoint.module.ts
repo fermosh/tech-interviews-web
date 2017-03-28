@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule} from '@angular/router';
 import { EntryPointComponent } from './entryPoint.component';
 import { SkillPickerComponent } from './components/skillPicker.component';
-import { LevelFilterPipe } from './pipes/level-filter.pipe';
-import { DomainFilterPipe } from './pipes/domain-filter.pipe';
+import { CompetencyFilterPipe } from './pipes/competency-filter.pipe';
 import { SharedModule } from './../shared/shared.module';
 import { EntryPointRoutingModule } from './entryPoint-routing.module';
 
@@ -13,7 +12,7 @@ import { EntryPointRoutingModule } from './entryPoint-routing.module';
             SharedModule,
             EntryPointRoutingModule
         ],
-        declarations: [EntryPointComponent, SkillPickerComponent, LevelFilterPipe, DomainFilterPipe]
+        declarations: [EntryPointComponent, SkillPickerComponent, CompetencyFilterPipe]
     }
 )
 

@@ -11,8 +11,8 @@ import { QuestionService } from './../shared/services/question.service';
 import { NumberValidator } from '../shared//validators/number.validator';
 import { GenericValidator } from '../shared//validators/generic.validator';
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
-import { CompetencyService } from './../shared/services/competency.service';
-import { ICompetency } from './../shared/classes/competency';
+import { PositionService } from './../shared/services/position.service';
+import { ICompetency } from './../entryPoint/classes/competency';
 import { Tag } from './../shared/classes/tag';
 import { SkillMatrix } from './../shared/classes/skill-matrix';
 
@@ -45,7 +45,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
                 private router: Router,
                 private questionService: QuestionService,
                 private skillMatrixService: SkillMatrixService,
-                private competencyService: CompetencyService) {
+                private competencyService: PositionService) {
 
         // Defines all of the validation messages for the form.
         // These could instead be retrieved from a file or database.
@@ -115,9 +115,9 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getCompetencies(): void {
-        this.competencyService.getCompetencies()
+        this.competencyService.getPosition()
             .subscribe(
-                (competencies: ICompetency[]) => this.onCompetenciesRetrieved(competencies),
+                (position) => this.onCompetenciesRetrieved(position.competencies),
                 (error: any) => this.errorMessage = <any>error
             );
     }

@@ -8,13 +8,9 @@ import { EntryPointModule } from '../../../src/app/entryPoint/entryPoint.module'
 import { EntryPointComponent } from '../../../src/app/entryPoint/entryPoint.component';
 
 import { SkillPickerComponent } from '../../../src/app/entryPoint/components/skillPicker.component';
-import { LevelFilterPipe } from '../../../src/app/entryPoint/pipes/level-filter.pipe';
-import { DomainFilterPipe } from '../../../src/app/entryPoint/pipes/domain-filter.pipe';
+import { CompetencyFilterPipe } from '../../../src/app/entryPoint/pipes/competency-filter.pipe';
 
 /* Services */
-import { CompetencyService } from '../../../src/app/shared/services/competency.service';
-import { LevelService } from '../../../src/app/shared/services/level.service';
-import { DomainService } from '../../../src/app/shared/services/domain.service';
 import { SkillMatrixService } from '../../../src/app/shared/services/skill-matrix.service';
 import { TemplateService } from '../../../src/app/shared/services/template.service';
 /* Mock Services */
@@ -33,14 +29,11 @@ describe('Entry Point Component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule],
-            declarations: [EntryPointComponent, SkillPickerComponent, LevelFilterPipe, DomainFilterPipe],
+            declarations: [EntryPointComponent, SkillPickerComponent, CompetencyFilterPipe],
             providers: [{ provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } }]
         }).overrideComponent(EntryPointComponent, {
             set: {
                 providers: [
-                    { provide: CompetencyService, useClass: MockCompetencyService },
-                    { provide: LevelService, useClass: MockLevelService },
-                    { provide: DomainService, useClass: MockDomainService },
                     { provide: SkillMatrixService, useClass: MockSkillMatrixService },
                     { provide: TemplateService, useClass: MockTemplateService }
                 ]
@@ -67,16 +60,10 @@ describe('Entry Point Component', () => {
     describe('service depencencies', () => {
         it('should be all defined', () => {
             // act
-            let competencyServiceDependency = componentFixture.debugElement.injector.get(CompetencyService);
-            let levelServiceDependency = componentFixture.debugElement.injector.get(LevelService);
-            let domainServiceDependency = componentFixture.debugElement.injector.get(DomainService);
             let templateServiceDependency = componentFixture.debugElement.injector.get(TemplateService);
             let skillMatrixService = componentFixture.debugElement.injector.get(SkillMatrixService);
 
             // assert
-            expect(competencyServiceDependency).toBeDefined();
-            expect(levelServiceDependency).toBeDefined();
-            expect(domainServiceDependency).toBeDefined();
             expect(templateServiceDependency).toBeDefined();
             expect(skillMatrixService).toBeDefined();
         });
@@ -89,7 +76,7 @@ describe('Entry Point Component', () => {
 
             // assert
             expect(component.competencies.length).toBe(3);
-            expect(component.competencyId).toBe(1);
+            expect(component.competencyId).toBe(0);
         });
 
         it('should have 5 levels and the selected levelId should be 1', () => {
@@ -99,15 +86,6 @@ describe('Entry Point Component', () => {
             // assert
             expect(component.levels.length).toBe(5);
             expect(component.levelId).toBe(1);
-        });
-
-        it('should have 20 domains and the selected domainId should be 4', () => {
-            // act
-            component.ngOnInit();
-
-            // assert
-            expect(component.domains.length).toBe(20);
-            expect(component.domainId).toBe(4);
         });
     });
 });
