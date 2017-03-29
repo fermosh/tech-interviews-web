@@ -11,12 +11,12 @@ import { SkillPickerComponent } from '../../../src/app/entryPoint/components/ski
 import { CompetencyFilterPipe } from '../../../src/app/entryPoint/pipes/competency-filter.pipe';
 
 /* Services */
+import { PositionService } from '../../../src/app/shared/services/position.service';
 import { SkillMatrixService } from '../../../src/app/shared/services/skill-matrix.service';
 import { TemplateService } from '../../../src/app/shared/services/template.service';
+
 /* Mock Services */
-import { MockCompetencyService } from '../shared/services/mockCompetency.service';
-import { MockLevelService } from '../shared/services/mockLevel.service';
-import { MockDomainService } from '../shared/services/mockDomain.service';
+import { MockPositionService } from '../shared/services/mockPosition.service';
 import { MockSkillMatrixService } from '../shared/services/mockSkill-matrix.service';
 import { MockTemplateService } from '../shared/services/mockTemplate.service';
 
@@ -34,6 +34,7 @@ describe('Entry Point Component', () => {
         }).overrideComponent(EntryPointComponent, {
             set: {
                 providers: [
+                    { provide: PositionService, useClass: MockPositionService },
                     { provide: SkillMatrixService, useClass: MockSkillMatrixService },
                     { provide: TemplateService, useClass: MockTemplateService }
                 ]
@@ -70,12 +71,12 @@ describe('Entry Point Component', () => {
     });
 
     describe('when initialized', () => {
-        it('should have 3 competencies and the selected competencyId should be 1', () => {
+        it('should have 2 competencies and the selected competencyId should be 0', () => {
             // act
             component.ngOnInit();
 
             // assert
-            expect(component.competencies.length).toBe(3);
+            expect(component.competencies.length).toBe(2);
             expect(component.competencyId).toBe(0);
         });
 
@@ -85,7 +86,7 @@ describe('Entry Point Component', () => {
 
             // assert
             expect(component.levels.length).toBe(5);
-            expect(component.levelId).toBe(1);
+            expect(component.levelId).toBe(0);
         });
     });
 });

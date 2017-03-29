@@ -207,7 +207,7 @@ describe('Question Service', () => {
 
             // arrange
             let mockItem: Question = {
-                id: 0,
+                id: 1,
                 body: 'What is Boxing and Un-Boxing?',
                 answer: ``,
                 tag: { id: 1, name: '.Net'}
