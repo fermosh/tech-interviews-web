@@ -166,7 +166,8 @@ export class EntryPointComponent {
         this.isSkillGridVisible = false;
 
         // get the skillMatrixId from the selected domain
-        let skillMatrixId = this.domains.find(x => x.id == this.domainId).skillMatrixId;
+        // let skillMatrixId = this.domains.find(x => x.id == this.domainId);
+        let  skillMatrixId = 13;
 
         // call the service to get the skill matrix data
         this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
