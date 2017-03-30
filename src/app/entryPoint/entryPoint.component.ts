@@ -165,7 +165,7 @@ export class EntryPointComponent {
 
         // set the haschildren flag for the skill
         // hack: for the moment we just allow maximum 5 levels
-        skill.hasChildren = skill.skillLevel < 5 && children.length > 0;
+        skill.hasChildren = children.length > 0;
 
         if (!skill.hasChildren) {
             return;

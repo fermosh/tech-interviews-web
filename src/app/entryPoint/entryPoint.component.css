@@ -12,28 +12,18 @@
     margin-top: 15px;
     margin-bottom: 15px;
 }
-.panel{
-    border: none !important;
-}
 select
 {
-    width: 220px;
+    width: 200px;
 }
 select[name='level']
 {
-    min-width: 100px;
-    width: 100px;
+    min-width: 80px;
+    width: 80px;
 }
 .right-Button
 {
     float: right;
-}
-.padding-bottom{
-    padding-bottom: 50px;
-}
-.inline-container{
-    margin: 5px;
-    float: left;
-    min-height: 64px;
-    border: 1px solid brown;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

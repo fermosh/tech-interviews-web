@@ -5,17 +5,17 @@
     color: white !important;
     text-transform: uppercase;
 }
-.uui-table.small td {
+/*.uui-table.small td {
     padding: 5px;
-}
+}*/
 .childSelected::before {
-    width: 10px;
-    height: 10px;
-    border-width: 3px;
+    width: 11px;
+    height: 11px;
+    border-width: 2px;
     background: #666666;
 }
 tr[class="treegrid-child"] td div p.uui-checkbox {
-    margin-left: 19px;
+    margin-left: 15px;
 }
 .legend {
     background-color: #1A9CB0;
@@ -29,3 +29,35 @@ p {
     margin-bottom: 0px !important;
 }
 
+div.skill-level-1 {
+    padding-left: 0px;
+}
+div.skill-level-2 {
+    padding-left: 14.3%;
+}
+div.skill-level-3 {
+    padding-left: 28.6%;
+}
+div.skill-level-4 {
+    padding-left: 42.9%;
+}
+div.skill-level-5 {
+    padding-left: 57.2%;
+}
+div.skill-level-6 {
+    padding-left: 71.5%;
+}
+div.skill-level-7 {
+    padding-left: 85.8%;
+}
+
+span.treegrid-caret.fa-angle-right.fa {
+    float: left;
+    margin: 2px 5px 0 0;
+    width: 10px;
+    display: inline
+}
+p.uui-checkbox.square-skin {
+    float: left;
+    display: inline;
+}
