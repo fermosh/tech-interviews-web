@@ -162,16 +162,8 @@ export class TechnicalInterviewData implements InMemoryDbService {
 
         let skillMatrix: SkillMatrix[] = [
             {
-                id: 13,
                 hasContent: true,
-                competencyName: '.Net',
-                domain: 'FrontEnd web development',
-                level:
-                {
-                    id: 3,
-                    name: 'L3',
-                    description: 'Senior Software Engineer'
-                },
+                competencyId: 13,
                 skills: [
                     {
                         rootId: 7,
@@ -355,16 +347,8 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     }]
             },
             {
-                id: 14,
                 hasContent: true,
-                competencyName: '.Net',
-                domain: 'Azure development',
-                level:
-                {
-                    id: 4,
-                    name: 'L4',
-                    description: 'Lead Software Engineer'
-                },
+                competencyId: 14,
                 skills: [
                     {
                         rootId: 7,
@@ -568,7 +552,6 @@ export class TechnicalInterviewData implements InMemoryDbService {
 
         let interviewScriptData: InterviewScript[] = [
             {
-                id: 13,
                 competencyName: '.Net',
                 domain: 'Front-End Web Developemnt',
                 level:
@@ -729,14 +712,13 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 interviewExercises: []
             },
             {
-                id: 14,
                 competencyName: '.Net',
-                domain: 'Azure development',
+                domain: 'Front-End Web Developemnt',
                 level:
                 {
-                    id: 4,
-                    name: 'L4',
-                    description: 'Lead Software Engineer'
+                    id: 3,
+                    name: 'L3',
+                    description: 'Senior Software Engineer'
                 },
                 skills: [
                     {

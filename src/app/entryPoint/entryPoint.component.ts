@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { ICompetency } from './classes/competency';
 import { ILevel } from './../shared/classes/level';
+import { Skill } from '../shared/classes/skill';
 
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { TemplateService } from './../shared/services/template.service';
@@ -54,20 +55,19 @@ export class EntryPointComponent {
     // Get and fill the Competency dropdown data*/
     private initializeFilterData(): void {
 
+        // Initilize levels, they are going to be 5 for default
         this.levels = [
-            {id: 1, name: 'L1', description: 'Level 1'},
-            {id: 2, name: 'L2', description: 'Level 2'},
-            {id: 3, name: 'L3', description: 'Level 3'},
-            {id: 4, name: 'L4', description: 'Level 4'},
-            {id: 5, name: 'L5', description: 'Level 5'}
-            ];
+            { id: 1, name: 'L1', description: 'Level 1' },
+            { id: 2, name: 'L2', description: 'Level 2' },
+            { id: 3, name: 'L3', description: 'Level 3' },
+            { id: 4, name: 'L4', description: 'Level 4' },
+            { id: 5, name: 'L5', description: 'Level 5' }
+        ];
 
-        this.positionService.getPosition().subscribe(
-            position => {
-                // se va a imprimir
-                this.competencies = position.competencies;
-            }
-        );
+        // call the position service to get the competencies
+        this.positionService.getCompetencies().subscribe(
+            competencies => { this.competencies = competencies; },
+            error => console.log(<any>error));
     }
     /* End Initilizers */
 
@@ -117,30 +117,63 @@ export class EntryPointComponent {
         // get the skillMatrixId from the selected domain
         let selectedCompetencyId = this.domainId == 0 ? this.competencyId : this.domainId;
 
-        // here we call th skillMatrix Service to get all the skills
+        // call the service to get the skill matrix data
+        this.skillMatrixService.getSkillMatrixByLevel(selectedCompetencyId, this.levelId).subscribe(
+            skillMatrix => {
+                // fill the skill picker source
+                this.skills = this.processSkills(skillMatrix.skills)
+                    .map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
 
+                // set the skillPicker header
+                this.skillPickerLegend = this.getLabel();
 
-        // // call the service to get the skill matrix data
-        // this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
-        //     skillMatrix => {
+                // make grid Visisble
+                this.isSkillGridVisible = true;
 
-        //         // fill the skill picker source
-        //         this.skills = skillMatrix.skills.map(
-        //             skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
-
-        //         // set the skillPicker header
-        //         this.skillPickerLegend = this.getLabel();
-
-        //         // make grid Visisble
-        //         this.isSkillGridVisible = true;
-
-        //         this.checkNextButtonStatus();
-        //     },
-        //     error => console.log(<any>error));
+                // check if we can enable the next button according to the skills selected
+                this.checkNextButtonStatus();
+            },
+            error => console.log(<any>error));
     }
     /*End event functions*/
 
     /* Start helper functions */
+
+    processSkills(skills: Skill[]): Skill[] {
+
+        // initialize a new skill array
+        let output: Skill[] = [];
+
+        // apply the fillSkillInfo function to the first level objects
+        // this will also unchain the same function to their children
+        skills.filter(x => x.parentId == null).forEach(x => this.fillSkillInfo(x, 1, skills, output));
+
+        // return the output array
+        return output;
+    }
+
+    private fillSkillInfo(skill: Skill, initialLevel: number, source: Skill[], output: Skill[]) {
+
+        // add the skill to the new array
+        output.push(skill);
+
+        // set the level to the current skill
+        skill.skillLevel = initialLevel;
+
+        // look for the current skill children
+        let children = source.filter(x => x.parentId == skill.id);
+
+        // set the haschildren flag for the skill
+        // hack: for the moment we just allow maximum 5 levels
+        skill.hasChildren = skill.skillLevel < 5 && children.length > 0;
+
+        if (!skill.hasChildren) {
+            return;
+        };
+
+        // apply this same function to every children of the skill
+        children.forEach(y => this.fillSkillInfo(y, initialLevel + 1, source, output));
+    }
 
     // promise to save a template
     private saveTemplate(skillIds: number[]): Observable<ITemplate> {
@@ -157,15 +190,15 @@ export class EntryPointComponent {
     private getLabel(): string {
 
         let label = '';
-        let competency =  this.competencies.find(x => x.id == this.competencyId);
+        let competency = this.competencies.find(x => x.id == this.competencyId);
 
-        if (competency == undefined){
+        if (competency == undefined) {
             return label;
         }
 
         label = competency.name;
 
-        let domain =  this.competencies.find(x => x.id == this.domainId);
+        let domain = this.competencies.find(x => x.id == this.domainId);
 
         if (domain == undefined) {
             return label;
@@ -173,9 +206,9 @@ export class EntryPointComponent {
 
         label = label + ' ' + domain.name;
 
-        let level =  this.levels.find(x => x.id == this.levelId);
+        let level = this.levels.find(x => x.id == this.levelId);
 
-        if (level == undefined){
+        if (level == undefined) {
             return label;
         }
 

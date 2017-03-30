@@ -9,10 +9,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
 import { Position } from '../../entryPoint/classes/position';
+import { ICompetency } from '../../entryPoint/classes/competency';
 
 @Injectable()
 export class PositionService {
-    private baseUrl = 'api/position';
+    private baseUrl = 'http://localhost:64647/api/competency';
 
     constructor(private http: Http) { }
 
@@ -22,9 +23,18 @@ export class PositionService {
             .catch(this.handleError);
     }
 
+    getCompetencies(): Observable<ICompetency[]> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.get(`${this.baseUrl}/all`)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body || body.data || {};
     }
 
     private handleError(error: Response): Observable<any> {

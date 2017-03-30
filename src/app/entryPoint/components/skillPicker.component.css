@@ -5,19 +5,27 @@
     color: white !important;
     text-transform: uppercase;
 }
-.childSelected::before{
+.uui-table.small td {
+    padding: 5px;
+}
+.childSelected::before {
     width: 10px;
     height: 10px;
     border-width: 3px;
     background: #666666;
 }
-tr[class="treegrid-child"] td div p.uui-checkbox{
-    margin-left: 20px;
+tr[class="treegrid-child"] td div p.uui-checkbox {
+    margin-left: 19px;
 }
-.legend{
+.legend {
     background-color: #1A9CB0;
     color: #FFFFFF;
     width: 100%;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
 }
+
+p {
+    margin-bottom: 0px !important;
+}
+
