@@ -95,10 +95,7 @@ export class ExerciseService {
             id: 0,
             title: '',
             body: '',
-            tag : {
-                id: 0,
-                name: ''
-            },
+            tags: [],
             competency: {
                 id: 0,
                 name: ''

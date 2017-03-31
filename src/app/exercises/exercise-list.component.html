@@ -23,7 +23,7 @@
                         {{exercise.title}}
                         </a>
                     </td>
-                    <td>{{exercise.tag.name}}</td>
+                    <td>{{exercise.tags[0].name}}</td>
                     <td>{{exercise.competency.name}}</td>
                     <td>
                         <a class="uui-button small" [routerLink]="['/exercises', exercise.id]">

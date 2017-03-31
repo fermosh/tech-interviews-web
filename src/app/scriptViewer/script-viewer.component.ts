@@ -107,12 +107,12 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     mapExerciseBank(exercises: Exercise[]) {
         this.exerciseBank = [];
         // 1. Fill 'Exercise Bank' with data retrieved from service.
-        this.exerciseBank = exercises.map(e => <InterviewExercise>new Object({ id: e.id, title: e.title, body: e.body, solution: e.solution, tag: e.tag, rating: 0, comments: [], selected: false }));
+        this.exerciseBank = exercises.map(e => <InterviewExercise>new Object({ id: e.id, title: e.title, body: e.body, solution: e.solution, tags: e.tags, rating: 0, comments: [], selected: false }));
 
         // 2. Complete the 'Exercise Bank' with those exercises existing in the Interview but not in the DB Bank 
         this.scriptViewer.interviewExercises.forEach(ie => {
             if (!this.exerciseBank.some(eb => eb.id === ie.id)) {
-                this.exerciseBank.push({ id: ie.id, title: ie.title, body: ie.body, solution: ie.solution, tag: ie.tag, rating: ie.rating, comments: ie.comments, selected: ie.selected });
+                this.exerciseBank.push({ id: ie.id, title: ie.title, body: ie.body, solution: ie.solution, tags: ie.tags, rating: ie.rating, comments: ie.comments, selected: ie.selected });
             }
         });
     }
@@ -213,7 +213,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         for (let exercise of this.exerciseBank) {
             if (exercise.selected) {
                 if (!this.scriptViewer.interviewExercises.some(ie => ie.id === exercise.id)) {   // Exercise selected and is not part of the Intervie Script
-                    this.scriptViewer.interviewExercises.push({ id: exercise.id, title: exercise.title, body: exercise.body, solution: exercise.solution, tag: exercise.tag, rating: 0, comments: [], selected: true });
+                    this.scriptViewer.interviewExercises.push({ id: exercise.id, title: exercise.title, body: exercise.body, solution: exercise.solution, tags: exercise.tags, rating: 0, comments: [], selected: true });
                 }
             } else {
                 if (this.scriptViewer.interviewExercises.some(ie => ie.id === exercise.id)) {    // Exercise unselected and is part of the Interview Script

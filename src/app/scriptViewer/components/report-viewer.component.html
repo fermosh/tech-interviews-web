@@ -25,10 +25,9 @@
                 <tr>
                     <td class="report-label"><i>Skills:</i></td>
                     <td>
-                        <!--<template ngFor let-tag [ngForOf]="exercise.tags" let-last="last">
+                        <template ngFor let-tag [ngForOf]="exercise.tags" let-last="last">
                             <span>{{ tag.text }}</span><span *ngIf="!last">, </span>
-                        </template>-->
-                        <span>{{ exercise.tag.name }}</span>
+                        </template>
                     </td>
                 </tr>
                 <tr *ngIf="exercise.comments && !exercise.comments.length">

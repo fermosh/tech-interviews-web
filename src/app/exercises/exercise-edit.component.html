@@ -38,16 +38,13 @@
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': displayMessage.skill}">
-                    <label class="col-md-2 control-label" for="skillId">Skill</label>
-                    <div class="col-md-3">
-                        <select id="skillId" class="form-control" formControlName="skillId">
-                            <option *ngIf="skillId === 0" ng-selected [attr.value]="0">-- Select --</option>
-                            <option *ngFor="let tag of tags" ng-selected="tag.id === skillId" [attr.value]="tag.Id">{{tag.name}}</option>
-                        </select>
-                        <span class="help-block" *ngIf="displayMessage.skill">
-                            {{displayMessage.skill}}
-                        </span>
+                    <label class="col-md-2 control-label" for="tags">Skills</label>
+                    <div class="col-md-8">
+                        <ul id="tagIt" class="exercise-edit-tags">
+                            <li *ngFor="let tag of tags" [attr.value]="tag.Id">{{tag.name}}</li>
+                        </ul>
                     </div>
+                    <div id="events_container"></div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': displayMessage.competency}">
                     <label class="col-md-2 control-label" for="competencyId">Competency</label>
