@@ -14,7 +14,7 @@ import { ITemplate } from '../classes/template';
 
 @Injectable()
 export class TemplateService {
-    private baseUrl = 'api/templates';
+    private baseUrl = 'http://localhost:64647/api/template';
 
     constructor(private http: Http) { }
 
@@ -48,7 +48,7 @@ export class TemplateService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (template.id === 0) {
+        if (template.id === '') {
             return this.createTemplate(template, options);
         }
         return this.updateTemplate(template, options);
@@ -56,8 +56,18 @@ export class TemplateService {
 
     private createTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
         template.id = undefined;
-        return this.http.post(this.baseUrl, template, options)
-            .map(this.extractData)
+
+        let bodyData = JSON.stringify({
+            CompetencyId: template.competencyId,
+            JobFunctionLevel: template.jobfubctionLevel,
+            Skills: template.skillIds
+        });
+
+        return this.http.post(this.baseUrl, bodyData, options)
+            .map(response => {
+                template.id = this.extractData(response);
+                return template;
+            })
             .catch(this.handleError);
     }
 
@@ -70,7 +80,7 @@ export class TemplateService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body || body.data || {};
     }
 
     private handleError(error: Response): Observable<any> {
@@ -82,8 +92,6 @@ export class TemplateService {
 
     initializeTemplate(): ITemplate {
         // Return an initialized object
-        return {
-            id: 0, skillIds: []
-        };
+        return { id: '', skillIds: [], competencyId: 0, jobfubctionLevel: 0 };
     }
 }

@@ -102,8 +102,10 @@ export class EntryPointComponent {
             return;
         }
 
+        let selectedCompetencyId = this.getCompetencyId();
+
         // this.saveTemplateAndRedirect(this.skills.filter(x => x.isSelected).map(x => x.id));
-        this.saveTemplate(this.skills.filter(x => x.isSelected).map(x => x.id)).subscribe(
+        this.saveTemplate(selectedCompetencyId, this.levelId, this.skills.filter(x => x.isSelected).map(x => x.id)).subscribe(
             result => {
                 // navigate to the scriptViewer and pass the just created template id
                 this.router.navigate(['./script-viewer/' + result.id]);
@@ -115,7 +117,7 @@ export class EntryPointComponent {
         this.isSkillGridVisible = false;
 
         // get the skillMatrixId from the selected domain
-        let selectedCompetencyId = this.domainId == 0 ? this.competencyId : this.domainId;
+        let selectedCompetencyId = this.getCompetencyId();
 
         // call the service to get the skill matrix data
         this.skillMatrixService.getSkillMatrixByLevel(selectedCompetencyId, this.levelId).subscribe(
@@ -138,6 +140,10 @@ export class EntryPointComponent {
     /*End event functions*/
 
     /* Start helper functions */
+
+    private getCompetencyId(): number {
+        return this.domainId == 0 ? this.competencyId : this.domainId;
+    }
 
     processSkills(skills: Skill[]): Skill[] {
 
@@ -176,9 +182,10 @@ export class EntryPointComponent {
     }
 
     // promise to save a template
-    private saveTemplate(skillIds: number[]): Observable<ITemplate> {
+    private saveTemplate(competencyId: number, jobfubctionLevel: number, skillIds: number[]): Observable<ITemplate> {
         // save template
-        return this.templateService.saveTemplate({ id: 0, skillIds: skillIds });
+        return this.templateService.saveTemplate(
+            { id: '', skillIds: skillIds, competencyId: competencyId, jobfubctionLevel: jobfubctionLevel });
     }
 
     // determines when the next button is enabled or not according to the selected skills

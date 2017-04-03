@@ -25,7 +25,7 @@ export class SkillMatrixService {
 
     getSkillMatrixByLevel(competencyId: number, levelId: number): Observable<SkillMatrix> {
         let base = 'http://localhost:64647/api/skillmatrix';
-        const url = `${base}/all?competencyId=${competencyId}&jobFunctionLevel=${levelId}`;
+        const url = `${base}/${competencyId}/${levelId}`;
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });

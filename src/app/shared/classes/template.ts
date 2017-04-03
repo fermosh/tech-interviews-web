@@ -1,4 +1,6 @@
 export interface ITemplate{
-    id: number;
+    id: string;
+    competencyId: number;
+    jobfubctionLevel: number;
     skillIds: number[];
 }
