@@ -286,10 +286,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tag: {
-                    id: 973,
-                    name: 'Development',
-                },
+                tags: [
+                    {
+                        id: 973,
+                        name: 'Development',
+                    },
+                    {
+                        id: 7,
+                        name: 'Hard Skills',
+                    }
+                ],
                 competency: {
                     id: 1,
                     name: '.Net'
@@ -302,10 +308,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                     Curly brackets or braces, [] Square brackets. Implement an algorithm
                     to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
                 solution: '',
-                tag: {
-                    id: 973,
-                    name: 'Development',
-                },
+                tags: [
+                    {
+                        id: 973,
+                        name: 'Development',
+                    },
+                    {
+                        id: 7,
+                        name: 'Hard Skills',
+                    }
+                ],
                 competency: {
                     id: 1,
                     name: '.Net'
@@ -1197,10 +1209,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                         such as madam or kayak. Write an function that receives an string
                                         parameters and return true if it is a palindrome.`,
                         solution: '',
-                        tag: {
-                            id: 1,
-                            name: 'Code Standards'
-                        },
+                        tags: [
+                            {
+                                id: 1,
+                                name: 'Code Standards',
+                            },
+                            {
+                                id: 7,
+                                name: 'Hard Skills',
+                            }
+                        ],
                         selected: true,
                         rating: 4,
                         comments: [
@@ -1219,10 +1237,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                         Curly brackets or braces, [] Square brackets. Implement an algorithm
                                         to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
                         solution: '',
-                        tag: {
-                            id: 2,
-                            name: '.NET Development'
-                        },
+                        tags: [
+                            {
+                                id: 1,
+                                name: 'Code Standards',
+                            },
+                            {
+                                id: 7,
+                                name: 'Hard Skills',
+                            }
+                        ],
                         selected: true,
                         rating: 5,
                         comments: [
@@ -1329,10 +1353,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                         such as madam or kayak. Write an function that receives an string
                                         parameters and return true if it is a palindrome.`,
                 solution: '',
-                tag: {
-                    id: 1,
-                    name: 'Code Standards'
-                }
+                tags: [
+                    {
+                        id: 1,
+                        name: 'Code Standards',
+                    },
+                    {
+                        id: 7,
+                        name: 'Hard Skills',
+                    }
+                ],
             },
             {
                 id: 2,
@@ -1341,10 +1371,16 @@ export class TechnicalInterviewData implements InMemoryDbService {
                                         Curly brackets or braces, [] Square brackets. Implement an algorithm
                                         to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
                 solution: '',
-                tag: {
-                    id: 2,
-                    name: '.NET Development'
-                }
+                tags: [
+                    {
+                        id: 1,
+                        name: 'Code Standards',
+                    },
+                    {
+                        id: 7,
+                        name: 'Hard Skills',
+                    }
+                ],
             }
         ];
 

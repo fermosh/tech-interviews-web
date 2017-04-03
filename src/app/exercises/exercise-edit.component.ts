@@ -16,7 +16,7 @@ import { Tag } from './../shared/classes/tag';
 import { SkillMatrix } from './../shared/classes/skill-matrix';
 import { ICompetency } from './../shared/classes/competency';
 
-declare var jQuery: any;
+declare var $: any;
 
 @Component({
     templateUrl: './exercise-edit.component.html',
@@ -27,6 +27,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
 
     title: string = 'Exercise Edit';
     tags: Tag[];
+    availableTags: Tag[];
     competencies: ICompetency[];
     isPageRendered: boolean;
     errorMessage: string;
@@ -51,7 +52,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.validationMessages = {
             title: {
                 required: 'Exercise title is required.',
-                minlength: 'Exercise title must be at least twenty characters.',
+                minlength: 'Exercise title must be at least ten characters long.',
                 maxlength: 'Exercise title cannot exceed 200 characters.'
             },
             body: {
@@ -68,15 +69,16 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.exerciseForm = this.fb.group({
-            title: ['', [Validators.required,
-                        Validators.minLength(20),
-                        Validators.maxLength(200)]],
-            body: ['', [ Validators.maxLength(400)]],
-            solution: ['', [ Validators.maxLength(4000)]],
-            skillId: 0,
-            competencyId: 0
-        });
+        this.exerciseForm = this.fb.group(
+            {
+                title: ['', [Validators.required,
+                            Validators.minLength(10),
+                            Validators.maxLength(200)]],
+                body: ['', [ Validators.maxLength(400)]],
+                solution: ['', [ Validators.maxLength(4000)]],
+                competencyId: 0
+            }
+        );
 
         // Read the exercise Id from the route parameter
         this.sub = this.route.params.subscribe(
@@ -94,6 +96,42 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
+    fillAutocomplete(tags: Tag[], availableTags: Tag[]): void {
+        let addTag = function(text) {
+            tags.push(availableTags.find(t => t.name === text));
+        };
+
+        let removeTag = function(text) {
+            tags = tags.filter(t => t.name !== text);
+        };
+
+        let control = $('#tagIt');
+        control.uui_tagit(
+            {
+                'autocomplete': {
+                    delay: 0,
+                    minLength: 2,
+                    source: availableTags.map(skill => skill.name)
+                },
+                afterTagAdded: function(evt, ui) {
+                    if (!ui.duringInitialization) {
+                        addTag(control.tagit('tagLabel', ui.tag));
+                    }
+                },
+                afterTagRemoved: function(evt, ui) {
+                    if (!ui.duringInitialization) {
+                        removeTag(control.tagit('tagLabel', ui.tag));
+                    }
+                }
+            }
+        );
+    }
+
+    private onCompetencyChange(competencyId: number): void {
+        this.getTags(competencyId);
+    }
+
+
     ngAfterViewInit(): void {
         // Watch for the blur event from any input element on the form.
         let controlBlurs: Observable<any>[] = this.formInputElements
@@ -108,13 +146,12 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getTags(id: number): void {
         this.skillMatrixService.getSkillMatrix(id)
             .subscribe(
-                (skillMatrix: SkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
+                (skillMatrix: SkillMatrix) => {
+                    this.availableTags = skillMatrix.skills;
+                    this.fillAutocomplete(this.tags, this.availableTags);
+                },
                 (error: any) => this.errorMessage = <any>error
             );
-    }
-
-    onTagsRetrieved(tags: Tag[]): void {
-        this.tags = tags;
     }
 
     getCompetencies(): void {
@@ -132,7 +169,9 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getExercise(id: number): void {
         this.exerciseService.getExercise(id)
             .subscribe(
-                (exercise: Exercise) => this.onExerciseRetrieved(exercise),
+                (exercise: Exercise) => {
+                    this.onExerciseRetrieved(exercise);
+                },
                 (error: any) => this.errorMessage = <any>error
             );
     }
@@ -141,6 +180,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.exerciseForm) {
             this.exerciseForm.reset();
         }
+
         this.exercise = exercise;
 
         if (this.exercise.id === 0) {
@@ -154,9 +194,10 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
             title: this.exercise.title,
             body: this.exercise.body,
             solution: this.exercise.solution,
-            skillId: this.exercise.tag.id,
             competencyId: this.exercise.competency.id
         });
+
+        this.tags = this.exercise.tags;
     }
 
     deleteExercise(): void {
