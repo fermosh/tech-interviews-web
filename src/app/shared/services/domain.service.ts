@@ -83,7 +83,8 @@ export class DomainService {
             id: 0,
             name: null,
             competencyId: 0,
-            levelId: 0
+            levelId: 0,
+            skillMatrixId: 0
         };
     }
 }

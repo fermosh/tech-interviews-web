@@ -33,115 +33,134 @@ export class TechnicalInterviewData implements InMemoryDbService {
                 id: 1,
                 name: 'FrontEnd web development',
                 competencyId: 1,
-                levelId: 1
+                levelId: 1,
+                skillMatrixId: 13
             },
             {
                 id: 2,
                 name: 'Backend development',
                 competencyId: 1,
-                levelId: 1
+                levelId: 1,
+                skillMatrixId: 13
             },
             {
                 id: 3,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
-                levelId: 1
+                levelId: 1,
+                skillMatrixId: 13
             },
             {
                 id: 4,
                 name: 'Azure development',
                 competencyId: 1,
-                levelId: 1
+                levelId: 1,
+                skillMatrixId: 13
             },
             {
                 id: 5,
                 name: 'FrontEnd web development',
                 competencyId: 1,
-                levelId: 2
+                levelId: 2,
+                skillMatrixId: 14
             },
             {
                 id: 6,
                 name: 'Backend development',
                 competencyId: 1,
-                levelId: 2
+                levelId: 2,
+                skillMatrixId: 14
             },
             {
                 id: 7,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
-                levelId: 2
+                levelId: 2,
+                skillMatrixId: 14
             },
             {
                 id: 8,
                 name: 'Azure development',
                 competencyId: 1,
-                levelId: 2
+                levelId: 2,
+                skillMatrixId: 14
             },
             {
                 id: 9,
                 name: 'FrontEnd web development',
                 competencyId: 1,
-                levelId: 3
+                levelId: 3,
+                skillMatrixId: 12
             },
             {
                 id: 10,
                 name: 'Backend development',
                 competencyId: 1,
-                levelId: 3
+                levelId: 3,
+                skillMatrixId: 12
             },
             {
                 id: 11,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
-                levelId: 3
+                levelId: 3,
+                skillMatrixId: 12
             },
             {
                 id: 12,
                 name: 'Azure development',
                 competencyId: 1,
-                levelId: 4
+                levelId: 3,
+                skillMatrixId: 12
             },
             {
                 id: 13,
                 name: 'FrontEnd web development',
                 competencyId: 1,
-                levelId: 4
+                levelId: 4,
+                skillMatrixId: 11
             },
             {
                 id: 14,
                 name: 'Backend development',
                 competencyId: 1,
-                levelId: 4
+                levelId: 4,
+                skillMatrixId: 11
             },
             {
                 id: 15,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
-                levelId: 4
+                levelId: 4,
+                skillMatrixId: 11
             },
             {
                 id: 16,
                 name: 'Azure development',
                 competencyId: 1,
-                levelId: 5
+                levelId: 4,
+                skillMatrixId: 11
             },
             {
                 id: 17,
                 name: 'FrontEnd web development',
                 competencyId: 1,
-                levelId: 5
+                levelId: 5,
+                skillMatrixId: 10
             },
             {
                 id: 18,
                 name: 'Backend development',
                 competencyId: 1,
-                levelId: 5
+                levelId: 5,
+                skillMatrixId: 10
             },
             {
                 id: 19,
                 name: 'FrontEnd desktop development',
                 competencyId: 1,
-                levelId: 5
+                levelId: 5,
+                skillMatrixId: 10
             }
         ];
 
