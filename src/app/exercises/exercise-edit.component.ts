@@ -16,7 +16,7 @@ import { Tag } from './../shared/classes/tag';
 import { SkillMatrix } from './../shared/classes/skill-matrix';
 import { ICompetency } from './../shared/classes/competency';
 
-declare var jQuery: any;
+declare var $: any;
 
 @Component({
     templateUrl: './exercise-edit.component.html',
@@ -69,14 +69,16 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.exerciseForm = this.fb.group({
-            title: ['', [Validators.required,
-                        Validators.minLength(10),
-                        Validators.maxLength(200)]],
-            body: ['', [ Validators.maxLength(400)]],
-            solution: ['', [ Validators.maxLength(4000)]],
-            competencyId: 0
-        });
+        this.exerciseForm = this.fb.group(
+            {
+                title: ['', [Validators.required,
+                            Validators.minLength(10),
+                            Validators.maxLength(200)]],
+                body: ['', [ Validators.maxLength(400)]],
+                solution: ['', [ Validators.maxLength(4000)]],
+                competencyId: 0
+            }
+        );
 
         // Read the exercise Id from the route parameter
         this.sub = this.route.params.subscribe(
@@ -95,15 +97,15 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     fillAutocomplete(tags: Tag[], availableTags: Tag[]): void {
-        let addEvent = function(text) {
+        let addTag = function(text) {
             tags.push(availableTags.find(t => t.name === text));
         };
 
-        let removeEvent = function(text) {
+        let removeTag = function(text) {
             tags = tags.filter(t => t.name !== text);
         };
 
-        let control = jQuery('#tagIt');
+        let control = $('#tagIt');
         control.uui_tagit(
             {
                 'autocomplete': {
@@ -113,17 +115,22 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
                 },
                 afterTagAdded: function(evt, ui) {
                     if (!ui.duringInitialization) {
-                        addEvent(control.tagit('tagLabel', ui.tag));
+                        addTag(control.tagit('tagLabel', ui.tag));
                     }
                 },
                 afterTagRemoved: function(evt, ui) {
                     if (!ui.duringInitialization) {
-                        removeEvent(control.tagit('tagLabel', ui.tag));
+                        removeTag(control.tagit('tagLabel', ui.tag));
                     }
                 }
             }
         );
     }
+
+    private onCompetencyChange(competencyId: number): void {
+        this.getTags(competencyId);
+    }
+
 
     ngAfterViewInit(): void {
         // Watch for the blur event from any input element on the form.
@@ -162,7 +169,9 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getExercise(id: number): void {
         this.exerciseService.getExercise(id)
             .subscribe(
-                (exercise: Exercise) => this.onExerciseRetrieved(exercise),
+                (exercise: Exercise) => {
+                    this.onExerciseRetrieved(exercise);
+                },
                 (error: any) => this.errorMessage = <any>error
             );
     }
