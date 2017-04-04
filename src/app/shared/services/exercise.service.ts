@@ -12,12 +12,12 @@ import { Exercise } from './../classes/exercise';
 
 @Injectable()
 export class ExerciseService {
-    private baseUrl = `${environment.host}`;
+    private baseUrl = `${environment.host}exercises/`;
 
     constructor(private http: Http) { }
 
     getExercises(): Observable<Exercise[]> {
-        return this.http.get(`${this.baseUrl}/exercises`)
+        return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -31,13 +31,13 @@ export class ExerciseService {
 
     getExercise(id: number): Observable<Exercise> {
         if (id === 0) {
-        return Observable.of(this.initializeExercise());
+            return Observable.of(this.initializeExercise());
         // return Observable.create((observer: any) => {
         //     observer.next(this.initializeQuestion());
         //     observer.complete();
         // });
         };
-        const url = `${this.baseUrl}/exercises/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -47,30 +47,30 @@ export class ExerciseService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/exercises/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
 
-    saveExercise(question: Exercise): Observable<Exercise> {
+    saveExercise(exercise: Exercise): Observable<Exercise> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (question.id === 0) {
-            return this.createExercise(question, options);
+        if (exercise.id === 0) {
+            return this.createExercise(exercise, options);
         }
-        return this.updateExercise(question, options);
+        return this.updateExercise(exercise, options);
     }
 
     private createExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
         exercise.id = undefined;
-        return this.http.post(`${this.baseUrl}/exercises`, exercise, options)
+        return this.http.post(this.baseUrl, exercise, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     private updateExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
-        const url = `${this.baseUrl}/exercises/${exercise.id}`;
+        const url = `${this.baseUrl}${exercise.id}`;
         return this.http.put(url, exercise, options)
             .map(() => exercise)
             .catch(this.handleError);

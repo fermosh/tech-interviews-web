@@ -13,7 +13,7 @@ import { ICompetency } from './../classes/competency';
 
 @Injectable()
 export class CompetencyService {
-    private baseUrl = `${environment.host}/competentcies/`;
+    private baseUrl = `${environment.host}competencies/`;
 
     constructor(private http: Http) { }
 

@@ -14,7 +14,7 @@ import { ILevel } from './../classes/level';
 
 @Injectable()
 export class LevelService {
-    private baseUrl = `${environment.host}/levels/`;
+    private baseUrl = `${environment.host}levels/`;
 
     constructor(private http: Http) { }
 

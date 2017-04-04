@@ -13,7 +13,7 @@ import { IDomain } from './../classes/domain';
 
 @Injectable()
 export class DomainService {
-    private baseUrl = `${environment.host}/domains/`;
+    private baseUrl = `${environment.host}domains/`;
 
     constructor(private http: Http) { }
 
@@ -25,7 +25,7 @@ export class DomainService {
 
     getDomain(id: number): Observable<IDomain> {
         if (id === 0) {
-            return Observable.of(this.initializeProduct());
+            return Observable.of(this.initializeDomain());
         };
         const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
@@ -78,7 +78,7 @@ export class DomainService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeProduct(): IDomain {
+    initializeDomain(): IDomain {
         // Return an initialized object
         return {
             id: 0,

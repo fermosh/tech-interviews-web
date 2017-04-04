@@ -8,11 +8,12 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { SkillMatrix } from './../classes/skill-matrix';
 
 @Injectable()
 export class SkillMatrixService {
-    private baseUrl = 'api/skillMatrix';
+    private baseUrl = `${environment.host}skillMatrix/`;
 
     constructor(private http: Http) { }
 

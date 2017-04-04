@@ -12,11 +12,12 @@ import { Question } from './../classes/question';
 
 @Injectable()
 export class QuestionService {
-private baseUrl = `${environment.host}`;
+    private baseUrl = `${environment.host}questions/`;
+
     constructor(private http: Http) { }
 
     getQuestions(): Observable<Question[]> {
-        return this.http.get(`${this.baseUrl}/questions`)
+        return this.http.get(this.baseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -36,7 +37,7 @@ private baseUrl = `${environment.host}`;
         //     observer.complete();
         // });
         };
-        const url = `${this.baseUrl}/questions/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -46,7 +47,7 @@ private baseUrl = `${environment.host}`;
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/questions/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -63,13 +64,13 @@ private baseUrl = `${environment.host}`;
 
     private createQuestion(question: Question, options: RequestOptions): Observable<Question> {
         question.id = undefined;
-        return this.http.post(`${this.baseUrl}/questions`, question, options)
+        return this.http.post(this.baseUrl, question, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     private updateQuestion(question: Question, options: RequestOptions): Observable<Question> {
-        const url = `${this.baseUrl}/exercises/${question.id}`;
+        const url = `${this.baseUrl}${question.id}`;
         return this.http.put(url, question, options)
             .map(() => question)
             .catch(this.handleError);
