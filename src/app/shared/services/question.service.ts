@@ -7,24 +7,22 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { Question } from './../classes/question';
 
 @Injectable()
 export class QuestionService {
-    private baseUrl = 'api/questions';
-    private questionsBankUrl = 'api/questionsByTemplateId';
-
+private baseUrl = `${environment.host}`;
     constructor(private http: Http) { }
 
     getQuestions(): Observable<Question[]> {
-        return this.http.get(this.baseUrl)
+        return this.http.get(`${this.baseUrl}/questions`)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     getQuestionsByTemplateId(id: number): Observable<Question[]> {
-        //const url = `${this.questionsBankUrl}/${id}`;
-        const url = this.questionsBankUrl;
+        const url = `${this.baseUrl}$template/${id}/questions`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -32,13 +30,13 @@ export class QuestionService {
 
     getQuestion(id: number): Observable<Question> {
         if (id === 0) {
-        return Observable.of(this.initializeQuestion());
+            return Observable.of(this.initializeQuestion());
         // return Observable.create((observer: any) => {
         //     observer.next(this.initializeQuestion());
         //     observer.complete();
         // });
         };
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}/questions/${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -48,7 +46,7 @@ export class QuestionService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}/questions/${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -65,13 +63,13 @@ export class QuestionService {
 
     private createQuestion(question: Question, options: RequestOptions): Observable<Question> {
         question.id = undefined;
-        return this.http.post(this.baseUrl, question, options)
+        return this.http.post(`${this.baseUrl}/questions`, question, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     private updateQuestion(question: Question, options: RequestOptions): Observable<Question> {
-        const url = `${this.baseUrl}/${question.id}`;
+        const url = `${this.baseUrl}/exercises/${question.id}`;
         return this.http.put(url, question, options)
             .map(() => question)
             .catch(this.handleError);

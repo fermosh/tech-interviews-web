@@ -7,24 +7,23 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { Exercise } from './../classes/exercise';
 
 @Injectable()
 export class ExerciseService {
-    private baseUrl = 'api/exercises';
-    private exercisesBankUrl = 'api/exercisesByTemplateId';
+    private baseUrl = `${environment.host}`;
 
     constructor(private http: Http) { }
 
     getExercises(): Observable<Exercise[]> {
-        return this.http.get(this.baseUrl)
+        return this.http.get(`${this.baseUrl}/exercises`)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     getExercisesByTemplateId(id: number): Observable<Exercise[]> {
-        //const url = `${this.exercisesBankUrl}/${id}`;
-        const url = this.exercisesBankUrl;
+        const url = `${this.baseUrl}$template/${id}/exercises`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -38,7 +37,7 @@ export class ExerciseService {
         //     observer.complete();
         // });
         };
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}/exercises/${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -48,7 +47,7 @@ export class ExerciseService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}/exercises/${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -65,13 +64,13 @@ export class ExerciseService {
 
     private createExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
         exercise.id = undefined;
-        return this.http.post(this.baseUrl, exercise, options)
+        return this.http.post(`${this.baseUrl}/exercises`, exercise, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     private updateExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
-        const url = `${this.baseUrl}/${exercise.id}`;
+        const url = `${this.baseUrl}/exercises/${exercise.id}`;
         return this.http.put(url, exercise, options)
             .map(() => exercise)
             .catch(this.handleError);
