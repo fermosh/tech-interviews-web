@@ -8,11 +8,12 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { IDomain } from './../classes/domain';
 
 @Injectable()
 export class DomainService {
-    private baseUrl = 'api/domains';
+    private baseUrl = `${environment.host}domains/`;
 
     constructor(private http: Http) { }
 
@@ -24,9 +25,9 @@ export class DomainService {
 
     getDomain(id: number): Observable<IDomain> {
         if (id === 0) {
-        return Observable.of(this.initializeProduct());
+            return Observable.of(this.initializeDomain());
         };
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -36,7 +37,7 @@ export class DomainService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -51,17 +52,17 @@ export class DomainService {
         return this.updateDomain(Domain, options);
     }
 
-    private createDomain(Domain: IDomain, options: RequestOptions): Observable<IDomain> {
-        Domain.id = undefined;
-        return this.http.post(this.baseUrl, Domain, options)
+    private createDomain(domain: IDomain, options: RequestOptions): Observable<IDomain> {
+        domain.id = undefined;
+        return this.http.post(this.baseUrl, domain, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private updateDomain(product: IDomain, options: RequestOptions): Observable<IDomain> {
-        const url = `${this.baseUrl}/${product.id}`;
-        return this.http.put(url, product, options)
-            .map(() => product)
+    private updateDomain(domain: IDomain, options: RequestOptions): Observable<IDomain> {
+        const url = `${this.baseUrl}${domain.id}`;
+        return this.http.put(url, domain, options)
+            .map(() => domain)
             .catch(this.handleError);
     }
 
@@ -77,7 +78,7 @@ export class DomainService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeProduct(): IDomain {
+    initializeDomain(): IDomain {
         // Return an initialized object
         return {
             id: 0,
