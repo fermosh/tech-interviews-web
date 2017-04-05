@@ -48,7 +48,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         this.hoverExercises = false;
         this.sub = this.route.params.subscribe(
             params => {
-                let id = +params['id'];
+                let id = params['id'];
                 this.getInterviewScript(id);
             });
     }
@@ -70,7 +70,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         }
     }
 
-    getInterviewScript(id: number) {
+    getInterviewScript(id: string) {
         this.scriptViewerService.getScriptViewer(id)
             .subscribe(scriptViewer => {
                 this.scriptViewer = scriptViewer;
@@ -80,13 +80,13 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             error => this.errorMessage = <any>error);
     }
 
-    getQuestionBank(templateId: number) {
+    getQuestionBank(templateId: string) {
         this.questionService.getQuestionsByTemplateId(templateId)
             .subscribe(questionBank => this.mapQuestionBank(questionBank),
             error => this.errorMessage = <any>error);
     }
 
-    getExerciseBank(templateId: number) {
+    getExerciseBank(templateId: string) {
         this.exerciseService.getExercisesByTemplateId(templateId)
             .subscribe(exerciseBank => this.mapExerciseBank(exerciseBank),
             error => this.errorMessage = <any>error);
@@ -232,7 +232,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         this.hoverExercises = true;
     }
 
-    addComment(type: string, skillId: number, typeId: number, event: any): void {
+    addComment(type: string, skillId: number, typeId: string, event: any): void {
         let comment: IComment = { text: event.target.value, user: 'Logged User Name', date: new Date() };
         switch (type) {
             case 'question':
@@ -247,7 +247,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         event.target.value = null;
     }
 
-    deleteComment(type: string, skillId: number, typeId: number, comment: IComment): void {
+    deleteComment(type: string, skillId: number, typeId: string, comment: IComment): void {
         let index: number;
 
         switch (type) {

@@ -22,15 +22,15 @@ export class QuestionService {
             .catch(this.handleError);
     }
 
-    getQuestionsByTemplateId(id: number): Observable<Question[]> {
+    getQuestionsByTemplateId(id: string): Observable<Question[]> {
         const url = `${this.baseUrl}$template/${id}/questions`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getQuestion(id: number): Observable<Question> {
-        if (id === 0) {
+    getQuestion(id: string): Observable<Question> {
+        if (id === '0') {
             return Observable.of(this.initializeQuestion());
         // return Observable.create((observer: any) => {
         //     observer.next(this.initializeQuestion());
@@ -43,7 +43,7 @@ export class QuestionService {
             .catch(this.handleError);
     }
 
-    deleteQuestion(id: number): Observable<Response> {
+    deleteQuestion(id: string): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -56,7 +56,7 @@ export class QuestionService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (question.id === 0) {
+        if (question.id === '') {
             return this.createQuestion(question, options);
         }
         return this.updateQuestion(question, options);
@@ -78,7 +78,7 @@ export class QuestionService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body.data || body || {};
     }
 
     private handleError(error: Response): Observable<any> {
@@ -91,7 +91,7 @@ export class QuestionService {
     initializeQuestion(): Question {
         // Return an initialized object
         return {
-            id: 0,
+            id: '',
             body: '',
             answer: null,
             tag : {

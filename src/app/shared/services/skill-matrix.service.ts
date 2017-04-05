@@ -17,8 +17,8 @@ export class SkillMatrixService {
 
     constructor(private http: Http) { }
 
-    getSkillMatrix(id: number): Observable<SkillMatrix> {
-        const url = `${this.baseUrl}/${id}`;
+    getSkillMatrix(competencyId: number, levelId: number): Observable<SkillMatrix> {
+        const url = `${this.baseUrl}${competencyId}/${levelId}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -26,7 +26,7 @@ export class SkillMatrixService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body.data || body || {};
     }
 
     private handleError(error: Response): Observable<any> {

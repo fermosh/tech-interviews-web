@@ -22,15 +22,15 @@ export class ExerciseService {
             .catch(this.handleError);
     }
 
-    getExercisesByTemplateId(id: number): Observable<Exercise[]> {
+    getExercisesByTemplateId(id: string): Observable<Exercise[]> {
         const url = `${this.baseUrl}$template/${id}/exercises`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getExercise(id: number): Observable<Exercise> {
-        if (id === 0) {
+    getExercise(id: string): Observable<Exercise> {
+        if (id === '') {
             return Observable.of(this.initializeExercise());
         // return Observable.create((observer: any) => {
         //     observer.next(this.initializeQuestion());
@@ -43,7 +43,7 @@ export class ExerciseService {
             .catch(this.handleError);
     }
 
-    deleteExercise(id: number): Observable<Response> {
+    deleteExercise(id: string): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -56,7 +56,7 @@ export class ExerciseService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (exercise.id === 0) {
+        if (exercise.id === '') {
             return this.createExercise(exercise, options);
         }
         return this.updateExercise(exercise, options);
@@ -91,7 +91,7 @@ export class ExerciseService {
     initializeExercise(): Exercise {
         // Return an initialized object
         return {
-            id: 0,
+            id: '',
             title: '',
             body: '',
             tags: [],

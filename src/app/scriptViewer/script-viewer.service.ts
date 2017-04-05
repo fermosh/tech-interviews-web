@@ -12,7 +12,7 @@ export class ScriptViewerService {
 
     constructor(private http: Http) { }
 
-    getScriptViewer(id: number): Observable<InterviewScript> {
+    getScriptViewer(id: string): Observable<InterviewScript> {
         const url = `${this.interviewScriptUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)

@@ -170,7 +170,7 @@ export class EntryPointComponent {
         let  skillMatrixId = 13;
 
         // call the service to get the skill matrix data
-        this.skillMatrixService.getSkillMatrix(skillMatrixId).subscribe(
+        this.skillMatrixService.getSkillMatrix(skillMatrixId, 1).subscribe(
             skillMatrix => {
 
                 // fill the skill picker source
