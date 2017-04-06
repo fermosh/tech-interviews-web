@@ -25,6 +25,9 @@ export class EntryPointComponent {
     levelId = 0;
     domainId = 0;
 
+    selectedCompetencyId = 0;
+    selectedLevelId = 0;
+
     /* Declare options to store the filter data */
     competencies: ICompetency[];
 
@@ -102,10 +105,8 @@ export class EntryPointComponent {
             return;
         }
 
-        let selectedCompetencyId = this.getCompetencyId();
-
         // this.saveTemplateAndRedirect(this.skills.filter(x => x.isSelected).map(x => x.id));
-        this.saveTemplate(selectedCompetencyId, this.levelId, this.skills.filter(x => x.isSelected).map(x => x.id)).subscribe(
+        this.saveTemplate(this.selectedCompetencyId, this.selectedLevelId, this.skills.filter(x => x.isSelected).map(x => x.id)).subscribe(
             result => {
                 // navigate to the scriptViewer and pass the just created template id
                 this.router.navigate(['./script-viewer/' + result.id]);
@@ -117,10 +118,12 @@ export class EntryPointComponent {
         this.isSkillGridVisible = false;
 
         // get the skillMatrixId from the selected domain
-        let selectedCompetencyId = this.getCompetencyId();
+        this.selectedCompetencyId = this.getCompetencyId();
+
+        this.selectedLevelId = this.levelId;
 
         // call the service to get the skill matrix data
-        this.skillMatrixService.getSkillMatrixByLevel(selectedCompetencyId, this.levelId).subscribe(
+        this.skillMatrixService.getSkillMatrixByLevel(this.selectedCompetencyId, this.selectedLevelId).subscribe(
             skillMatrix => {
                 // fill the skill picker source
                 this.skills = this.processSkills(skillMatrix.skills)
