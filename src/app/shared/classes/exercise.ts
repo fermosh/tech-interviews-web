@@ -3,7 +3,7 @@ import { Tag } from './tag';
 import { ICompetency } from './competency';
 
 export class Exercise {
-    id: number;
+    id: string;
     title: string;
     body: string;
     solution?: string;

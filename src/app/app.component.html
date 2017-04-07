@@ -21,19 +21,7 @@
                         <span class="title">{{title}}</span>
                     </a>
                 </div>
-                <div class="responsive-menu">
-                    <div class="menu-wrapper">
-                        <div class="menu-scroll">
-                            <ul class="nav navbar-nav">
-                                <li><a [routerLink]="['/entryPoint']"><span>Skill Matrix</span></a></li>
-                                <li><a [routerLink]="['/question-list']"><span>Questions</span></a></li>
-                                <li><a [routerLink]="['/exercise-list']"><span>Exercises</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <!---->
             <a href="#" class="brand-logo">
                 <span class="logo">
                     <img src="assets/ic_logo_UUi.svg" alt="" />
@@ -44,6 +32,11 @@
                 <li routerLinkActive="active"><a [routerLink]="['/questions']">Questions</a></li>
                 <li routerLinkActive="active"><a [routerLink]="['/exercises']">Exercises</a></li>
             </ul>
+            <!--<ul class="uui-header-tools nav navbar-nav">
+                <li class="uui-header-button">
+                    <a [routerLink]="['/questions/0']" class="uui-button">Add</a>
+                </li>
+            </ul>-->
         </nav>
     </div>
 </header>

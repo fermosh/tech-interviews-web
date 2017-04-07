@@ -8,16 +8,17 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { SkillMatrix } from './../classes/skill-matrix';
 
 @Injectable()
 export class SkillMatrixService {
-    private baseUrl = 'api/skillMatrix';
+    private baseUrl = `${environment.host}skillMatrix/`;
 
     constructor(private http: Http) { }
 
-    getSkillMatrix(id: number): Observable<SkillMatrix> {
-        const url = `${this.baseUrl}/${id}`;
+    getSkillMatrix(competencyId: number, levelId: number): Observable<SkillMatrix> {
+        const url = `${this.baseUrl}${competencyId}/${levelId}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -25,7 +26,7 @@ export class SkillMatrixService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body.data || body || {};
     }
 
     private handleError(error: Response): Observable<any> {

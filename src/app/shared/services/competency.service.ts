@@ -8,11 +8,12 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { ICompetency } from './../classes/competency';
 
 @Injectable()
 export class CompetencyService {
-    private baseUrl = 'api/competencies';
+    private baseUrl = `${environment.host}competencies/`;
 
     constructor(private http: Http) { }
 
@@ -30,7 +31,7 @@ export class CompetencyService {
         //     observer.complete();
         // });
         };
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -40,7 +41,7 @@ export class CompetencyService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -63,7 +64,7 @@ export class CompetencyService {
     }
 
     private updateCompetency(competency: ICompetency, options: RequestOptions): Observable<ICompetency> {
-        const url = `${this.baseUrl}/${competency.id}`;
+        const url = `${this.baseUrl}${competency.id}`;
         return this.http.put(url, competency, options)
             .map(() => competency)
             .catch(this.handleError);
@@ -71,7 +72,7 @@ export class CompetencyService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body.data || body || {};
     }
 
     private handleError(error: Response): Observable<any> {

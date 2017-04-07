@@ -78,7 +78,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         // Read the question Id from the route parameter
         this.sub = this.route.params.subscribe(
             params => {
-                let id = +params['id'];
+                let id = params['id'];
                 this.getQuestion(id);
             }
         );
@@ -103,7 +103,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getTags(id: number): void {
-        this.skillMatrixService.getSkillMatrix(id)
+        this.skillMatrixService.getSkillMatrix(id, 1)
             .subscribe(
                 (skillMatrix: SkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
                 (error: any) => this.errorMessage = <any>error
@@ -126,7 +126,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.competencies = competencies;
     }
 
-    getQuestion(id: number): void {
+    getQuestion(id: string): void {
         this.questionService.getQuestion(id)
             .subscribe(
                 (question: Question) => this.onQuestionRetrieved(question),
@@ -140,7 +140,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         this.question = question;
 
-        if (this.question.id === 0) {
+        if (this.question.id === '') {
             this.title = 'Add Question';
         } else {
             this.title = `Edit Question: ${this.question.body}`;
@@ -156,7 +156,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     deleteQuestion(): void {
-        if (this.question.id === 0) {
+        if (this.question.id === '') {
             // Don't delete, it was never saved.
             this.onSaveComplete();
        } else {

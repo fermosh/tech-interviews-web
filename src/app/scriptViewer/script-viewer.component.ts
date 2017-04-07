@@ -242,7 +242,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         this.hoverExercises = true;
     }
 
-    addComment(type: string, skillId: number, typeId: number, event: any): void {
+    addComment(type: string, skillId: number, typeId: string, event: any): void {
         let comment: IComment = { text: event.target.value, user: 'Logged User Name', date: new Date() };
         switch (type) {
             case 'question':
@@ -257,7 +257,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         event.target.value = null;
     }
 
-    deleteComment(type: string, skillId: number, typeId: number, comment: IComment): void {
+    deleteComment(type: string, skillId: number, typeId: string, comment: IComment): void {
         let index: number;
 
         switch (type) {

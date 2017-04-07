@@ -83,7 +83,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         // Read the exercise Id from the route parameter
         this.sub = this.route.params.subscribe(
             params => {
-                let id = +params['id'];
+                let id = params['id'];
                 this.getExercise(id);
             }
         );
@@ -144,7 +144,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getTags(id: number): void {
-        this.skillMatrixService.getSkillMatrix(id)
+        this.skillMatrixService.getSkillMatrix(id, 1)
             .subscribe(
                 (skillMatrix: SkillMatrix) => {
                     this.availableTags = skillMatrix.skills;
@@ -166,7 +166,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.competencies = competencies;
     }
 
-    getExercise(id: number): void {
+    getExercise(id: string): void {
         this.exerciseService.getExercise(id)
             .subscribe(
                 (exercise: Exercise) => {
@@ -183,7 +183,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.exercise = exercise;
 
-        if (this.exercise.id === 0) {
+        if (this.exercise.id === '') {
             this.title = 'Add Exercise';
         } else {
             this.title = `Edit Exercise: ${this.exercise.title}`;
@@ -201,7 +201,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     deleteExercise(): void {
-        if (this.exercise.id === 0) {
+        if (this.exercise.id === '') {
             // Don't delete, it was never saved.
             this.onSaveComplete();
        } else {

@@ -9,11 +9,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { ILevel } from './../classes/level';
 
 @Injectable()
 export class LevelService {
-    private baseUrl = 'api/levels';
+    private baseUrl = `${environment.host}levels/`;
 
     constructor(private http: Http) { }
 
@@ -25,9 +26,9 @@ export class LevelService {
 
     getLevel(id: number): Observable<ILevel> {
         if (id === 0) {
-        return Observable.of(this.initializeProduct());
+            return Observable.of(this.initializeLevel());
         };
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -37,7 +38,7 @@ export class LevelService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -59,10 +60,10 @@ export class LevelService {
             .catch(this.handleError);
     }
 
-    private updateLevel(product: ILevel, options: RequestOptions): Observable<ILevel> {
-        const url = `${this.baseUrl}/${product.id}`;
-        return this.http.put(url, product, options)
-            .map(() => product)
+    private updateLevel(level: ILevel, options: RequestOptions): Observable<ILevel> {
+        const url = `${this.baseUrl}${level.id}`;
+        return this.http.put(url, level, options)
+            .map(() => level)
             .catch(this.handleError);
     }
 
@@ -78,7 +79,7 @@ export class LevelService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeProduct(): ILevel {
+    initializeLevel(): ILevel {
         // Return an initialized object
         return {
             id: 0,

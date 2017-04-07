@@ -7,12 +7,13 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { Question } from './../classes/question';
 
 @Injectable()
 export class QuestionService {
-    private baseUrl = 'api/questions';
-    private questionsBankUrl = 'http://localhost:64647/api';
+    private baseUrl = `${environment.host}questions/`;
+    private questionsBankUrl = `${environment.host}templates/`;
 
     constructor(private http: Http) { }
 
@@ -23,31 +24,31 @@ export class QuestionService {
     }
 
     getQuestionsByTemplateId(id: string): Observable<Question[]> {
-        const url = `${this.questionsBankUrl}/templates/${id}/questions`;
+        const url = `${this.questionsBankUrl}${id}/questions`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getQuestion(id: number): Observable<Question> {
-        if (id === 0) {
-        return Observable.of(this.initializeQuestion());
+    getQuestion(id: string): Observable<Question> {
+        if (id === '0') {
+            return Observable.of(this.initializeQuestion());
         // return Observable.create((observer: any) => {
         //     observer.next(this.initializeQuestion());
         //     observer.complete();
         // });
         };
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    deleteQuestion(id: number): Observable<Response> {
+    deleteQuestion(id: string): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -56,7 +57,7 @@ export class QuestionService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (question.id === 0) {
+        if (question.id === '') {
             return this.createQuestion(question, options);
         }
         return this.updateQuestion(question, options);
@@ -70,7 +71,7 @@ export class QuestionService {
     }
 
     private updateQuestion(question: Question, options: RequestOptions): Observable<Question> {
-        const url = `${this.baseUrl}/${question.id}`;
+        const url = `${this.baseUrl}${question.id}`;
         return this.http.put(url, question, options)
             .map(() => question)
             .catch(this.handleError);
@@ -91,7 +92,7 @@ export class QuestionService {
     initializeQuestion(): Question {
         // Return an initialized object
         return {
-            id: 0,
+            id: '',
             body: '',
             answer: null,
             tag : {
