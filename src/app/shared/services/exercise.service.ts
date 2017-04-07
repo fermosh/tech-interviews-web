@@ -30,7 +30,7 @@ export class ExerciseService {
     }
 
     getExercise(id: string): Observable<Exercise> {
-        if (id === '') {
+        if (id === '0') {
             return Observable.of(this.initializeExercise());
         // return Observable.create((observer: any) => {
         //     observer.next(this.initializeQuestion());
@@ -70,15 +70,14 @@ export class ExerciseService {
     }
 
     private updateExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
-        const url = `${this.baseUrl}${exercise.id}`;
-        return this.http.put(url, exercise, options)
+        return this.http.put(this.baseUrl, exercise, options)
             .map(() => exercise)
             .catch(this.handleError);
     }
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body.data || body || {};
     }
 
     private handleError(error: Response): Observable<any> {
@@ -94,7 +93,7 @@ export class ExerciseService {
             id: '',
             title: '',
             body: '',
-            tags: [],
+            skills: [],
             competency: {
                 id: 0,
                 name: ''

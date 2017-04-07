@@ -12,7 +12,7 @@ export class QuestionBankFilterPipe implements PipeTransform {
             return [];
         }
         return questionBank
-            .filter(qb => qb.tag.id === skillId)
+            .filter(qb => qb.skill.id === skillId)
             .sort((a: InterviewQuestion, b: InterviewQuestion) => {
                 if (a.order === -1) {
                     return 1;
