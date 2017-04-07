@@ -25,8 +25,8 @@ export class EntryPointComponent {
     levelId = 0;
     domainId = 0;
 
-    selectedCompetencyId = 0;
-    selectedLevelId = 0;
+    selectedCompetencyId = this.competencyId;
+    selectedLevelId = this.levelId;
 
     /* Declare options to store the filter data */
     competencyList: ICompetency[];

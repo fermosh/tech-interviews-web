@@ -1,5 +1,5 @@
 <select [(ngModel)]="competencyId" (change)="Onchange($event.target.value)" name="competency" class="selectpicker uui-form-element plus-margin-5" title="Competency">
-    <option value="0" *ngIf="competencyId == 0">Competency</option>
+    <!--<option value="0" *ngIf="competencyId == 0">Competency</option>-->
     <template ngFor let-item [ngForOf]="competencies">
         <optgroup *ngIf="item.isSelectable" label="{{item.name}}">
             <option *ngFor="let child of item.competencies" [attr.value]="child.id">{{child.name}}</option>
