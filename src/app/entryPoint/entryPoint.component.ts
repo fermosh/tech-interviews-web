@@ -29,6 +29,7 @@ export class EntryPointComponent {
     selectedLevelId = 0;
 
     /* Declare options to store the filter data */
+    competencyList: ICompetency[];
     competencies: ICompetency[];
 
     levels: ILevel[];
@@ -69,13 +70,36 @@ export class EntryPointComponent {
 
         // call the position service to get the competencies
         this.positionService.getCompetencies().subscribe(
-            competencies => { this.competencies = competencies; },
-            error => console.log(<any>error));
+            competencies => {
+                this.competencyList = competencies;
+                this.competencies = this.SetCompetencies(competencies);
+            }, error => console.log(<any>error));
+    }
+
+    private SetCompetencies(competencies: ICompetency[]) {
+        let result: ICompetency[] = [];
+
+        competencies.filter(competency => competency.parentId == null).forEach(parent => {
+
+            let children = competencies.filter(x => x.parentId == parent.id);
+
+            parent.isSelectable = children.length > 0;
+
+            if (parent.isSelectable) {
+                parent.competencies = children;
+            }
+
+            result.push(parent);
+        });
+
+        return result;
     }
     /* End Initilizers */
 
     /*Start event functions*/
-    private onCompetencyChange(competencyId: number): void {
+    private onCompetencyChanged(competencyId: number): void {
+        this.competencyId = competencyId;
+
         // reset level and domain selections
         this.domainId = 0;
 
@@ -114,6 +138,11 @@ export class EntryPointComponent {
     }
 
     private onSearch(): void {
+
+        if (this.levelId == this.selectedLevelId && this.competencyId ==  this.selectedCompetencyId) {
+            return;
+        }
+
         // hide skill grid
         this.isSkillGridVisible = false;
 
@@ -129,8 +158,10 @@ export class EntryPointComponent {
                 this.skills = this.processSkills(skillMatrix.skills)
                     .map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
 
+                let legend = this.getLabel(this.selectedCompetencyId, this.selectedLevelId);
+
                 // set the skillPicker header
-                this.skillPickerLegend = this.getLabel();
+                this.skillPickerLegend = legend;
 
                 // make grid Visisble
                 this.isSkillGridVisible = true;
@@ -197,10 +228,10 @@ export class EntryPointComponent {
     }
 
     // return a label to show in the skill picker header
-    private getLabel(): string {
+    private getLabel(competencyId: number, levelId: number): string {
 
         let label = '';
-        let competency = this.competencies.find(x => x.id == this.competencyId);
+        let competency = this.competencyList.find(x => x.id == competencyId);
 
         if (competency == undefined) {
             return label;
@@ -208,15 +239,7 @@ export class EntryPointComponent {
 
         label = competency.name;
 
-        let domain = this.competencies.find(x => x.id == this.domainId);
-
-        if (domain == undefined) {
-            return label;
-        }
-
-        label = label + ' ' + domain.name;
-
-        let level = this.levels.find(x => x.id == this.levelId);
+        let level = this.levels.find(x => x.id == levelId);
 
         if (level == undefined) {
             return label;

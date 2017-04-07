@@ -5,4 +5,5 @@ export interface ICompetency {
     parentId?: number;
     name: string;
     isSelectable: boolean;
+    competencies?: ICompetency[];
 }

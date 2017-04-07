@@ -5,6 +5,11 @@
             </tr>
         </thead>
         <tbody>
+            <tr *ngIf="skills.length < 1">
+                <div class="uui-alert-messages">
+                    <strong>Oops!</strong> There are not skills to show.
+                </div>
+            </tr>
             <tr *ngFor="let skill of skills" [attr.data-grid-level]="skill.skillLevel" [ngClass]="skill.className">
                 <td>
                     <div [ngClass]="'skill-level-' + skill.skillLevel">

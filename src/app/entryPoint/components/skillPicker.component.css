@@ -1,3 +1,6 @@
+.uui-table{
+    margin-top: 10px;
+}
 .uui-table thead tr {
     background-color:rgba(102,102,102,0.95);
 }
@@ -5,9 +8,6 @@
     color: white !important;
     text-transform: uppercase;
 }
-/*.uui-table.small td {
-    padding: 5px;
-}*/
 .childSelected::before {
     width: 11px;
     height: 11px;

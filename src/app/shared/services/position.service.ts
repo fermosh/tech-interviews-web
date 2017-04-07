@@ -13,7 +13,7 @@ import { ICompetency } from '../../entryPoint/classes/competency';
 
 @Injectable()
 export class PositionService {
-    private baseUrl = 'http://localhost:64647/api/competency';
+    private baseUrl = 'http://localhost:64647/api/competencies';
 
     constructor(private http: Http) { }
 
