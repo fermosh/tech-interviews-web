@@ -12,7 +12,7 @@ import { Question } from './../classes/question';
 @Injectable()
 export class QuestionService {
     private baseUrl = 'api/questions';
-    private questionsBankUrl = 'api/questionsByTemplateId';
+    private questionsBankUrl = 'http://localhost:64647/api';
 
     constructor(private http: Http) { }
 
@@ -22,9 +22,8 @@ export class QuestionService {
             .catch(this.handleError);
     }
 
-    getQuestionsByTemplateId(id: number): Observable<Question[]> {
-        //const url = `${this.questionsBankUrl}/${id}`;
-        const url = this.questionsBankUrl;
+    getQuestionsByTemplateId(id: string): Observable<Question[]> {
+        const url = `${this.questionsBankUrl}/templates/${id}/questions`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -79,7 +78,7 @@ export class QuestionService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body || body.data || {};
     }
 
     private handleError(error: Response): Observable<any> {

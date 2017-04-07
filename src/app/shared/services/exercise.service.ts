@@ -12,7 +12,7 @@ import { Exercise } from './../classes/exercise';
 @Injectable()
 export class ExerciseService {
     private baseUrl = 'api/exercises';
-    private exercisesBankUrl = 'api/exercisesByTemplateId';
+    private exercisesBankUrl = 'http://localhost:64647/api';
 
     constructor(private http: Http) { }
 
@@ -22,9 +22,8 @@ export class ExerciseService {
             .catch(this.handleError);
     }
 
-    getExercisesByTemplateId(id: number): Observable<Exercise[]> {
-        //const url = `${this.exercisesBankUrl}/${id}`;
-        const url = this.exercisesBankUrl;
+    getExercisesByTemplateId(id: string): Observable<Exercise[]> {
+        const url = `${this.exercisesBankUrl}/templates/${id}/exercises`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -79,7 +78,7 @@ export class ExerciseService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body || body.data || {};
     }
 
     private handleError(error: Response): Observable<any> {

@@ -49,9 +49,10 @@
                                         </span>
                                     </p>
                                     <div class="skill-accordion-subtitle">
-                                        <tih-score *ngIf="(skill.interviewQuestions && skill.interviewQuestions.length) || (skill.interviewExercises && skill.interviewExercises.length)" [score]='getRatingBySkill(skill)' class="score-label-value"></tih-score>
-                                        <span [class]="'uui-label ' + getSkillPriorityStyle(skill)">{{ skill.priority }}</span>&nbsp;&nbsp;
-                                        <span class="starting-label-value">{{ skill.startingFrom }}</span>&nbsp;&nbsp;
+                                        <tih-score *ngIf="(skill.interviewQuestions && skill.interviewQuestions.length) || (skill.interviewExercises && skill.interviewExercises.length)"
+                                            [score]='getRatingBySkill(skill)' class="score-label-value"></tih-score>
+                                        <span *ngIf="skill.priority" [class]="'uui-label ' + getSkillPriorityStyle(skill)">{{ skill.priority }}&nbsp;&nbsp;</span>
+                                        <span *ngIf="skill.startingFrom" class="starting-label-value">{{ skill.startingFrom }}&nbsp;&nbsp;</span>
                                         <span class="topic-label-value" data-toggle="tooltip" data-container="body" data-html="true" data-placement="right" [attr.data-original-title]="getTopicsBySkill(skill)">Topics</span>
                                     </div>
                                 </div>
@@ -72,7 +73,8 @@
                                                     <table>
                                                         <tr>
                                                             <td><span class="fa fa-bars" aria-hidden="true"></span>{{ question.body
-                                                                }}</td>
+                                                                }}
+                                                            </td>
                                                             <td class="rating-cell">
                                                                 <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                             </td>
@@ -100,7 +102,8 @@
                         <!-- EXERCISES SET -->
                         <div (mouseenter)="onMouseEnterExercises()">
                             <h3 class="medium-gray" style="text-transform: none;">Exercises&nbsp;&nbsp;
-                                <div *ngIf="hoverExercises" title="Exercise Picker" class="question-picker-button" data-toggle="modal" data-target="#exercisePicker" (click)="setSelectedExercises(skill)">
+                                <div *ngIf="hoverExercises" title="Exercise Picker" class="question-picker-button" data-toggle="modal" data-target="#exercisePicker"
+                                    (click)="setSelectedExercises(skill)">
                                     <i class="fa fa-pencil"></i>
                                 </div>
                             </h3>
@@ -140,7 +143,8 @@
                                                     <td>&nbsp;</td>
                                                     <td class="ex-comment-cell">
                                                         <tih-history-comment [comments]="exercise.comments" (deleteCommentClicked)="deleteComment('exercise', 0, exercise.id, $event)"></tih-history-comment>
-                                                        <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', 0, exercise.id, $event)" />
+                                                        <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', 0, exercise.id, $event)"
+                                                        />
                                                     </td>
                                                 </tr>
                                             </table>
@@ -162,7 +166,8 @@
     </div>
 
     <!-- QUESTION PICKER -->
-    <div class="modal uui-modal fade blue" id="questionPicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" *ngIf="selectedSkill">
+    <div class="modal uui-modal fade blue" id="questionPicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+        *ngIf="selectedSkill">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -176,7 +181,8 @@
                             <tr *ngFor="let question of questionBank | questionBankFilter : selectedSkill.id">
                                 <td>
                                     <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true,  'disable': !question.removable }">
-                                        <input type="checkbox" [attr.disabled]="question.removable ? null : ''" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id" />
+                                        <input type="checkbox" [attr.disabled]="question.removable ? null : ''" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id"
+                                        />
                                         <label [for]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id">{{ question.body }}</label>
                                     </p>
                                 </td>
@@ -207,7 +213,8 @@
                             <tr *ngFor="let exercise of exerciseBank">
                                 <td>
                                     <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true, 'ex-tilte-picker': true,  'disable': !exercise.removable }">
-                                        <input type="checkbox" [attr.disabled]="exercise.removable ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id" />
+                                        <input type="checkbox" [attr.disabled]="exercise.removable ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id"
+                                        />
                                         <label [for]="'cbxExercise_Exercise_' + exercise.id">{{ exercise.title }}</label>
                                         <template [ngIf]="exercise.tags && exercise.tags.length > 1">
                                             <template ngFor let-tag [ngForOf]="exercise.tags">
@@ -229,6 +236,13 @@
         </div>
     </div>
 
+</div>
+<div *ngIf='scriptViewer === null && errorMessage !== null'>
+    <div class="uui-alert-messages fuchsia" role="alert">
+        <i class="fa fa-exclamation-triangle"></i>
+        <strong>Error!</strong> There was an error when retrieving the Interview Script: {{ errorMessage.statusText }}
+        <span class="sr-only">Close</span>
+    </div>    
 </div>
 <br>
 <br>
