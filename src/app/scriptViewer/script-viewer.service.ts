@@ -4,16 +4,17 @@ import { Observable } from 'rxjs/Rx';
 
 import { InterviewScript } from './classes/interview-script';
 import { Skill } from './../shared/classes/skill';
+import { environment } from './../../environments/environment';
 
 @Injectable()
 
 export class ScriptViewerService {
-    private interviewScriptUrl = 'http://localhost:64647/api';
+    private baseUrl = `${environment.host}`;
 
     constructor(private http: Http) { }
 
     getScriptViewer(id: string): Observable<InterviewScript> {
-        const url = `${this.interviewScriptUrl}/templates/${id}`;
+        const url = `${this.baseUrl}templates/${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
