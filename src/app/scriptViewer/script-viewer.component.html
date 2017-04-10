@@ -51,8 +51,8 @@
                                     <div class="skill-accordion-subtitle">
                                         <tih-score *ngIf="(skill.interviewQuestions && skill.interviewQuestions.length) || (skill.interviewExercises && skill.interviewExercises.length)"
                                             [score]='getRatingBySkill(skill)' class="score-label-value"></tih-score>
-                                        <span [class]="'uui-label ' + getSkillPriorityStyle(skill)">{{ skill.priority }}</span>&nbsp;&nbsp;
-                                        <span class="starting-label-value">{{ skill.startingFrom }}</span>&nbsp;&nbsp;
+                                        <span *ngIf="skill.priority" [class]="'uui-label ' + getSkillPriorityStyle(skill)">{{ skill.priority }}&nbsp;&nbsp;</span>
+                                        <span *ngIf="skill.startingFrom" class="starting-label-value">{{ skill.startingFrom }}&nbsp;&nbsp;</span>
                                         <span class="topic-label-value" data-toggle="tooltip" data-container="body" data-html="true" data-placement="right" [attr.data-original-title]="getTopicsBySkill(skill)">Topics</span>
                                     </div>
                                 </div>
@@ -73,7 +73,8 @@
                                                     <table>
                                                         <tr>
                                                             <td><span class="fa fa-bars" aria-hidden="true"></span>{{ question.body
-                                                                }}</td>
+                                                                }}
+                                                            </td>
                                                             <td class="rating-cell">
                                                                 <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                             </td>
@@ -127,10 +128,9 @@
                                         <div *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [id]="'tab_ex_' + exercise.id" [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index === 0 }">
                                             <h3 class="ex-subtitle-label">Related Skills</h3>
                                             <p class="gray">
-                                                <!--<template ngFor let-tag [ngForOf]="exercise.tags" let-last="last">
-                                                    <span>{{ tag.text }}</span><span *ngIf="!last">, </span>
-                                                </template>-->
-                                                <span>{{ exercise.tag.name }}</span>
+                                                <template ngFor let-tag [ngForOf]="exercise.tags" let-last="last">
+                                                    <span>{{ tag.name }}</span><span *ngIf="!last">, </span>
+                                                </template>
                                             </p><br>
                                             <h3 class="ex-subtitle-label">Description</h3>
                                             <p class="gray">{{ exercise.body }}</p><br>
@@ -216,12 +216,11 @@
                                         <input type="checkbox" [attr.disabled]="exercise.removable ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id"
                                         />
                                         <label [for]="'cbxExercise_Exercise_' + exercise.id">{{ exercise.title }}</label>
-                                        <!--<template [ngIf]="exercise.tags && exercise.tags.length > 1">
+                                        <template [ngIf]="exercise.tags && exercise.tags.length > 1">
                                             <template ngFor let-tag [ngForOf]="exercise.tags">
-                                                <span class="uui-label lime-green related-skills-label">{{ '+ ' + (tag.text) }}</span>
+                                                <span class="uui-label lime-green related-skills-label">{{ '+ ' + (tag.name) }}</span>
                                             </template>
-                                        </template>-->
-                                        <span class="uui-label lime-green related-skills-label">{{ '+ ' + (exercise.tag.name) }}</span>
+                                        </template>
                                     </p>
                                     <p class="uui-description-text ex-descr-picker">{{ exercise.body }}</p>
                                 </td>
@@ -237,6 +236,13 @@
         </div>
     </div>
 
+</div>
+<div *ngIf='scriptViewer === null && errorMessage !== null'>
+    <div class="uui-alert-messages fuchsia" role="alert">
+        <i class="fa fa-exclamation-triangle"></i>
+        <strong>Error!</strong> There was an error when retrieving the Interview Script: {{ errorMessage.statusText }}
+        <span class="sr-only">Close</span>
+    </div>    
 </div>
 <br>
 <br>

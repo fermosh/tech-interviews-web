@@ -4,16 +4,17 @@ import { Observable } from 'rxjs/Rx';
 
 import { InterviewScript } from './classes/interview-script';
 import { Skill } from './../shared/classes/skill';
+import { environment } from './../../environments/environment';
 
 @Injectable()
 
 export class ScriptViewerService {
-    private interviewScriptUrl = 'api/interviewScriptData';
+    private baseUrl = `${environment.host}`;
 
     constructor(private http: Http) { }
 
-    getScriptViewer(id: number): Observable<InterviewScript> {
-        const url = `${this.interviewScriptUrl}/${id}`;
+    getScriptViewer(id: string): Observable<InterviewScript> {
+        const url = `${this.baseUrl}templates/${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -21,14 +22,13 @@ export class ScriptViewerService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body || body.data || {};
     }
 
     private handleError(error: Response): Observable<any> {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        return Observable.throw(error || error.json().error || 'Server error');
     }
 
     getFinalRating(interviewScript: InterviewScript): number {

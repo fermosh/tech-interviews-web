@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ICompetency } from '../../entryPoint/classes/competency';
+import { ICompetency } from '../../classes/competency';
 
 declare var jQuery: any;
 

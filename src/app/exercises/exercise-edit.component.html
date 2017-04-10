@@ -38,23 +38,19 @@
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': displayMessage.skill}">
-                    <label class="col-md-2 control-label" for="skillId">Skill</label>
-                    <div class="col-md-3">
-                        <select id="skillId" class="form-control" formControlName="skillId">
-                            <option *ngIf="skillId === 0" ng-selected [attr.value]="0">-- Select --</option>
-                            <option *ngFor="let tag of tags" ng-selected="tag.id === skillId" [attr.value]="tag.Id">{{tag.name}}</option>
-                        </select>
-                        <span class="help-block" *ngIf="displayMessage.skill">
-                            {{displayMessage.skill}}
-                        </span>
+                    <label class="col-md-2 control-label" for="skills">Skills</label>
+                    <div class="col-md-8">
+                        <ul id="tagIt" class="exercise-edit-skills">
+                            <li *ngFor="let skill of skills" [attr.value]="skill.Id">{{skill.name}}</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': displayMessage.competency}">
-                    <label class="col-md-2 control-label" for="competencyId">Competency</label>
+                    <label class="col-md-2 control-label" for="competency">Competency</label>
                     <div class="col-md-3">
-                        <select id="competencyId" class="form-control" formControlName="competencyId">
-                            <option *ngIf="competencyId === 0" ng-selected [attr.value]="0">-- Select --</option>
-                            <option *ngFor="let competency of competencies" ng-selected="competency.id === competencyId" [attr.value]="competency.id">{{competency.name}}</option>
+                        <select class="form-control" formControlName="competency">
+                            <option *ngIf="competency === ''" ng-selected="selected" [value]="''">-- Select --</option>
+                            <option *ngFor="let c of competencies" ng-selected="c.name === competency" [value]="c.name">{{c.name}}</option>
                         </select>
                         <span class="help-block" *ngIf="displayMessage.competency">
                             {{displayMessage.competency}}
@@ -67,7 +63,7 @@
                         <button class="uui-button transparent" type="submit" [disabled]='!exerciseForm.valid'>
                             Save
                         </button>
-                        <button class="uui-button transparent" [routerLink]="['/exercises']">
+                        <button class="uui-button transparent" [routerLink]="[ '/exercises']">
                             Cancel
                         </button>
                         <button class="uui-button transparent" (click)="deleteExercise()">

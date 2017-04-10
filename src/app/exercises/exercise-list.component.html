@@ -1,13 +1,14 @@
 <div *ngIf='exercises'>
     <div class="exercise-list-header">
         <div class="container">
+            <button class="uui-button lime-green" style="float:right" [routerLink]="['/exercises/0']">Add</button>
             <div class="exercise-list-title-box">
                 <h2>{{title}}</h2>
             </div>
         </div>
     </div>
     <br>
-    <div class="container">
+    <div class="container" *ngIf='exercises && exercises.length'>
         <table class="uui-table dynamic stripe records-per-page search showing-pages paging">
             <thead>
                 <tr>
@@ -23,7 +24,7 @@
                         {{exercise.title}}
                         </a>
                     </td>
-                    <td>{{exercise.tag.name}}</td>
+                    <td>{{exercise.skills[0].name}}</td>
                     <td>{{exercise.competency.name}}</td>
                     <td>
                         <a class="uui-button small" [routerLink]="['/exercises', exercise.id]">

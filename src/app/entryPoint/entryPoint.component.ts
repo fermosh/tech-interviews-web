@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ICompetency } from './classes/competency';
+import { ICompetency } from '../shared/classes/competency';
 import { ILevel } from './../shared/classes/level';
 import { Skill } from '../shared/classes/skill';
 
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { TemplateService } from './../shared/services/template.service';
-import { PositionService } from './../shared/services/position.service';
+import { CompetencyService } from './../shared/services/competency.service';
 
 import { ITemplate } from './../shared/classes/template';
 import { SkillMatrixItem } from './classes/skillMatrixItem';
@@ -48,7 +48,7 @@ export class EntryPointComponent {
     constructor(
         private skillMatrixService: SkillMatrixService,
         private templateService: TemplateService,
-        private positionService: PositionService,
+        private competencyService: CompetencyService,
         private router: Router) { };
 
     /* Start Initilizers */
@@ -69,7 +69,7 @@ export class EntryPointComponent {
         ];
 
         // call the position service to get the competencies
-        this.positionService.getCompetencies().subscribe(
+        this.competencyService.getCompetencies().subscribe(
             competencies => {
                 this.competencyList = competencies;
                 this.competencies = this.SetCompetencies(competencies);

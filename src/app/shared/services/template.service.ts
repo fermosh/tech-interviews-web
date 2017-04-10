@@ -10,11 +10,12 @@ import 'rxjs/add/operator/filter';
 
 import 'rxjs/add/observable/of';
 
+import { environment } from './../../../environments/environment';
 import { ITemplate } from '../classes/template';
 
 @Injectable()
 export class TemplateService {
-    private baseUrl = 'http://localhost:64647/api/template';
+    private baseUrl = `${environment.host}templates/`;
 
     constructor(private http: Http) { }
 
@@ -29,7 +30,7 @@ export class TemplateService {
             return Observable.of(this.initializeTemplate());
         };
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -39,7 +40,7 @@ export class TemplateService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -71,10 +72,10 @@ export class TemplateService {
             .catch(this.handleError);
     }
 
-    private updateTemplate(product: ITemplate, options: RequestOptions): Observable<ITemplate> {
-        const url = `${this.baseUrl}/${product.id}`;
-        return this.http.put(url, product, options)
-            .map(() => product)
+    private updateTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
+        const url = `${this.baseUrl}${template.id}`;
+        return this.http.put(url, template, options)
+            .map(() => template)
             .catch(this.handleError);
     }
 

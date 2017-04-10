@@ -3,10 +3,10 @@ import { Tag } from './tag';
 import { ICompetency } from '../../entryPoint/classes/competency';
 
 export class Exercise {
-    id: number;
+    id: string;
     title: string;
     body: string;
     solution?: string;
-    tag: Tag;
+    skills?: Tag[];
     competency?: ICompetency;
 }

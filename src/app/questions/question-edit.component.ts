@@ -11,8 +11,7 @@ import { QuestionService } from './../shared/services/question.service';
 import { NumberValidator } from '../shared//validators/number.validator';
 import { GenericValidator } from '../shared//validators/generic.validator';
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
-import { PositionService } from './../shared/services/position.service';
-import { ICompetency } from './../entryPoint/classes/competency';
+import { CompetencyService } from './../shared/services/competency.service';
 import { Tag } from './../shared/classes/tag';
 import { SkillMatrix } from './../shared/classes/skill-matrix';
 
@@ -27,8 +26,8 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
     title: string = 'Question Edit';
-    tags: Tag[];
-    competencies: ICompetency[];
+    skills: Tag[];
+    competencies: Tag[];
     isPageRendered: boolean;
     errorMessage: string;
     questionForm: FormGroup;
@@ -45,7 +44,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
                 private router: Router,
                 private questionService: QuestionService,
                 private skillMatrixService: SkillMatrixService,
-                private competencyService: PositionService) {
+                private competencyService: CompetencyService) {
 
         // Defines all of the validation messages for the form.
         // These could instead be retrieved from a file or database.
@@ -71,19 +70,19 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
                         Validators.minLength(20),
                         Validators.maxLength(200)]],
             answer: ['', [ Validators.maxLength(4000)]],
-            skillId: 0,
-            competencyId: 0
+            skill: '',
+            competency: ''
         });
 
         // Read the question Id from the route parameter
         this.sub = this.route.params.subscribe(
             params => {
-                let id = +params['id'];
+                let id = params['id'];
                 this.getQuestion(id);
             }
         );
 
-        this.getTags(13);
+        this.getSkills(13);
         this.getCompetencies();
     }
 
@@ -102,31 +101,31 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    getTags(id: number): void {
-        this.skillMatrixService.getSkillMatrix(id)
+    getSkills(id: number): void {
+        this.skillMatrixService.getSkillMatrix(id, 1)
             .subscribe(
                 (skillMatrix: SkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
                 (error: any) => this.errorMessage = <any>error
             );
     }
 
-    onTagsRetrieved(tags: Tag[]): void {
-        this.tags = tags;
+    onTagsRetrieved(skills: Tag[]): void {
+        this.skills = skills;
     }
 
     getCompetencies(): void {
-        this.competencyService.getPosition()
+        this.competencyService.getCompetencies()
             .subscribe(
-                (position) => this.onCompetenciesRetrieved(position.competencies),
+                (competencies: Tag[]) => this.onCompetenciesRetrieved(competencies),
                 (error: any) => this.errorMessage = <any>error
             );
     }
 
-    onCompetenciesRetrieved(competencies: ICompetency[]): void {
+    onCompetenciesRetrieved(competencies: Tag[]): void {
         this.competencies = competencies;
     }
 
-    getQuestion(id: number): void {
+    getQuestion(id: string): void {
         this.questionService.getQuestion(id)
             .subscribe(
                 (question: Question) => this.onQuestionRetrieved(question),
@@ -140,7 +139,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         this.question = question;
 
-        if (this.question.id === 0) {
+        if (this.question.id === '') {
             this.title = 'Add Question';
         } else {
             this.title = `Edit Question: ${this.question.body}`;
@@ -150,13 +149,13 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.questionForm.patchValue({
             body: this.question.body,
             answer: this.question.answer,
-            skillId: this.question.tag.id,
-            competencyId: this.question.competency.id
+            skill: this.question.skill.name,
+            competency: this.question.competency.name
         });
     }
 
     deleteQuestion(): void {
-        if (this.question.id === 0) {
+        if (this.question.id === '') {
             // Don't delete, it was never saved.
             this.onSaveComplete();
        } else {
@@ -174,6 +173,9 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.questionForm.dirty && this.questionForm.valid) {
             // Copy the form values over the question object values
             let q = Object.assign({}, this.question, this.questionForm.value);
+
+            q.skill = this.skills.find(s => s.name === this.questionForm.value.skill);
+            q.competency = this.competencies.find(c => c.name === this.questionForm.value.competency);
 
             this.questionService.saveQuestion(q)
                 .subscribe(

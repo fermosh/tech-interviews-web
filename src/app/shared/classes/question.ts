@@ -3,9 +3,9 @@ import { Tag } from './tag';
 import { ICompetency } from '../../entryPoint/classes/competency';
 
 export class Question {
-    id: number;
+    id: string;
     body: string;
     answer?: string;
-    tag: Tag;
+    skill: Tag;
     competency?: ICompetency;
 }
