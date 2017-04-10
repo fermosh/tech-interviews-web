@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ICompetency } from './../shared/classes/competency';
-import { IDomain } from './../shared/classes/domain';
+import { ICompetency } from '../shared/classes/competency';
 import { ILevel } from './../shared/classes/level';
-import { CompetencyService } from './../shared/services/competency.service';
-import { LevelService } from './../shared/services/level.service';
-import { DomainService } from './../shared/services/domain.service';
+import { Skill } from '../shared/classes/skill';
+
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { TemplateService } from './../shared/services/template.service';
+import { CompetencyService } from './../shared/services/competency.service';
+
 import { ITemplate } from './../shared/classes/template';
 import { SkillMatrixItem } from './classes/skillMatrixItem';
 import { Observable } from 'rxjs/Observable';
 
 declare var jQuery: any;
-
 
 @Component({
     templateUrl: './entryPoint.component.html',
@@ -26,10 +25,14 @@ export class EntryPointComponent {
     levelId = 0;
     domainId = 0;
 
+    selectedCompetencyId = this.competencyId;
+    selectedLevelId = this.levelId;
+
     /* Declare options to store the filter data */
+    competencyList: ICompetency[];
     competencies: ICompetency[];
+
     levels: ILevel[];
-    domains: IDomain[];
 
     /*Skills for the skill picker*/
     skills: SkillMatrixItem[];
@@ -42,86 +45,62 @@ export class EntryPointComponent {
     skillPickerLegend = '';
 
     /* Constructor to inject the diferent services */
-    constructor(private competencyService: CompetencyService,
-        private levelService: LevelService,
-        private domainService: DomainService,
+    constructor(
         private skillMatrixService: SkillMatrixService,
         private templateService: TemplateService,
+        private competencyService: CompetencyService,
         private router: Router) { };
 
     /* Start Initilizers */
     ngOnInit(): void {
-        this.initializeCompetencyData();
+        this.initializeFilterData();
     }
 
     // Get and fill the Competency dropdown data*/
-    private initializeCompetencyData(): void {
-        // load competency dropdown
+    private initializeFilterData(): void {
+
+        // Initilize levels, they are going to be 5 for default
+        this.levels = [
+            { id: 1, name: 'L1', description: 'Level 1' },
+            { id: 2, name: 'L2', description: 'Level 2' },
+            { id: 3, name: 'L3', description: 'Level 3' },
+            { id: 4, name: 'L4', description: 'Level 4' },
+            { id: 5, name: 'L5', description: 'Level 5' }
+        ];
+
+        // call the position service to get the competencies
         this.competencyService.getCompetencies().subscribe(
             competencies => {
-                // fill the available competencies with the ones from the datasource
-                this.competencies = competencies.sort((c1, c2) => this.competencyComparer(c1, c2));
-
-                // if there is more than one competency use the first one
-                if (this.competencies.length > 0) {
-                    this.competencyId = this.competencies[0].id;
-                }
-
-                // call the level initialization
-                this.initializeLevelData();
-            },
-            error => console.log(<any>error));
+                this.competencyList = competencies;
+                this.competencies = this.SetCompetencies(competencies);
+            }, error => console.log(<any>error));
     }
 
-    // Get and fill the Level dropdown data*/
-    private initializeLevelData(): void {
-        // load level dropdown
-        this.levelService.getLevels().subscribe(
-            levels => {
-                // fill the available levels
-                this.levels = levels.sort((l1, l2) => this.levelComparer(l1, l2));
+    private SetCompetencies(competencies: ICompetency[]) {
+        let result: ICompetency[] = [];
 
-                // possible levels
-                let possibleLevels = this.levels.filter(x => x.competencyId == this.competencyId);
+        competencies.filter(competency => competency.parentId == null).forEach(parent => {
 
-                // if there is more than one level use the first one
-                if (possibleLevels.length > 0) {
-                    this.levelId = possibleLevels[0].id;
-                }
+            let children = competencies.filter(x => x.parentId == parent.id);
 
-                // call the domain initialization
-                this.initializeDomainData();
-            },
-            error => console.log(<any>error));
-    }
+            parent.isSelectable = children.length > 0;
 
-    // Get and fill the Domain dropdown data*/
-    private initializeDomainData(): void {
-        // load domain dropdown
-        this.domainService.getDomains().subscribe(
-            domains => {
-                // fill the available domains
-                this.domains = domains.sort((d1, d2) => this.domainComparer(d1, d2));
+            if (parent.isSelectable) {
+                parent.competencies = children;
+            }
 
-                // possible levels
-                let possibleDomains = this.domains.filter(x => x.levelId == this.levelId);
+            result.push(parent);
+        });
 
-                // if there is more than one domain use the first one
-                if (possibleDomains.length > 0) {
-                    this.domainId = possibleDomains[0].id;
-                }
-
-                // verify the search status
-                this.checkSearchButtonStatus();
-            },
-            error => console.log(<any>error));
+        return result;
     }
     /* End Initilizers */
 
     /*Start event functions*/
-    private onCompetencyChange(competencyId: number): void {
+    private onCompetencyChanged(competencyId: number): void {
+        this.competencyId = competencyId;
+
         // reset level and domain selections
-        this.levelId = 0;
         this.domainId = 0;
 
         // verify the search status
@@ -129,9 +108,6 @@ export class EntryPointComponent {
     }
 
     private onLevelChange(levelId: number): void {
-        // reset domain selections
-        this.domainId = 0;
-
         // verify the search status
         this.checkSearchButtonStatus();
     }
@@ -154,7 +130,7 @@ export class EntryPointComponent {
         }
 
         // this.saveTemplateAndRedirect(this.skills.filter(x => x.isSelected).map(x => x.id));
-        this.saveTemplate(this.skills.filter(x => x.isSelected).map(x => x.id)).subscribe(
+        this.saveTemplate(this.selectedCompetencyId, this.selectedLevelId, this.skills.filter(x => x.isSelected).map(x => x.id)).subscribe(
             result => {
                 // navigate to the scriptViewer and pass the just created template id
                 this.router.navigate(['./script-viewer/' + result.id]);
@@ -162,27 +138,35 @@ export class EntryPointComponent {
     }
 
     private onSearch(): void {
+
+        if (this.levelId == this.selectedLevelId && this.competencyId ==  this.selectedCompetencyId) {
+            return;
+        }
+
         // hide skill grid
         this.isSkillGridVisible = false;
 
         // get the skillMatrixId from the selected domain
-        // let skillMatrixId = this.domains.find(x => x.id == this.domainId);
-        let  skillMatrixId = 13;
+        this.selectedCompetencyId = this.getCompetencyId();
+
+        this.selectedLevelId = this.levelId;
 
         // call the service to get the skill matrix data
-        this.skillMatrixService.getSkillMatrix(skillMatrixId, 1).subscribe(
+        this.skillMatrixService.getSkillMatrixByLevel(this.selectedCompetencyId, this.selectedLevelId).subscribe(
             skillMatrix => {
-
                 // fill the skill picker source
-                this.skills = skillMatrix.skills.map(
-                    skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
+                this.skills = this.processSkills(skillMatrix.skills)
+                    .map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
+
+                let legend = this.getLabel(this.selectedCompetencyId, this.selectedLevelId);
 
                 // set the skillPicker header
-                this.skillPickerLegend = this.getLabel();
+                this.skillPickerLegend = legend;
 
                 // make grid Visisble
                 this.isSkillGridVisible = true;
 
+                // check if we can enable the next button according to the skills selected
                 this.checkNextButtonStatus();
             },
             error => console.log(<any>error));
@@ -191,10 +175,51 @@ export class EntryPointComponent {
 
     /* Start helper functions */
 
+    private getCompetencyId(): number {
+        return this.domainId == 0 ? this.competencyId : this.domainId;
+    }
+
+    processSkills(skills: Skill[]): Skill[] {
+
+        // initialize a new skill array
+        let output: Skill[] = [];
+
+        // apply the fillSkillInfo function to the first level objects
+        // this will also unchain the same function to their children
+        skills.filter(x => x.parentId == null).forEach(x => this.fillSkillInfo(x, 1, skills, output));
+
+        // return the output array
+        return output;
+    }
+
+    private fillSkillInfo(skill: Skill, initialLevel: number, source: Skill[], output: Skill[]) {
+
+        // add the skill to the new array
+        output.push(skill);
+
+        // set the level to the current skill
+        skill.skillLevel = initialLevel;
+
+        // look for the current skill children
+        let children = source.filter(x => x.parentId == skill.id);
+
+        // set the haschildren flag for the skill
+        // hack: for the moment we just allow maximum 5 levels
+        skill.hasChildren = children.length > 0;
+
+        if (!skill.hasChildren) {
+            return;
+        };
+
+        // apply this same function to every children of the skill
+        children.forEach(y => this.fillSkillInfo(y, initialLevel + 1, source, output));
+    }
+
     // promise to save a template
-    private saveTemplate(skillIds: number[]): Observable<ITemplate> {
+    private saveTemplate(competencyId: number, jobfubctionLevel: number, skillIds: number[]): Observable<ITemplate> {
         // save template
-        return this.templateService.saveTemplate({ id: 0, skillIds: skillIds });
+        return this.templateService.saveTemplate(
+            { id: '', skillIds: skillIds, competencyId: competencyId, jobfubctionLevel: jobfubctionLevel });
     }
 
     // determines when the next button is enabled or not according to the selected skills
@@ -203,28 +228,20 @@ export class EntryPointComponent {
     }
 
     // return a label to show in the skill picker header
-    private getLabel(): string {
+    private getLabel(competencyId: number, levelId: number): string {
 
         let label = '';
-        let competency =  this.competencies.find(x => x.id == this.competencyId);
+        let competency = this.competencyList.find(x => x.id == competencyId);
 
-        if (competency == undefined){
+        if (competency == undefined) {
             return label;
         }
 
         label = competency.name;
 
-        let domain =  this.domains.find(x => x.id == this.domainId);
+        let level = this.levels.find(x => x.id == levelId);
 
-        if (domain == undefined) {
-            return label;
-        }
-
-        label = label + ' ' + domain.name;
-
-        let level =  this.levels.find(x => x.id == this.levelId);
-
-        if (level == undefined){
+        if (level == undefined) {
             return label;
         }
 
@@ -238,46 +255,7 @@ export class EntryPointComponent {
 
     // determines when the search button is enabled or not according to the dropdwns values
     private checkSearchButtonStatus(): void {
-        this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0 || this.domainId == 0);
-    }
-
-    // ICompetency Comparer(for sorting purpose)
-    private competencyComparer(first: ICompetency, second: ICompetency): number {
-        if (first.name > second.name) {
-            return 1;
-        }
-
-        if (first.name < second.name) {
-            return -1;
-        }
-
-        return 0;
-    }
-
-    // ILevel Comparer(for sorting purpose)
-    private levelComparer(first: ILevel, second: ILevel): number {
-        if (first.name > second.name) {
-            return 1;
-        }
-
-        if (first.name < second.name) {
-            return -1;
-        }
-
-        return 0;
-    }
-
-    // IDomain Comparer(for sorting purpose)
-    private domainComparer(first: IDomain, second: IDomain): number {
-        if (first.name > second.name) {
-            return 1;
-        }
-
-        if (first.name < second.name) {
-            return -1;
-        }
-
-        return 0;
+        this.isSearchDisabled = (this.competencyId == 0 || this.levelId == 0);
     }
     /*End helper functions */
 }

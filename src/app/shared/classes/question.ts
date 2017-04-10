@@ -1,6 +1,6 @@
 /* Defines question entity */
 import { Tag } from './tag';
-import { ICompetency } from './competency';
+import { ICompetency } from '../../entryPoint/classes/competency';
 
 export class Question {
     id: string;

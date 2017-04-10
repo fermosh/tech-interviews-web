@@ -17,8 +17,7 @@ export class MockScriptViewerService extends ScriptViewerService {
         {
             id: 3,
             name: 'L3',
-            description: 'Senior Software Engineer',
-            competencyId: 13
+            description: 'Senior Software Engineer'
         },
         skills: [
             {

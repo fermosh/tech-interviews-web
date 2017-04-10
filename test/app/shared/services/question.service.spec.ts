@@ -14,43 +14,43 @@ describe('Question Service', () => {
             answer: ``,
             tag: {
                 id: 1,
-                text: '.Net'
+                name: '.Net'
             }
         },
         {
             id: 2,
-            text: 'When to use string and when StringBuilder?',
+            body: 'When to use string and when StringBuilder?',
             answer: ``,
             tag: {
                 id: 1,
-                text: '.Net'
+                name: '.Net'
             }
         },
         {
             id: 3,
-            text: 'When to use var and when the exact data type?',
+            body: 'When to use var and when the exact data type?',
             answer: ``,
             tag: {
                 id: 1,
-                text: '.Net'
+                name: '.Net'
             }
         },
         {
             id: 4,
-            text: 'What is SOLID? Explain the principles and provide examples',
+            body: 'What is SOLID? Explain the principles and provide examples',
             answer: ``,
             tag: {
                 id: 1,
-                text: '.Net'
+                name: '.Net'
             }
         },
         {
             id: 5,
-            text: 'What is Value Type and Reference Type?',
+            body: 'What is Value Type and Reference Type?',
             answer: ``,
             tag: {
                 id: 1,
-                text: '.Net'
+                name: '.Net'
             }
         }
     ];
@@ -177,26 +177,16 @@ describe('Question Service', () => {
             // arrange
             let mockItem: Question = {
                 id: 0,
-                text: 'What is Boxing and Un-Boxing?',
+                body: 'What is Boxing and Un-Boxing?',
                 answer: ``,
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    }
-                ]
+                tag: { id: 1, name: '.Net'}
             };
 
             let response: Question = {
                 id: 1,
-                text: 'What is Boxing and Un-Boxing?',
+                body: 'What is Boxing and Un-Boxing?',
                 answer: ``,
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    }
-                ]
+                tag: { id: 1, name: '.Net'}
             };
 
 
@@ -218,14 +208,9 @@ describe('Question Service', () => {
             // arrange
             let mockItem: Question = {
                 id: 1,
-                text: `What's the purpose of standards/conventions in .NET C#?`,
+                body: 'What is Boxing and Un-Boxing?',
                 answer: ``,
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    }
-                ]
+                tag: { id: 1, name: '.Net'}
             };
 
             mock.connections.subscribe(conn => {
@@ -245,15 +230,10 @@ describe('Question Service', () => {
 
             // arrange
             let mockItem: Question = {
-                id: 6,
-                text: 'What is Boxing and Un-Boxing?',
+                id: 0,
+                body: 'What is Boxing and Un-Boxing?',
                 answer: ``,
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    }
-                ]
+                tag: { id: 1, name: '.Net'}
             };
 
             mock.connections.subscribe(conn => {

@@ -94,11 +94,14 @@ export class ExerciseService {
             id: '',
             title: '',
             body: '',
-            skills: [],
             competency: {
-                id: 0,
-                name: ''
-            }
+                    code: '',
+                    jobFunctions: [],
+                    id: 0,
+                    parentId: null,
+                    name: '',
+                    isSelectable: false
+                }
         };
     }
 }

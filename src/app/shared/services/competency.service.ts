@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
 import { environment } from './../../../environments/environment';
-import { ICompetency } from './../classes/competency';
+import { ICompetency } from '../classes/competency';
 
 @Injectable()
 export class CompetencyService {
@@ -18,7 +18,10 @@ export class CompetencyService {
     constructor(private http: Http) { }
 
     getCompetencies(): Observable<ICompetency[]> {
-        return this.http.get(this.baseUrl)
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.get(`${this.baseUrl}`)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -26,10 +29,10 @@ export class CompetencyService {
     getCompetency(id: number): Observable<ICompetency> {
         if (id === 0) {
             return Observable.of(this.initializeCompetency());
-        // return Observable.create((observer: any) => {
-        //     observer.next(this.initializeCompetency());
-        //     observer.complete();
-        // });
+            // return Observable.create((observer: any) => {
+            //     observer.next(this.initializeCompetency());
+            //     observer.complete();
+            // });
         };
         const url = `${this.baseUrl}${id}`;
         return this.http.get(url)
@@ -72,7 +75,7 @@ export class CompetencyService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || body || {};
+        return body || body.data || body || {};
     }
 
     private handleError(error: Response): Observable<any> {
@@ -85,8 +88,11 @@ export class CompetencyService {
     initializeCompetency(): ICompetency {
         // Return an initialized object
         return {
+            code: '',
+            jobFunctions: [0],
             id: 0,
-            name: null
+            name: '',
+            isSelectable: false
         };
     }
 }

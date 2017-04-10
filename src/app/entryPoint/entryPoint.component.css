@@ -3,27 +3,27 @@
     margin-top: -3px;
     margin-left: 5px;
 }
-.plus-margin-horizontal
+.plus-margin-5
 {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 5px 5px 5px 0px;
 }
 .plus-margin-vertical
 {
     margin-top: 15px;
     margin-bottom: 15px;
 }
-.panel{
-    border: none !important;
-}
-.panel select
+select
 {
-    width: 220px;
+    width: 200px;
+}
+select[name='level']
+{
+    min-width: 80px;
+    width: 80px;
 }
 .right-Button
 {
     float: right;
-}
-.padding-bottom{
-    padding-bottom: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

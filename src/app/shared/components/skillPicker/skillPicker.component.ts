@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SkillMatrixItem } from '../classes/skillMatrixItem';
+import { SkillMatrixItem } from '../../../entryPoint/classes/skillMatrixItem';
 
 declare var jQuery: any;
 
@@ -14,6 +14,8 @@ export class SkillPickerComponent {
 
     @Input() skills: SkillMatrixItem[];
     @Input() header: string;
+    @Input() collapsed = false;
+
     @Output() selectionChanged: EventEmitter<void> = new EventEmitter<void>();
 
     ngOnInit(): void {
@@ -94,8 +96,14 @@ export class SkillPickerComponent {
     // function that executes the treegrid jquery instruction
     private createTree(): void {
         if (!this.isTreeCreated) {
+
             // calls this jQuery function to initialize the uui Tree Grid
-            jQuery('.uui-table.treegrid').uui_tree_grid({ collapsed: false, animate: true, padding_automation: false, padding: 0 });
+            jQuery('.uui-table.treegrid')
+                .uui_tree_grid({ collapsed: this.collapsed, animate: true, padding_automation: false, padding: 0 });
+
+            if (!this.collapsed) {
+                jQuery('.uui-table').find('span').each(function () { jQuery(this).removeClass('fa-angle-up').addClass('fa-angle-down'); });
+            }
 
             // set the flag to true
             this.isTreeCreated = true;

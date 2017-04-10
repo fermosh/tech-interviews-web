@@ -1,26 +1,15 @@
-<div class="panel">
-    <h3 class="dark-gray plus-margin-horizontal plus-margin-vertical">Please, select the candidate's profile:</h3>
-
-    <select [(ngModel)]="competencyId" (change)="onCompetencyChange($event.target.value)" name="competency" class="selectpicker uui-form-element plus-margin-horizontal" title="Competency">
-        <option *ngFor="let competency of competencies" [attr.value]="competency.id">{{competency.name}}</option>
-    </select>
-
-    <select [(ngModel)]="levelId" (change)="onLevelChange($event.target.value)" name="level" class="uui-form-element plus-margin-horizontal" title="Level">
-        <option value="0" *ngIf="levelId == 0">Choose a level</option>
-        <option *ngFor="let level of levels | levelFilter:competencyId" [attr.value]="level.id">{{level.name}}</option>
-    </select>
-
-    <select [(ngModel)]="domainId" (change)="onDomainChange($event.target.value)" name="domain" class="uui-form-element plus-margin-horizontal" title="Domain">
-        <option value="0" *ngIf="domainId == 0">Choose a domain</option>
-        <option *ngFor="let domain of domains | domainFilter: levelId" [attr.value]="domain.id">{{domain.name}}</option>
-    </select>
-
-    <button class="uui-button lime-green minus-margin-top {{ isSearchDisabled ? 'disable':'' }}" [disabled]="isSearchDisabled" (click)="onSearch()"><i class="fa fa-search"></i> Search</button>
+<div class="container">
+        <h3 class="dark-gray plus-margin-5 plus-margin-vertical">Please, select the candidate's profile:</h3>
+        <select [(ngModel)]="levelId" (change)="onLevelChange($event.target.value)" name="level" class="selectpicker uui-form-element plus-margin-5" title="Level">
+            <!--<option value="0" *ngIf="levelId == 0">Level</option>-->
+            <option *ngFor="let level of levels" [attr.value]="level.id">{{level.name}}</option>
+        </select>
+        <app-competency-picker [competencies]="competencies" [selectedId]="competencyId" (selectionChanged)="onCompetencyChanged($event)"></app-competency-picker>
+        <button class="uui-button lime-green {{ isSearchDisabled ? 'disable':'' }}" [disabled]="isSearchDisabled" (click)="onSearch()">
+            <i class="fa fa-search"></i> Search
+        </button>
 </div>
-
-<div *ngIf="isSkillGridVisible" class="panel plus-margin-horizontal">
-    <app-skill-picker [skills]="skills" (selectionChanged)="onPickerSelectionChanged()" [header]="skillPickerLegend"></app-skill-picker>
-    <div class="panel plus-margin-horizontal plus-margin-vertical padding-bottom">
+<div class="container" *ngIf="isSkillGridVisible">
+        <app-skill-picker [skills]="skills" (selectionChanged)="onPickerSelectionChanged()" [header]="skillPickerLegend"></app-skill-picker>
         <button class="uui-button lime-green right-icon right-Button {{ isNextDisabled ? 'disable':'' }}" (click)="onNext()" [disabled]="isNextDisabled">Next<i class="fa fa-long-arrow-right"></i></button>
-    </div>
 </div>
