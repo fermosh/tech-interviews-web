@@ -13,6 +13,7 @@ import { Question } from './../classes/question';
 @Injectable()
 export class QuestionService {
     private baseUrl = `${environment.host}questions/`;
+    private questionsBankUrl = `${environment.host}templates/`;
 
     constructor(private http: Http) { }
 
@@ -23,7 +24,7 @@ export class QuestionService {
     }
 
     getQuestionsByTemplateId(id: string): Observable<Question[]> {
-        const url = `${this.baseUrl}$template/${id}/questions`;
+        const url = `${this.questionsBankUrl}${id}/questions`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -77,7 +78,7 @@ export class QuestionService {
 
     private extractData(response: Response) {
         let body = response.json();
-        return body.data || body || {};
+        return body || body.data || {};
     }
 
     private handleError(error: Response): Observable<any> {

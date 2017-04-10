@@ -46,9 +46,10 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.hoverSkillId = 0;
         this.hoverExercises = false;
+        this.errorMessage = null;
         this.sub = this.route.params.subscribe(
             params => {
-                let id = params['id'];
+                let id: string = params['id'];
                 this.getInterviewScript(id);
             });
     }
@@ -77,19 +78,28 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
                 this.getQuestionBank(id);
                 this.getExerciseBank(id);
             },
-            error => this.errorMessage = <any>error);
+            error => { 
+                this.scriptViewer = null;
+                this.errorMessage = <any>error;
+            });
     }
 
     getQuestionBank(templateId: string) {
         this.questionService.getQuestionsByTemplateId(templateId)
             .subscribe(questionBank => this.mapQuestionBank(questionBank),
-            error => this.errorMessage = <any>error);
+            error => {
+                this.questionBank = null;
+                this.errorMessage = <any>error;
+            });
     }
 
     getExerciseBank(templateId: string) {
         this.exerciseService.getExercisesByTemplateId(templateId)
             .subscribe(exerciseBank => this.mapExerciseBank(exerciseBank),
-            error => this.errorMessage = <any>error);
+            error => {
+                this.exerciseBank = null;
+                this.errorMessage = <any>error; 
+            });
     }
 
     mapQuestionBank(questions: Question[]) {
