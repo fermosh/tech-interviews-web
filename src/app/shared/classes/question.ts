@@ -6,6 +6,6 @@ export class Question {
     id: string;
     body: string;
     answer?: string;
-    tag: Tag;
+    skill: Tag;
     competency?: ICompetency;
 }

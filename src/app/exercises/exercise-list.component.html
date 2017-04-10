@@ -1,6 +1,7 @@
 <div *ngIf='exercises'>
     <div class="exercise-list-header">
         <div class="container">
+            <button class="uui-button lime-green" style="float:right" [routerLink]="['/exercises/0']">Add</button>
             <div class="exercise-list-title-box">
                 <h2>{{title}}</h2>
             </div>
@@ -23,7 +24,7 @@
                         {{exercise.title}}
                         </a>
                     </td>
-                    <td>{{exercise.tags[0].name}}</td>
+                    <td>{{exercise.skills[0].name}}</td>
                     <td>{{exercise.competency.name}}</td>
                     <td>
                         <a class="uui-button small" [routerLink]="['/exercises', exercise.id]">

@@ -71,8 +71,7 @@ export class QuestionService {
     }
 
     private updateQuestion(question: Question, options: RequestOptions): Observable<Question> {
-        const url = `${this.baseUrl}${question.id}`;
-        return this.http.put(url, question, options)
+        return this.http.put(this.baseUrl, question, options)
             .map(() => question)
             .catch(this.handleError);
     }
@@ -95,7 +94,7 @@ export class QuestionService {
             id: '',
             body: '',
             answer: null,
-            tag : {
+            skill : {
                 id: 0,
                 name: ''
             },

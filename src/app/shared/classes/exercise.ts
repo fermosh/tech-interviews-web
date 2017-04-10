@@ -7,6 +7,6 @@ export class Exercise {
     title: string;
     body: string;
     solution?: string;
-    tags?: Tag[];
+    skills?: Tag[];
     competency?: ICompetency;
 }
