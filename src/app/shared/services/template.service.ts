@@ -25,8 +25,8 @@ export class TemplateService {
             .catch(this.handleError);
     }
 
-    getTemplate(id: number): Observable<ITemplate> {
-        if (id === 0) {
+    getTemplate(id: string): Observable<ITemplate> {
+        if (id === '') {
             return Observable.of(this.initializeTemplate());
         };
 
@@ -36,7 +36,7 @@ export class TemplateService {
             .catch(this.handleError);
     }
 
-    deleteTemplate(id: number): Observable<Response> {
+    deleteTemplate(id: string): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 

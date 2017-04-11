@@ -9,26 +9,26 @@ describe('Exercise Service', () => {
     // array to mock http requests
     const exerciseResult: Exercise[] = [
         {
-            id: 1,
+            id: '1',
             title: 'Palindrome',
             body: `A palindrome is a word, phrase, number, or other
                 sequence of characters which reads the same backward or forward,
                 such as madam or kayak. Write an function that receives an string
                 parameters and return true if it is a palindrome.`,
             solution: '',
-            tag: {
+            skills: [{
                 id: 1,
                 name: '.Net'
-            }
+            }]
         },
         {
-            id: 2,
+            id: '2',
             title: 'Balanced Brakets',
             body: `Type of Brackets: () Round brackets or parentheses, {}
                 Curly brackets or braces, [] Square brackets. Implement an algorithm
                 to resolve the balanced brackets problems, ie. \'{([])}\' is balanced.`,
             solution: '',
-            tag: [
+            skills: [
                 {
                     id: 1,
                     name: '.Net'
@@ -162,31 +162,31 @@ describe('Exercise Service', () => {
 
             // arrange
             let mockItem: Exercise = {
-                id: 0,
+                id: '',
                 title: 'Palindrome',
                 body: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tag: {
+                skills: [{
                     id: 1,
-                    text: '.Net'
-                }
+                    name: '.Net'
+                }]
             };
 
             let response: Exercise = {
-                id: 1,
+                id: '1',
                 title: 'Palindrome',
                 body: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tag: {
+                skills: [{
                     id: 1,
-                    text: '.Net'
-                }
+                    name: '.Net'
+                }]
             };
 
             mock.connections.subscribe(conn => {
@@ -206,17 +206,17 @@ describe('Exercise Service', () => {
 
             // arrange
             let mockItem: Exercise = {
-                id: 1,
+                id: '1',
                 title: 'Palindrome',
                 body: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tag: {
+                skills: [{
                     id: 1,
-                    text: '.Net'
-                }
+                    name: '.Net'
+                }]
             };
 
             mock.connections.subscribe(conn => {
@@ -236,17 +236,17 @@ describe('Exercise Service', () => {
 
             // arrange
             let mockItem: Exercise = {
-                id: 1,
+                id: '1',
                 title: 'Palindrome',
                 body: `A palindrome is a word, phrase, number, or other
                     sequence of characters which reads the same backward or forward,
                     such as madam or kayak. Write an function that receives an string
                     parameters and return true if it is a palindrome.`,
                 solution: '',
-                tag: {
+                skills: [{
                     id: 1,
-                    text: '.Net'
-                }
+                    name: '.Net'
+                }]
             };
 
             mock.connections.subscribe(conn => {
@@ -267,7 +267,7 @@ describe('Exercise Service', () => {
         it('should delete an item succesfully', async(inject([ExerciseService, MockBackend], (service: ExerciseService, mock) => {
 
             // arrange
-            let itemId = 6;
+            let itemId = '6';
 
             let mockResponse = new Response(new ResponseOptions({body: null, status: 204, type: null, statusText: 'No Content' }));
 
@@ -286,7 +286,7 @@ describe('Exercise Service', () => {
         // test to validate the DeleteExercise method returns an exception
         it('should return an exception', async(inject([ExerciseService, MockBackend], (service: ExerciseService, mock) => {
             // arrange
-            let itemId = -1;
+            let itemId = '-1';
             mock.connections.subscribe(conn => {
                 throw new Error('Any error message');
             });

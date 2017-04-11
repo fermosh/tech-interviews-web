@@ -4,19 +4,16 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 /* Module and component */
-import { EntryPointModule } from '../../../src/app/entryPoint/entryPoint.module';
 import { EntryPointComponent } from '../../../src/app/entryPoint/entryPoint.component';
-
-import { SkillPickerComponent } from '../../../src/app/entryPoint/components/skillPicker.component';
-import { CompetencyFilterPipe } from '../../../src/app/entryPoint/pipes/competency-filter.pipe';
-
+import { CompentencyPickerComponent } from '../../../src/app/shared/components/competencyPicker/competencyPicker.component';
+import { SkillPickerComponent } from '../../../src/app/shared/components/skillPicker/skillPicker.component';
 /* Services */
-import { PositionService } from '../../../src/app/shared/services/position.service';
+import { CompetencyService } from '../../../src/app/shared/services/competency.service';
 import { SkillMatrixService } from '../../../src/app/shared/services/skill-matrix.service';
 import { TemplateService } from '../../../src/app/shared/services/template.service';
 
 /* Mock Services */
-import { MockPositionService } from '../shared/services/mockPosition.service';
+import { MockCompetencyService } from '../shared/services/mockCompetency.service';
 import { MockSkillMatrixService } from '../shared/services/mockSkill-matrix.service';
 import { MockTemplateService } from '../shared/services/mockTemplate.service';
 
@@ -29,12 +26,12 @@ describe('Entry Point Component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule],
-            declarations: [EntryPointComponent, SkillPickerComponent, CompetencyFilterPipe],
+            declarations: [EntryPointComponent, SkillPickerComponent, CompentencyPickerComponent],
             providers: [{ provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } }]
         }).overrideComponent(EntryPointComponent, {
             set: {
                 providers: [
-                    { provide: PositionService, useClass: MockPositionService },
+                    { provide: CompetencyService, useClass: MockCompetencyService },
                     { provide: SkillMatrixService, useClass: MockSkillMatrixService },
                     { provide: TemplateService, useClass: MockTemplateService }
                 ]

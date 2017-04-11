@@ -9,8 +9,7 @@ describe('Script Viewer Service: ', () => {
 
     // array to mock http requests
     const skillMatrixResult: SkillMatrix[] = [{
-        id: 13, hasContent: true, competencyName: '.Net', domain: 'FrontEnd web development',
-        level: { id: 3, name: 'L3', description: 'Senior Software Engineer' },
+        hasContent: true, competencyId:0,
         skills: [{
                         id: 2,
                         name: '.NET Development',
