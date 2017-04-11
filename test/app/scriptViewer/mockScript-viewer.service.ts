@@ -10,7 +10,6 @@ import { Exercise } from '../../../src/app/shared/classes/exercise';
 
 export class MockScriptViewerService extends ScriptViewerService {
     private interviewScripts: InterviewScript = {
-        id: 13,
         competencyName: '.Net',
         domain: 'Front-End Web Developemnt',
         level:
@@ -175,7 +174,7 @@ export class MockScriptViewerService extends ScriptViewerService {
         super(null);
     }
 
-    getScriptViewer(id: number): Observable<InterviewScript> {
+    getScriptViewer(id: string): Observable<InterviewScript> {
         return Observable.of(this.interviewScripts);
     }
 

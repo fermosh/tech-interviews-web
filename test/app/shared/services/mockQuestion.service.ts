@@ -11,25 +11,22 @@ export class MockQuestionService extends QuestionService {
     // array to mock http requests
     private questions: Question[] = [
             {
-                id: 1,
+                id: '1',
                 body: `What's the purpose of standards/conventions in .NET C#?`,
                 answer: ``,
-                tag: { id: 973, name: 'Development' },
-                competency: { id: 1, name: '.Net' }
+                skill: { id: 973, name: 'Development' }
             },
             {
-                id: 2,
+                id: '2',
                 body: 'When to use string and when StringBuilder?',
                 answer: ``,
-                tag: { id: 973, name: 'Development' },
-                competency: { id: 571, name: '.Net' }
+                skill: { id: 973, name: 'Development' }
             },
             {
-                id: 3,
+                id: '3',
                 body: 'When to use var and when the exact data type?',
                 answer: ``,
-                tag: { id: 973, name: 'Development' },
-                competency: { id: 1, name: '.Net' }
+                skill: { id: 973, name: 'Development' }
             }];
 
     constructor() {
@@ -40,22 +37,22 @@ export class MockQuestionService extends QuestionService {
         return Observable.of(this.questions);
     }
 
-    getQuestionsByTemplateId(id: number): Observable<Question[]> {
+    getQuestionsByTemplateId(id: string): Observable<Question[]> {
         return Observable.of(this.questions);
     }
 
-    getQuestion(id: number): Observable<Question> {
+    getQuestion(id: string): Observable<Question> {
         return Observable.of(this.questions[0]);
     }
 
-    deleteQuestion(id: number): Observable<Response> {
+    deleteQuestion(id: string): Observable<Response> {
         let response = new Response(new ResponseOptions({ body: null, status: 204, type: null, statusText: 'No Content' }));
         return Observable.of(response);
     }
 
     saveQuestion(question: Question): Observable<Question> {
-        if (question.id === 0) {
-            question.id = 1;
+        if (question.id === '0') {
+            question.id = '1';
         }
 
         return Observable.of(question);

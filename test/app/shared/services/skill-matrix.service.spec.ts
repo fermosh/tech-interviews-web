@@ -9,8 +9,7 @@ describe('Skill Matrix Service: ', () => {
 
     // array to mock http requests
     const skillMatrixResult: SkillMatrix[] = [{
-        id: 13, hasContent: true, competencyName: '.Net', domain: 'FrontEnd web development',
-        level: { id: 3, name: 'L3', description: 'Senior Software Engineer', competencyId: 13 },
+        hasContent: true, competencyId: 10,
         skills: [{
             rootId: 7, displayOrder: 1, requiredSkillLevel: 0, userSkillLevel: 0, levelSet: 0, competencyId: 13, jobFunctionLevel: 3,
             topics: [], id: 7, parentId: null, name: 'Hard skills', isSelectable: true, skillLevel: 1, hasChildren: true
@@ -43,11 +42,11 @@ describe('Skill Matrix Service: ', () => {
             // arrange
             let mockItem = skillMatrixResult[0];
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockItem })));
             });
 
             // act
-            service.getSkillMatrix(mockItem.id).subscribe(result => {
+            service.getSkillMatrix(mockItem.competencyId, 1).subscribe(result => {
                 // assert
                 expect(result).toBeDefined();
             });
@@ -58,11 +57,11 @@ describe('Skill Matrix Service: ', () => {
             // arrange
             let mockItem = skillMatrixResult[0];
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body:  mockItem })));
             });
 
             // act
-            service.getSkillMatrix(mockItem.id).subscribe(result => {
+            service.getSkillMatrix(mockItem.competencyId, 1).subscribe(result => {
                 // assert
                 expect(result).toBeDefined();
                 expect(result).toEqual(mockItem);
@@ -77,7 +76,7 @@ describe('Skill Matrix Service: ', () => {
             });
 
             // act
-            let errorFunction = () => service.getSkillMatrix(null).subscribe(result => { });
+            let errorFunction = () => service.getSkillMatrix(null, null).subscribe(result => { });
 
             // assert
             expect(errorFunction).toThrowError();
