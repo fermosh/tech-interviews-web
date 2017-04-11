@@ -68,12 +68,12 @@ describe('Entry Point Component', () => {
     });
 
     describe('when initialized', () => {
-        it('should have 2 competencies and the selected competencyId should be 0', () => {
+        it('should have 1 competency and the selected competencyId should be 0', () => {
             // act
             component.ngOnInit();
 
             // assert
-            expect(component.competencies.length).toBe(2);
+            expect(component.competencyList.length).toBe(1);
             expect(component.competencyId).toBe(0);
         });
 

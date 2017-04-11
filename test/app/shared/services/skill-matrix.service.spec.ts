@@ -42,7 +42,7 @@ describe('Skill Matrix Service: ', () => {
             // arrange
             let mockItem = skillMatrixResult[0];
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockItem })));
             });
 
             // act
@@ -57,7 +57,7 @@ describe('Skill Matrix Service: ', () => {
             // arrange
             let mockItem = skillMatrixResult[0];
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body:  mockItem })));
             });
 
             // act

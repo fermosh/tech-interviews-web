@@ -52,7 +52,7 @@ describe('Question Service', () => {
             async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
             // arrange
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: questionResult }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: questionResult })));
             });
 
             // act
@@ -68,7 +68,7 @@ describe('Question Service', () => {
         async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
             // arrange
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: questionResult }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: questionResult })));
             });
 
             // act
@@ -116,7 +116,7 @@ describe('Question Service', () => {
             // arrange
             let mockItem = questionResult[0];
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockItem })));
             });
 
             // act
@@ -161,7 +161,7 @@ describe('Question Service', () => {
 
 
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: response }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: response })));
             });
 
             // act
@@ -183,7 +183,7 @@ describe('Question Service', () => {
                 skill: { id: 973, name: 'Development' }};
 
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockItem })));
             });
 
             // act

@@ -66,7 +66,7 @@ describe('Exercise Service', () => {
             async(inject([ExerciseService, MockBackend], (service: ExerciseService, mock) => {
             // arrange
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: exerciseResult }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: exerciseResult })));
             });
 
             // act
@@ -82,7 +82,7 @@ describe('Exercise Service', () => {
         async(inject([ExerciseService, MockBackend], (service: ExerciseService, mock) => {
             // arrange
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: exerciseResult }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: exerciseResult})));
             });
 
             // act
@@ -115,7 +115,7 @@ describe('Exercise Service', () => {
             // arrange
             let mockItem = exerciseResult[0];
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockItem})));
             });
 
             // act
@@ -130,7 +130,8 @@ describe('Exercise Service', () => {
             // arrange
             let mockItem = exerciseResult[0];
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockItem})));
+                mockItem
             });
 
             // act
@@ -190,7 +191,7 @@ describe('Exercise Service', () => {
             };
 
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: response }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body:response})));
             });
 
             // act
