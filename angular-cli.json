@@ -29,8 +29,6 @@
             "../node_modules/uui-framework/uui/js/uui-tooltip.min.js",
             "../node_modules/uui-framework/uui/js/lib/components/tag-it.min.js",
             "../node_modules/uui-framework/uui/js/uui-tagit.min.js",
-            "../node_modules/uui-framework/uui/js/lib/components/bootstrap-select.min.js",
-            "../node_modules/uui-framework/js/uui/uui-dropdown.js",
             "../node_modules/core-js/client/shim.min.js",
             "../node_modules/reflect-metadata/Reflect.js"
         ],

@@ -23,13 +23,11 @@ export class EntryPointComponent {
     /* Initilize the filters identifiers */
     competencyId = 0;
     levelId = 0;
-    domainId = 0;
 
     selectedCompetencyId = this.competencyId;
     selectedLevelId = this.levelId;
 
     /* Declare options to store the filter data */
-    competencyList: ICompetency[];
     competencies: ICompetency[];
 
     levels: ILevel[];
@@ -71,37 +69,16 @@ export class EntryPointComponent {
         // call the position service to get the competencies
         this.competencyService.getCompetencies().subscribe(
             competencies => {
-                this.competencyList = competencies;
-                this.competencies = this.SetCompetencies(competencies);
+                this.competencies = competencies;
             }, error => console.log(<any>error));
     }
 
-    private SetCompetencies(competencies: ICompetency[]) {
-        let result: ICompetency[] = [];
 
-        competencies.filter(competency => competency.parentId == null).forEach(parent => {
-
-            let children = competencies.filter(x => x.parentId == parent.id);
-
-            parent.isSelectable = children.length > 0;
-
-            if (parent.isSelectable) {
-                parent.competencies = children;
-            }
-
-            result.push(parent);
-        });
-
-        return result;
-    }
     /* End Initilizers */
 
     /*Start event functions*/
     private onCompetencyChanged(competencyId: number): void {
         this.competencyId = competencyId;
-
-        // reset level and domain selections
-        this.domainId = 0;
 
         // verify the search status
         this.checkSearchButtonStatus();
@@ -147,7 +124,7 @@ export class EntryPointComponent {
         this.isSkillGridVisible = false;
 
         // get the skillMatrixId from the selected domain
-        this.selectedCompetencyId = this.getCompetencyId();
+        this.selectedCompetencyId = this.competencyId;
 
         this.selectedLevelId = this.levelId;
 
@@ -174,10 +151,6 @@ export class EntryPointComponent {
     /*End event functions*/
 
     /* Start helper functions */
-
-    private getCompetencyId(): number {
-        return this.domainId == 0 ? this.competencyId : this.domainId;
-    }
 
     processSkills(skills: Skill[]): Skill[] {
 
@@ -231,7 +204,7 @@ export class EntryPointComponent {
     private getLabel(competencyId: number, levelId: number): string {
 
         let label = '';
-        let competency = this.competencyList.find(x => x.id == competencyId);
+        let competency = this.competencies.find(x => x.id == competencyId);
 
         if (competency == undefined) {
             return label;

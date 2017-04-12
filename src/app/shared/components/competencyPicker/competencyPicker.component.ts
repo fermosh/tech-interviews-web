@@ -10,23 +10,43 @@ declare var jQuery: any;
 })
 export class CompentencyPickerComponent {
     @Input() selectedId = 0;
-    @Input() competencies: ICompetency[] = [];
     @Output() selectionChanged: EventEmitter<number> = new EventEmitter<number>();
+    private internalCompetencies: ICompetency[];
 
-    private isLoaded = false;
+    get competencies(): ICompetency[] {
+        return this.internalCompetencies;
+    }
+
+    @Input('competencies')
+    set competencies(competencies: ICompetency[]) {
+        if (competencies == undefined) {
+            this.internalCompetencies = null;
+            return;
+        }
+
+        this.internalCompetencies = this.SetCompetencies(competencies);
+    }
 
     private Onchange(competencyId: number): void {
         this.selectionChanged.emit(competencyId);
     }
 
-    private ngAfterViewChecked(): void {
-        this.loadDropDowns();
-    }
+    private SetCompetencies(competencies: ICompetency[]) {
+        let result: ICompetency[] = [];
 
-    private loadDropDowns() {
-        if (this.competencies != null && !this.isLoaded) {
-            jQuery('.selectpicker').uui_dropdown();
-            this.isLoaded = true;
-        }
+        competencies.filter(competency => competency.parentId == null).forEach(parent => {
+
+            let children = competencies.filter(x => x.parentId == parent.id);
+
+            parent.isSelectable = children.length > 0;
+
+            if (parent.isSelectable) {
+                parent.competencies = children;
+            }
+
+            result.push(parent);
+        });
+
+        return result;
     }
 }

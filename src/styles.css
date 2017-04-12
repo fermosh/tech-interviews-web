@@ -4,10 +4,6 @@
 @import './../node_modules/uui-framework/uui/css/uui-all.min.css';
 @import './../node_modules/uui-framework/uui/css/lib/components/jquery.tagit.css';
 @import './../node_modules/uui-framework/uui/css/lib/components/tagit.ui-zendesk.css';
-@import './../node_modules/uui-framework/uui/css/lib/components/bootstrap-select.min.css';
-
-/*@import './../node_modules/uui-framework/css/custom-styles.css';*/
-
 @import './../node_modules/uui-framework/uui/css/lib/components/jquery.mCustomScrollbar.min.css';
 @import './../node_modules/uui-framework/uui/fonts/font-awesome/css/font-awesome.min.css';
 @import './../node_modules/uui-framework/uui/js/lib/components/DataTables-1.10.2/css/jquery.dataTables.min.css';
