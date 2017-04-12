@@ -1,6 +1,6 @@
 /* Defines exercise entity */
 import { Tag } from './tag';
-import { ICompetency } from '../../entryPoint/classes/competency';
+import { ICompetency } from './competency';
 
 export class Exercise {
     id: string;
@@ -8,5 +8,5 @@ export class Exercise {
     body: string;
     solution?: string;
     skills?: Tag[];
-    competency?: ICompetency;
+    competency?: Tag;
 }

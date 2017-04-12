@@ -71,7 +71,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
                         Validators.maxLength(200)]],
             answer: ['', [ Validators.maxLength(4000)]],
             skill: '',
-            competency: ''
+            competency: 0
         });
 
         // Read the question Id from the route parameter
@@ -150,7 +150,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             body: this.question.body,
             answer: this.question.answer,
             skill: this.question.skill.name,
-            competency: this.question.competency.name
+            competency: this.question.competency.id
         });
     }
 
@@ -175,7 +175,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             let q = Object.assign({}, this.question, this.questionForm.value);
 
             q.skill = this.skills.find(s => s.name === this.questionForm.value.skill);
-            q.competency = this.competencies.find(c => c.name === this.questionForm.value.competency);
+            q.competency = this.competencies.find(c => c.id === this.questionForm.value.competency);
 
             this.questionService.saveQuestion(q)
                 .subscribe(

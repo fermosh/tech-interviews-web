@@ -95,13 +95,9 @@ export class ExerciseService {
             title: '',
             body: '',
             competency: {
-                    code: '',
-                    jobFunctions: [],
-                    id: 0,
-                    parentId: null,
-                    name: '',
-                    isSelectable: false
-                }
+                id: 0,
+                name: ''
+            }
         };
     }
 }

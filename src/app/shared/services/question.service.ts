@@ -99,13 +99,9 @@ export class QuestionService {
                 name: ''
             },
             competency: {
-                    code: '',
-                    jobFunctions: [],
-                    id: 0,
-                    parentId: null,
-                    name: '',
-                    isSelectable: false
-                }
+                id: 0,
+                name: ''
+            }
         };
     }
 }
