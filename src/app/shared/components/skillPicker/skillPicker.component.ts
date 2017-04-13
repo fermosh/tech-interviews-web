@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SkillMatrixItem } from '../../../entryPoint/classes/skillMatrixItem';
+import { Skill } from '../../classes/skill';
 
 declare var jQuery: any;
 
@@ -12,14 +13,24 @@ export class SkillPickerComponent {
 
     private isTreeCreated = false;
 
-    @Input() skills: SkillMatrixItem[];
+    skills: SkillMatrixItem[];
     @Input() header: string;
     @Input() collapsed = false;
+    @Output() selectionChanged: EventEmitter<number[]> = new EventEmitter<number[]>();
 
-    @Output() selectionChanged: EventEmitter<void> = new EventEmitter<void>();
+    @Input('skillSource')
+    set skillSource(skills: Skill[]) {
+        if (skills == undefined) {
+            this.skills = [];
+            return;
+        }
 
-    ngOnInit(): void {
+        this.skills = this.processSkills(skills)
+            .map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
+
         this.skills.forEach(skill => skill.className = this.getClassName(skill));
+
+        this.emmitChanges();
     }
 
     // function that returns the class of the skill item
@@ -39,7 +50,11 @@ export class SkillPickerComponent {
         // ver or set parent selection
         this.cascadeParent(skill);
 
-        this.selectionChanged.emit();
+        this.emmitChanges();
+    }
+
+    private emmitChanges(){
+        this.selectionChanged.emit(this.skills.filter(x => x.isSelected).map(x=> x.id));
     }
 
     // Verify or set childs selection when a Skill parent has changed
@@ -108,5 +123,41 @@ export class SkillPickerComponent {
             // set the flag to true
             this.isTreeCreated = true;
         }
+    }
+
+    private processSkills(skills: Skill[]): Skill[] {
+
+        // initialize a new skill array
+        let output: Skill[] = [];
+
+        // apply the fillSkillInfo function to the first level objects
+        // this will also unchain the same function to their children
+        skills.filter(x => x.parentId == null).forEach(x => this.fillSkillInfo(x, 1, skills, output));
+
+        // return the output array
+        return output;
+    }
+
+    private fillSkillInfo(skill: Skill, initialLevel: number, source: Skill[], output: Skill[]) {
+
+        // add the skill to the new array
+        output.push(skill);
+
+        // set the level to the current skill
+        skill.skillLevel = initialLevel;
+
+        // look for the current skill children
+        let children = source.filter(x => x.parentId == skill.id);
+
+        // set the haschildren flag for the skill
+        // hack: for the moment we just allow maximum 5 levels
+        skill.hasChildren = children.length > 0;
+
+        if (!skill.hasChildren) {
+            return;
+        };
+
+        // apply this same function to every children of the skill
+        children.forEach(y => this.fillSkillInfo(y, initialLevel + 1, source, output));
     }
 }

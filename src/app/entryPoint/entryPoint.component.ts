@@ -10,7 +10,6 @@ import { TemplateService } from './../shared/services/template.service';
 import { CompetencyService } from './../shared/services/competency.service';
 
 import { ITemplate } from './../shared/classes/template';
-import { SkillMatrixItem } from './classes/skillMatrixItem';
 import { Observable } from 'rxjs/Observable';
 
 declare var jQuery: any;
@@ -33,7 +32,9 @@ export class EntryPointComponent {
     levels: ILevel[];
 
     /*Skills for the skill picker*/
-    skills: SkillMatrixItem[];
+    skills: Skill[];
+
+    skillsSelected: number[] = [];
 
     /* Auxiliar flags */
     private isSkillGridVisible: boolean;
@@ -67,13 +68,8 @@ export class EntryPointComponent {
         ];
 
         // call the position service to get the competencies
-        this.competencyService.getCompetencies().subscribe(
-            competencies => {
-                this.competencies = competencies;
-            }, error => console.log(<any>error));
+        this.competencyService.getCompetencies().subscribe(competencies => { this.competencies = competencies; }, error => console.log(<any>error));
     }
-
-
     /* End Initilizers */
 
     /*Start event functions*/
@@ -89,12 +85,8 @@ export class EntryPointComponent {
         this.checkSearchButtonStatus();
     }
 
-    private onDomainChange(domainId: number): void {
-        // verify the search status
-        this.checkSearchButtonStatus();
-    }
-
-    private onPickerSelectionChanged(): void {
+    private onPickerSelectionChanged(skillIds: number[]): void {
+        this.skillsSelected = skillIds;
         this.checkNextButtonStatus();
     }
 
@@ -106,8 +98,7 @@ export class EntryPointComponent {
             return;
         }
 
-        // this.saveTemplateAndRedirect(this.skills.filter(x => x.isSelected).map(x => x.id));
-        this.saveTemplate(this.selectedCompetencyId, this.selectedLevelId, this.skills.filter(x => x.isSelected).map(x => x.id)).subscribe(
+        this.saveTemplate(this.selectedCompetencyId, this.selectedLevelId, this.skillsSelected).subscribe(
             result => {
                 // navigate to the scriptViewer and pass the just created template id
                 this.router.navigate(['./script-viewer/' + result.id]);
@@ -116,7 +107,7 @@ export class EntryPointComponent {
 
     private onSearch(): void {
 
-        if (this.levelId == this.selectedLevelId && this.competencyId ==  this.selectedCompetencyId) {
+        if (this.levelId == this.selectedLevelId && this.competencyId == this.selectedCompetencyId) {
             return;
         }
 
@@ -132,8 +123,7 @@ export class EntryPointComponent {
         this.skillMatrixService.getSkillMatrixByLevel(this.selectedCompetencyId, this.selectedLevelId).subscribe(
             skillMatrix => {
                 // fill the skill picker source
-                this.skills = this.processSkills(skillMatrix.skills)
-                    .map(skill => new SkillMatrixItem(skill.id, skill.parentId, skill.name, skill.skillLevel, skill.hasChildren));
+                this.skills = skillMatrix.skills;
 
                 let legend = this.getLabel(this.selectedCompetencyId, this.selectedLevelId);
 
@@ -151,48 +141,10 @@ export class EntryPointComponent {
     /*End event functions*/
 
     /* Start helper functions */
-
-    processSkills(skills: Skill[]): Skill[] {
-
-        // initialize a new skill array
-        let output: Skill[] = [];
-
-        // apply the fillSkillInfo function to the first level objects
-        // this will also unchain the same function to their children
-        skills.filter(x => x.parentId == null).forEach(x => this.fillSkillInfo(x, 1, skills, output));
-
-        // return the output array
-        return output;
-    }
-
-    private fillSkillInfo(skill: Skill, initialLevel: number, source: Skill[], output: Skill[]) {
-
-        // add the skill to the new array
-        output.push(skill);
-
-        // set the level to the current skill
-        skill.skillLevel = initialLevel;
-
-        // look for the current skill children
-        let children = source.filter(x => x.parentId == skill.id);
-
-        // set the haschildren flag for the skill
-        // hack: for the moment we just allow maximum 5 levels
-        skill.hasChildren = children.length > 0;
-
-        if (!skill.hasChildren) {
-            return;
-        };
-
-        // apply this same function to every children of the skill
-        children.forEach(y => this.fillSkillInfo(y, initialLevel + 1, source, output));
-    }
-
     // promise to save a template
     private saveTemplate(competencyId: number, jobfubctionLevel: number, skillIds: number[]): Observable<ITemplate> {
         // save template
-        return this.templateService.saveTemplate(
-            { id: '', skillIds: skillIds, competencyId: competencyId, jobfubctionLevel: jobfubctionLevel });
+        return this.templateService.saveTemplate({ id: '', skillIds: skillIds, competencyId: competencyId, jobfubctionLevel: jobfubctionLevel });
     }
 
     // determines when the next button is enabled or not according to the selected skills
@@ -223,7 +175,7 @@ export class EntryPointComponent {
 
     // Function that returns true if there is at least one skill selected
     private isAnySkillSelected(): boolean {
-        return this.skills.some(x => x.isSelected);
+        return this.skillsSelected.length > 0;
     }
 
     // determines when the search button is enabled or not according to the dropdwns values
