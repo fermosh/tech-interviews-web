@@ -75,7 +75,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
                             Validators.maxLength(200)]],
                 body: ['', [ Validators.maxLength(400)]],
                 solution: ['', [ Validators.maxLength(4000)]],
-                competency: 0
+                competencyId: 0
             }
         );
 
@@ -87,7 +87,6 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         );
 
-        this.getSkills(14);
         this.getCompetencies();
     }
 
@@ -126,10 +125,9 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         );
     }
 
-    private onCompetencyChange(competency: number): void {
-        this.getSkills(competency);
+    private onCompetencyChange(id: number): void {
+        this.getSkills(id);
     }
-
 
     ngAfterViewInit(): void {
         // Watch for the blur event from any input element on the form.
@@ -142,8 +140,8 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    getSkills(id: number): void {
-        this.skillMatrixService.getSkillMatrix(id, 5)
+    getSkills(competencyId: number): void {
+        this.skillMatrixService.getSkillMatrix(competencyId, 5)
             .subscribe(
                 (skillMatrix: SkillMatrix) => {
                     this.availableSkills = skillMatrix.skills;
@@ -193,10 +191,11 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
             title: this.exercise.title,
             body: this.exercise.body,
             solution: this.exercise.solution,
-            competency: this.exercise.competency.id            
+            competencyId: this.exercise.competency.id
         });
 
         this.skills = this.exercise.skills;
+        this.getSkills(this.exercise.competency.id);
     }
 
     deleteExercise(): void {
@@ -219,7 +218,8 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
             // Copy the form values over the exercise object values
             let e = Object.assign({}, this.exercise, this.exerciseForm.value);
 
-            e.competency = this.competencies.find(c => c.id == this.exerciseForm.value.competency);
+            e.competency = this.competencies.find(c => c.id == this.exerciseForm.value.competencyId);
+            e.skills = this.skills;
 
             this.exerciseService.saveExercise(e)
                 .subscribe(

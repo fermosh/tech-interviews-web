@@ -83,7 +83,8 @@ export class ExerciseService extends BaseService {
             competency: {
                 id: 0,
                 name: ''
-            }
+            },
+            skills : [] 
         };
     }
 }
