@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SkillMatrixItem } from '../../../entryPoint/classes/skillMatrixItem';
+import { SkillMatrixItem } from '../../classes/skillMatrixItem';
 import { Skill } from '../../classes/skill';
 
 declare var jQuery: any;
@@ -53,8 +53,8 @@ export class SkillPickerComponent {
         this.emmitChanges();
     }
 
-    private emmitChanges(){
-        this.selectionChanged.emit(this.skills.filter(x => x.isSelected).map(x=> x.id));
+    private emmitChanges() {
+        this.selectionChanged.emit(this.skills.filter(x => x.isSelected).map(x => x.id));
     }
 
     // Verify or set childs selection when a Skill parent has changed

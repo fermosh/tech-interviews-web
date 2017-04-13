@@ -68,7 +68,8 @@ export class EntryPointComponent {
         ];
 
         // call the position service to get the competencies
-        this.competencyService.getCompetencies().subscribe(competencies => { this.competencies = competencies; }, error => console.log(<any>error));
+        this.competencyService.getCompetencies()
+            .subscribe(competencies => { this.competencies = competencies; }, error => console.log(<any>error));
     }
     /* End Initilizers */
 
@@ -144,7 +145,8 @@ export class EntryPointComponent {
     // promise to save a template
     private saveTemplate(competencyId: number, jobfubctionLevel: number, skillIds: number[]): Observable<ITemplate> {
         // save template
-        return this.templateService.saveTemplate({ id: '', skillIds: skillIds, competencyId: competencyId, jobfubctionLevel: jobfubctionLevel });
+        return this.templateService
+            .saveTemplate({ id: '', skillIds: skillIds, competencyId: competencyId, jobfubctionLevel: jobfubctionLevel });
     }
 
     // determines when the next button is enabled or not according to the selected skills
