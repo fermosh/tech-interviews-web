@@ -10,7 +10,7 @@ import { ScriptViewerService } from './../script-viewer.service';
 })
 
 export class ReportViewerComponent {
-    @Input() interviewScript: InterviewScript[];
+    @Input() interviewScript: InterviewScript;
 
     constructor(private _scriptViewerService: ScriptViewerService) { }
 

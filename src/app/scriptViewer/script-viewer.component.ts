@@ -104,7 +104,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
 
     mapQuestionBank(questions: Question[]) {
         // 1. Fill 'Question Bank' with data retrieved from service.
-        this.questionBank = questions.map(q => <InterviewQuestion>new Object({ id: q.id, body: q.body, answer: q.answer, tag: q.skill, rating: 0, comments: [], selected: false, order: -1 }));
+        this.questionBank = questions.map(q => <InterviewQuestion>new Object({ id: q.id, body: q.body, answer: q.answer, skill: q.skill, rating: 0, comments: [], selected: false, order: -1 }));
 
         // 2. Complete the 'Question Bank' with those questions existing in the Interview but not in the DB Bank 
         this.scriptViewer.skills.forEach(s => s.interviewQuestions.forEach(siq => {

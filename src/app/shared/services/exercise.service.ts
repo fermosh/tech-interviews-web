@@ -44,7 +44,7 @@ export class ExerciseService {
             .catch(this.handleError);
     }
 
-    deleteExercise(id: string): Observable<Response> {
+        deleteExercise(id: string): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 

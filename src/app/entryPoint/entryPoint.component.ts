@@ -37,9 +37,9 @@ export class EntryPointComponent {
     skillsSelected: number[] = [];
 
     /* Auxiliar flags */
-    private isSkillGridVisible: boolean;
-    private isSearchDisabled = true;
-    private isNextDisabled = false;
+    isSkillGridVisible: boolean;
+    isSearchDisabled = true;
+    isNextDisabled = false;
 
     skillPickerLegend = '';
 
@@ -74,14 +74,14 @@ export class EntryPointComponent {
     /* End Initilizers */
 
     /*Start event functions*/
-    private onCompetencyChanged(competencyId: number): void {
+    onCompetencyChanged(competencyId: number): void {
         this.competencyId = competencyId;
 
         // verify the search status
         this.checkSearchButtonStatus();
     }
 
-    private onLevelChange(levelId: number): void {
+    onLevelChange(levelId: number): void {
         // verify the search status
         this.checkSearchButtonStatus();
     }
@@ -106,7 +106,7 @@ export class EntryPointComponent {
             });
     }
 
-    private onSearch(): void {
+    onSearch(): void {
 
         if (this.levelId == this.selectedLevelId && this.competencyId == this.selectedCompetencyId) {
             return;

@@ -27,7 +27,7 @@ export class CompentencyPickerComponent {
         this.internalCompetencies = this.SetCompetencies(competencies);
     }
 
-    private Onchange(competencyId: number): void {
+    Onchange(competencyId: number): void {
         this.selectionChanged.emit(competencyId);
     }
 
