@@ -73,7 +73,7 @@ describe('Entry Point Component', () => {
             component.ngOnInit();
 
             // assert
-            expect(component.competencyList.length).toBe(1);
+            expect(component.competencies.length).toBe(1);
             expect(component.competencyId).toBe(0);
         });
 
