@@ -3,22 +3,19 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { environment } from './../../../environments/environment';
 import { Exercise } from './../classes/exercise';
+import { BaseService } from './base.service';
 
 @Injectable()
-export class ExerciseService {
-    private baseUrl = `${environment.host}exercises/`;
-    private exercisesBankUrl = `${environment.host}templates/`;
-
-    constructor(private http: Http) { }
+export class ExerciseService extends BaseService {
+    private exerciseUrl = `${this.baseUrl}exercises/`;
+    private exercisesBankUrl = `${this.baseUrl}templates/`;
 
     getExercises(): Observable<Exercise[]> {
-        return this.http.get(this.baseUrl)
+        return this.http.get(this.exerciseUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -38,17 +35,18 @@ export class ExerciseService {
         //     observer.complete();
         // });
         };
-        const url = `${this.baseUrl}${id}`;
+        
+        const url = `${this.exerciseUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-        deleteExercise(id: string): Observable<Response> {
+    deleteExercise(id: string): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}${id}`;
+        const url = `${this.exerciseUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -65,27 +63,15 @@ export class ExerciseService {
 
     private createExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
         exercise.id = undefined;
-        return this.http.post(this.baseUrl, exercise, options)
+        return this.http.post(this.exerciseUrl, exercise, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     private updateExercise(exercise: Exercise, options: RequestOptions): Observable<Exercise> {
-        return this.http.put(this.baseUrl, exercise, options)
+        return this.http.put(this.exerciseUrl, exercise, options)
             .map(() => exercise)
             .catch(this.handleError);
-    }
-
-    private extractData(response: Response) {
-        let body = response.json();
-        return body || body.data || {};
-    }
-
-    private handleError(error: Response): Observable<any> {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
     }
 
     initializeExercise(): Exercise {

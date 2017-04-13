@@ -10,17 +10,15 @@ import 'rxjs/add/operator/filter';
 
 import 'rxjs/add/observable/of';
 
-import { environment } from './../../../environments/environment';
 import { ITemplate } from '../classes/template';
+import { BaseService } from './base.service';
 
 @Injectable()
-export class TemplateService {
-    private baseUrl = `${environment.host}templates/`;
-
-    constructor(private http: Http) { }
+export class TemplateService extends BaseService {
+    private templateUrl = `${this.baseUrl}templates/`;
 
     getTemplates(): Observable<ITemplate[]> {
-        return this.http.get(this.baseUrl)
+        return this.http.get(this.templateUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -30,7 +28,7 @@ export class TemplateService {
             return Observable.of(this.initializeTemplate());
         };
 
-        const url = `${this.baseUrl}${id}`;
+        const url = `${this.templateUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -40,7 +38,7 @@ export class TemplateService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}${id}`;
+        const url = `${this.templateUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -64,7 +62,7 @@ export class TemplateService {
             Skills: template.skillIds
         });
 
-        return this.http.post(this.baseUrl, bodyData, options)
+        return this.http.post(this.templateUrl, bodyData, options)
             .map(response => {
                 template.id = this.extractData(response);
                 return template;
@@ -73,22 +71,10 @@ export class TemplateService {
     }
 
     private updateTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
-        const url = `${this.baseUrl}${template.id}`;
+        const url = `${this.templateUrl}${template.id}`;
         return this.http.put(url, template, options)
             .map(() => template)
             .catch(this.handleError);
-    }
-
-    private extractData(response: Response) {
-        let body = response.json();
-        return body || body.data || {};
-    }
-
-    private handleError(error: Response): Observable<any> {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
     }
 
     initializeTemplate(): ITemplate {
