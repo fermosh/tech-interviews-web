@@ -180,8 +180,8 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             // Copy the form values over the question object values
             let q = Object.assign({}, this.question, this.questionForm.value);
 
-            q.skill = this.skills.find(s => s.id == this.questionForm.value.skill);
-            q.competency = this.competencies.find(c => c.id == this.questionForm.value.competency);
+            q.skill = this.skills.find(s => s.id == this.questionForm.value.skillId);
+            q.competency = this.competencies.find(c => c.id == this.questionForm.value.competencyId);
 
             this.questionService.saveQuestion(q)
                 .subscribe(
