@@ -15,9 +15,6 @@ import { CompetencyService } from './../shared/services/competency.service';
 import { Tag } from './../shared/classes/tag';
 import { SkillMatrix } from './../shared/classes/skill-matrix';
 
-
-declare var jQuery: any;
-
 @Component({
     templateUrl: './question-edit.component.html',
     styleUrls: ['./question-edit.component.css']
