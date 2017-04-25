@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, FormControlName } from '@angular/forms';
-import { ActivatedRoute, Router  } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/merge';
@@ -13,6 +13,7 @@ import { GenericValidator } from '../shared//validators/generic.validator';
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { CompetencyService } from './../shared/services/competency.service';
 import { Tag } from './../shared/classes/tag';
+import { ICompetency } from './../shared/classes/competency'
 import { SkillMatrix } from './../shared/classes/skill-matrix';
 
 @Component({
@@ -24,7 +25,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
 
     title: string = 'Question Edit';
     skills: Tag[];
-    competencies: Tag[];
+    competencies: ICompetency[];
     isPageRendered: boolean;
     errorMessage: string;
     questionForm: FormGroup;
@@ -37,11 +38,11 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     private genericValidator: GenericValidator;
 
     constructor(private fb: FormBuilder,
-                private route: ActivatedRoute,
-                private router: Router,
-                private questionService: QuestionService,
-                private skillMatrixService: SkillMatrixService,
-                private competencyService: CompetencyService) {
+        private route: ActivatedRoute,
+        private router: Router,
+        private questionService: QuestionService,
+        private skillMatrixService: SkillMatrixService,
+        private competencyService: CompetencyService) {
 
         // Defines all of the validation messages for the form.
         // These could instead be retrieved from a file or database.
@@ -64,9 +65,9 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit(): void {
         this.questionForm = this.fb.group({
             body: ['', [Validators.required,
-                        Validators.minLength(20),
-                        Validators.maxLength(200)]],
-            answer: ['', [ Validators.maxLength(4000)]],
+            Validators.minLength(20),
+            Validators.maxLength(200)]],
+            answer: ['', [Validators.maxLength(4000)]],
             skillId: 0,
             competencyId: 0
         });
@@ -104,8 +105,8 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getSkills(competencyId: number): void {
         this.skillMatrixService.getSkillMatrixByParent(competencyId, 5)
             .subscribe(
-                (skillMatrix: SkillMatrix) => this.onSkillsRetrieved(skillMatrix.skills),
-                (error: any) => this.errorMessage = <any>error
+            (skillMatrix: SkillMatrix) => this.onSkillsRetrieved(skillMatrix.skills),
+            (error: any) => this.errorMessage = <any>error
             );
     }
 
@@ -116,22 +117,23 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getCompetencies(): void {
         this.competencyService.getCompetencies()
             .subscribe(
-                (competencies: Tag[]) => this.onCompetenciesRetrieved(competencies),
-                (error: any) => this.errorMessage = <any>error
-            );
+            competencies => {
+                this.onCompetenciesRetrieved(competencies.filter(x => x.parentId == null))
+            },
+            (error: any) => this.errorMessage = <any>error);
     }
 
-    onCompetenciesRetrieved(competencies: Tag[]): void {
+    onCompetenciesRetrieved(competencies: ICompetency[]): void {
         this.competencies = competencies;
     }
 
     getQuestion(id: string): void {
         this.questionService.getQuestion(id)
             .subscribe(
-                (question: Question) => this.onQuestionRetrieved(question),
-                (error: any) => this.errorMessage = <any>error,
-                
-            );
+            (question: Question) => this.onQuestionRetrieved(question),
+            (error: any) => this.errorMessage = <any>error,
+
+        );
     }
 
     onQuestionRetrieved(question: Question): void {
@@ -153,7 +155,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             skillId: this.question.skill.id,
             competencyId: this.question.competency.id
         });
-        
+
         this.getSkills(this.question.competency.id);
     }
 
@@ -161,12 +163,12 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.question.id === '') {
             // Don't delete, it was never saved.
             this.onSaveComplete();
-       } else {
+        } else {
             if (confirm(`Really delete the question: ${this.question.body}?`)) {
                 this.questionService.deleteQuestion(this.question.id)
                     .subscribe(
-                        () => this.onSaveComplete(),
-                        (error: any) => this.errorMessage = <any>error
+                    () => this.onSaveComplete(),
+                    (error: any) => this.errorMessage = <any>error
                     );
             }
         }
@@ -182,8 +184,8 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.questionService.saveQuestion(q)
                 .subscribe(
-                    () => this.onSaveComplete(),
-                    (error: any) => this.errorMessage = <any>error
+                () => this.onSaveComplete(),
+                (error: any) => this.errorMessage = <any>error
                 );
         } else if (!this.questionForm.dirty) {
             this.onSaveComplete();
