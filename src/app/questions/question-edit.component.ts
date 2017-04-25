@@ -102,7 +102,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
-        this.skillMatrixService.getSkillMatrix(competencyId, 5)
+        this.skillMatrixService.getSkillMatrixByParent(competencyId, 5)
             .subscribe(
                 (skillMatrix: SkillMatrix) => this.onSkillsRetrieved(skillMatrix.skills),
                 (error: any) => this.errorMessage = <any>error

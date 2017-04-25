@@ -141,7 +141,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
-        this.skillMatrixService.getSkillMatrix(competencyId, 5)
+        this.skillMatrixService.getSkillMatrixByParent(competencyId, 5)
             .subscribe(
                 (skillMatrix: SkillMatrix) => {
                     this.availableSkills = skillMatrix.skills;
