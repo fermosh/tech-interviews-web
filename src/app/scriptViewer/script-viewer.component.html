@@ -27,6 +27,7 @@
     </div>
     <br>
     <div class="container">
+        <button class="uui-button lime-green script-viewer-top-btn" (click)="saveInterview()">Save Interview</button>
         <button class="uui-button lime-green script-viewer-top-btn" (click)="showPreview()">{{ !isOnPreview ? 'Interview Report' : 'Back to Script Viewer' }}</button>
         <button class="uui-button lime-green script-viewer-top-btn" (click)="copyToClipBoard()" id="btnCopyToClipBoard" *ngIf="isOnPreview">Copy to ClipBoard</button>
         <br><br><br>

@@ -26,6 +26,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: InterviewScript;
     errorMessage: string;
     private sub: Subscription;
+    private templateId: string;
     private selectedSkill: Skill;
     private questionBank: InterviewQuestion[];
     private exerciseBank: InterviewExercise[];
@@ -44,13 +45,14 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         private exerciseService: ExerciseService) { }
 
     ngOnInit(): void {
+        this.templateId = "0";
         this.hoverSkillId = 0;
         this.hoverExercises = false;
         this.errorMessage = null;
         this.sub = this.route.params.subscribe(
             params => {
-                let id: string = params['id'];
-                this.getInterviewScript(id);
+                this.templateId = params['id'];
+                this.getInterviewScript(this.templateId);
             });
     }
 
@@ -78,7 +80,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
                 this.getQuestionBank(id);
                 this.getExerciseBank(id);
             },
-            error => { 
+            error => {
                 this.scriptViewer = null;
                 this.errorMessage = <any>error;
             });
@@ -98,7 +100,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             .subscribe(exerciseBank => this.mapExerciseBank(exerciseBank),
             error => {
                 this.exerciseBank = null;
-                this.errorMessage = <any>error; 
+                this.errorMessage = <any>error;
             });
     }
 
@@ -158,6 +160,14 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         } catch (err) {
             console.log('Unable to copy.');
         }
+    }
+
+    saveInterview(): void {
+        this.scriptViewerService.saveInterview(this.scriptViewer)
+            .subscribe(scriptViewer => console.log(scriptViewer),
+            error => {
+                this.errorMessage = <any>error;
+            });
     }
 
     // ----------------------------------------------------------------------------------
