@@ -7,5 +7,5 @@ export class Question {
     body: string;
     answer?: string;
     skill: Tag;
-    competency?: ICompetency;
+    competency?: Tag;
 }

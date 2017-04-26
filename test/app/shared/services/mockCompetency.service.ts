@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 export class MockCompetencyService extends CompetencyService {
-    private competencyResult: ICompetency[] = [{ id: 1, name: '.Net' }, { id: 2, name: 'Javascript' }, { id: 3, name: 'DevOps' }];
+    private competencyResult: ICompetency[] = [{code: '', jobFunctions: [], id: 0, parentId: 0, name: '', isSelectable: false}];
 
     constructor() {
         super(null);

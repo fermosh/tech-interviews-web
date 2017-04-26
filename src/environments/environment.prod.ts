@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    Host: 'api/'
+    host: 'http://technicalinterviewhelper-api.azurewebsites.net/api/'
 };

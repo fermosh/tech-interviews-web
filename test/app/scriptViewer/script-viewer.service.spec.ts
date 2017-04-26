@@ -3,124 +3,21 @@ import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from 
 import { MockBackend } from '@angular/http/testing';
 
 import { ScriptViewerService } from './../../../src/app/scriptViewer/script-viewer.service';
-import { SkillMatrix } from './../../../src/app/shared/classes/skill-matrix';
+import { InterviewScript } from './../../../src/app/scriptViewer/classes/interview-script';
 
 describe('Script Viewer Service: ', () => {
 
     // array to mock http requests
-    const skillMatrixResult: SkillMatrix[] = [{
-        id: 13, hasContent: true, competencyName: '.Net', domain: 'FrontEnd web development',
-        level: { id: 3, name: 'L3', description: 'Senior Software Engineer', competencyId: 13 },
+    const skillMatrixResult: InterviewScript[] = [{
+        hasContent: true,
+        competencyName: '',
+        level: {id: 1, name: 'L1', description: 'l1'},
         skills: [{
-                        id: 2,
-                        name: '.NET Development',
-                        startingFrom: 'Novice',
-                        priority: 'High',
-                        rootId: 7,
-                        displayOrder: 101,
-                        requiredSkillLevel: 10,
-                        userSkillLevel: 0,
-                        levelSet: 0,
-                        competencyId: 13,
-                        jobFunctionLevel: 3,
-                        parentId: 479,
-                        isSelectable: true,
-                        skillLevel: 4,
-                        hasChildren: false,
-                        topics: [
-                            {
-                                name: '.NET Framework',
-                                isRequired: true
-                            }
-                        ],
-                        interviewQuestions: [
-                            {
-                                id: 1,
-                                question: 'What is SOLID? Explain the principles and provide examples',
-                                answer: '',
-                                selected: true,
-                                rating: 1,
-                                comments: []
-                            },
-                            {
-                                id: 2,
-                                question: 'What is Value Type and Reference Type?',
-                                answer: '',
-                                selected: true,
-                                rating: 1,
-                                comments: []
-                            }
-                        ],
-                        interviewExercises: [
-                            {
-                                id: 1,
-                                title: 'Palindrome',
-                                description: `A palindrome is a word, phrase, number, or other
-                                    sequence of characters which reads the same backward or forward,
-                                    such as madam or kayak. Write an function that receives an string
-                                    parameters and return true if it is a palindrome.`,
-                                solution: '',
-                                selected: true,
-                                rating: 1,
-                                comments: []
-                            }
-                        ]
-                    },
-                    {
-                        id: 3,
-                        name: '.NET Development x',
-                        startingFrom: 'Novice',
-                        priority: 'High',
-                        rootId: 7,
-                        displayOrder: 101,
-                        requiredSkillLevel: 10,
-                        userSkillLevel: 0,
-                        levelSet: 0,
-                        competencyId: 13,
-                        jobFunctionLevel: 3,
-                        parentId: 479,
-                        isSelectable: true,
-                        skillLevel: 4,
-                        hasChildren: false,
-                        topics: [
-                            {
-                                name: '.NET Framework',
-                                isRequired: true
-                            }
-                        ],
-                        interviewQuestions: [
-                            {
-                                id: 1,
-                                question: 'What is SOLID? Explain the principles and provide examples',
-                                answer: '',
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            },
-                            {
-                                id: 2,
-                                question: 'What is Value Type and Reference Type?',
-                                answer: '',
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            }
-                        ],
-                        interviewExercises: [
-                            {
-                                id: 1,
-                                title: 'Palindrome',
-                                description: `A palindrome is a word, phrase, number, or other
-                                    sequence of characters which reads the same backward or forward,
-                                    such as madam or kayak. Write an function that receives an string
-                                    parameters and return true if it is a palindrome.`,
-                                solution: '',
-                                selected: true,
-                                rating: 0,
-                                comments: []
-                            }
-                        ]
-                    }]
+            rootId: 7, displayOrder: 1, requiredSkillLevel: 0, userSkillLevel: 0, levelSet: 0, competencyId: 13, jobFunctionLevel: 3,
+            topics: [], id: 7, parentId: null, name: 'Hard skills', isSelectable: true, skillLevel: 1, hasChildren: true, 
+            interviewExercises:[{id: '1', title: '', body:'', selected: true, rating: 0}, {id: '2', title: '',body:'', selected: true, rating: 0}],
+            interviewQuestions: [{id: '1', body: '', skill: {id: 1, name:'A'}, rating:0}, {id: '2', body: '', skill: {id: 1, name:'A'}, rating:0}]
+        }]
     }];
 
     // test initialization
@@ -147,11 +44,11 @@ describe('Script Viewer Service: ', () => {
         it('should return a defined item', async(inject([ScriptViewerService, MockBackend], (service: ScriptViewerService, mock) => {
 
             // arrange
-            let templateId = 1;
+            let templateId = '1';
             let mockData = skillMatrixResult[0];
 
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockData }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ mockData }) })));
             });
 
             // act
@@ -165,11 +62,11 @@ describe('Script Viewer Service: ', () => {
         it('should return the expected value', async(inject([ScriptViewerService, MockBackend], (service: ScriptViewerService, mock) => {
 
             // arrange
-            let templateId = 1;
+            let templateId = '1';
             let mockData = skillMatrixResult[0];
 
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockData }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockData })));
             });
 
             // act
@@ -222,7 +119,7 @@ describe('Script Viewer Service: ', () => {
 
             // assert
             expect(result).toBeDefined();
-            expect(result).toEqual(1);
+            expect(result).toEqual(0);
         })));
 
         // test to validate the getRatingBySkill method returns the expected value
@@ -230,7 +127,7 @@ describe('Script Viewer Service: ', () => {
             async(inject([ScriptViewerService, MockBackend], (service: ScriptViewerService, mock) => {
 
             // arrange
-            let mockData = skillMatrixResult[0].skills[1];
+            let mockData = skillMatrixResult[0].skills[0];
 
             // act
             let result = service.getRatingBySkill(mockData);

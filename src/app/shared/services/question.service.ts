@@ -3,22 +3,19 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { environment } from './../../../environments/environment';
 import { Question } from './../classes/question';
+import { BaseService } from './base.service';
 
 @Injectable()
-export class QuestionService {
-    private baseUrl = `${environment.host}questions/`;
-    private questionsBankUrl = `${environment.host}templates/`;
-
-    constructor(private http: Http) { }
+export class QuestionService extends BaseService{
+    private questionUrl = `${this.baseUrl}questions/`;
+    private questionsBankUrl = `${this.baseUrl}templates/`;
 
     getQuestions(): Observable<Question[]> {
-        return this.http.get(this.baseUrl)
+        return this.http.get(this.questionUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -38,7 +35,8 @@ export class QuestionService {
         //     observer.complete();
         // });
         };
-        const url = `${this.baseUrl}${id}`;
+        
+        const url = `${this.questionUrl}${id}`;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
@@ -48,7 +46,7 @@ export class QuestionService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}${id}`;
+        const url = `${this.questionUrl}${id}`;
         return this.http.delete(url, options)
             .catch(this.handleError);
     }
@@ -65,27 +63,15 @@ export class QuestionService {
 
     private createQuestion(question: Question, options: RequestOptions): Observable<Question> {
         question.id = undefined;
-        return this.http.post(this.baseUrl, question, options)
+        return this.http.post(this.questionUrl, question, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     private updateQuestion(question: Question, options: RequestOptions): Observable<Question> {
-        return this.http.put(this.baseUrl, question, options)
+        return this.http.put(this.questionUrl, question, options)
             .map(() => question)
             .catch(this.handleError);
-    }
-
-    private extractData(response: Response) {
-        let body = response.json();
-        return body || body.data || {};
-    }
-
-    private handleError(error: Response): Observable<any> {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
     }
 
     initializeQuestion(): Question {

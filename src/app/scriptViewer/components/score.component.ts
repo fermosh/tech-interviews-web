@@ -8,7 +8,7 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 export class ScoreComponent implements OnInit, OnChanges  {
     @Input() score: number;
-    private scoreStyle: string;
+    scoreStyle: string;
 
     ngOnInit(): void {
         this.scoreStyle = this.updateScoreStyle();

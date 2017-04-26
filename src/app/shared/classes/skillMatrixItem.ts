@@ -1,14 +1,11 @@
-export class SkillMatrixItem {
-    id: number;
-    parentId: number;
-    name: string;
-    isSelected: boolean;
-    skillLevel: number;
-    hasChildren: boolean;
+import { Skill } from './skill';
+export class SkillMatrixItem extends Skill {
     className?: string;
     anyChildSelected: boolean;
 
     constructor(id: number, parentId: number, name: string, skillLevel: number, hasChildren: boolean) {
+        super();
+
         this.id = id;
         this.parentId = parentId;
         this.name = name;

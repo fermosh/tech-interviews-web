@@ -6,7 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./star.component.css']
 })
 export class StarComponent {
-    private startCollection: number[] = [1, 2, 3, 4, 5];
+    startCollection: number[] = [1, 2, 3, 4, 5];
 
     @Input() rating: number;
     @Output() ratingClicked: EventEmitter<number> =

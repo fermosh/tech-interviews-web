@@ -15,9 +15,6 @@ import { CompetencyService } from './../shared/services/competency.service';
 import { Tag } from './../shared/classes/tag';
 import { SkillMatrix } from './../shared/classes/skill-matrix';
 
-
-declare var jQuery: any;
-
 @Component({
     templateUrl: './question-edit.component.html',
     styleUrls: ['./question-edit.component.css']
@@ -70,8 +67,8 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
                         Validators.minLength(20),
                         Validators.maxLength(200)]],
             answer: ['', [ Validators.maxLength(4000)]],
-            skill: '',
-            competency: ''
+            skillId: 0,
+            competencyId: 0
         });
 
         // Read the question Id from the route parameter
@@ -82,12 +79,15 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         );
 
-        this.getSkills(13);
         this.getCompetencies();
     }
 
     ngOnDestroy(): void {
         this.sub.unsubscribe();
+    }
+
+    private onCompetencyChange(id: number): void {
+        this.getSkills(id);
     }
 
     ngAfterViewInit(): void {
@@ -101,15 +101,15 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    getSkills(id: number): void {
-        this.skillMatrixService.getSkillMatrix(id, 1)
+    getSkills(competencyId: number): void {
+        this.skillMatrixService.getSkillMatrix(competencyId, 5)
             .subscribe(
-                (skillMatrix: SkillMatrix) => this.onTagsRetrieved(skillMatrix.skills),
+                (skillMatrix: SkillMatrix) => this.onSkillsRetrieved(skillMatrix.skills),
                 (error: any) => this.errorMessage = <any>error
             );
     }
 
-    onTagsRetrieved(skills: Tag[]): void {
+    onSkillsRetrieved(skills: Tag[]): void {
         this.skills = skills;
     }
 
@@ -129,7 +129,8 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.questionService.getQuestion(id)
             .subscribe(
                 (question: Question) => this.onQuestionRetrieved(question),
-                (error: any) => this.errorMessage = <any>error
+                (error: any) => this.errorMessage = <any>error,
+                
             );
     }
 
@@ -149,9 +150,11 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.questionForm.patchValue({
             body: this.question.body,
             answer: this.question.answer,
-            skill: this.question.skill.name,
-            competency: this.question.competency.name
+            skillId: this.question.skill.id,
+            competencyId: this.question.competency.id
         });
+        
+        this.getSkills(this.question.competency.id);
     }
 
     deleteQuestion(): void {
@@ -174,8 +177,8 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
             // Copy the form values over the question object values
             let q = Object.assign({}, this.question, this.questionForm.value);
 
-            q.skill = this.skills.find(s => s.name === this.questionForm.value.skill);
-            q.competency = this.competencies.find(c => c.name === this.questionForm.value.competency);
+            q.skill = this.skills.find(s => s.id == this.questionForm.value.skillId);
+            q.competency = this.competencies.find(c => c.id == this.questionForm.value.competencyId);
 
             this.questionService.saveQuestion(q)
                 .subscribe(

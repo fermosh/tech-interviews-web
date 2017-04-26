@@ -21,4 +21,6 @@ export class Skill extends Tag {
     hasChildren?: boolean;
     priority?: string;
     startingFrom?: string;
+
+    isSelected?: boolean;
 }

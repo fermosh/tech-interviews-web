@@ -8,52 +8,24 @@ describe('Question Service', () => {
 
     // array to mock http requests
     const questionResult: Question[] = [
-        {
-            id: 1,
-            body: `What's the purpose of standards/conventions in .NET C#?`,
-            answer: ``,
-            tag: {
-                id: 1,
-                text: '.Net'
-            }
-        },
-        {
-            id: 2,
-            text: 'When to use string and when StringBuilder?',
-            answer: ``,
-            tag: {
-                id: 1,
-                text: '.Net'
-            }
-        },
-        {
-            id: 3,
-            text: 'When to use var and when the exact data type?',
-            answer: ``,
-            tag: {
-                id: 1,
-                text: '.Net'
-            }
-        },
-        {
-            id: 4,
-            text: 'What is SOLID? Explain the principles and provide examples',
-            answer: ``,
-            tag: {
-                id: 1,
-                text: '.Net'
-            }
-        },
-        {
-            id: 5,
-            text: 'What is Value Type and Reference Type?',
-            answer: ``,
-            tag: {
-                id: 1,
-                text: '.Net'
-            }
-        }
-    ];
+            {
+                id: '1',
+                body: `What's the purpose of standards/conventions in .NET C#?`,
+                answer: ``,
+                skill: { id: 973, name: 'Development' }
+            },
+            {
+                id: '2',
+                body: 'When to use string and when StringBuilder?',
+                answer: ``,
+                skill: { id: 973, name: 'Development' }
+            },
+            {
+                id: '3',
+                body: 'When to use var and when the exact data type?',
+                answer: ``,
+                skill: { id: 973, name: 'Development' }
+            }];
 
     // test initialization
     beforeEach(() => {
@@ -80,7 +52,7 @@ describe('Question Service', () => {
             async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
             // arrange
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: questionResult }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: questionResult })));
             });
 
             // act
@@ -96,7 +68,7 @@ describe('Question Service', () => {
         async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
             // arrange
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: questionResult }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: questionResult })));
             });
 
             // act
@@ -144,7 +116,7 @@ describe('Question Service', () => {
             // arrange
             let mockItem = questionResult[0];
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockItem })));
             });
 
             // act
@@ -176,32 +148,20 @@ describe('Question Service', () => {
 
             // arrange
             let mockItem: Question = {
-                id: 0,
-                text: 'What is Boxing and Un-Boxing?',
+                id: '',
+                body: `What's the purpose of standards/conventions in .NET C#?`,
                 answer: ``,
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    }
-                ]
-            };
+                skill: { id: 973, name: 'Development' }};
 
             let response: Question = {
-                id: 1,
-                text: 'What is Boxing and Un-Boxing?',
+                id: '1',
+                body: `What's the purpose of standards/conventions in .NET C#?`,
                 answer: ``,
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    }
-                ]
-            };
+                skill: { id: 973, name: 'Development' }};
 
 
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: response }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: response })));
             });
 
             // act
@@ -217,19 +177,13 @@ describe('Question Service', () => {
 
             // arrange
             let mockItem: Question = {
-                id: 1,
-                text: `What's the purpose of standards/conventions in .NET C#?`,
+                id: '1',
+                body: `What's the purpose of standards/conventions in .NET C#?`,
                 answer: ``,
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    }
-                ]
-            };
+                skill: { id: 973, name: 'Development' }};
 
             mock.connections.subscribe(conn => {
-                conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: mockItem }) })));
+                conn.mockRespond(new Response(new ResponseOptions({ body: mockItem })));
             });
 
             // act
@@ -245,16 +199,10 @@ describe('Question Service', () => {
 
             // arrange
             let mockItem: Question = {
-                id: 6,
-                text: 'What is Boxing and Un-Boxing?',
+                id: '1',
+                body: `What's the purpose of standards/conventions in .NET C#?`,
                 answer: ``,
-                tags: [
-                    {
-                        id: 1,
-                        text: '.Net'
-                    }
-                ]
-            };
+                skill: { id: 973, name: 'Development' }};
 
             mock.connections.subscribe(conn => {
                 throw new Error('Any error message');
@@ -274,7 +222,7 @@ describe('Question Service', () => {
         it('should delete an item succesfully', async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
 
             // arrange
-            let itemId = 6;
+            let itemId = '6';
 
             let mockResponse = new Response(new ResponseOptions({body: null, status: 204, type: null, statusText: 'No Content' }));
 
@@ -293,7 +241,7 @@ describe('Question Service', () => {
         // test to validate the DeleteQuestion method returns an exception
         it('should return an exception', async(inject([QuestionService, MockBackend], (service: QuestionService, mock) => {
             // arrange
-            let itemId = -1;
+            let itemId = '-1';
             mock.connections.subscribe(conn => {
                 throw new Error('Any error message');
             });

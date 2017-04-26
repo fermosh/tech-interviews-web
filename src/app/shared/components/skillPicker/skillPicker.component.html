@@ -1,0 +1,25 @@
+    <table class="uui-table treegrid hover small stripe no-border">
+        <thead>
+            <tr *ngIf="header">
+                <th class="legend">{{header}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="skills.length < 1">
+                <div class="uui-alert-messages">
+                    <strong>Oops!</strong> There are not skills to show.
+                </div>
+            </tr>
+            <tr *ngFor="let skill of skills" [attr.data-grid-level]="skill.skillLevel" [ngClass]="skill.className">
+                <td>
+                    <div [ngClass]="'skill-level-' + skill.skillLevel">
+                        <span *ngIf="skill.hasChildren" class="treegrid-caret fa fa-angle-right"></span>
+                        <p class="uui-checkbox square-skin">
+                            <input type="checkbox" id="{{skill.id}}" [(ngModel)]="skill.isSelected" (ngModelChange)="onSkillSelected(skill)">
+                            <label for="{{skill.id}}" [ngClass]="skill.anyChildSelected ? 'childSelected' : ''">{{skill.name}}</label>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>

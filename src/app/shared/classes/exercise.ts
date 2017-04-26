@@ -8,5 +8,5 @@ export class Exercise {
     body: string;
     solution?: string;
     skills?: Tag[];
-    competency?: ICompetency;
+    competency?: Tag;
 }
