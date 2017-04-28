@@ -12,6 +12,7 @@ import { NumberValidator } from './../shared/validators/number.validator';
 import { GenericValidator } from './../shared//validators/generic.validator';
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { CompetencyService } from './../shared/services/competency.service';
+import { ICompetency } from './../shared/classes/competency';
 import { Tag } from './../shared/classes/tag';
 import { SkillMatrix } from './../shared/classes/skill-matrix';
 
@@ -27,7 +28,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     title: string = 'Exercise Edit';
     skills: Tag[];
     availableSkills: Tag[];
-    competencies: Tag[];
+    competencies: ICompetency[];
     isPageRendered: boolean;
     errorMessage: string;
     exerciseForm: FormGroup;
@@ -141,7 +142,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
-        this.skillMatrixService.getSkillMatrix(competencyId, 5)
+        this.skillMatrixService.getSkillMatrixByParent(competencyId, 5)
             .subscribe(
                 (skillMatrix: SkillMatrix) => {
                     this.availableSkills = skillMatrix.skills;
@@ -154,12 +155,14 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getCompetencies(): void {
         this.competencyService.getCompetencies()
             .subscribe(
-                (competencies: Tag[]) => this.onCompetenciesRetrieved(competencies),
+                competencies => {
+                    this.onCompetenciesRetrieved(competencies.filter(x=> x.parentId == null))
+                },
                 (error: any) => this.errorMessage = <any>error
             );
     }
 
-    onCompetenciesRetrieved(competencies: Tag[]): void {
+    onCompetenciesRetrieved(competencies: ICompetency[]): void {
         this.competencies = competencies;
     }
 
