@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { InterviewScript } from './classes/interview-script';
@@ -16,6 +16,16 @@ export class ScriptViewerService {
     getScriptViewer(id: string): Observable<InterviewScript> {
         const url = `${this.baseUrl}templates/${id}`;
         return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    saveInterview(interviewScript: InterviewScript): Observable<InterviewScript> {
+        const url = `${this.baseUrl}interviews`;
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        
+        return this.http.post(url, interviewScript, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
