@@ -34,6 +34,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     exerciseForm: FormGroup;
     exercise: Exercise;
     private sub: Subscription;
+    private editedSkills: boolean = false;
 
     // Use with the generic validation message class
     displayMessage: { [key: string]: string } = {};
@@ -95,33 +96,35 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    fillAutocomplete(skills: Tag[], availableSkills: Tag[]): void {
-        let addTag = function(text) {
-            skills.push(availableSkills.find(s => s.name === text));
+    fillAutocomplete(): void {
+        // create a reference to the current component object 
+        // in order to use it into the javascript anonymous functions
+        let component = this;
+
+        // function to add or remove skills to the current component skills
+        let editFunction = function (evt, ui, label, isNew) {
+            if (!ui.duringInitialization) {
+                // turn the skills edited flag true
+                component.editedSkills = true;
+
+                // evaluate if the skill is new or it should be removed
+                if (isNew) {
+                    component.skills.push(component.availableSkills.find(s => s.name === control.tagit('tagLabel', ui.tag)));
+                }
+                else {
+                    component.skills = component.skills.filter(s => s.name !== control.tagit('tagLabel', ui.tag));
+                }
+            }
         };
 
-        let removeTag = function(text) {
-            skills = skills.filter(s => s.name !== text);
-        };
-
+        // get the control to use for tags
         let control = $('#tagIt');
+        // set the control with the callbacks for Add and Remove
         control.uui_tagit(
             {
-                'autocomplete': {
-                    'delay': 0,
-                    'minLength': 2,
-                    'source': availableSkills.map(skill => skill.name)
-                },                
-                afterTagAdded: function(evt, ui) {
-                    if (!ui.duringInitialization) {
-                        addTag(control.tagit('tagLabel', ui.tag));
-                    }
-                },
-                afterTagRemoved: function(evt, ui) {
-                    if (!ui.duringInitialization) {
-                        removeTag(control.tagit('tagLabel', ui.tag));
-                    }
-                }
+                'autocomplete': { 'delay': 0, 'minLength': 2, 'source': component.availableSkills.map(skill => skill.name)},
+                afterTagAdded: function (evt, ui) { editFunction(evt, ui, control.tagit('tagLabel', ui.tag), true) },
+                afterTagRemoved: function (evt, ui) { editFunction(evt, ui, control.tagit('tagLabel', ui.tag), false) }
             }
         );
     }
@@ -146,7 +149,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe(
                 (skillMatrix: SkillMatrix) => {
                     this.availableSkills = skillMatrix.skills;
-                    this.fillAutocomplete(this.skills, this.availableSkills);
+                    this.fillAutocomplete();
                 },
                 (error: any) => this.errorMessage = <any>error
             );
@@ -217,7 +220,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     saveExercise(): void {
-        if (this.exerciseForm.dirty && this.exerciseForm.valid) {
+        if ((this.exerciseForm.dirty || this.editedSkills) && this.exerciseForm.valid) {
             // Copy the form values over the exercise object values
             let e = Object.assign({}, this.exercise, this.exerciseForm.value);
 
