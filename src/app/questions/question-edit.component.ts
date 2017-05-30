@@ -14,7 +14,6 @@ import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { CompetencyService } from './../shared/services/competency.service';
 import { Tag } from './../shared/classes/tag';
 import { ICompetency } from './../shared/classes/competency'
-import { SkillMatrix } from './../shared/classes/skill-matrix';
 
 @Component({
     templateUrl: './question-edit.component.html',
@@ -103,9 +102,9 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
-        this.skillMatrixService.getSkillMatrixByParent(competencyId, 5)
+        this.skillMatrixService.getSkillMatrixByParent(competencyId)
             .subscribe(
-            (skillMatrix: SkillMatrix) => this.onSkillsRetrieved(skillMatrix.skills),
+            (skills: Tag[]) => this.onSkillsRetrieved(skills),
             (error: any) => this.errorMessage = <any>error
             );
     }

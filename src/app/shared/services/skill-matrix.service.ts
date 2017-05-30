@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { SkillMatrix } from './../classes/skill-matrix';
+import { Skill } from './../classes/skill';
 import { BaseService } from './base.service';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class SkillMatrixService extends BaseService {
 
 
     // This method get the skill matrix of the given CompetencyId for the specific level number
-    getSkillMatrix(competencyId: number, levelId: number): Observable<SkillMatrix> {
+    getSkills(competencyId: number, levelId: number): Observable<Skill[]> {
         const url = `${this.skillMatrixUrl}${competencyId}/${levelId}`;
 
         return this.http.get(url, this.options)
@@ -27,9 +27,9 @@ export class SkillMatrixService extends BaseService {
 
     // This method get the skill matrix of the given CompetencyId and its competencies children
     // for the specific level number
-    getSkillMatrixByParent(competencyId: number, levelId: number): Observable<SkillMatrix> {
-        const url = `${this.skillMatrixUrl}parent/${competencyId}/${levelId}`;
-        
+    getSkillMatrixByParent(competencyId: number): Observable<Skill[]> {
+        const url = `${this.skillMatrixUrl}${competencyId}/true`;
+
         return this.http.get(url, this.options)
             .map(this.extractData)
             .catch(this.handleError);

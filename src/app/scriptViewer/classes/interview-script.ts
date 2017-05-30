@@ -1,8 +1,9 @@
 import { InterviewExercise } from './../classes/interview-exercise';
-import { SkillMatrix } from './../../shared/classes/skill-matrix';
+import { Skill } from './../../shared/classes/skill';
 import { ILevel } from './../../shared/classes/level';
 
-export class InterviewScript extends SkillMatrix {
+export class InterviewScript {
+    Skills: Skill[];
     competencyName: string;
     domain?: string;
     level: ILevel;

@@ -14,7 +14,7 @@ import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { CompetencyService } from './../shared/services/competency.service';
 import { ICompetency } from './../shared/classes/competency';
 import { Tag } from './../shared/classes/tag';
-import { SkillMatrix } from './../shared/classes/skill-matrix';
+import { Skill } from './../shared/classes/skill';
 
 declare var $: any;
 
@@ -97,7 +97,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     fillAutocomplete(): void {
-        // create a reference to the current component object 
+        // create a reference to the current component object
         // in order to use it into the javascript anonymous functions
         let component = this;
 
@@ -110,8 +110,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
                 // evaluate if the skill is new or it should be removed
                 if (isNew) {
                     component.skills.push(component.availableSkills.find(s => s.name === control.tagit('tagLabel', ui.tag)));
-                }
-                else {
+                } else {
                     component.skills = component.skills.filter(s => s.name !== control.tagit('tagLabel', ui.tag));
                 }
             }
@@ -145,10 +144,10 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
-        this.skillMatrixService.getSkillMatrixByParent(competencyId, 5)
+        this.skillMatrixService.getSkillMatrixByParent(competencyId)
             .subscribe(
-                (skillMatrix: SkillMatrix) => {
-                    this.availableSkills = skillMatrix.skills;
+                (skills: Skill[]) => {
+                    this.availableSkills = skills;
                     this.fillAutocomplete();
                 },
                 (error: any) => this.errorMessage = <any>error
@@ -159,7 +158,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.competencyService.getCompetencies()
             .subscribe(
                 competencies => {
-                    this.onCompetenciesRetrieved(competencies.filter(x=> x.parentId == null))
+                    this.onCompetenciesRetrieved(competencies.filter(x => x.parentId == null))
                 },
                 (error: any) => this.errorMessage = <any>error
             );
@@ -224,7 +223,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
             // Copy the form values over the exercise object values
             let e = Object.assign({}, this.exercise, this.exerciseForm.value);
 
-            e.competency = this.competencies.find(c => c.id == this.exerciseForm.value.competencyId);
+            e.competency = this.competencies.find(c => c.id === this.exerciseForm.value.competencyId);
             e.skills = this.skills;
 
             this.exerciseService.saveExercise(e)

@@ -45,7 +45,7 @@ export class ScriptViewerService {
         let sum: number = 0;
         let numberOfItems: number = 0;
 
-        if (interviewScript.skills && interviewScript.skills.length > 0) {
+        if (interviewScript.Skills && interviewScript.Skills.length > 0) {
             sum += this.getSkillsRating(interviewScript);
             numberOfItems++;
         }
@@ -65,9 +65,9 @@ export class ScriptViewerService {
         let sum: number = 0;
         let numberOfItems: number = 0;
 
-        if (interviewScript.skills && interviewScript.skills.length > 0) {
-            sum = interviewScript.skills.map(skill => this.getRatingBySkill(skill)).reduce(function (a, b) { return a + b; }, 0);
-            numberOfItems = interviewScript.skills.filter(s => s.interviewQuestions.length).length;
+        if (interviewScript.Skills && interviewScript.Skills.length > 0) {
+            sum = interviewScript.Skills.map(skill => this.getRatingBySkill(skill)).reduce(function (a, b) { return a + b; }, 0);
+            numberOfItems = interviewScript.Skills.filter(s => s.interviewQuestions.length).length;
         }
 
         if (sum > 0) {
