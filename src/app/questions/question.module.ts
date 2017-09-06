@@ -1,38 +1,28 @@
 import { NgModule } from '@angular/core';
-import { RouterModule} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QuestionListComponent } from './question-list.component';
-import { QuestionDetailComponent } from './question-detail.component';
 import { QuestionDetailGuard, QuestionEditGuard } from './question-guard.service';
 import { QuestionEditComponent } from './question-edit.component';
-import { QuestionService } from './question.service';
 import { SharedModule } from '../shared/shared.module';
+import { QuestionRoutingModule } from './question-routing.module';
 
-@NgModule({
-  imports: [
-    SharedModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([
-      { path: 'question-list', component: QuestionListComponent },
-      { path: 'question/:id',
-        canActivate: [ QuestionDetailGuard],
-        component: QuestionDetailComponent
-      },
-      { path: 'question-edit/:id',
-        canDeactivate: [ QuestionEditGuard ],
-        component: QuestionEditComponent },
-    ])
-  ],
-  declarations: [
-    QuestionListComponent,
-    QuestionDetailComponent,
-    QuestionEditComponent
-  ],
-  providers: [
-    QuestionService,
-    QuestionDetailGuard,
-    QuestionEditGuard
-  ]
-})
+@NgModule(
+  {
+      imports: [
+          SharedModule,
+          ReactiveFormsModule,
+          QuestionRoutingModule
+        ],
+        declarations: [
+            QuestionListComponent,
+            QuestionEditComponent
+        ],
+        providers: [
+            QuestionDetailGuard,
+            QuestionEditGuard
+        ]
+    }
+)
 
 export class QuestionModule { }

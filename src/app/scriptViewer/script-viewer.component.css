@@ -26,6 +26,8 @@
 
 .final-score-box {
     float: right;
+    margin-left: 30px;
+    text-align: center;
 }
 
 .final-score-label-text {
@@ -34,13 +36,39 @@
 }
 
 .final-score-label-value {
-    float: right;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 7px;
+    margin-bottom: 5px;
+}
+
+.average-final-score-label-value {
+    background-color: rgba(255,255,255,.9);
+    color: #1A9CB0;
+    border: 1px solid #1A9CB0;
+}
+
+.final-score-label-value h2 {
+    margin-bottom: 0px;
+}
+
+.script-viewer-top-btn {
+    float:right;
+    margin-left: 5px;
 }
 
 /* SKILL SETTING */
 
 .skill-accordion-toggle-title {
     padding-bottom: 5px !important;
+}
+
+.skill-accordion-title {
+    width: inherit !important;
+    padding-right: 10px !important;
 }
 
 .skill-accordion-subtitle {
@@ -109,7 +137,20 @@
     color: #8B5A9F;
 }
 
+.uui-checkbox.square-skin input:disabled+label:after {
+    border-color: #eee;
+    background: #e5e5e5;
+    color: #aaa;
+}
+
 /* QUESTION SETTING */
+
+.sortable-question {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
 
 .rating-cell {
     text-align: right;
@@ -136,11 +177,23 @@
     cursor: pointer;
     color: #8B5A9F;
     font-family: 'Oswald Regular';
-    font-size: 11px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    width: 115px;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.related-skills-label {
+    height: 17px;
+    line-height: 16px;
+    padding: 0 6px;
+    background: #eee;
+    border-color: #ccc;
+    color: #999!important;
+}
+
+.fa-bars {
+    cursor: move;
+    cursor: -webkit-grabbing;
+    margin-right: 5px;
 }
 
 /* EXERCISE SETTING */
@@ -155,6 +208,7 @@
     color: #666666;
     text-transform: none;
     font-size: 16px;
+    margin-bottom: 5px;
 }
 
 .ex-rating-cell {
@@ -169,6 +223,22 @@
 .ex-comment-cell {
     padding-left: 10px;
     vertical-align: top;
+}
+
+.ex-tilte-picker {
+    margin-bottom: 2px;
+}
+
+.ex-descr-picker {
+    margin: 0 0 12px 25px;
+}
+
+.ex-score-label-value {
+    display: inline-block;
+    -ms-transform: scale(0.7, 0.7); /* IE 9 */
+    -webkit-transform: scale(0.7, 0.7); /* Safari */
+    transform: scale(0.7, 0.7);
+    margin-right: -5px;
 }
 
 .interview-report-title {

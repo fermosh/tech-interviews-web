@@ -1,8 +1,8 @@
 import { Component, OnInit }  from '@angular/core';
-import { IQuestion } from './question';
-import { QuestionService } from './question.service';
+import { Question } from './../shared/classes/question';
+import { QuestionService } from './../shared/services/question.service';
 
-declare var jQuery: any;
+declare var $: any;
 
 @Component({
     templateUrl: './question-list.component.html',
@@ -13,7 +13,7 @@ export class QuestionListComponent implements OnInit {
     isPageRendered: boolean;
     listFilter: string;
     errorMessage: string;
-    questions: IQuestion[];
+    questions: Question[];
 
     constructor(private questionService: QuestionService) { }
 
@@ -25,7 +25,7 @@ export class QuestionListComponent implements OnInit {
 
     ngAfterViewChecked(): void {
         if (this.questions && this.questions.length > 0 && !this.isPageRendered) {
-            jQuery('.uui-table.dynamic').dataTable({'dom': 'lf<t>ip'});
+            $('.uui-table.dynamic').dataTable({'dom': 'lf<t>ip'});
 
             this.isPageRendered = true;
         }

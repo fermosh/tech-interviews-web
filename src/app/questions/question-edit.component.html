@@ -10,40 +10,55 @@
     <div class="container">
         <form class="form-horizontal" novalidate (ngSubmit)="saveQuestion()" [formGroup]="questionForm">
             <fieldset>
-                <div class="form-group" [ngClass]="{'has-error': displayMessage.text }">
-                    <label class="col-md-2 control-label" for="textId">Text</label>
+                <div class="form-group" [ngClass]="{'has-error': displayMessage.body}">
+                    <label class="col-md-2 control-label" for="bodyId">Body</label>
                     <div class="col-md-8">
-                        <input class="form-control" id="textId" type="text" placeholder="Text (required)" formControlName="questionText" />
-                        <span class="help-block" *ngIf="displayMessage.questionText">
-                                {{displayMessage.questionText}}
+                        <input class="form-control" id="bodyId" type="text" placeholder="Body (required)" formControlName="body" />
+                        <span class="help-block" *ngIf="displayMessage.body">
+                            {{displayMessage.body}}
                         </span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{'has-error': displayMessage.answer}">
                     <label class="col-md-2 control-label" for="answerId">Answer</label>
                     <div class="col-md-8">
-                        <textarea class="form-control" id="answerId" placeholder="Answer" rows=3 formControlName="questionAnswer"></textarea>
+                        <textarea class="form-control" id="answerId" placeholder="Answer (optional)" rows=3 formControlName="answer"></textarea>
                         <span class="help-block" *ngIf="displayMessage.answer">
-                                {{displayMessage.questionAnswer}}
+                            {{displayMessage.answer}}
                         </span>
                     </div>
                 </div>
-                <div formArrayName="questionTags" [ngClass]="{'has-error': displayMessage.tag}">
-                    <label class="col-md-2 control-label" for="questionTags">Tags</label>
-                    <ul id="tagIt">
-                        <!--<li class="form-control" *ngFor="let tag of questionTags; let i=index" [id]="i" placeholder="Tag" [formControlName]="i"></li>-->
-                        <!--<div class="form-group" *ngFor="let tag of questionTags; let i=index">
-                            <li class="form-control" [id]="i" placeholder="Tag" [formControlName]="i"></li>
-                        </div>-->
-                    </ul>
+                <div class="form-group" [ngClass]="{'has-error': displayMessage.competency}">
+                    <label class="col-md-2 control-label" for="competency">Competency</label>
+                    <div class="col-md-3">
+                        <select class="form-control" formControlName="competencyId" (change)="onCompetencyChange($event.target.value)">
+                            <option *ngIf="questionForm.value.competencyId == 0" ng-selected="selected" [value]="0">-- Select --</option>
+                            <option *ngFor="let competency of competencies" ng-selected="competency.id === competencyId" [value]="competency.id">{{competency.name}}</option>
+                        </select>
+                        <span class="help-block" *ngIf="displayMessage.competency">
+                            {{displayMessage.competency}}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': displayMessage.skill}">
+                    <label class="col-md-2 control-label" for="skill">Skill</label>
+                    <div class="col-md-3">
+                        <select class="form-control" formControlName="skillId">
+                            <option *ngIf="skillId == undefined" ng-selected="selected" [value]="0">-- Select --</option>
+                            <option *ngFor="let skill of skills" ng-selected="skill.name === skillId" [value]="skill.id">{{skill.name}}</option>
+                        </select>
+                        <span class="help-block" *ngIf="displayMessage.skill">
+                            {{displayMessage.skill}}
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2"></label>
-                    <div class="uui-input-group horizontal">
+                    <div class="col-md-8 uui-input-group horizontal">
                         <button class="uui-button transparent" type="submit" [disabled]='!questionForm.valid'>
                             Save
                         </button>
-                        <button class="uui-button transparent" [routerLink]="['/question-list']">
+                        <button class="uui-button transparent" [routerLink]="['/questions']">
                             Cancel
                         </button>
                         <button class="uui-button transparent" (click)="deleteQuestion()">

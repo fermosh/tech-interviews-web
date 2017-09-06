@@ -1,35 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule} from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { CompetencyService } from './competency.service';
-import { LevelService } from './level.service';
-import { DomainService } from './domain.service';
-import { SkillMatrixService } from './skill-matrix.service';
-import { TemplateService } from './template.service';
 import { EntryPointComponent } from './entryPoint.component';
-
-import { LevelFilterPipe } from './pipes/level-filter.pipe';
-import { DomainFilterPipe } from './pipes/domain-filter.pipe';
-
+import { SkillPickerComponent } from '../shared/components/skillPicker/skillPicker.component';
+import { CompentencyPickerComponent } from '../shared/components/competencyPicker/competencyPicker.component';
 import { SharedModule } from './../shared/shared.module';
+import { EntryPointRoutingModule } from './entryPoint-routing.module';
 
-@NgModule({
-  imports: [
-    SharedModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([
-      { path: '', component: EntryPointComponent }
-    ])
-  ],
-  declarations: [EntryPointComponent, LevelFilterPipe, DomainFilterPipe],
-  providers: [
-    CompetencyService,
-    LevelService,
-    DomainService,
-    SkillMatrixService,
-    TemplateService
-  ]
-})
+@NgModule(
+    {
+        imports: [SharedModule, EntryPointRoutingModule],
+        declarations: [EntryPointComponent, SkillPickerComponent, CompentencyPickerComponent]
+    }
+)
 
 export class EntryPointModule { }

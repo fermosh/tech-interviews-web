@@ -1,8 +1,8 @@
 import { Component, OnInit }  from '@angular/core';
-import { IExercise } from './exercise';
-import { ExerciseService } from './exercise.service';
+import { Exercise } from './../shared/classes/exercise';
+import { ExerciseService } from './../shared/services/exercise.service';
 
-declare var jQuery: any;
+declare var $: any;
 
 @Component({
     templateUrl: './exercise-list.component.html',
@@ -13,7 +13,7 @@ export class ExerciseListComponent implements OnInit {
     private isPageRendered: boolean;
     listFilter: string;
     errorMessage: string;
-    exercises: IExercise[];
+    exercises: Exercise[];
 
     constructor(private exerciseService: ExerciseService) { }
 
@@ -25,7 +25,7 @@ export class ExerciseListComponent implements OnInit {
 
     ngAfterViewChecked(): void {
         if (this.exercises && this.exercises.length > 0 && !this.isPageRendered) {
-            jQuery('.uui-table.dynamic').dataTable({'dom': 'lf<t>ip'});
+            $('.uui-table.dynamic').dataTable({'dom': 'lf<t>ip'});
 
             this.isPageRendered = true;
         }
