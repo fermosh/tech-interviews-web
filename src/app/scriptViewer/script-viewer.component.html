@@ -126,7 +126,7 @@
                                         <div *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [id]="'tab_ex_' + exercise.id" [ngClass]="{ 'tab-pane': true, 'ex-tab-pane': true, 'active': index === 0 }">
                                             <h3 class="ex-subtitle-label">Related Skills</h3>
                                             <p class="gray">
-                                                <template ngFor let-tag [ngForOf]="exercise.tags" let-last="last">
+                                                <template ngFor let-tag [ngForOf]="exercise.skills" let-last="last">
                                                     <span>{{ tag.name }}</span><span *ngIf="!last">, </span>
                                                 </template>
                                             </p><br>
@@ -210,8 +210,8 @@
                                     <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true, 'ex-tilte-picker': true,  'disable': !exercise.removable }">
                                         <input type="checkbox" [attr.disabled]="exercise.removable ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id" />
                                         <label [for]="'cbxExercise_Exercise_' + exercise.id">{{ exercise.title }}</label>
-                                        <template [ngIf]="exercise.tags && exercise.tags.length > 1">
-                                            <template ngFor let-tag [ngForOf]="exercise.tags">
+                                        <template [ngIf]="exercise.skills && exercise.skills.length > 0">
+                                            <template ngFor let-tag [ngForOf]="exercise.skills">
                                                 <span class="uui-label lime-green related-skills-label">{{ '+ ' + (tag.name) }}</span>
                                             </template>
                                         </template>
