@@ -26,6 +26,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     scriptViewer: InterviewScript;
     errorMessage: string;
     private sub: Subscription;
+    private templateId: string;
     private selectedSkill: Skill;
     private questionBank: InterviewQuestion[];
     private exerciseBank: InterviewExercise[];
@@ -44,13 +45,14 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         private exerciseService: ExerciseService) { }
 
     ngOnInit(): void {
+        this.templateId = "0";
         this.hoverSkillId = 0;
         this.hoverExercises = false;
         this.errorMessage = null;
         this.sub = this.route.params.subscribe(
             params => {
-                let id: string = params['id'];
-                this.getInterviewScript(id);
+                this.templateId = params['id'];
+                this.getInterviewScript(this.templateId);
             });
     }
 
@@ -59,7 +61,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     }
 
     ngAfterViewChecked(): void {
-        if (this.scriptViewer && this.scriptViewer.skills && !this.isScriptViewerRendered) {
+        if (this.scriptViewer && this.scriptViewer.Skills && !this.isScriptViewerRendered) {
             jQuery('.topic-label-value').uui_tooltip({
                 template: `<div class="tooltip" role="tooltip"><div class="tooltip-arrow" style="background-color:rgba(0,0,0,0.7);"></div><div class="tooltip-inner"
                     style="text-align:left; padding:15px; line-height:15px; max-width:none; background-color:rgba(0,0,0,0.7);">
@@ -78,7 +80,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
                 this.getQuestionBank(id);
                 this.getExerciseBank(id);
             },
-            error => { 
+            error => {
                 this.scriptViewer = null;
                 this.errorMessage = <any>error;
             });
@@ -98,7 +100,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             .subscribe(exerciseBank => this.mapExerciseBank(exerciseBank),
             error => {
                 this.exerciseBank = null;
-                this.errorMessage = <any>error; 
+                this.errorMessage = <any>error;
             });
     }
 
@@ -107,7 +109,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         this.questionBank = questions.map(q => <InterviewQuestion>new Object({ id: q.id, body: q.body, answer: q.answer, skill: q.skill, rating: 0, comments: [], selected: false, order: -1 }));
 
         // 2. Complete the 'Question Bank' with those questions existing in the Interview but not in the DB Bank 
-        this.scriptViewer.skills.forEach(s => s.interviewQuestions.forEach(siq => {
+        this.scriptViewer.Skills.forEach(s => s.interviewQuestions.forEach(siq => {
             if (!this.questionBank.some(qb => qb.id === siq.id)) {
                 this.questionBank.push({ id: siq.id, body: siq.body, answer: siq.answer, skill: siq.skill, rating: siq.rating, comments: siq.comments, selected: siq.selected, order: siq.order });
             }
@@ -158,6 +160,14 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         } catch (err) {
             console.log('Unable to copy.');
         }
+    }
+
+    saveInterview(): void {
+        this.scriptViewerService.saveInterview(this.scriptViewer)
+            .subscribe(scriptViewer => console.log(scriptViewer),
+            error => {
+                this.errorMessage = <any>error;
+            });
     }
 
     // ----------------------------------------------------------------------------------
@@ -246,7 +256,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         let comment: IComment = { text: event.target.value, user: 'Logged User Name', date: new Date() };
         switch (type) {
             case 'question':
-                this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
+                this.scriptViewer.Skills.filter(s => s.id === skillId)[0].interviewQuestions
                     .filter(q => q.id === typeId)[0].comments.push(comment);
                 break;
             case 'exercise':
@@ -262,9 +272,9 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
 
         switch (type) {
             case 'question':
-                index = this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
+                index = this.scriptViewer.Skills.filter(s => s.id === skillId)[0].interviewQuestions
                     .filter(q => q.id === typeId)[0].comments.indexOf(comment);
-                this.scriptViewer.skills.filter(s => s.id === skillId)[0].interviewQuestions
+                this.scriptViewer.Skills.filter(s => s.id === skillId)[0].interviewQuestions
                     .filter(q => q.id === typeId)[0].comments.splice(index, 1);
                 break;
             case 'exercise':

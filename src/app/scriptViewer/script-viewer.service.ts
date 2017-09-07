@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { InterviewScript } from './classes/interview-script';
@@ -20,6 +20,16 @@ export class ScriptViewerService {
             .catch(this.handleError);
     }
 
+    saveInterview(interviewScript: InterviewScript): Observable<InterviewScript> {
+        const url = `${this.baseUrl}interviews`;
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        
+        return this.http.post(url, interviewScript, options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     private extractData(response: Response) {
         let body = response.json();
         return body || body.data || {};
@@ -35,7 +45,7 @@ export class ScriptViewerService {
         let sum: number = 0;
         let numberOfItems: number = 0;
 
-        if (interviewScript.skills && interviewScript.skills.length > 0) {
+        if (interviewScript.Skills && interviewScript.Skills.length > 0) {
             sum += this.getSkillsRating(interviewScript);
             numberOfItems++;
         }
@@ -55,9 +65,9 @@ export class ScriptViewerService {
         let sum: number = 0;
         let numberOfItems: number = 0;
 
-        if (interviewScript.skills && interviewScript.skills.length > 0) {
-            sum = interviewScript.skills.map(skill => this.getRatingBySkill(skill)).reduce(function (a, b) { return a + b; }, 0);
-            numberOfItems = interviewScript.skills.filter(s => s.interviewQuestions.length).length;
+        if (interviewScript.Skills && interviewScript.Skills.length > 0) {
+            sum = interviewScript.Skills.map(skill => this.getRatingBySkill(skill)).reduce(function (a, b) { return a + b; }, 0);
+            numberOfItems = interviewScript.Skills.filter(s => s.interviewQuestions.length).length;
         }
 
         if (sum > 0) {

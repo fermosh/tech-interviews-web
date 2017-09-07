@@ -12,8 +12,9 @@ import { NumberValidator } from './../shared/validators/number.validator';
 import { GenericValidator } from './../shared//validators/generic.validator';
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { CompetencyService } from './../shared/services/competency.service';
+import { ICompetency } from './../shared/classes/competency';
 import { Tag } from './../shared/classes/tag';
-import { SkillMatrix } from './../shared/classes/skill-matrix';
+import { Skill } from './../shared/classes/skill';
 
 declare var $: any;
 
@@ -27,12 +28,13 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     title: string = 'Exercise Edit';
     skills: Tag[];
     availableSkills: Tag[];
-    competencies: Tag[];
+    competencies: ICompetency[];
     isPageRendered: boolean;
     errorMessage: string;
     exerciseForm: FormGroup;
     exercise: Exercise;
     private sub: Subscription;
+    private editedSkills: boolean = false;
 
     // Use with the generic validation message class
     displayMessage: { [key: string]: string } = {};
@@ -94,33 +96,34 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    fillAutocomplete(skills: Tag[], availableSkills: Tag[]): void {
-        let addTag = function(text) {
-            skills.push(availableSkills.find(s => s.name === text));
+    fillAutocomplete(): void {
+        // create a reference to the current component object
+        // in order to use it into the javascript anonymous functions
+        let component = this;
+
+        // function to add or remove skills to the current component skills
+        let editFunction = function (evt, ui, label, isNew) {
+            if (!ui.duringInitialization) {
+                // turn the skills edited flag true
+                component.editedSkills = true;
+
+                // evaluate if the skill is new or it should be removed
+                if (isNew) {
+                    component.skills.push(component.availableSkills.find(s => s.name === control.tagit('tagLabel', ui.tag)));
+                } else {
+                    component.skills = component.skills.filter(s => s.name !== control.tagit('tagLabel', ui.tag));
+                }
+            }
         };
 
-        let removeTag = function(text) {
-            skills = skills.filter(s => s.name !== text);
-        };
-
+        // get the control to use for tags
         let control = $('#tagIt');
+        // set the control with the callbacks for Add and Remove
         control.uui_tagit(
             {
-                'autocomplete': {
-                    'delay': 0,
-                    'minLength': 2,
-                    'source': availableSkills.map(skill => skill.name)
-                },                
-                afterTagAdded: function(evt, ui) {
-                    if (!ui.duringInitialization) {
-                        addTag(control.tagit('tagLabel', ui.tag));
-                    }
-                },
-                afterTagRemoved: function(evt, ui) {
-                    if (!ui.duringInitialization) {
-                        removeTag(control.tagit('tagLabel', ui.tag));
-                    }
-                }
+                'autocomplete': { 'delay': 0, 'minLength': 2, 'source': component.availableSkills.map(skill => skill.name)},
+                afterTagAdded: function (evt, ui) { editFunction(evt, ui, control.tagit('tagLabel', ui.tag), true) },
+                afterTagRemoved: function (evt, ui) { editFunction(evt, ui, control.tagit('tagLabel', ui.tag), false) }
             }
         );
     }
@@ -141,11 +144,11 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
-        this.skillMatrixService.getSkillMatrix(competencyId, 5)
+        this.skillMatrixService.getSkillMatrixByParent(competencyId)
             .subscribe(
-                (skillMatrix: SkillMatrix) => {
-                    this.availableSkills = skillMatrix.skills;
-                    this.fillAutocomplete(this.skills, this.availableSkills);
+                (skills: Skill[]) => {
+                    this.availableSkills = skills;
+                    this.fillAutocomplete();
                 },
                 (error: any) => this.errorMessage = <any>error
             );
@@ -154,12 +157,14 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     getCompetencies(): void {
         this.competencyService.getCompetencies()
             .subscribe(
-                (competencies: Tag[]) => this.onCompetenciesRetrieved(competencies),
+                competencies => {
+                    this.onCompetenciesRetrieved(competencies.filter(x => x.parentId == null))
+                },
                 (error: any) => this.errorMessage = <any>error
             );
     }
 
-    onCompetenciesRetrieved(competencies: Tag[]): void {
+    onCompetenciesRetrieved(competencies: ICompetency[]): void {
         this.competencies = competencies;
     }
 
@@ -214,11 +219,11 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     saveExercise(): void {
-        if (this.exerciseForm.dirty && this.exerciseForm.valid) {
+        if ((this.exerciseForm.dirty || this.editedSkills) && this.exerciseForm.valid) {
             // Copy the form values over the exercise object values
             let e = Object.assign({}, this.exercise, this.exerciseForm.value);
 
-            e.competency = this.competencies.find(c => c.id == this.exerciseForm.value.competencyId);
+            e.competency = this.competencies.find(c => c.id === this.exerciseForm.value.competencyId);
             e.skills = this.skills;
 
             this.exerciseService.saveExercise(e)

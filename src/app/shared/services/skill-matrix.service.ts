@@ -7,27 +7,30 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { SkillMatrix } from './../classes/skill-matrix';
+import { Skill } from './../classes/skill';
 import { BaseService } from './base.service';
 
 @Injectable()
 export class SkillMatrixService extends BaseService {
     private skillMatrixUrl = `${this.baseUrl}skillMatrix/`;
+    private options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
 
-    getSkillMatrix(competencyId: number, levelId: number): Observable<SkillMatrix> {
+
+    // This method get the skill matrix of the given CompetencyId for the specific level number
+    getSkills(competencyId: number, levelId: number): Observable<Skill[]> {
         const url = `${this.skillMatrixUrl}${competencyId}/${levelId}`;
-        return this.http.get(url)
+
+        return this.http.get(url, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getSkillMatrixByLevel(competencyId: number, levelId: number): Observable<SkillMatrix> {
-        const url = `${this.skillMatrixUrl}${competencyId}/${levelId}`;
+    // This method get the skill matrix of the given CompetencyId and its competencies children
+    // for the specific level number
+    getSkillMatrixByParent(competencyId: number): Observable<Skill[]> {
+        const url = `${this.skillMatrixUrl}${competencyId}/true`;
 
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http.get(url, options)
+        return this.http.get(url, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }

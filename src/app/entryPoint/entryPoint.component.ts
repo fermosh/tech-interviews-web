@@ -121,10 +121,10 @@ export class EntryPointComponent {
         this.selectedLevelId = this.levelId;
 
         // call the service to get the skill matrix data
-        this.skillMatrixService.getSkillMatrixByLevel(this.selectedCompetencyId, this.selectedLevelId).subscribe(
-            skillMatrix => {
+        this.skillMatrixService.getSkills(this.selectedCompetencyId, this.selectedLevelId).subscribe(
+            skills => {
                 // fill the skill picker source
-                this.skills = skillMatrix.skills;
+                this.skills = skills;
 
                 let legend = this.getLabel(this.selectedCompetencyId, this.selectedLevelId);
 

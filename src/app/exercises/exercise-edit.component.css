@@ -20,3 +20,7 @@
 .exercise-edit-skills {
     width: 100%;
 }
+
+.tagit li[value="0"] {
+    display: none;
+}
