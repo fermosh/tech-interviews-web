@@ -19,7 +19,7 @@
         <span><b>Title:</b> {{excercise.title}}</span><br>
         <span><b>Description:</b> {{excercise.body}}</span><br>
         <span *ngIf="!question.comments && question.comments.length"><b>Comments:</b></span><br>
-        <span *ngFor="let comment of exercise.comments">- {{ comment.text }}</span><br>
+        <span *ngFor="let comment of exercise.comments">- {{ comment.text }}<br></span>
     </div>
     <br>
     <span class="report-header">Questions</span>
