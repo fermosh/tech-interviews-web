@@ -1,46 +1,39 @@
 <div class="report-template">
-    <h3>List of Skills Checked</h3>
-    <div *ngFor="let skill of interviewScript.skills">
-        <b><h6 class="skill-name">{{ skill.name }}</h6></b>
-        <span class="report-label"><i>Score: </i></span><span>{{ getRatingBySkill(skill) | number:'1.0-1' }}</span><br><br>
-        <ul>
-            <li *ngFor="let question of skill.interviewQuestions; let index = index;">
-                <i>{{ index + 1 + ') ' + question.body }}</i>
-                <p *ngIf="question.comments && !question.comments.length">No comments.</p>
-                <p *ngFor="let comment of question.comments">{{ comment.text }}</p>
-            </li>
-        </ul>
-        <br>
+    <span class="report-header">Summary</span>
+        <p>-</p>
+    <span class="report-header">Pros</span>
+        <p>-</p>
+    <span class="report-header">Cons</span>
+        <p>-</p>
+    <span class="report-header">Red Flags</span>
+        <p>-</p>
+    <span class="report-header">List of Skills Checked</span> <br>
+    <span *ngFor="let skill of interviewScript.skills">
+        <ng-container *ngIf="(getRatingBySkill(skill)) > 0;">
+            - [{{getRatingBySkill(skill) | number:'1.0-1' }}] {{ skill.name }} <br>
+        </ng-container>
+    </span>
+    <br>
+    <span class="report-header">Coding Excercise</span><br>
+    <div *ngFor="let skill of interviewScript.interviewExcercises">
+        <span><b>Title:</b> {{excercise.title}}</span><br>
+        <span><b>Description:</b> {{excercise.body}}</span><br>
+        <span *ngIf="!question.comments && question.comments.length"><b>Comments:</b></span><br>
+        <span *ngFor="let comment of exercise.comments">- {{ comment.text }}</span><br>
     </div>
     <br>
-    <h3>Coding</h3>
-    <div *ngFor="let exercise of interviewScript.interviewExercises">
-        <b><h6>{{ exercise.title }}</h6></b>
-        <table>
-            <tbody>
-                <tr>
-                    <td class="report-label" style="width:80px;"><i>Score:</i></td>
-                    <td>{{ exercise.rating }}</td>
-                </tr>
-                <tr>
-                    <td class="report-label"><i>Skills:</i></td>
-                    <td>
-                        <template ngFor let-tag [ngForOf]="exercise.skills" let-last="last">
-                            <span>{{ tag.text }}</span><span *ngIf="!last">, </span>
-                        </template>
-                    </td>
-                </tr>
-                <tr *ngIf="exercise.comments && !exercise.comments.length">
-                    <td colspan="2">No comments.</td>
-                </tr>
-                <tr *ngFor="let comment of exercise.comments">
-                    <td class="report-label"><i>Comments:</i></td>
-                    <td>{{ comment.text }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-    </div>
+    <span class="report-header">Questions</span>
+    <div *ngFor="let skill of interviewScript.skills">
+        <ng-container *ngIf="getRatingBySkill(skill) > 0">
+            <span><b>[{{getRatingBySkill(skill) | number:'1.0-1' }}] {{ skill.name }}</b></span><br>
+            <ng-container *ngFor="let question of skill.interviewQuestions; let index = index;">
+                <span> - {{'[' + question.rating+'] '+question.body }}</span> <i *ngFor="let comment of question.comments; let last = last"> {{ comment.text }}<i *ngIf="!last">,</i></i> <br>
+            </ng-container>
+        </ng-container>
+    </div>  
+    <br>
+    <span class="report-header">Suggestions for the Candidate</span>
+    <p>-</p>
 </div>
 
 <!-- ClipBoard -->
