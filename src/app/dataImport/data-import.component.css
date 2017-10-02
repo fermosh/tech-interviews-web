@@ -1,0 +1,11 @@
+.data-import-header {
+    background-color: #1A9CB0;
+    color: #FFFFFF;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.data-import-header-title h2 {
+    margin-bottom: 0;
+}

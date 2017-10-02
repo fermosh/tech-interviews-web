@@ -22,6 +22,10 @@ const routes: Routes = [
         path: 'script-viewer',
         loadChildren: 'app/scriptViewer/script-viewer.module#ScriptViewerModule'
     },
+    {
+        path: 'data-import',
+        loadChildren: 'app/dataImport/data-import.module#DataImportModule'
+    },
     { path: '',   redirectTo: '/entryPoint', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent }
 ];
