@@ -22,6 +22,7 @@ export class SkillMatrixService extends BaseService {
 
         return this.http.get(url, this.options)
             .map(this.extractData)
+            .map(skillMatrixModel => skillMatrixModel.skills)
             .catch(this.handleError);
     }
 

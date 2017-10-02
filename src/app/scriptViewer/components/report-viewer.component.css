@@ -2,6 +2,12 @@ h3 {
     margin-bottom: 15px;
 }
 
+.report-header{
+    text-transform: uppercase;
+    font-family: 'Oswald Regular',Arial,sans-serif;
+    font-size: 18px;
+}
+
 .report-template {
     background-color: #f4f4f4;
     border: 1px solid #e5e5e5;

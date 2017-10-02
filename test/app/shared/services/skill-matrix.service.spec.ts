@@ -3,18 +3,18 @@ import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from 
 import { MockBackend } from '@angular/http/testing';
 
 import { SkillMatrixService } from '../../../../src/app/shared/services/skill-matrix.service';
-import { SkillMatrix } from '../../../../src/app/shared/classes/skill-matrix';
+//import { SkillMatrix } from '../../../../src/app/shared/classes/skill-matrix';
 
 describe('Skill Matrix Service: ', () => {
 
     // array to mock http requests
-    const skillMatrixResult: SkillMatrix[] = [{
-        hasContent: true, competencyId: 10,
+    const skillMatrixResult: any = {
+        hasContent: true, competencyId: 13,
         skills: [{
             rootId: 7, displayOrder: 1, requiredSkillLevel: 0, userSkillLevel: 0, levelSet: 0, competencyId: 13, jobFunctionLevel: 3,
             topics: [], id: 7, parentId: null, name: 'Hard skills', isSelectable: true, skillLevel: 1, hasChildren: true
         }]
-    }];
+    };
 
     // test initialization
     beforeEach(() => {
@@ -40,31 +40,33 @@ describe('Skill Matrix Service: ', () => {
         it('should return a defined item', async(inject([SkillMatrixService, MockBackend], (service: SkillMatrixService, mock) => {
 
             // arrange
-            let mockItem = skillMatrixResult[0];
+            let mockItem = skillMatrixResult;
+            
             mock.connections.subscribe(conn => {
                 conn.mockRespond(new Response(new ResponseOptions({ body: mockItem })));
             });
 
             // act
-            service.getSkillMatrix(mockItem.competencyId, 1).subscribe(result => {
+            service.getSkills(mockItem.competencyId, 1).subscribe(result => {
                 // assert
-                expect(result).toBeDefined();
+                expect(result[0]).toBeDefined();
             });
         })));
 
         // test to validate the getSkillMatrix method returns the expected value
         it('should return the expected value', async(inject([SkillMatrixService, MockBackend], (service: SkillMatrixService, mock) => {
             // arrange
-            let mockItem = skillMatrixResult[0];
+            let mockItem = skillMatrixResult;
+
             mock.connections.subscribe(conn => {
                 conn.mockRespond(new Response(new ResponseOptions({ body:  mockItem })));
             });
 
             // act
-            service.getSkillMatrix(mockItem.competencyId, 1).subscribe(result => {
+            service.getSkills(mockItem.competencyId, 1).subscribe(result => {
                 // assert
-                expect(result).toBeDefined();
-                expect(result).toEqual(mockItem);
+                expect(result[0]).toBeDefined();
+                expect(result).toEqual(mockItem.skills);
             });
         })));
 
@@ -76,7 +78,7 @@ describe('Skill Matrix Service: ', () => {
             });
 
             // act
-            let errorFunction = () => service.getSkillMatrix(null, null).subscribe(result => { });
+            let errorFunction = () => service.getSkills(null, null).subscribe(result => { });
 
             // assert
             expect(errorFunction).toThrowError();
