@@ -9,7 +9,7 @@ import { ExcelToJsonService } from './../shared/services/excelToJson/excelToJson
 })
 
 export class DataImportComponent  {
-    url: string = "https://evening-anchorage-3159.herokuapp.com/api/";  // Replace with API URL
+	url: string = "https://evening-anchorage-3159.herokuapp.com/api/";  //TODO: Replace with API URL
 
     constructor(private excelToJsonService: ExcelToJsonService){}
 
@@ -17,10 +17,11 @@ export class DataImportComponent  {
 
     }
 
-    public doSomething(item: any): void {
-		this.excelToJsonService.requiredProperties = [ "id", "body", "answer", "skill.id", "skill.name"];;
+    public proccessFile(item: any): void {
+		this.excelToJsonService.requiredProperties = item.requiredProperties;
 		this.excelToJsonService.convert(item.some).subscribe(
 			function(dataJsonResult) {
+				//TODO: Replace with the process to send this dataJsonResult to server
 				console.log(dataJsonResult);
 			},
 			function(error){

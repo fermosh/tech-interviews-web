@@ -4,7 +4,6 @@ import { MockBackend } from '@angular/http/testing';
 import { ExcelToJsonService } from './../../../../../src/app/shared/services/excelToJson/excelToJson.service';
 import { ArrayToJsonService } from './../../../../../src/app/shared/services/excelToJson/arrayToJson.service';
 import { Question } from './../../../../../src/app/shared/classes/question';
-import { MockExcelToJsonService } from "./mockExcelToJson.service";
 
 describe('Excel to Json Service', () => {
     let excelToJsonService: ExcelToJsonService;
@@ -117,7 +116,7 @@ describe('Excel to Json Service', () => {
                 ["1", "What's the purpose of standards/conventions in .NET C#?", "", "973", "Development", "other info without property"],
                 ["2", "When to use string and when StringBuilder?", "", "973", "Development", "other info without property"],
                 ["3", "When to use var and when the exact data type?", "", "973", "Development", "other info without property" ]];
-                
+
              //prepare service
              service.data = questionsWithExtraInfo;
              service.requiredProperties = [ "id", "body", "answer", "skill.id", "skill.name"];

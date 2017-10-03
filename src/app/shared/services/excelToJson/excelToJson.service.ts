@@ -41,7 +41,7 @@ export class ExcelToJsonService{
 
     private validate(keys: Array<string>): boolean {
         for (var i = 0; i < this.requiredProperties.length; i++) {
-            if(!keys.includes(this.requiredProperties[i])){
+            if(!keys.some(k => k == this.requiredProperties[i])){
                 throw new Error(`Column "${this.requiredProperties[i]}" is missing in the file and it's required.`);
             }
         }
