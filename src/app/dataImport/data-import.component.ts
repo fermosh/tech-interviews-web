@@ -20,13 +20,11 @@ export class DataImportComponent  {
     public proccessFile(item: any): void {
 		this.excelToJsonService.requiredProperties = item.requiredProperties;
 		this.excelToJsonService.convert(item.some).subscribe(
-			function(dataJsonResult) {
+			dataJsonResult => {
 				//TODO: Replace with the process to send this dataJsonResult to server
 				console.log(dataJsonResult);
 			},
-			function(error){
-				console.error(error);
-			}
+			error => console.error(error)
 		);
     }
 }

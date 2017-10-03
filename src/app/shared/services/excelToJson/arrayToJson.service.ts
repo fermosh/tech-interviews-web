@@ -29,16 +29,16 @@ export class ArrayToJsonService{
 
 
 
-  private isArray = function(obj: any): boolean {
+  private isArray(obj: any): boolean {
     return Object.prototype.toString.call(obj) === '[object Array]';
   };
 
-  public trimKeyName = function(key: any): string {
+  public trimKeyName(key: any): string {
     let parsedKeyName = this.parseKeyName(key);
     return parsedKeyName[1];
   }
 
-  private parseKeyName = function(key: string): any {
+  private parseKeyName(key: string): any {
     let index;
     index = key.match(/\[(\d+)\]$/);
     switch (false) {
@@ -51,7 +51,7 @@ export class ArrayToJsonService{
     }
   };
 
-  private convertValueList = function(list: Array<string>) {
+  private convertValueList(list: Array<string>) {
     let item, j, len, results;
     results = [];
     for (j = 0, len = list.length; j < len; j++) {
@@ -61,7 +61,7 @@ export class ArrayToJsonService{
     return results;
   };
 
-  private convertValue = function(value: any): any {
+  private convertValue(value: any): any {
     let testVal;
     if(value === undefined)
       return "";
@@ -79,7 +79,7 @@ export class ArrayToJsonService{
     }
   };
 
-  private assign = function(obj: JSON, key: any, value: any, options: any): any {
+  private assign(obj: JSON, key: any, value: any, options: any): any {
     let i, index, j, keyIsList, keyName, ref, ref1, ref2;
     if(key === undefined)
       return;
@@ -130,7 +130,7 @@ export class ArrayToJsonService{
     }
   };
 
-  private transpose = function(matrix: Array<Array<any>>): Array<Array<any>> {
+  private transpose(matrix: Array<Array<any>>): Array<Array<any>> {
     let i, j, ref, results, t;
     results = [];
     for (i = j = 0, ref = matrix[0].length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
@@ -147,7 +147,7 @@ export class ArrayToJsonService{
     return results;
   };
 
-  private convert = function(data: Array<Array<any>>, options: any): Array<JSON> {
+  private convert(data: Array<Array<any>>, options: any): Array<JSON> {
     let index, item, j, k, keys, len, len1, result, row, rows, value;
     if (options.isColOriented) {
       data = this.transpose(data);
@@ -169,7 +169,7 @@ export class ArrayToJsonService{
     return result;
   };
 
-  private _validateOptions = function(options: any): any {
+  private validateOptions(options: any): any {
     if (!options) {
       options = this._DEFAULT_OPTIONS;
     } else {
@@ -183,7 +183,7 @@ export class ArrayToJsonService{
     return options;
   };
 
-  public processArray = function(data: Array<Array<any>>, options: any, requiredProperties: Array<string>) {
+  public processArray(data: Array<Array<any>>, options: any, requiredProperties: Array<string>) {
     if (options == null) {
       options = this._DEFAULT_OPTIONS;
     }
@@ -195,7 +195,7 @@ export class ArrayToJsonService{
       this.ignoreNonRequiredProperties = false;
     }
 
-    options = this._validateOptions(options);
+    options = this.validateOptions(options);
     return this.convert(data, options);
   };
 
