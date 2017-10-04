@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 
 export class NumberValidator {
 
@@ -10,4 +10,8 @@ export class NumberValidator {
             return null;
         };
     }
+
+    static validateNonZero(c: FormControl) {
+        return c.value > 0 ? null : { validateZero: { valid: false } };
+      }
 }
