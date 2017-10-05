@@ -15,7 +15,7 @@ const routes: Routes = [
         loadChildren: 'app/exercises/exercise.module#ExerciseModule',
     },
     {
-        path: 'entryPoint',
+        path: 'skillMatrix',
         loadChildren: 'app/entryPoint/entryPoint.module#EntryPointModule'
     },
     {
@@ -26,7 +26,7 @@ const routes: Routes = [
         path: 'data-import',
         loadChildren: 'app/dataImport/data-import.module#DataImportModule'
     },
-    { path: '',   redirectTo: '/entryPoint', pathMatch: 'full' },
+    { path: '',   loadChildren: 'app/entryPoint/entryPoint.module#EntryPointModule', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent }
 ];
 
