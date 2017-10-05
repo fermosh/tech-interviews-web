@@ -43,7 +43,7 @@
                 <div class="form-group" [ngClass]="{'has-error': displayMessage.skill}">
                     <label class="col-md-2 control-label" for="skill">Skill</label>
                     <div class="col-md-3">
-                        <select class="form-control" formControlName="skillId" min="1">
+                        <select class="form-control" formControlName="skillId">
                             <option *ngIf="skillId == undefined" ng-selected="selected" [value]="0">-- Select --</option>
                             <option *ngFor="let skill of skills" ng-selected="skill.name === skillId" [value]="skill.id">{{skill.name}}</option>
                         </select>
