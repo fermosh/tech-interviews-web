@@ -15,6 +15,9 @@ export class FileUploadComponent implements OnInit {
     @Input() allowedMimeType: Array<string>;
     @Input() allowedFileType: Array<string>;
     @Input() headers: Array<any>;
+    @Input() additionalParameter: {
+        [key: string]: any;
+    };
 
     @Output() fileOver: EventEmitter<number> =
     new EventEmitter<number>();
@@ -32,7 +35,8 @@ export class FileUploadComponent implements OnInit {
             autoUpload: this.autoUpload,
             allowedMimeType: this.allowedMimeType,
             allowedFileType: this.allowedFileType,
-            headers: this.headers
+            headers: this.headers,
+            additionalParameter: this.additionalParameter
         });
     }
 
@@ -42,6 +46,7 @@ export class FileUploadComponent implements OnInit {
     }
 
     public _itemUpload(item: any): void {
+        item.requiredProperties = this.additionalParameter[0].requiredProperties;
         this.itemUpload.emit(item);
     }
 }
