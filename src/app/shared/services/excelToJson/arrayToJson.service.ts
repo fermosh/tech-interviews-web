@@ -51,7 +51,7 @@ export class ArrayToJsonService{
     }
   };
 
-  private convertValueList(list: Array<string>) {
+  private convertValueList(list: Array<string>): Array<any> {
     let item, j, len, results;
     results = [];
     for (j = 0, len = list.length; j < len; j++) {
@@ -183,7 +183,7 @@ export class ArrayToJsonService{
     return options;
   };
 
-  public processArray(data: Array<Array<any>>, options: any, requiredProperties: Array<string>) {
+  public processArray(data: Array<Array<any>>, options: any, requiredProperties: Array<string>): Array<JSON> {
     if (options == null) {
       options = this._DEFAULT_OPTIONS;
     }
