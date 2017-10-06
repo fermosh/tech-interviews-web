@@ -33,8 +33,6 @@
                     <div class="col-md-3">
                             <app-competency-picker formControlName="competencyId" ngDefaultControl [competencies]="competencies" [selectedId]="questionForm.value.competencyId"
                             (selectionChanged)="onCompetencyChange($event)"></app-competency-picker>
-                            <!-- <app-competency-picker formControlName="competencyId" ngDefaultControl [competencies]="competencies" [selectedId]="questionForm.value.competencyId"
-                            (selectionChanged)="onCompetencyChange($event)"></app-competency-picker> -->
                         <span class="help-block" *ngIf="displayMessage.competency">
                             {{displayMessage.competency}}
                         </span>
