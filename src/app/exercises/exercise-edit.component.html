@@ -40,10 +40,8 @@
                 <div class="form-group" [ngClass]="{'has-error': displayMessage.competency}">
                     <label class="col-md-2 control-label" for="competency">Competency</label>
                     <div class="col-md-3">
-                        <select class="form-control" formControlName="competencyId" (change)="onCompetencyChange($event.target.value)">
-                            <option *ngIf="exerciseForm.value.competencyId == 0" ng-selected="selected" [value]="0">-- Select --</option>
-                            <option *ngFor="let competency of competencies" ng-selected="competency.id === competencyId" [value]="competency.id">{{competency.name}}</option>
-                        </select>
+                        <app-competency-picker formControlName="competencyId" ngDefaultControl [competencies]="competencies" [selectedId]="exerciseForm.value.competencyId"
+                        (selectionChanged)="onCompetencyChange($event)"></app-competency-picker>
                         <span class="help-block" *ngIf="displayMessage.competency">
                             {{displayMessage.competency}}
                         </span>

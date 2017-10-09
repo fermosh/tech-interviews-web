@@ -144,7 +144,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
-        this.skillMatrixService.getSkillMatrixByParent(competencyId)
+        this.skillMatrixService.getSkillsByCompetency(competencyId)
             .subscribe(
                 (skills: Skill[]) => {
                     this.availableSkills = skills;
@@ -158,14 +158,10 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.competencyService.getCompetencies()
             .subscribe(
                 competencies => {
-                    this.onCompetenciesRetrieved(competencies.filter(x => x.parentId == null))
+                    this.competencies = competencies;
                 },
                 (error: any) => this.errorMessage = <any>error
             );
-    }
-
-    onCompetenciesRetrieved(competencies: ICompetency[]): void {
-        this.competencies = competencies;
     }
 
     getExercise(id: string): void {
