@@ -22,21 +22,16 @@
                     </a>
                 </div>
             </div>
-            <a href="#" class="brand-logo">
+            <a [routerLink]="['']" class="brand-logo">
                 <span class="logo">
                     <img src="assets/ic_logo_UUi.svg" alt="" />
                 </span> {{title}}
             </a>
             <ul class="uui-navigation nav navbar-nav">
-                <li routerLinkActive="active"><a [routerLink]="['/entryPoint']">Skill Matrix</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['/skillMatrix']">Skill Matrix</a></li>
                 <li routerLinkActive="active"><a [routerLink]="['/questions']">Questions</a></li>
                 <li routerLinkActive="active"><a [routerLink]="['/exercises']">Exercises</a></li>
             </ul>
-            <!--<ul class="uui-header-tools nav navbar-nav">
-                <li class="uui-header-button">
-                    <a [routerLink]="['/questions/0']" class="uui-button">Add</a>
-                </li>
-            </ul>-->
         </nav>
     </div>
 </header>

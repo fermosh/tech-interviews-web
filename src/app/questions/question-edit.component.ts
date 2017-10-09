@@ -63,11 +63,9 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit(): void {
         this.questionForm = this.fb.group({
-            body: ['', [Validators.required,
-            Validators.minLength(20),
-            Validators.maxLength(200)]],
+            body: ['', [Validators.required, Validators.minLength(15), Validators.maxLength(200)]],
             answer: ['', [Validators.maxLength(4000)]],
-            skillId: 0,
+            skillId: [0, NumberValidator.validateNonZero],
             competencyId: 0
         });
 
@@ -87,6 +85,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private onCompetencyChange(id: number): void {
+        this.questionForm.patchValue({ skillId: 0, competencyId: id });
         this.getSkills(id);
     }
 
@@ -102,7 +101,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
-        this.skillMatrixService.getSkillMatrixByParent(competencyId)
+        this.skillMatrixService.getSkillsByCompetency(competencyId)
             .subscribe(
             (skills: Tag[]) => this.onSkillsRetrieved(skills),
             (error: any) => this.errorMessage = <any>error
@@ -117,7 +116,7 @@ export class QuestionEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.competencyService.getCompetencies()
             .subscribe(
             competencies => {
-                this.onCompetenciesRetrieved(competencies.filter(x => x.parentId == null))
+                this.onCompetenciesRetrieved(competencies)
             },
             (error: any) => this.errorMessage = <any>error);
     }

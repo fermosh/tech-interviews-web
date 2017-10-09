@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 // Imports for loading & configuring the in-memory web api
 import { SkillMatrixService } from './../shared/services/skill-matrix.service';
 import { CompetencyService } from './../shared/services/competency.service';
@@ -13,13 +12,17 @@ import { ScriptViewerService } from '../scriptViewer/script-viewer.service';
 import { ExcelToJsonService } from './../shared/services/excelToJson/excelToJson.service';
 import { ArrayToJsonService } from './../shared/services/excelToJson/arrayToJson.service';
 
+import { CompentencyPickerComponent } from '../shared/components/competencyPicker/competencyPicker.component';
+
 @NgModule(
   {
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     exports: [
         CommonModule,
         FormsModule,
+        CompentencyPickerComponent
     ],
+    declarations: [CompentencyPickerComponent],
     providers: [
         SkillMatrixService,
         CompetencyService,
