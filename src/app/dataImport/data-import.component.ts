@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 
 import { ExcelToJsonService } from './../shared/services/excelToJson/excelToJson.service';
+import { QuestionsImportService } from './../shared/services/bulkImport/questionsImport.service';
 
 @Component({
     templateUrl: './data-import.component.html',
@@ -9,9 +10,10 @@ import { ExcelToJsonService } from './../shared/services/excelToJson/excelToJson
 })
 
 export class DataImportComponent  {
-	url: string = "https://evening-anchorage-3159.herokuapp.com/api/";  //TODO: Replace with API URL
-
-    constructor(private excelToJsonService: ExcelToJsonService){}
+	
+	constructor(
+		private excelToJsonService: ExcelToJsonService,
+		private questionsImportService: QuestionsImportService){}
 
     public fileOverBase(event: any): void {
 
@@ -21,10 +23,21 @@ export class DataImportComponent  {
 		this.excelToJsonService.requiredProperties = item.requiredProperties;
 		this.excelToJsonService.convert(item.some).subscribe(
 			dataJsonResult => {
-				//TODO: Replace with the process to send this dataJsonResult to server
-				console.log(dataJsonResult);
+				this.sendData(dataJsonResult);
 			},
-			error => console.error(error)
+			error => {
+				//TODO: show message to the user
+			}
 		);
-    }
+	}
+	public sendData(data: JSON): void{
+		this.questionsImportService.importQuestions(data).subscribe(
+			result => {
+				//TODO: do something with the result
+			},
+			error => { 
+				//TODO: show message to the user
+			}
+		);
+	}
 }

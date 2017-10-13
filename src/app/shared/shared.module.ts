@@ -12,6 +12,7 @@ import { ExerciseService } from './../shared/services/exercise.service';
 import { ScriptViewerService } from '../scriptViewer/script-viewer.service';
 import { ExcelToJsonService } from './../shared/services/excelToJson/excelToJson.service';
 import { ArrayToJsonService } from './../shared/services/excelToJson/arrayToJson.service';
+import { QuestionsImportService } from './../shared/services/bulkImport/questionsImport.service';
 
 @NgModule(
   {
@@ -29,6 +30,7 @@ import { ArrayToJsonService } from './../shared/services/excelToJson/arrayToJson
         ScriptViewerService,
         ExcelToJsonService,
         ArrayToJsonService,
+        QuestionsImportService
       ]
   }
 )
