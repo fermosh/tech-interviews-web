@@ -24,11 +24,11 @@ export class FileUploadComponent implements OnInit {
     @Output() itemUpload: EventEmitter<number> =
     new EventEmitter<number>();
 
-    uploader: FileUploader;
+    fileUploader: FileUploader;
     hasBaseDropZoneOver: boolean = false;
 
     ngOnInit(): void {
-        this.uploader = new FileUploader({
+        this.fileUploader = new FileUploader({
             url: this.url,
             queueLimit: this.queueLimit,
             maxFileSize: this.maxFileSize,
