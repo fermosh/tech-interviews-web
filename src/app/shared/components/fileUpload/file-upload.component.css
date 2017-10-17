@@ -32,6 +32,13 @@
     font-family: 'Oswald Light';
 }
 
-.table {
-    font-family: 'Oswald Regular';
+.right {
+    float: right;
+}
+
+.uui-loader {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    float: left;
 }

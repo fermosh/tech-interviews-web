@@ -1,52 +1,71 @@
 <!-- DROP ZONE -->
-<div ng2FileDrop [ngClass]="{ 'file-upload-file-over': hasBaseDropZoneOver, 'file-upload-file-over-disabled': hasBaseDropZoneOver && uploader.queue.length >= queueLimit }"
-    (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well file-upload-drop-zone">
-    <span *ngIf="!(hasBaseDropZoneOver && uploader.queue.length >= queueLimit)">Drop your file here</span>
-    <span *ngIf="hasBaseDropZoneOver && uploader.queue.length >= queueLimit" class="file-upload-limit-reached">Limit of Files Reached</span>
+<div ng2FileDrop [ngClass]="{ 'file-upload-file-over': hasBaseDropZoneOver, 'file-upload-file-over-disabled': hasBaseDropZoneOver && fileUploader.queue.length >= queueLimit }"
+    (fileOver)="fileOverBase($event)" [uploader]="fileUploader" class="well file-upload-drop-zone">
+    <span *ngIf="!(hasBaseDropZoneOver && fileUploader.queue.length >= queueLimit)">Drop your file here</span>
+    <span *ngIf="hasBaseDropZoneOver && fileUploader.queue.length >= queueLimit" class="file-upload-limit-reached">Limit of Files Reached</span>
 </div>
 <!-- RESTRICTION NOTES -->
+<div *ngIf="queueLimit" class="file-upload-notes right">
+    <span>File limit: {{ queueLimit }}</span>
+</div>
 <div class="file-upload-notes">
     <span>Max size allowed: {{ maxFileSize/1024/1024 }} MB</span>
 </div>
-<div *ngIf="uploader.queue.length >= queueLimit" class="file-upload-notes">
-    <span>File limit: {{ queueLimit }}</span>
-</div>
+<br>
 <br>
 <!-- UPLOADED FILE INFO -->
-<table class="table">
+<table *ngIf="fileUploader.queue.length" class="uui-table small hover">
     <thead>
         <tr>
-            <th width="50%">Name</th>
+            <th width="40%">Name</th>
             <th>Size</th>
-            <th>Progress</th>
+            <!--<th>Progress</th>-->
             <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of uploader.queue">
+        <tr *ngFor="let item of fileUploader.queue">
             <td>{{ item?.file?.name }}</td>
             <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-            <td>
+            <!--<td>
                 <div class="progress" style="margin-bottom: 0;">
                     <div class="progress-bar file-upload-progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
                 </div>
-            </td>
-            <td class="text-center">
-                <span *ngIf="item.isSuccess" style="color:#A3C644;"><i class="fa fa-check"></i></span>
-                <span *ngIf="item.isCancel" style="color:#FF9B19;"><i class="fa fa-exclamation-circle"></i></span>
-                <span *ngIf="item.isError" style="color:#B22746;"><i class="fa fa-remove"></i></span>
+            </td>-->
+            <td>
+                <div *ngIf="item.isUploading">
+                    <div class="uui-loader spinner">
+                        <div class="dot dot-1"></div>
+                        <div class="dot dot-2"></div>
+                        <div class="dot dot-3"></div>
+                        <div class="dot dot-4"></div>
+                        <div class="dot dot-5"></div>
+                        <div class="dot dot-6"></div>
+                        <div class="dot dot-7"></div>
+                        <div class="dot dot-8"></div>
+                        <div class="dot dot-9"></div>
+                        <div class="dot dot-10"></div>
+                        <div class="dot dot-11"></div>
+                        <div class="dot dot-12"></div>
+                    </div>
+                    <div>&nbsp;&nbsp;&nbsp;Uploading...</div>
+                </div>
+                <span *ngIf="item.isSuccess" style="color:#A3C644;"><i class="fa fa-check-circle"></i></span>
+                <!--<span *ngIf="item.isCancel" style="color:#FF9B19;"><i class="fa fa-exclamation-circle"></i></span>-->
+                <span *ngIf="item.isError" style="color:#B22746;"><i class="fa fa-exclamation-circle"></i></span>
+                <span [innerHTML]="item.statusMessage"></span>
             </td>
             <td nowrap>
-                <button type="button" title="Upload" class="uui-button small blue" (click)="_itemUpload(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                <span class="fa fa-upload"></span>
-            </button>
+                <button type="button" title="Upload" [ngClass]="{ 'uui-button': true, 'small': true, 'blue': (!item.isUploading && !item.isSuccess),  'disabled': (item.isUploading || item.isSuccess)  }" (click)="_itemUpload(item)" [disabled]="item.isUploading || item.isSuccess">
+                    <span class="fa fa-upload"></span>
+                </button>
                 <!--<button type="button" class="uui-button small" (click)="item.cancel()" [disabled]="!item.isUploading">
-                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-            </button>-->
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                </button>-->
                 <button type="button" title="Remove" class="uui-button small raspberry" (click)="item.remove()">
-                <span class="fa fa-trash-o"></span>
-            </button>
+                    <span class="fa fa-trash-o"></span>
+                </button>
             </td>
         </tr>
     </tbody>
