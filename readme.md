@@ -1,5 +1,18 @@
 # Technical Interview Helper
 
+Steps for settng up the UI of the project.
+
+	1. Install visual studio code
+	2. From the visual studio code start window select clone GIT repository and paste the following URL: https://epamgdldotnetpublic.visualstudio.com/TechnicalInterviewHelper
+	3. Install Node.JS so you can use NPM.
+	4. Open the root folder in VS code and run npm install
+	5. Change directory to node_modules > UUI > UUI Framework and run the following commands
+		a. npm install -g grunt-cli
+		b. npm install grunt -- save-dev
+		c. npm install
+	6. Go back to the root folder and run the following command ng serve
+    7. Open a web browser and enter http://localhost:4200 and if there was no errors, you should see the technical interview UI
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.24.
 
 ## Development server
