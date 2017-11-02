@@ -147,6 +147,7 @@ export class ExerciseEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getSkills(competencyId: number): void {
+        //testing
         this.skillMatrixService.getSkillMatrixByCompetency(competencyId)
             .subscribe(
                 (skills: Skill[]) => {
