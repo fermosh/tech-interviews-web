@@ -48,8 +48,7 @@ export class SkillMatrixService extends BaseService {
             const url = `${this.skillMatrixUrl}${competencyId}`;
 
             return this.http.get(url, this.options)
-                .map(this.extractData)
-                .map(skillMatrixModel => skillMatrixModel.skills)
-                .catch(this.handleError);
+            .map(this.extractData)
+            .catch(this.handleError);
         }
 }
