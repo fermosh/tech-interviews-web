@@ -7,6 +7,10 @@ import { SelectivePreloadingStrategy } from './selective-preloading-strategy';
 
 const routes: Routes = [
     {
+        path: 'templates',
+        loadChildren: 'app/templates/template.module#TemplateModule'
+    },
+    {
         path: 'questions',
         loadChildren: 'app/questions/question.module#QuestionModule'
     },

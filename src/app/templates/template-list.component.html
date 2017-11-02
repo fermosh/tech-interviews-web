@@ -1,0 +1,31 @@
+<div *ngIf='templates'>
+    <div class="template-list-header">
+        <div class="container">
+            <button class="uui-button lime-green" style="float:right" [routerLink]="['/skillMatrix']">Add</button>
+            <div class="template-list-title-box">
+                <h2>{{title}}</h2>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container" *ngIf='templates && templates.length'>
+        <table class="uui-table dynamic stripe records-per-page search showing-pages paging">
+            <thead>
+                <tr>
+                    <th>Competency</th>
+                    <th>Level</th>
+                    <th>Skills</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let template of templates'>
+                    <td>{{template.competencyName}} {{template.domain}}</td>
+                    <td>{{template.level.name}} - {{template.level.description}}</td>
+                    <td>{{template.skills.length}}</td>
+                    <td><a class="uui-button small" [routerLink]="['/script-viewer', template.id]">Edit</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

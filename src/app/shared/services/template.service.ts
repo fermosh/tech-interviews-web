@@ -18,7 +18,7 @@ export class TemplateService extends BaseService {
     private templateUrl = `${this.baseUrl}templates/`;
 
     getTemplates(): Observable<ITemplate[]> {
-        return this.http.get(this.templateUrl)
+        return this.http.get(this.templateUrl + `all`)
             .map(this.extractData)
             .catch(this.handleError);
     }
