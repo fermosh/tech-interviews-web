@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { InterviewScript } from './classes/interview-script';
 import { Skill } from './../shared/classes/skill';
 import { environment } from './../../environments/environment';
+import { ITemplate } from './../shared/classes/template';
 
 @Injectable()
 
@@ -13,19 +14,11 @@ export class ScriptViewerService {
 
     constructor(private http: Http) { }
 
-    getScriptViewer(id: string): Observable<InterviewScript> {
-        const url = `${this.baseUrl}templates/${id}`;
-        return this.http.get(url)
-            .map(this.extractData)
-            .catch(this.handleError);
-    }
+    getScriptViewer(id: string, isInterview: boolean): Observable<InterviewScript> {
+        //const url = isInterview ? `${this.baseUrl}interviews/${id}` : `${this.baseUrl}templates/${id}`;  // Uncomment by apy/interviews is implemente
+        const url = `${this.baseUrl}templates/${id}`;                                                      // Comment by apy/interviews is implemente
 
-    saveInterview(interviewScript: InterviewScript): Observable<InterviewScript> {
-        const url = `${this.baseUrl}interviews`;
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        
-        return this.http.post(url, interviewScript, options)
+        return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }

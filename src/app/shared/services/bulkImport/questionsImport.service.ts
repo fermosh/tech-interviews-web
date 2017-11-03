@@ -7,14 +7,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
 import { BaseService } from './../base.service';
-import { BulkErrorResult } from './../../classes/bulkErrorResult'
+import { ErrorResult } from './../../classes/errorResult'
 
 @Injectable()
 export class QuestionsImportService extends BaseService{
     private questionsImportUrl = `${this.baseUrl}bulkImport/questions`;
 
     
-    public importQuestions(questions: JSON): Observable<BulkErrorResult[]> {
+    public importQuestions(questions: JSON): Observable<ErrorResult[]> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         

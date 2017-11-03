@@ -1,0 +1,14 @@
+<div class="alert-area">
+    <div *ngFor="let alert of alerts" class="alert uui-alert-messages {{ getCssClass(alert) }}" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="removeAlert(alert)">
+            <span aria-hidden="true">
+                <span></span>
+                <span></span>
+            </span>
+        </button>
+        <i class="{{ getIcon(alert) }}"></i>
+        <strong>
+            <span class="alert-title-value">{{ getTypeValue(alert) }}</span>!</strong> {{ alert.message }}
+        <span class="sr-only">Close</span>
+    </div>
+</div>

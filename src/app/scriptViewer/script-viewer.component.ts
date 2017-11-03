@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { SortablejsOptions } from 'angular-sortablejs';
@@ -12,8 +12,13 @@ import { InterviewQuestion } from './classes/interview-question';
 import { InterviewExercise } from './classes/interview-exercise';
 import { QuestionService } from './../shared/services/question.service';
 import { ExerciseService } from './../shared/services/exercise.service';
+import { ITemplate } from './../shared/classes/template';
+import { ISkillTemplate } from './../shared/classes/skillTemplate';
 
 import { ScriptViewerService } from './script-viewer.service';
+import { TemplateService } from './../shared/services/template.service';
+import { AlertService } from './../shared/services/alert.service';
+import { ErrorResult } from './../shared/classes/errorResult';
 
 declare var jQuery: any;
 
@@ -23,8 +28,8 @@ declare var jQuery: any;
 })
 
 export class ScriptViewerComponent implements OnInit, OnDestroy {
-    scriptViewer: InterviewScript;
-    errorMessage: string;
+    private isInterview: boolean;
+    private scriptViewer: InterviewScript;
     private sub: Subscription;
     private templateId: string;
     private selectedSkill: Skill;
@@ -34,6 +39,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     private isOnPreview: boolean;
     private hoverSkillId: number;
     private hoverExercises: boolean;
+    private isScriptViewerNameFocus: boolean;
     sortablejsOptions: SortablejsOptions = {
         animation: 150,
         handle: '.fa-bars'
@@ -42,17 +48,21 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,
         private scriptViewerService: ScriptViewerService,
         private questionService: QuestionService,
-        private exerciseService: ExerciseService) { }
+        private exerciseService: ExerciseService,
+        private templateService: TemplateService,
+        private alertService: AlertService,
+        private renderer: Renderer2) { }
 
     ngOnInit(): void {
         this.templateId = "0";
         this.hoverSkillId = 0;
         this.hoverExercises = false;
-        this.errorMessage = null;
+        this.alertService.clear();
         this.sub = this.route.params.subscribe(
             params => {
                 this.templateId = params['id'];
-                this.getInterviewScript(this.templateId);
+                this.isInterview = params['type'] == "interview" ? true : false;
+                this.getScriptViewer(this.templateId);
             });
     }
 
@@ -73,8 +83,8 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         }
     }
 
-    getInterviewScript(id: string) {
-        this.scriptViewerService.getScriptViewer(id)
+    getScriptViewer(id: string) {
+        this.scriptViewerService.getScriptViewer(id, this.isInterview)
             .subscribe(scriptViewer => {
                 this.scriptViewer = scriptViewer;
                 this.getQuestionBank(id);
@@ -82,7 +92,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             },
             error => {
                 this.scriptViewer = null;
-                this.errorMessage = <any>error;
+                this.alertService.error(<any>error);
             });
     }
 
@@ -91,7 +101,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             .subscribe(questionBank => this.mapQuestionBank(questionBank),
             error => {
                 this.questionBank = null;
-                this.errorMessage = <any>error;
+                this.alertService.error(<any>error);
             });
     }
 
@@ -100,7 +110,7 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
             .subscribe(exerciseBank => this.mapExerciseBank(exerciseBank),
             error => {
                 this.exerciseBank = null;
-                this.errorMessage = <any>error;
+                this.alertService.error(<any>error);
             });
     }
 
@@ -162,12 +172,42 @@ export class ScriptViewerComponent implements OnInit, OnDestroy {
         }
     }
 
-    saveInterview(): void {
-        this.scriptViewerService.saveInterview(this.scriptViewer)
-            .subscribe(scriptViewer => console.log(scriptViewer),
+    saveTemplate(): void {
+        if (this.scriptViewer.name.trim() == "") {
+            this.alertService.warning("The Template Name is blank");
+            this.renderer.selectRootElement('#scriptViewerName').focus();
+            return;
+        }
+        let template: ITemplate = {
+            id: this.templateId,
+            name: this.scriptViewer.name,
+            competencyId: this.scriptViewer.competencyId,
+            jobFunctionLevel: this.scriptViewer.jobFunctionLevel,
+            skills: this.scriptViewer.skills.map(s => <ISkillTemplate>new Object({ id: s.id, questions: s.interviewQuestions.map(iq => iq.id) })),
+            exercises: this.scriptViewer.interviewExercises.map(ie => ie.id)
+        }
+        let errorResult: ErrorResult = new ErrorResult("", "");
+
+        this.templateService.saveTemplate(template, errorResult)
+            .subscribe(
+            scriptViewer => {
+                if (errorResult.errorDescription != null && errorResult.errorDescription.length > 0) {
+                    this.alertService.warning(errorResult.errorDescription);
+                } else {
+                    this.alertService.success("The template was successfuly saved.");
+                }
+            },
             error => {
-                this.errorMessage = <any>error;
+                this.alertService.error(<any>error);
             });
+    }
+
+    setScriptViewerNameCss(focus: boolean): void {
+        this.isScriptViewerNameFocus = focus;
+    }
+
+    getScriptViewerNameCss(): string {
+        return this.isScriptViewerNameFocus ? "text-box-name-edition" : "text-box-name";
     }
 
     // ----------------------------------------------------------------------------------
