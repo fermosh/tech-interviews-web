@@ -43,4 +43,12 @@ export class SkillMatrixService extends BaseService {
             .map(skillMatrixModel => skillMatrixModel.skills)
             .catch(this.handleError);
     }
+        // This method returns all the possible skills from a given Competency
+        getSkillMatrixByCompetency(competencyId: number): Observable<Skill[]> {
+            const url = `${this.skillMatrixUrl}${competencyId}`;
+
+            return this.http.get(url, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+        }
 }
