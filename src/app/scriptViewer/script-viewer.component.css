@@ -60,6 +60,28 @@
     margin-left: 5px;
 }
 
+.text-box-name {
+    border: 0;
+    font-family: 'Oswald Regular';
+    font-size: 18px;
+    width: 45%;
+    padding: 0;
+    height: 25px;
+}
+
+.text-box-name-edition {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #39C2D7;
+    font-family: 'Oswald Regular';
+    font-size: 18px;
+    width: 45%;
+    background-color: rgba(26, 156, 176, 0.1);
+    padding-left: 6px;
+    height: 36px;
+}
+
 /* SKILL SETTING */
 
 .skill-accordion-toggle-title {

@@ -4,7 +4,7 @@ import { ScriptViewerComponent } from './script-viewer.component';
 
 const scriptViewerRoutes: Routes = [
     {
-        path: ':id',
+        path: ':type/:id',
         component: ScriptViewerComponent,
     }
 ];

@@ -1,11 +1,14 @@
+import { ISkillTemplate } from './skillTemplate';
 import { ILevel } from './level';
 
-export interface ITemplate{
+export interface ITemplate {
     id: string;
+    name: string;
     competencyId: number;
+    jobFunctionLevel: number;  
+    skills: ISkillTemplate[];
+    exercises: string[];
     competencyName?: string;
     domain?: string;
-    jobfubctionLevel: number;
-    skillIds: number[];
     level?: ILevel;
 }
