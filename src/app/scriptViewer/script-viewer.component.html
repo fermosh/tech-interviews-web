@@ -1,21 +1,28 @@
+<tih-alert></tih-alert>
 <div *ngIf='scriptViewer'>
     <div class="script-viewer-header">
         <div class="container">
-            <div class="final-score-box">
+            <div *ngIf="isInterview" class="final-score-box">
                 <div class="final-score-label-value average-final-score-label-value">
-                    <h2><span>{{ getFinalRating() | number:'1.0-1' }}</span></h2>
+                    <h2>
+                        <span>{{ getFinalRating() | number:'1.0-1' }}</span>
+                    </h2>
                 </div>
                 <span class="final-score-label-text">Final Score</span>
             </div>
-            <div class="final-score-box">
+            <div *ngIf="isInterview" class="final-score-box">
                 <div class="final-score-label-value">
-                    <h2><span>{{ getExercisesRating() | number:'1.0-1' }}</span></h2>
+                    <h2>
+                        <span>{{ getExercisesRating() | number:'1.0-1' }}</span>
+                    </h2>
                 </div>
                 <span class="final-score-label-text">Exercises</span>
             </div>
-            <div class="final-score-box">
+            <div *ngIf="isInterview" class="final-score-box">
                 <div class="final-score-label-value">
-                    <h2><span>{{ getSkillsRating() | number:'1.0-1' }}</span></h2>
+                    <h2>
+                        <span>{{ getSkillsRating() | number:'1.0-1' }}</span>
+                    </h2>
                 </div>
                 <span class="final-score-label-text">Skills</span>
             </div>
@@ -27,10 +34,17 @@
     </div>
     <br>
     <div class="container">
-        <button class="uui-button lime-green script-viewer-top-btn" (click)="saveInterview()">Save Interview</button>
-        <button class="uui-button lime-green script-viewer-top-btn" (click)="showPreview()">{{ !isOnPreview ? 'Interview Report' : 'Back to Script Viewer' }}</button>
-        <button class="uui-button lime-green script-viewer-top-btn" (click)="copyToClipBoard()" id="btnCopyToClipBoard" *ngIf="isOnPreview">Copy to ClipBoard</button>
-        <br><br><br>
+        <input type="text" id="scriptViewerName" class="uui-form-element {{ getScriptViewerNameCss() }}" (focus)="setScriptViewerNameCss(true)" (focusout)="setScriptViewerNameCss(false)"
+            placeholder="{{ isInterview ? 'Candidate Name' : 'Template Name' }}" [(ngModel)]="scriptViewer.name" />
+        <button class="uui-button lime-green script-viewer-top-btn disable" (click)="createInterview()" *ngIf="!isInterview" disabled>Create Interview</button>
+        <button class="uui-button lime-green script-viewer-top-btn" (click)="isInterview ? saveInterview() : saveTemplate()">Save {{ isInterview ? 'Interview' : 'Template' }}</button>
+        <button class="uui-button lime-green script-viewer-top-btn" (click)="showPreview()" *ngIf="isInterview">{{ !isOnPreview ? 'Interview Report' : 'Back to Script Viewer' }}</button>
+        <button class="uui-button lime-green script-viewer-top-btn" (click)="copyToClipBoard()" id="btnCopyToClipBoard" *ngIf="isInterview && isOnPreview">Copy to ClipBoard</button>
+        <br>
+        <span class="topic-label-value" data-placement="right">{{ isInterview ? 'Candidate Name' : 'Template Name' }}</span>
+        <br>
+        <br>
+        <br>
         <div id="uuiCarousel" class="slide" data-ride="carousel">
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
@@ -50,7 +64,8 @@
                                         </span>
                                     </p>
                                     <div class="skill-accordion-subtitle">
-                                        <tih-score *ngIf="(skill.interviewQuestions && skill.interviewQuestions.length) || (skill.interviewExercises && skill.interviewExercises.length)" [score]='getRatingBySkill(skill)' class="score-label-value"></tih-score>
+                                        <tih-score *ngIf="isInterview && ((skill.interviewQuestions && skill.interviewQuestions.length) || (skill.interviewExercises && skill.interviewExercises.length))"
+                                            [score]='getRatingBySkill(skill)' class="score-label-value"></tih-score>
                                         <span *ngIf="skill.priority" [class]="'uui-label ' + getSkillPriorityStyle(skill)">{{ skill.priority }}&nbsp;&nbsp;</span>
                                         <span *ngIf="skill.startingFrom" class="starting-label-value">{{ skill.startingFrom }}&nbsp;&nbsp;</span>
                                         <span class="topic-label-value" data-toggle="tooltip" data-container="body" data-html="true" data-placement="right" [attr.data-original-title]="getTopicsBySkill(skill)">Topics</span>
@@ -72,20 +87,20 @@
                                                 <div *ngFor="let question of skill.interviewQuestions" class="sortable-question">
                                                     <table>
                                                         <tr>
-                                                            <td><span class="fa fa-bars" aria-hidden="true"></span>{{ question.body
-                                                                }}
+                                                            <td>
+                                                                <span class="fa fa-bars" aria-hidden="true"></span>{{ question.body }}
                                                             </td>
                                                             <td class="rating-cell">
-                                                                <tih-star [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
+                                                                <tih-star *ngIf="isInterview" [rating]='question.rating' (ratingClicked)='question.rating=$event'></tih-star>
                                                             </td>
                                                             <td class="comments-cell">
-                                                                <i [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments.length > 0, 'fa-comment-o': question.comments.length === 0 }"
+                                                                <i *ngIf="isInterview" [ngClass]="{ 'icon-button': true, 'fa': true, 'fa-comment': question.comments && question.comments.length > 0, 'fa-comment-o': question.comments && question.comments.length === 0 }"
                                                                     data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#skill_' + skill.id + '_question_' + question.id"
                                                                     [attr.aria-controls]="'skill_' + skill.id + '_question_' + question.id"></i>
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                    <div class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
+                                                    <div *ngIf="isInterview" class="collapse" [id]="'skill_' + skill.id + '_question_' + question.id">
                                                         <tih-history-comment [comments]="question.comments" (deleteCommentClicked)="deleteComment('question', skill.id, question.id, $event)"></tih-history-comment>
                                                         <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('question', skill.id, question.id, $event)"
                                                         />
@@ -102,7 +117,8 @@
                         <!-- EXERCISES SET -->
                         <div (mouseenter)="onMouseEnterExercises()">
                             <h3 class="medium-gray" style="text-transform: none;">Exercises&nbsp;&nbsp;
-                                <div *ngIf="hoverExercises" title="Exercise Picker" class="question-picker-button" data-toggle="modal" data-target="#exercisePicker" (click)="setSelectedExercises(skill)">
+                                <div *ngIf="hoverExercises" title="Exercise Picker" class="question-picker-button" data-toggle="modal" data-target="#exercisePicker"
+                                    (click)="setSelectedExercises(skill)">
                                     <i class="fa fa-pencil"></i>
                                 </div>
                             </h3>
@@ -118,7 +134,8 @@
                                     <ul class="nav nav-tabs">
                                         <li *ngFor="let exercise of scriptViewer.interviewExercises; let index = index" [class.active]="index === 0">
                                             <a data-toggle="tab" [href]="'#tab_ex_' + exercise.id">{{ exercise.title }}
-                                                <tih-score class="ex-score-label-value" [score]='exercise.rating'></tih-score></a>
+                                                <tih-score *ngIf="isInterview" class="ex-score-label-value" [score]='exercise.rating'></tih-score>
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -128,13 +145,16 @@
                                             <h3 class="ex-subtitle-label">Related Skills</h3>
                                             <p class="gray">
                                                 <template ngFor let-tag [ngForOf]="exercise.skills" let-last="last">
-                                                    <span>{{ tag.name }}</span><span *ngIf="!last">, </span>
+                                                    <span>{{ tag.name }}</span>
+                                                    <span *ngIf="!last">, </span>
                                                 </template>
-                                            </p><br>
+                                            </p>
+                                            <br>
                                             <h3 class="ex-subtitle-label">Description</h3>
-                                            <p class="gray">{{ exercise.body }}</p><br>
-                                            <h3 class="ex-subtitle-label">Score</h3>
-                                            <table>
+                                            <p class="gray">{{ exercise.body }}</p>
+                                            <br>
+                                            <h3 *ngIf="isInterview" class="ex-subtitle-label">Score</h3>
+                                            <table *ngIf="isInterview">
                                                 <tr>
                                                     <td class="ex-rating-cell">
                                                         <tih-star [rating]='exercise.rating' (ratingClicked)='exercise.rating=$event'></tih-star>
@@ -142,7 +162,8 @@
                                                     <td>&nbsp;</td>
                                                     <td class="ex-comment-cell">
                                                         <tih-history-comment [comments]="exercise.comments" (deleteCommentClicked)="deleteComment('exercise', 0, exercise.id, $event)"></tih-history-comment>
-                                                        <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', 0, exercise.id, $event)" />
+                                                        <input type="text" class="uui-form-element comments-input" placeholder="Additional Comments" (keyup.enter)="addComment('exercise', 0, exercise.id, $event)"
+                                                        />
                                                     </td>
                                                 </tr>
                                             </table>
@@ -155,7 +176,9 @@
                 </div>
                 <div class="item">
                     <div>
-                        <span class="interview-report-title">Technical Interview Report</span><br><br>
+                        <span class="interview-report-title">Technical Interview Report</span>
+                        <br>
+                        <br>
                         <tih-report-viewer [interviewScript]="scriptViewer"></tih-report-viewer>
                     </div>
                 </div>
@@ -164,21 +187,27 @@
     </div>
 
     <!-- QUESTION PICKER -->
-    <div class="modal uui-modal fade blue" id="questionPicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" *ngIf="selectedSkill">
+    <div class="modal uui-modal fade blue" id="questionPicker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+        *ngIf="selectedSkill">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">{{ selectedSkill.name }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span></span><span></span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <span *ngIf='questionBank && (questionBank | questionBankFilter : selectedSkill.id).length === 0'>No questions found for <b>{{ selectedSkill.name }}</b>.</span>
+                    <span *ngIf='questionBank && (questionBank | questionBankFilter : selectedSkill.id).length === 0'>No questions found for
+                        <b>{{ selectedSkill.name }}</b>.</span>
                     <table *ngIf='questionBank && (questionBank | questionBankFilter : selectedSkill.id).length'>
                         <tbody>
                             <tr *ngFor="let question of questionBank | questionBankFilter : selectedSkill.id">
                                 <td>
                                     <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true,  'disable': !question.removable }">
-                                        <input type="checkbox" [attr.disabled]="question.removable ? null : ''" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id" />
+                                        <input type="checkbox" [attr.disabled]="question.removable ? null : ''" [(ngModel)]="question.selected" [id]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id"
+                                        />
                                         <label [for]="'cbxQuestion_Skill' + selectedSkill.id + '_Question_' + question.id">{{ question.body }}</label>
                                     </p>
                                 </td>
@@ -200,7 +229,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Exercises</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span></span><span></span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <span *ngIf='exerciseBank && exerciseBank.length === 0'>No exercises found.</span>
@@ -209,7 +241,8 @@
                             <tr *ngFor="let exercise of exerciseBank">
                                 <td>
                                     <p [ngClass]="{ 'uui-checkbox': true, 'square-skin': true, 'large': true, 'ex-tilte-picker': true,  'disable': !exercise.removable }">
-                                        <input type="checkbox" [attr.disabled]="exercise.removable ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id" />
+                                        <input type="checkbox" [attr.disabled]="exercise.removable ? null : ''" [(ngModel)]="exercise.selected" [id]="'cbxExercise_Exercise_' + exercise.id"
+                                        />
                                         <label [for]="'cbxExercise_Exercise_' + exercise.id">{{ exercise.title }}</label>
                                         <template [ngIf]="exercise.skills && exercise.skills.length > 0">
                                             <template ngFor let-tag [ngForOf]="exercise.skills">
@@ -229,14 +262,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-</div>
-<div *ngIf='scriptViewer === null && errorMessage !== null'>
-    <div class="uui-alert-messages fuchsia" role="alert">
-        <i class="fa fa-exclamation-triangle"></i>
-        <strong>Error!</strong> There was an error when retrieving the Interview Script: {{ errorMessage.statusText }}
-        <span class="sr-only">Close</span>
     </div>
 </div>
 <br>

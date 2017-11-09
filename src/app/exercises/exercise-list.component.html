@@ -25,7 +25,13 @@
                         </a>
                     </td>
                     <td>{{exercise.competency.name}}</td>
-                    <td>{{exercise.skills[0].name}}</td>
+                    <td>
+                        <div class="col-md-8">
+                                <ul id="tagIt" class="exercise-edit-skills">
+                                    <li *ngFor="let skill of exercise.skills">{{skill.name}}</li>
+                                </ul>
+                            </div>
+                    </td>
                     <td>
                         <a class="uui-button small" [routerLink]="['/exercises', exercise.id]">
                             Edit

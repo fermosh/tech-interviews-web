@@ -12,13 +12,14 @@ import 'rxjs/add/observable/of';
 
 import { ITemplate } from '../classes/template';
 import { BaseService } from './base.service';
+import { ErrorResult } from './../classes/errorResult';
 
 @Injectable()
 export class TemplateService extends BaseService {
     private templateUrl = `${this.baseUrl}templates/`;
 
     getTemplates(): Observable<ITemplate[]> {
-        return this.http.get(this.templateUrl)
+        return this.http.get(this.templateUrl + `all`)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -43,23 +44,25 @@ export class TemplateService extends BaseService {
             .catch(this.handleError);
     }
 
-    saveTemplate(template: ITemplate): Observable<ITemplate> {
+    saveTemplate(template: ITemplate, errorResult: ErrorResult): Observable<ITemplate> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         if (template.id === '') {
             return this.createTemplate(template, options);
         }
-        return this.updateTemplate(template, options);
+        return this.updateTemplate(template, errorResult, options);
     }
 
     private createTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
         template.id = undefined;
 
         let bodyData = JSON.stringify({
+            Name: template.name,
             CompetencyId: template.competencyId,
-            JobFunctionLevel: template.jobfubctionLevel,
-            Skills: template.skillIds
+            JobFunctionLevel: template.jobFunctionLevel,
+            Skills: template.skills,
+            Exercises: template.exercises
         });
 
         return this.http.post(this.templateUrl, bodyData, options)
@@ -70,15 +73,22 @@ export class TemplateService extends BaseService {
             .catch(this.handleError);
     }
 
-    private updateTemplate(template: ITemplate, options: RequestOptions): Observable<ITemplate> {
-        const url = `${this.templateUrl}${template.id}`;
+    private updateTemplate(template: ITemplate, errorResult: ErrorResult, options: RequestOptions): Observable<ITemplate> {
+        const url = `${this.templateUrl}`;
         return this.http.put(url, template, options)
-            .map(() => template)
+            .map(response => {
+                let _response: any = this.extractData(response);
+                if (_response.errorDescription != null) {
+                    errorResult.entity = _response.entity;
+                    errorResult.errorDescription = _response.errorDescription;
+                }
+                return template;
+            })
             .catch(this.handleError);
     }
 
     initializeTemplate(): ITemplate {
         // Return an initialized object
-        return { id: '', skillIds: [], competencyId: 0, jobfubctionLevel: 0 };
+        return { id: '', name: '', skills: [], competencyId: 0, jobFunctionLevel: 0, exercises: [] };
     }
 }

@@ -24,3 +24,9 @@
 .tagit li[value="0"] {
     display: none;
 }
+
+.not-found-label {
+    font-family: 'Oswald Light';
+    color: #999999;
+    font-size: 14px;
+}

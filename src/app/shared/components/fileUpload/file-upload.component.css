@@ -1,0 +1,44 @@
+.file-upload-drop-zone { 
+    border: dotted 3px #CCC;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: center;
+    font-family: 'Oswald Light';
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.file-upload-file-over { 
+    border: dotted 3px #1A9CB0;
+    background-color: rgba(26, 156, 176, 0.1)
+}
+
+.file-upload-file-over-disabled {
+    background-color: rgba(178,39,70, 0.25);
+    border: dotted 3px #B22746;;
+    color: #FFF;
+}
+
+.file-upload-limit-reached {
+    font-family: 'Oswald Bold';
+    color: #B22746;
+}
+
+.file-upload-progress-bar {
+    background-color: #1A9CB0;
+}
+
+.file-upload-notes {
+    font-family: 'Oswald Light';
+}
+
+.right {
+    float: right;
+}
+
+.uui-loader {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    float: left;
+}

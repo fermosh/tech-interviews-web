@@ -7,6 +7,10 @@ import { SelectivePreloadingStrategy } from './selective-preloading-strategy';
 
 const routes: Routes = [
     {
+        path: 'templates',
+        loadChildren: 'app/templates/template.module#TemplateModule'
+    },
+    {
         path: 'questions',
         loadChildren: 'app/questions/question.module#QuestionModule'
     },
@@ -15,14 +19,18 @@ const routes: Routes = [
         loadChildren: 'app/exercises/exercise.module#ExerciseModule',
     },
     {
-        path: 'entryPoint',
+        path: 'skillMatrix',
         loadChildren: 'app/entryPoint/entryPoint.module#EntryPointModule'
     },
     {
         path: 'script-viewer',
         loadChildren: 'app/scriptViewer/script-viewer.module#ScriptViewerModule'
     },
-    { path: '',   redirectTo: '/entryPoint', pathMatch: 'full' },
+    {
+        path: 'data-import',
+        loadChildren: 'app/dataImport/data-import.module#DataImportModule'
+    },
+    { path: '',   loadChildren: 'app/entryPoint/entryPoint.module#EntryPointModule', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent }
 ];
 

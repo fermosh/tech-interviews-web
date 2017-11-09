@@ -15,6 +15,7 @@ export class ExerciseListComponent implements OnInit {
     errorMessage: string;
     exercises: Exercise[];
 
+
     constructor(private exerciseService: ExerciseService) { }
 
     ngOnInit(): void {

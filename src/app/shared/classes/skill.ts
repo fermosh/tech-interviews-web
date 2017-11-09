@@ -2,7 +2,6 @@
 import { ITopic } from './topic';
 import { Tag } from './tag';
 import { InterviewQuestion } from './../../scriptViewer/classes/interview-question';
-import { InterviewExercise } from './../../scriptViewer/classes/interview-exercise';
 
 export class Skill extends Tag {
     rootId: number;
@@ -14,7 +13,6 @@ export class Skill extends Tag {
     jobFunctionLevel: number;
     topics?: ITopic[];
     interviewQuestions?: InterviewQuestion[];
-    interviewExercises?: InterviewExercise[];
     parentId: number;
     isSelectable: boolean;
     skillLevel?: number;

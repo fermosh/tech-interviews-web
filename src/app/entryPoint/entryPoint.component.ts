@@ -10,7 +10,9 @@ import { TemplateService } from './../shared/services/template.service';
 import { CompetencyService } from './../shared/services/competency.service';
 
 import { ITemplate } from './../shared/classes/template';
+import { ISkillTemplate } from './../shared/classes/skillTemplate';
 import { Observable } from 'rxjs/Observable';
+import { ErrorResult } from './../shared/classes/errorResult';
 
 declare var jQuery: any;
 
@@ -102,7 +104,7 @@ export class EntryPointComponent {
         this.saveTemplate(this.selectedCompetencyId, this.selectedLevelId, this.skillsSelected).subscribe(
             result => {
                 // navigate to the scriptViewer and pass the just created template id
-                this.router.navigate(['./script-viewer/' + result.id]);
+                this.router.navigate(['./script-viewer/template/' + result.id]);
             });
     }
 
@@ -143,10 +145,19 @@ export class EntryPointComponent {
 
     /* Start helper functions */
     // promise to save a template
-    private saveTemplate(competencyId: number, jobfubctionLevel: number, skillIds: number[]): Observable<ITemplate> {
+    private saveTemplate(competencyId: number, jobFunctionLevel: number, skillIds: number[]): Observable<ITemplate> {
+        let errorResult: ErrorResult;
         // save template
         return this.templateService
-            .saveTemplate({ id: '', skillIds: skillIds, competencyId: competencyId, jobfubctionLevel: jobfubctionLevel });
+            .saveTemplate({
+                    id: '',
+                    name: '',
+                    skills: skillIds.map(s => <ISkillTemplate> new Object({ id: s, questions: [] })), 
+                    competencyId: competencyId, 
+                    jobFunctionLevel: jobFunctionLevel,
+                    exercises: []
+                },
+                errorResult);
     }
 
     // determines when the next button is enabled or not according to the selected skills
